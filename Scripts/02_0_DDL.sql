@@ -45,15 +45,18 @@ DROP TABLE ORDERS
 /* 고객 */
 CREATE TABLE GUEST (
 	guest_id VARCHAR2(20) NOT NULL, /* 고객아이디 */
+	guest_pwd VARCHAR2(50) NOT NULL,
 	guest_name VARCHAR2(20) NOT NULL, /* 고객명 */
 	guest_birthday DATE, /* 생년월일 */
 	guest_phone VARCHAR2(13) NOT NULL, /* 전화번호 */
 	guest_email VARCHAR2(40), /* 이메일 */
 	guest_gender NUMBER(1), /* 성별 */
-	guest_join_day DATE, /* 가입일자 */
+	guest_join_date DATE DEFAULT SYSDATE, /* 가입일자 */
 	guest_note VARCHAR2(1000), /* 고객비고 */
-	del_yn CHAR(1) /* 탈퇴여부 */
+	del_yn CHAR(1) DEFAULT 'n' /* 탈퇴여부 */ -- n: 사용가능한 상태, y: 사용가능한 상태
 );
+
+--ALTER TABLE guest RENAME COLUMN guest_join_day TO guest_join_date;
 
 ALTER TABLE GUEST
 	ADD
@@ -185,7 +188,7 @@ CREATE TABLE QNA (
 	qna_title VARCHAR2(100), /* 제목 */
 	qna_content VARCHAR2(1000), /* 내용 */
 	qna_file varchar2(200), /* 첨부파일 */
-	qna_regDate DATE, /* 작성일 */
+	qna_regDate DATE DEFAULT SYSDATE, /* 작성일 */
 	res_Yn CHAR(1), /* 처리완료여부 */
 	qna_refNo NUMBER(10), /* 고객문의번호 */
 	del_yn CHAR(1) /* 삭제여부 */
@@ -214,7 +217,7 @@ ALTER TABLE HAIR_KIND
 /* 주문 */
 CREATE TABLE ORDERS (
 	orders_no NUMBER(10) NOT NULL, /* 주문번호 */
-	orders_date DATE, /* 주문일자 */
+	orders_date DATE DEFAULT SYSDATE, /* 주문일자 */
 	de_no NUMBER(10), /* 디자이너번호 */
 	guest_id VARCHAR2(20) /* 고객아이디 */
 );
