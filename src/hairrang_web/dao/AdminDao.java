@@ -8,12 +8,15 @@ public interface AdminDao {
 
 	ArrayList<Admin> selectAdminAll();
 	
-	Admin selectAdminById(Admin Admin);
+	Admin selectAdminById(Admin admin);
 	
-	int insertAdmin(Admin Admin);
+	int insertAdmin(Admin admin);
 	
-	int updateAdmin(Admin Admin);
+	int updateAdminName(Admin admin);
 	
-	int deleteAdmin(Admin Admin);
+	int updateAdminPwd(Admin admin);
 	
+	int deleteAdmin(Admin admin);
+	
+	int checkPwd(String id, String pwd);
 }

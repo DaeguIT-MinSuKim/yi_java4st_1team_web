@@ -14,5 +14,11 @@ public interface GuestDao {
 	
 	int updateGuest(Guest guest);
 	
+	int updateGuestPwd(Guest guest);
+	
 	int deleteGuest(Guest guest);
+	
+	int checkPwd(String id, String pwd);
+	
+	
 }

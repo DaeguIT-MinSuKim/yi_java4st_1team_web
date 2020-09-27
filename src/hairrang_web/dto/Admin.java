@@ -6,15 +6,14 @@ public class Admin {
 	private String adminPwd;
 	private String adminName;
 	
-	private Admin() {
+	public Admin() {
 	}
 
-	private Admin(String adminId) {
+	public Admin(String adminId) {
 		this.adminId = adminId;
 	}
 
-	private Admin(String adminId, String adminPwd, String adminName) {
-		super();
+	public Admin(String adminId, String adminPwd, String adminName) {
 		this.adminId = adminId;
 		this.adminPwd = adminPwd;
 		this.adminName = adminName;

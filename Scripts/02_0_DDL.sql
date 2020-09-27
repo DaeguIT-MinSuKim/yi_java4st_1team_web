@@ -118,13 +118,13 @@ ALTER TABLE ORDER_DETAIL
 /* 예약 */
 CREATE TABLE BOOKING (
 	book_no NUMBER(10) NOT NULL, /* 예약번호 */
-	guest_no NUMBER(10), /* 고객번호 */
+	guest_id VARCHAR2(20), /* 고객아이디 */
 	book_time DATE, /* 예약시간 */
 	hair_no NUMBER(10), /* 헤어번호 */
-	book_note VARCHAR2(400), /* 예약비고 */
-	guest_id VARCHAR2(20), /* 고객아이디 */
 	de_no NUMBER(10), /* 디자이너 */
-	book_statment VARCHAR2(20) /* 예약 */
+	book_regDate DATE,
+	book_status VARCHAR2(20), /* 예약 */
+	book_note VARCHAR2(400) /* 예약비고 */
 );
 
 ALTER TABLE BOOKING
@@ -180,7 +180,7 @@ ALTER TABLE DESIGNER
 			de_no
 		);
 
-/* Q&A2 */
+/* Q&A */
 CREATE TABLE QNA (
 	qna_no NUMBER(10) NOT NULL, /* 글번호 */
 	guest_id VARCHAR2(20), /* 고객아이디 */
