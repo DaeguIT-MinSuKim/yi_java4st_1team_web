@@ -7,6 +7,8 @@
 <title>Index</title>
 </head>
 <body>
+<h1>임시 첫페이지</h1>
 con = <%=JndiDs.getConnection() %>
+<a href="QnaList.do">QnaTest</a>
 </body>
 </html>
