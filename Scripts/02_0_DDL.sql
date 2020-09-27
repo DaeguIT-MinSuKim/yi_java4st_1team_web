@@ -122,10 +122,20 @@ CREATE TABLE BOOKING (
 	book_time DATE, /* 예약시간 */
 	hair_no NUMBER(10), /* 헤어번호 */
 	de_no NUMBER(10), /* 디자이너 */
-	book_regDate DATE,
-	book_status VARCHAR2(20), /* 예약 */
+	book_regDate DATE SYSDATE,
+	book_status NUMBER(1) DEFAULT 1, /* 예약 */
 	book_note VARCHAR2(400) /* 예약비고 */
 );
+
+/*예약 단계
+ *1. 예약 접수
+ *2. 예약 완료
+ *0. 예약 취소
+ *3. 방문 완료
+ *-1. NOSHOW
+ *
+ *NOSHOW 누적시 패널티 같은 거..? 별도 관리..
+ */
 
 ALTER TABLE BOOKING
 	ADD
