@@ -10,15 +10,18 @@ public class QnA {
 	private String qnaContent;
 	private String qnaFile;
 	private LocalDateTime qnaRegDate;
-	private String qnaResyn;
-	private int qnaRefno;
-	private String qnaDelyn;
+	private String qnaResYn;
+	private int qnaRefNo;
+	private String qnaDelYn;
 
 	public QnA() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public QnA(int qnaNo, Guest guestId, Admin adminId, String qnaTitle, String qnaContent, String qnaFile,
-			LocalDateTime qnaRegDate, String qnaResyn, int qnaRefno, String qnaDelyn) {
+			LocalDateTime qnaRegDate, String qnaResYn, int qnaRefNo, String qnaDelYn) {
+		super();
 		this.qnaNo = qnaNo;
 		this.guestId = guestId;
 		this.adminId = adminId;
@@ -26,16 +29,16 @@ public class QnA {
 		this.qnaContent = qnaContent;
 		this.qnaFile = qnaFile;
 		this.qnaRegDate = qnaRegDate;
-		this.qnaResyn = qnaResyn;
-		this.qnaRefno = qnaRefno;
-		this.qnaDelyn = qnaDelyn;
+		this.qnaResYn = qnaResYn;
+		this.qnaRefNo = qnaRefNo;
+		this.qnaDelYn = qnaDelYn;
 	}
 
 	@Override
 	public String toString() {
 		return "QnA [qnaNo=" + qnaNo + ", guestId=" + guestId + ", adminId=" + adminId + ", qnaTitle=" + qnaTitle
-				+ ", qnaContent=" + qnaContent + ", qnaFile=" + qnaFile + ", qnaRegDate=" + qnaRegDate + ", qnaResyn="
-				+ qnaResyn + ", qnaRefno=" + qnaRefno + ", qnaDelyn=" + qnaDelyn + "]";
+				+ ", qnaContent=" + qnaContent + ", qnaFile=" + qnaFile + ", qnaRegDate=" + qnaRegDate + ", qnaResYn="
+				+ qnaResYn + ", qnaRefNo=" + qnaRefNo + ", qnaDelYn=" + qnaDelYn + "]";
 	}
 
 	public int getQnaNo() {
@@ -94,28 +97,28 @@ public class QnA {
 		this.qnaRegDate = qnaRegDate;
 	}
 
-	public String getQnaResyn() {
-		return qnaResyn;
+	public String getQnaResYn() {
+		return qnaResYn;
 	}
 
-	public void setQnaResyn(String qnaResyn) {
-		this.qnaResyn = qnaResyn;
+	public void setQnaResYn(String qnaResYn) {
+		this.qnaResYn = qnaResYn;
 	}
 
-	public int getQnaRefno() {
-		return qnaRefno;
+	public int getQnaRefNo() {
+		return qnaRefNo;
 	}
 
-	public void setQnaRefno(int qnaRefno) {
-		this.qnaRefno = qnaRefno;
+	public void setQnaRefNo(int qnaRefNo) {
+		this.qnaRefNo = qnaRefNo;
 	}
 
-	public String getQnaDelyn() {
-		return qnaDelyn;
+	public String getQnaDelYn() {
+		return qnaDelYn;
 	}
 
-	public void setQnaDelyn(String qnaDelyn) {
-		this.qnaDelyn = qnaDelyn;
+	public void setQnaDelYn(String qnaDelYn) {
+		this.qnaDelYn = qnaDelYn;
 	}
 
 }

@@ -13,17 +13,17 @@
 		<tr>
 			<th>번호</th>
 			<th>제목</th>
-			<th>등록일</th>
+			<!-- <th>등록일</th> -->
 			<th>답변 여부</th>
 		</tr>
 		<c:forEach items="${qnaList}" var="qna">
 			<tr>
 				<td>${qna.qnaNo}</td>
 				<td><a href="qnaView.do?no=${qna.qnaNo}"> ${qna.qnaTitle}</a></td>
-				<td><fmt:formatDate value="${qna.qnaRegDate}" type="date" /></td>
+				<%-- <td><fmt:formatDate value="${qna.qnaRegDate}" type="date" /></td> --%>
 				<td><c:choose>
-						<c:when test="${qna.repYN== 'N'}"> no </c:when>
-						<c:when test="${qna.repYN== 'Y'}"> yes </c:when>
+						<c:when test="${qna.repYn eq 'n' }"> no </c:when>
+						<c:when test="${qna.repYn eq 'y' }"> yes </c:when>
 					</c:choose></td>
 			</tr>
 		</c:forEach>
