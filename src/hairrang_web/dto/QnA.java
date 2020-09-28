@@ -15,13 +15,10 @@ public class QnA {
 	private String qnaDelyn;
 
 	public QnA() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public QnA(int qnaNo, Guest guestId, Admin adminId, String qnaTitle, String qnaContent, String qnaFile,
 			LocalDateTime qnaRegDate, String qnaResyn, int qnaRefno, String qnaDelyn) {
-		super();
 		this.qnaNo = qnaNo;
 		this.guestId = guestId;
 		this.adminId = adminId;
