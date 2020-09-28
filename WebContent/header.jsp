@@ -47,7 +47,7 @@
 							<ul>
 								<li><a href="notice.jsp">NOTICE</a></li>
 								<li><a href="event.jsp">EVENT</a></li>
-								<li><a href="qna.jsp">Q&A</a></li>
+								<li><a href="qnaHome.do">Q&A</a></li>
 							</ul></li>
 					</ul>
 				</nav>

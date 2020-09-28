@@ -194,6 +194,7 @@ ALTER TABLE DESIGNER
 CREATE TABLE QNA (
 	qna_no NUMBER(10) NOT NULL, /* 글번호 */
 	guest_id VARCHAR2(20), /* 고객아이디 */
+	guest_name VARCHAR2(20),/* 고객이름 */
 	admin_id VARCHAR2(20), /* 관리자아이디 */
 	qna_title VARCHAR2(100), /* 제목 */
 	qna_content VARCHAR2(1000), /* 내용 */
