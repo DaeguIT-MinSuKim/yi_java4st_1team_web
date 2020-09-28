@@ -122,7 +122,7 @@ CREATE TABLE BOOKING (
 	book_time DATE, /* 예약시간 */
 	hair_no NUMBER(10), /* 헤어번호 */
 	de_no NUMBER(10), /* 디자이너 */
-	book_regDate DATE SYSDATE,
+	book_regDate DATE DEFAULT SYSDATE,
 	book_status NUMBER(1) DEFAULT 1, /* 예약 */
 	book_note VARCHAR2(400) /* 예약비고 */
 );
