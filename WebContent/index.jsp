@@ -17,7 +17,7 @@ img {margin-bottom:-6px;}
 <br>
 <h1>임시 첫페이지</h1>
 con = <%=JndiDs.getConnection() %>
-<a href="QnaList.do">QnaTest</a>
+<a href="qnaList.do">QnaTest</a>
 <br>
 <p style="font-size:30px; font-weight:600">#INSTAGRAM</p><br>
 <img src="images/insta_mini.png"><span style="clear:both;font-size:15px; font-weight:600;"> hairrang_official</span><br><br>
