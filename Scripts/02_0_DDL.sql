@@ -86,12 +86,14 @@ ALTER TABLE EVENT
 /* 헤어 */
 CREATE TABLE HAIR (
 	hair_no NUMBER(10) NOT NULL, /* 헤어번호 */
-	hair_name VARCHAR2(20) NOT NULL, /* 헤어명 */
+	hair_name VARCHAR2(40) NOT NULL, /* 헤어명 */
 	hair_price NUMBER NOT NULL, /* 단가 */
 	hair_pic varchar2(200), /* 사진 */
 	hair_content VARCHAR2(1000), /* 내용 */
 	kind_no NUMBER(10) /* 분류번호 */
 );
+
+ALTER TABLE HAIR MODIFY HAIR_NAME VARCHAR2(40);
 
 ALTER TABLE HAIR
 	ADD
