@@ -46,7 +46,7 @@ public class QnADaoImpl implements QnADao {
 		qna.setQnaNo(rs.getInt("QNA_NO"));
 		qna.setQnaTitle(rs.getString("QNA_TITLE"));
 		qna.setQnaRegDate(rs.getTimestamp("QNA_REGDATE").toLocalDateTime());
-		qna.setQnaResyn(rs.getString("RES_YN"));
+		qna.setQnaResYn(rs.getString("RES_YN"));
 		return qna;
 	}
 

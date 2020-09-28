@@ -22,8 +22,8 @@
 				<td><a href="qnaView.do?no=${qna.qnaNo}"> ${qna.qnaTitle}</a></td>
 				<%-- <td><fmt:formatDate value="${qna.qnaRegDate}" type="date" /></td> --%>
 				<td><c:choose>
-						<c:when test="${qna.repYn eq 'n' }"> no </c:when>
-						<c:when test="${qna.repYn eq 'y' }"> yes </c:when>
+						<c:when test="${qna.qnaResYn eq 'n' }"> no </c:when>
+						<c:when test="${qna.qnaResYn eq 'y' }"> yes </c:when>
 					</c:choose></td>
 			</tr>
 		</c:forEach>
