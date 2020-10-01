@@ -1,4 +1,4 @@
-package hairrang_web.controller.booking;
+package hairrang_web.controller.handler.booking;
 
 import java.io.IOException;
 

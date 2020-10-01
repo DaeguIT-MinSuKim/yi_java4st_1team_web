@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -45,6 +46,7 @@ public class BookingDaoImpl implements BookingDao {
 		return list;
 	}
 
+	
 	private Booking getBooking(ResultSet rs) throws SQLException {
 		int bookNo = rs.getInt("BOOK_NO");
 		Guest guest = new Guest(rs.getString("GUEST_NO"));
@@ -58,28 +60,79 @@ public class BookingDaoImpl implements BookingDao {
 		return new Booking(bookNo, guest, bookTime, hair, designer, bookRegDate, bookStatus, bookNote);
 	}
 
+	
 	@Override
 	public Booking selectBookingByBookingNo(Booking booking) {
-		// TODO Auto-generated method stub
+		String sql = "SELECT * FROM BOOKING WHERE BOOK_NO = ?";
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			
+			pstmt.setInt(1, booking.getBookNo());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					return getBooking(rs);
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
 		return null;
 	}
+	
 
 	@Override
 	public int insertBooking(Booking booking) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_STATUS, BOOK_NOTE) VALUES(?, ?, ?. ?, ?, ?)";
+		
+		try(Connection con = JndiDs.getConnection();
+			PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, booking.getGuest().getGuestId());
+			pstmt.setTimestamp(2, Timestamp.valueOf(booking.getBookDate()));
+			pstmt.setInt(3, booking.getHair().getHairNo());
+			pstmt.setInt(4, booking.getDesigner().getDeNo());
+			pstmt.setInt(5, booking.getBookStatus());
+			pstmt.setString(6, booking.getBookNote());
+			
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
+	
 	@Override
 	public int updateBooking(Booking booking) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "UPDATE BOOKING SET BOOK_TIME = ?, HAIR_NO = ?, DE_NO = ?, BOOK_STATUS = ?, BOOK_NOTE = ? WHERE BOOK_NO = ?";
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setTimestamp(1, Timestamp.valueOf(booking.getBookDate()));
+			pstmt.setInt(2, booking.getHair().getHairNo());
+			pstmt.setInt(3, booking.getDesigner().getDeNo());
+			pstmt.setInt(4, booking.getBookStatus());
+			pstmt.setString(5, booking.getBookNote());
+			pstmt.setString(6, booking.getGuest().getGuestId());
+			
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
+	
 	@Override
 	public int deleteBooking(Booking booking) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "DELETE BOOKING WHERE BOOK_NO = ?";
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, booking.getBookNo());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

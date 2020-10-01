@@ -1,4 +1,4 @@
-package hairrang_web.modle.qna;
+package hairrang_web.controller.handler.qna;
 
 import java.io.IOException;
 import java.util.ArrayList;
