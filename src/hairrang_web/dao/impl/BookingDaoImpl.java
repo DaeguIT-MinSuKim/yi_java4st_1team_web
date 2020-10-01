@@ -48,27 +48,38 @@ public class BookingDaoImpl implements BookingDao {
 
 	
 	private Booking getBooking(ResultSet rs) throws SQLException {
+		// BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE
+		
 		int bookNo = rs.getInt("BOOK_NO");
-		Guest guest = new Guest(rs.getString("GUEST_NO"));
-		LocalDateTime bookTime = rs.getTimestamp("BOOK_DATE").toLocalDateTime();
+		Guest guest = new Guest(rs.getString("GUEST_ID"));
+		// guestName 가져와야 함
+		LocalDateTime bookTime = rs.getTimestamp("BOOK_TIME").toLocalDateTime();
 		Hair hair = new Hair(rs.getInt("HAIR_NO"));
+		// hairName 가져와야 함
 		Designer designer = new Designer(rs.getInt("DE_NO"));
-		LocalDateTime bookRegDate = rs.getTimestamp("BOOK_REG_DATE").toLocalDateTime();
+		// deName 필요함
+		LocalDateTime bookRegDate = rs.getTimestamp("BOOK_REGDATE").toLocalDateTime();
 		int bookStatus = rs.getInt("BOOK_STATUS");
-		String bookNote = rs.getString("bookNote");
+		
+		String bookNote = null;
+		try {
+			bookNote = rs.getString("BOOK_NOTE");
+		} catch (SQLException e) {
+		}
 		
 		return new Booking(bookNo, guest, bookTime, hair, designer, bookRegDate, bookStatus, bookNote);
 	}
 
 	
 	@Override
-	public Booking selectBookingByBookingNo(Booking booking) {
-		String sql = "SELECT * FROM BOOKING WHERE BOOK_NO = ?";
+	public Booking selectBookingByGuestId(Guest guest) {
+		String sql = "SELECT * FROM BOOKING WHERE GUEST_ID = ?";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			
-			pstmt.setInt(1, booking.getBookNo());
+			System.out.println("guest.getGuestId() : " + guest.getGuestId());
+			pstmt.setString(1, guest.getGuestId());
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
 					return getBooking(rs);
@@ -81,7 +92,27 @@ public class BookingDaoImpl implements BookingDao {
 		return null;
 	}
 	
-
+	
+	@Override
+	public Booking selectBookingByBookingNo(Booking booking) {
+		String sql = "SELECT * FROM BOOKING WHERE BOOK_NO = ?";
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			
+			System.out.println("booking.getBookNo() : " + booking.getBookNo());
+			pstmt.setInt(1, booking.getBookNo());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					return getBooking(rs);
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return null;
+	}
 	@Override
 	public int insertBooking(Booking booking) {
 		String sql = "INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_STATUS, BOOK_NOTE) VALUES(?, ?, ?. ?, ?, ?)";
@@ -133,6 +164,26 @@ public class BookingDaoImpl implements BookingDao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public int isValidId(Booking booking, Guest guest) {
+		String sql = "SELECT 1 FROM BOOKING WHERE BOOK_NO = ? AND GUEST_ID = ?";
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, booking.getBookNo());
+			pstmt.setString(2, guest.getGuestId());
+			
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
 	}
 
 }
