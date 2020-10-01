@@ -73,7 +73,7 @@ fieldset input {
 	}   
 </style>
 <body>
-	<img src="images/shop.jpg" style="width: 100%;">
+	<img src="images/main1.jpg" style="width: 100%;">
 	<form class="login-form" method="post" action="login.do">
 	<div id="wrapper">
 		<div class="line"></div>

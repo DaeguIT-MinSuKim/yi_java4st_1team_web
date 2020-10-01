@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>hairrang</title>
 <!-- <link rel="stylesheet" href="style.css"> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -45,12 +46,13 @@
 				
 				<nav id="nav">
 					<ul>
-						<li><a href="index.jsp">HAIRRANG</a>
-						<li><a href="about.jsp">ABOUT</a></li>
+						<li><a href="index.do">HAIRRANG</a>
+						<li><a href="about.do">ABOUT</a></li>
 						<li><a href="">SALON</a>
 							<ul>
 								<li><a href="designer.jsp">DESIGNER</a></li>
 								<li><a href="hair.jsp">HAIR</a></li>
+								
 							</ul></li>
 						<li><a href="reservation.jsp">RESERVATION</a></li>
 						<li><a href="">COMMUNICATION</a>
