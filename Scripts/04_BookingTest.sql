@@ -15,3 +15,5 @@ SELECT * FROM hair;
 SELECT * FROM designer;
 
 SELECT * FROM BOOKING WHERE BOOK_NO = 60 AND GUEST_ID = 'test';
+
+SELECT * FROM event;
