@@ -28,21 +28,24 @@ public class EventDaoImpl implements EventDao {
 	@Override
 	public ArrayList<Event> selectEventAll() {
 		String sql = "SELECT * FROM EVENT";
-		ArrayList<Event> list = new ArrayList<>();
 		
 		try(Connection con = JndiDs.getConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery()) {
 
-			while (rs.next()) {
-				list.add(getEvent(rs));
+			if(rs.next()) {
+				ArrayList<Event> list = new ArrayList<>();
+				do {
+					list.add(getEvent(rs));
+				} while(rs.next());
+				return list;
 			}
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 		
-		return list;
+		return null;
 	}
 
 	private Event getEvent(ResultSet rs) throws SQLException {

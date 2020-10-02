@@ -7,7 +7,7 @@ public class HairKind {
 	private int kindNo;
 	private String kindName;
 	
-	/*
+	
 	private ArrayList<Hair> hairList;
 	
 	public ArrayList<Hair> getHairList() {
@@ -17,7 +17,6 @@ public class HairKind {
 	public void setHairList(ArrayList<Hair> hairList) {
 		this.hairList = hairList;
 	}
-	 */
 
 	public HairKind() {
 	}

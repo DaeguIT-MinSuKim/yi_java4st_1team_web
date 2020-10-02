@@ -20,20 +20,23 @@ public class DesignerDaoImpl implements DesignerDao {
 	@Override
 	public ArrayList<Designer> selectDesignerAll() {
 		String sql = "SELECT * FROM DESIGNER";
-		ArrayList<Designer> list = new ArrayList<>();
 		
 		try(Connection con = JndiDs.getConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery()) {
 
-			while (rs.next()) {
-				list.add(getDesigner(rs));
+			if(rs.next()) {
+				ArrayList<Designer> list = new ArrayList<>();
+				do {
+					list.add(getDesigner(rs));
+				} while(rs.next());
+				return list;
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 		
-		return list;
+		return null;
 	}
 
 	private Designer getDesigner(ResultSet rs) throws SQLException {

@@ -29,21 +29,21 @@ public class BookingDaoImpl implements BookingDao {
 	@Override
 	public ArrayList<Booking> selectBookingAll() {
 		String sql = "SELECT * FROM BOOKING";
-		ArrayList<Booking> list = null;
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
 			if(rs.next()) {
-				list = new ArrayList<>();
+				ArrayList<Booking> list = new ArrayList<>();
 				while(rs.next()) {
 					list.add(getBooking(rs));
 				}
+				return list;
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		return list;
+		return null;
 	}
 
 	

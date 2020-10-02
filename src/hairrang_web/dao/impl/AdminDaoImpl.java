@@ -24,19 +24,21 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	public ArrayList<Admin> selectAdminAll() {
 		String sql = "SELECT * FROM ADMIN_ALL_VIEW";
-		ArrayList<Admin> list = null;
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
 			if(rs.next()) {
-				list = new ArrayList<>();
-				list.add(getAdmin(rs));
+				ArrayList<Admin> list = new ArrayList<>();
+				do {
+					list.add(getAdmin(rs));
+				} while(rs.next());
+				return list;
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		return list;
+		return null;
 	}
 
 	private Admin getAdmin(ResultSet rs) throws SQLException {
@@ -53,11 +55,12 @@ public class AdminDaoImpl implements AdminDao {
 
 	
 	@Override
-	public Admin selectAdminById(Admin Admin) {
+	public Admin selectAdminById(Admin admin) {
 		String sql = "SELECT * FROM ADMIN_ALL_VIEW WHERE ADMIN_ID = ?";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, admin.getAdminId());
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
 					return getAdmin(rs);
@@ -125,8 +128,7 @@ public class AdminDaoImpl implements AdminDao {
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(2, admin.getAdminId());
-			
+			pstmt.setString(1, admin.getAdminId());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -140,6 +142,9 @@ public class AdminDaoImpl implements AdminDao {
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, id);
+			pstmt.setString(2, pwd);
+			
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
 					return rs.getInt(1); // 비밀번호 일치함
