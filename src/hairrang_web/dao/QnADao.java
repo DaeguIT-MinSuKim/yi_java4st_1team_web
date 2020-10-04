@@ -17,6 +17,12 @@ public interface QnADao {
 	
 	int deleteQnA(QnA qna);
 	
+	ArrayList<QnA> selectNoticeAll();
+	
 	//비회윈이 문의 넣었을때
 	int checkPwd();
+	
+	ArrayList<QnA> selectQnaAllById(Guest guest);
+	
+	int nextQnaNo();
 }

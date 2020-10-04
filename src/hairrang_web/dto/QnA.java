@@ -121,4 +121,11 @@ public class QnA {
 		this.qnaDelYn = qnaDelYn;
 	}
 
+	public QnA(Guest guestId, String qnaTitle, String qnaContent) {
+		super();
+		this.guestId = guestId;
+		this.qnaTitle = qnaTitle;
+		this.qnaContent = qnaContent;
+	}
+
 }
