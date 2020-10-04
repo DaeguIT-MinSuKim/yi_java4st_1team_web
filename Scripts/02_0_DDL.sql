@@ -54,9 +54,11 @@ CREATE TABLE GUEST (
 	guest_gender NUMBER(1), /* 성별 */
 	guest_join_date DATE DEFAULT SYSDATE, /* 가입일자 */
 	guest_note VARCHAR2(1000), /* 고객비고 */
-	del_yn CHAR(1) DEFAULT 'n' /* 탈퇴여부 */ -- n: 사용가능한 상태, y: 사용가능한 상태
+	del_yn CHAR(1) DEFAULT 'n', /* 탈퇴여부 */ -- n: 사용가능한 상태, y: 사용가능한 상태
+	info_yn char(1) /*마케팅수신동의 y, n*/
 );
 
+--ALTER TABLE guest ADD info_yn char(1);
 --ALTER TABLE guest RENAME COLUMN guest_join_day TO guest_join_date;
 
 ALTER TABLE GUEST

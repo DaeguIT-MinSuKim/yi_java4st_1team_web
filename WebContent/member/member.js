@@ -2,9 +2,9 @@ function go_save() {
   if (document.formm.id.value == "") {
     alert("아이디를 입력하여 주세요.");
     document.formm.id.focus();
-  } else if (document.formm.id.value != document.formm.reid.value) {
+  /*} else if (document.formm.id.value != document.formm.reid.value) {
     alert("중복확인을 클릭하여 주세요.");
-    document.formm.id.focus();
+    document.formm.id.focus();*/
   } else if (document.formm.pwd.value == "") {
     alert("비밀번호를 입력해 주세요.");
     document.formm.pwd.focus();
@@ -14,14 +14,30 @@ function go_save() {
   } else if (document.formm.name.value == "") {
     alert("이름을 입력해 주세요.");
     document.formm.name.focus();
-  } else if (document.formm.email.value == "") {
+  } else if (document.formm.email.value == ""  ) {
     alert("이메일을 입력해 주세요.");
-    document.formm.email.focus();
+    
+/*    document.formm.email.focus();
+    var email = document.getElementById("email").value;
+	var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+			if(exptext.test(email)==false){
+		//이메일 형식이 알파벳+숫자@알파벳+숫자.알파벳+숫자 형식이 아닐경우			
+	alert("이 메일형식이 올바르지 않습니다.");*/
+		
+  } else if (document.formm.birth.value == "") {
+	 alert("생년월일을 입력해 주세요.");
+	 document.formm.birth.focus();
+  } else if (document.formm.phone.value == "") {
+	alert("연락처를 입력해 주세요.");
+	document.formm.phone.focus();
+  } else if(document.formm.gender[0].checked == false && document.formm.gender[1].checked == false ){
+	  alert('성별을 체크해주세요.');
   } else {
     document.formm.action = "join.do";
     document.formm.submit();
   }
 }
+
 
 function idcheck() {
   if (document.formm.id.value == "") {
@@ -49,3 +65,5 @@ function go_next() {
     alert('약관에 동의하셔야만 합니다.');
   }
 }
+
+

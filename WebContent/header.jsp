@@ -10,6 +10,7 @@
 <title>hairrang</title>
 <!-- <link rel="stylesheet" href="style.css"> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.dropotron.min.js"></script>
 <script src="js/skel.min.js"></script>
@@ -26,6 +27,7 @@
 		<div id="header">
 			<div>
 				<!-- guestmenu -->
+				
 				<nav id="guest"> 
 				<c:choose>
        			<c:when test="${empty sessionScope.loginUser}">
@@ -43,6 +45,7 @@
 		       	</c:otherwise>       
 		       	</c:choose>
 				</nav>
+				</div>
 				
 				<nav id="nav">
 					<ul>
@@ -63,7 +66,8 @@
 							</ul></li>
 					</ul>
 				</nav>
-			</div>
+			
+		
 		</div>
 	</div>
 	<!--헤더파일 들어가는 곳 끝 -->

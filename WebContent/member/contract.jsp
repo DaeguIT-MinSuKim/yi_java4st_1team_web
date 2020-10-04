@@ -60,8 +60,32 @@ article {
 	background: white;
 	border:1px solid #777;
 }
-</style>
 
+
+
+
+.step {
+	background:#f8f9fa;
+	width:700px;
+	height:80px;
+	font-size:16px;
+	text-align:center;
+	display: table-cell;
+    vertical-align: middle;
+   
+}
+
+.div-step{
+	display:table;
+	 margin:0 auto;
+}
+
+
+</style>
+	 <div class="div-step">
+	<div class="step"><span style="font-weight:bold">STEP 01 약관 동의 </span> <span style="color:#c5c6ca"><i class="xi-angle-right"></i> STEP 02 회원정보 입력  <i class="xi-angle-right"></i> STEP 03 회원가입 완료</span></div>
+	</div>
+	
   <article>
   <div id="wrapper">
     <form id="join" name="formm">
