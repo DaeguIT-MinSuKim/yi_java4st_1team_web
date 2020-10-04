@@ -4,12 +4,12 @@
 <br>
 <br>
 <style>
-	body {text-align:Center;}
-	img {margin-bottom:-6px;}
+/* 	body {text-align:Center;} */
+ 	img {margin-bottom:-6px;}
 
 </style>
 <section id="slider">
-<%@ include file="/slider.jsp" %>  
+<%@ include file="slider.jsp" %>  
 </section>
 <br>
 <br>

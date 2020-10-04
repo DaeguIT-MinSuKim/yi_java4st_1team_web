@@ -13,6 +13,16 @@ import hairrang_web.dto.HairKind;
 
 public class HairDaoImpl implements HairDao {
 
+	private static final HairDaoImpl instance = new HairDaoImpl();
+	
+	private HairDaoImpl() {
+	}
+	
+	public static HairDaoImpl getInstance() {
+		return instance;
+	}
+
+
 	@Override
 	public ArrayList<HairKind> selectHairAll() {
 		String sql = "SELECT * FROM HAIR_KIND";

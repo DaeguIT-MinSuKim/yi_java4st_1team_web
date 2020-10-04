@@ -15,7 +15,9 @@
 <script src="js/skel.min.js"></script>
 <script src="js/init.js"></script>
 <script type="text/javascript" src="member/member.js"></script>
-  
+<style>
+	body {text-align:Center;}
+</style>
 </head>
 <body class="homepage">
 
@@ -54,7 +56,7 @@
 								<li><a href="hair.jsp">HAIR</a></li>
 								
 							</ul></li>
-						<li><a href="reservation.jsp">RESERVATION</a></li>
+						<li><a href="reservationList.do">RESERVATION</a></li>
 						<li><a href="">COMMUNICATION</a>
 							<ul>
 								<li><a href="notice.jsp">NOTICE</a></li>
