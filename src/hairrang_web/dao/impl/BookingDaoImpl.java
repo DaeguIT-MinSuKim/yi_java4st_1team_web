@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import hairrang_web.dao.BookingDao;
+import hairrang_web.dao.DesignerDao;
+import hairrang_web.dao.GuestDao;
+import hairrang_web.dao.HairDao;
 import hairrang_web.ds.JndiDs;
 import hairrang_web.dto.Booking;
 import hairrang_web.dto.Designer;
@@ -29,35 +32,36 @@ public class BookingDaoImpl implements BookingDao {
 	@Override
 	public ArrayList<Booking> selectBookingAll() {
 		String sql = "SELECT * FROM BOOKING";
-		ArrayList<Booking> list = null;
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
 			if(rs.next()) {
-				list = new ArrayList<>();
+				ArrayList<Booking> list = new ArrayList<>();
 				while(rs.next()) {
 					list.add(getBooking(rs));
 				}
+				return list;
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		return list;
+		return null;
 	}
 
 	
 	private Booking getBooking(ResultSet rs) throws SQLException {
 		// BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE
 		
+		GuestDao gDao = GuestDaoImpl.getInstance();
+		HairDao hDao = HairDaoImpl.getInstance();
+		DesignerDao dDao = DesignerDaoImpl.getInstance();
+				
 		int bookNo = rs.getInt("BOOK_NO");
-		Guest guest = new Guest(rs.getString("GUEST_ID"));
-		// guestName 가져와야 함
+		Guest guest = gDao.selectGuestById(new Guest(rs.getString("GUEST_ID")));
 		LocalDateTime bookTime = rs.getTimestamp("BOOK_TIME").toLocalDateTime();
-		Hair hair = new Hair(rs.getInt("HAIR_NO"));
-		// hairName 가져와야 함
-		Designer designer = new Designer(rs.getInt("DE_NO"));
-		// deName 필요함
+		Hair hair = hDao.selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
+		Designer designer = dDao.selectDesignerByNo(new Designer(rs.getInt("DE_NO")));
 		LocalDateTime bookRegDate = rs.getTimestamp("BOOK_REGDATE").toLocalDateTime();
 		int bookStatus = rs.getInt("BOOK_STATUS");
 		

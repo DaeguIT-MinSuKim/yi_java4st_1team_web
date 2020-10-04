@@ -12,6 +12,9 @@ SELECT * FROM BOOKING;
 INSERT INTO BOOKING VALUES(60, 'test', sysdate + 10 - 6/24, 15, 2, sysdate, 1, null);
 
 SELECT * FROM hair;
+SELECT * FROM HAIR_KIND;
 SELECT * FROM designer;
 
 SELECT * FROM BOOKING WHERE BOOK_NO = 60 AND GUEST_ID = 'test';
+
+SELECT * FROM event;
