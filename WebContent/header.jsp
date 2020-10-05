@@ -11,12 +11,22 @@
 <!-- <link rel="stylesheet" href="style.css"> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<<<<<<< HEAD
 <script src="js/jquery.min.js"></script>
+
 <script src="js/jquery.dropotron.min.js"></script>
 <script src="js/skel.min.js"></script>
 <script src="js/init.js"></script>
 <script type="text/javascript" src="member/member.js"></script>
-  
+ 
+ <!--slider -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+ 
+<style>
+	#header {position:fixed; width:100%; z-index:9999; margin:0 auto; text-align:center;}
+	#wrapper {width:1200px; margin:170px auto;}
+</style>  
 </head>
 <body class="homepage">
 
@@ -62,7 +72,7 @@
 							<ul>
 								<li><a href="notice.jsp">NOTICE</a></li>
 								<li><a href="event.jsp">EVENT</a></li>
-								<li><a href="qna.jsp">Q&A</a></li>
+								<li><a href="qnaHome.do">Q&A</a></li>
 							</ul></li>
 					</ul>
 				</nav>
@@ -71,3 +81,5 @@
 		</div>
 	</div>
 	<!--헤더파일 들어가는 곳 끝 -->
+	<div id="wrapper">
+	

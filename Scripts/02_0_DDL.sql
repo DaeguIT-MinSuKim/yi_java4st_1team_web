@@ -58,7 +58,11 @@ CREATE TABLE GUEST (
 	info_yn char(1) /*마케팅수신동의 y, n*/
 );
 
+<<<<<<< HEAD
 --ALTER TABLE guest ADD info_yn char(1);
+=======
+ALTER TABLE guest ADD info_yn char(1);
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git
 --ALTER TABLE guest RENAME COLUMN guest_join_day TO guest_join_date;
 
 ALTER TABLE GUEST
@@ -204,6 +208,7 @@ ALTER TABLE DESIGNER
 CREATE TABLE QNA (
 	qna_no NUMBER(10) NOT NULL, /* 글번호 */
 	guest_id VARCHAR2(20), /* 고객아이디 */
+	guest_name VARCHAR2(20),/* 고객이름 */
 	admin_id VARCHAR2(20), /* 관리자아이디 */
 	qna_title VARCHAR2(100), /* 제목 */
 	qna_content VARCHAR2(1000), /* 내용 */

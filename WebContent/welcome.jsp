@@ -27,6 +27,7 @@
 .div-step{
 	display:table;
 	 margin:0 auto;
+	 margin-top:50px;
 }
 
 .go_main{
@@ -52,12 +53,15 @@
 	<br><br><br>
 	<div class="content">
 	<img src="images/gift.png"><br><br>
-	<span style="font-size:25px;">${name}님의 회원가입을 <br> 축하합니다.<br>어쩌구엊저구</span>
+	<span style="font-size:25px;">${name}님의 회원가입을 <br> 축하합니다.<br><br></span>
+	<span>신규 가입하신 회원님께 가입 쿠폰을 지급해드립니다.</span>
 	<br><br><br>
 	</div>
 	
 	<div class="button">
 	<input type="button" value="메인페이지로 이동" class="go_main" onClick="location.href='index.do'">
+	<input type="button" value="실시간 예약" class="go_main" onClick="location.href='index.do'">
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git
 	</div>
 	
 	

@@ -17,6 +17,15 @@ import hairrang_web.dto.Designer;
  */
 public class DesignerDaoImpl implements DesignerDao {
 
+	private static final DesignerDaoImpl instance = new DesignerDaoImpl();
+	
+	private DesignerDaoImpl() {
+	}
+
+	public static DesignerDaoImpl getInstance() {
+		return instance;
+	}
+
 	@Override
 	public ArrayList<Designer> selectDesignerAll() {
 		String sql = "SELECT * FROM DESIGNER";

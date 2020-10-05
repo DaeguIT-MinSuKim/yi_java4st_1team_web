@@ -1,4 +1,4 @@
-package hairrang_web.controller.handler.guest;
+package hairrang_web.modle.qna;
 
 import java.io.IOException;
 
@@ -8,13 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import hairrang_web.controller.Command;
 
-public class IndexHandler implements Command {
+public class QnaWriteHandler implements Command {
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		
-		return "main/main.jsp";
+		return "qna/qnaWrite.jsp";
 	}
 
 }

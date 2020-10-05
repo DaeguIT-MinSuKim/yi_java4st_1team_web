@@ -1,17 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp"%>
-<br>
-<br>
-<br><br>
+
 <style>
 article {
-	padding:70px;
-	width:1000px; 
+	padding-top:100px;
+	padding-bottom:100px;
 	margin: 0 auto;
 	text-align: Center;
+	width:1000px;
+
 }
 .box {
+	
 	text-align:left;
 	border: 1px solid #e3e3e3;
     height: 210px;
@@ -23,6 +24,7 @@ article {
     -webkit-overflow-scrolling: touch;
     line-height: 20px;
     word-break: keep-all;
+    
 }
 .check {
     background: #f8f8f8;
@@ -41,6 +43,7 @@ article {
     color: #333;
     display: block;
     margin-bottom: 4px;
+   
 }
 
 .submit{
@@ -76,10 +79,14 @@ article {
 }
 
 .div-step{
+
+	padding-top:50px;
 	display:table;
 	 margin:0 auto;
 }
 
+.button {width:130px; height:50px; color:black; border:none; font-size:15px; font-weight:bold; margin:5px; width:200px; background: white; border:1px solid #777;}
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git
 
 </style>
 	 <div class="div-step">
@@ -87,7 +94,7 @@ article {
 	</div>
 	
   <article>
-  <div id="wrapper">
+  <div id="subwrapper">
     <form id="join" name="formm">
      <h2>[필수] 이용약관 동의</h2>
      <br>
@@ -95,7 +102,7 @@ article {
 	 <div class="terms_content">
 	 <h2>이용약관</h2><br>
 											<strong id="sec1_1">&lt; 제 1 장 총칙 &gt;</strong><br>
-											<span>제 1 조 (목 적)</span> 본 약관은 준오헤어, 준오아카데미, 에비뉴준오 (이하 '회사'라 한다.)가 제공하는 인터넷 서비스(영문명 www.junohair.com 이하 '서비스'라 한다.)를 이용함에 있어 이용조건 및 절차에 관한 기본적인 사항과 기타 필요한 사항에 관한 통합 약관의 정의를 목적으로 합니다.
+											<span>제 1 조 (목 적)</span> 본 약관은 헤어랑(이하 '회사'라 한다.)이 제공하는 인터넷 서비스(영문명 www.hairrang.com 이하 '서비스'라 한다.)를 이용함에 있어 이용조건 및 절차에 관한 기본적인 사항과 기타 필요한 사항에 관한 통합 약관의 정의를 목적으로 합니다.
 											<span>제 2 조 (용어의 정의)</span> 이 약관에서 사용하는 용어의 정의는 다음과 같습니다. <br> 1. 이용자 : 회사가 운영하는 서비스를 이 약관에 따라 제공받는 회원 및 비회원을 말합니다. <br> 2. 회 원 : 회사가 운영하는 서비스에 개인정보를 제공하여 회원등록을 한 자로서, 회사가 제공하는 서비스를 계속적으로 이용할 수 있는 자를 말합니다. <br> 3. 비회원 : 회원에 가입하지 않고 회사가 제공하는 서비스를 이용하는자를 말합니다. <br> 4. ID : 회원식별과 회원의 서비스 이용을 위하여 회원이 선정하고 회사가 승인하는 문자와 숫자의 조합을 말합니다. <br> 5. e-mail : 회원 식별과 회원의 서비스 이용을 위한 회원의 e-mail 주소를 말합니다. <br> 6. 비밀번호 : 회원이 부여받은 아이디(ID)와 일치된 회원임을 확인하고 회원 자신의 비밀을 보호하기 위하여 회원이 정한 문자와 숫자의 조합을 말합니다.<br> 7. 해 지 : 회사 또는 회원이 서비스를 개통 후 이용계약을 해약 하는 것을 말합니다.<br>
 											<span>제 3 조 (약관의 공지 및 변경) </span> 1. 이 약관의 내용은 서비스 화면에 게시하거나 기타의 방법으로 회원에게 공지함으로써 효력을 발생합니다. <br> 2. 회사는 이 약관을 변경할 수 있으며, 변경된 약관은 제7조와 같은 방법으로 공지함으로써 효력을 발생합니다.<br>
 											<span>제 4 조 (약관외 준칙)</span> 본 약관에 명시 되지 않은 사항은 관련 법령 또는 일반 상관례 원칙에 따릅니다.
@@ -143,7 +150,7 @@ article {
 	<div class="box">
        <div class="terms_content">
         <h2>개인정보 처리방침</h2><br>
-											<span>개인정보보호정책 안내</span> 본 정책은 준오헤어, 준오아카데미, 에비뉴준오 (이하 '회사'라 한다.)가 제공하는 인터넷 서비스(영문명 www.junohair.com 이하 '서비스'라 한다.)를 이용함에 있어 개인정보보호 정책 정의를 목적으로 합니다.
+											<span>개인정보보호정책 안내</span>  헤어랑(이하 '회사'라 한다.)이 제공하는 인터넷 서비스(영문명 www.junohair.com 이하 '서비스'라 한다.)를 이용함에 있어 개인정보보호 정책 정의를 목적으로 합니다.
 											<span>수집하는 개인정보 항목</span> o 회사는 회원가입, 상담, 서비스 신청 등등을 위해 아래와 같은 개인정보를 수집하고 있습니다.<br> o 수집항목 : 이름 , 생년월일 , 성별 , 로그인ID , 비밀번호 , 전화번호 , 휴대전화번호 , 이메일 등 <br> o 개인정보 수집방법 : 홈페이지(회원가입) <br>
 											<span>개인정보의 수집 및 이용목적</span> o 회사는 수집한 개인정보를 다음의 목적을 위해 활용합니다.<br> o 회사에서 제공하는 모든 서비스는 무료이며 회원의 동의하에 회사는 회원이 서비스 이용 중 필요하다고 인정되는 다양한 정보에 대하여 e-mail 우편등 기타의 방법으로 회원에게 제공 할 수 있습니다.<br> o 회원 관리 - 회원제 서비스 이용에 따른 본인확인 , 개인 식별 , 불량회원의 부정 이용 방지와 비인가 사용 방지 , 가입 의사 확인 , 연령확인 , 불만처리 등 민원처리 , 고지사항 전달 <br> o 마케팅 및 광고에 활용<br> 이벤트 등 광고성 정보 전달 , 접속 빈도 파악 또는 회원의 서비스 이용에 대한 통계 <br>
 											<span>개인정보의 보유 및 이용기간</span> 원칙적으로, 개인정보 수집 및 이용목적이 달성된 후에는 해당 정보를 지체 없이 파기합니다. 단, 관계법령의 규정에 의하여 보존할 필요가 있는 경우 회사는 아래와 같이 관계법령에서 정한 일정한 기간 동안 회원정보를 보관합니다.<br> o 보존 항목 : 결제기록 <br> o 보존 근거 : 계약 또는 청약철회 등에 관한 기록 <br> o 보존 기간 : 3년 <br> o 계약 또는 청약철회 등에 관한 기록 : 5년 (전자상거래등에서의 소비자보호에 관한 법률) <br> o 대금결제 및 재화 등의 공급에 관한 기록 : 5년 (전자상거래등에서의 소비자보호에 관한 법률) <br> o 소비자의 불만 또는 분쟁처리에 관한 기록 : 3년 (전자상거래등에서의 소비자보호에 관한 법률) 
@@ -159,8 +166,8 @@ article {
      </div>
       <br><br><br><br>
       
-      <input type="button" value="다음 단계" class="submit"  onclick="go_next()"> 
-      <input type="button" value="취소" class="cancel"> 
+      <input type="button" class="button" value="다음 단계" onclick="go_next()"> 
+      <input type="button" class="button" value="취소" > 
     </form>
     </div>
   </article>

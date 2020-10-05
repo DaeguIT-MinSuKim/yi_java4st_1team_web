@@ -36,7 +36,7 @@ public class GuestDaoTest {
 		list.stream().forEach(System.out::println);
 	}
 
-	@Test
+	//@Test
 	public void testSelectGuestById() {
 		System.out.println("selectId");
 		Guest guest = dao.selectGuestById(new Guest("test"));
@@ -44,18 +44,13 @@ public class GuestDaoTest {
 		System.out.println(guest);
 	}
 
-	//@Test
+//	@Test
 	public void testInsertGuest() {
 		
 		System.out.println("insert");
 		Guest guest = new Guest("test3", "1234", "이지수", LocalDate.now(), "010-1234-1234", "test3@test.com",1,  null, "y");
 		int res = dao.insertGuest(guest);
 		Assert.assertNotNull(res);
-		
-	}
-
-	@Test
-	public void testUpdateGuest() {
 		
 	}
 
