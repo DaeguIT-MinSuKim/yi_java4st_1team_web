@@ -232,10 +232,11 @@ v@import url("font-awesome.min.css");
 /* Header */
 	/*硫붾돱*/
 	#header {
+	 	position: fixed;
+	 	top:0;
 		color: black;
 		height:6em;
 		background: white;
-		border-bottom:1px solid #e3e3e3;
 		
 	}
 	#header .container {
@@ -245,8 +246,6 @@ v@import url("font-awesome.min.css");
 	.homepage #nav {
 		position: static;	
 		right: none;
-		
-		
 	}
 	
 	
@@ -378,8 +377,8 @@ v@import url("font-awesome.min.css");
 /* Footer */
 
 	#footer {
-		background-color: #F3F3F3;
-		padding: 5em 0 3em 0;
+		background-color: #f6f6f6;
+		/* padding: 5em 0 3em 0; */
 		text-align: center;
 		color: white;
 		bottom:0;
@@ -388,20 +387,22 @@ v@import url("font-awesome.min.css");
 		right:0;
 		
 			}
-			
-	#footer ul {float:right;}
-	#footer ul li {
-		display:inline;
-		padding: 5px;
-	}
-	.footer-menu {color:gray;}
+	.footer-top {width:100%; height:80px;border:1px solid #c0c0c0; margin:0 auto; }
+	#footer .footer-top .left {width:500px; height:80px; color:#616264; float:left; margin-left:300px; line-height:80px;}		
+	#footer .footer-top .left .line {display:inline; border-left:1px solid black; opacity:.40;}		
+	#footer .footer-top .right {width:500px;  height:80px;float:right; margin-right:300px;line-height:60px; }		
+	#footer .footer-top .right .icons {display:inline; padding: 5px; text-align:center; }
+	#footer .footer-top .right .icons li {display:inline-block; padding:10px; }
+	#footer .footer-top .right .icons li img:hover {cursor:pointer;}
+	
+
 	
 		
 /* Copyright */
 
 	#copyright {
 		position: relative;
-		text-align: center;
+		text-align:center;
 		font-size:12px;
 		padding:2em 0em 2em 0em;
 		color: black;
