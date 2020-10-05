@@ -20,7 +20,7 @@
 		<c:forEach items="${qnaList}" var="qna">
 			<tr>
 				<td>${qna.qnaNo}</td>
-				<td><a href="qnaView.do?no=${qna.qnaNo}"> ${qna.qnaTitle}</a></td>
+				<td><a href="qnaDetail.do?no=${qna.qnaNo}"> ${qna.qnaTitle}</a></td>
 				<%-- <td><fmt:formatDate value="${qna.qnaRegDate}" type="date" /></td> --%>
 				<td><c:choose>
 						<c:when test="${qna.qnaResYn eq 'n' }"> no </c:when>
@@ -48,6 +48,5 @@
 	</table>
 	<a href="qnaWrite.do">문의하기</a>
 	<a href="qnaList.do">문의내역</a>
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web
 </body>
 </html>
