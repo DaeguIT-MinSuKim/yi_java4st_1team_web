@@ -3,6 +3,7 @@
 <script>
 	document.title += ' - 예약 정보 확인'
 </script>
+<div class="content">
 <ul>
 	<li>${booking.bookNo }</li>
 	<li>${booking.guest.guestName }(${booking.guest.guestId })</li>
@@ -13,4 +14,5 @@
 	<li>${booking.bookStatus }</li>
 	<li>${booking.bookNote }</li>
 </ul>
+</div>
 <%@ include file="../footer.jsp" %>  

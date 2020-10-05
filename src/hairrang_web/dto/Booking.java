@@ -101,6 +101,18 @@ public class Booking {
 		this.bookStatus = bookStatus;
 	}
 
+	public String getBookStatusStr() {
+		String str = null;
+		switch(bookStatus) {
+			case 1: str = "예약 접수"; break;
+			case 2: str = "예약 완료"; break;
+			case 0: str = "예약 취소"; break;
+			case 3: str = "방문 완료"; break;
+			case -1: str = "미방문"; break;
+		}
+		return str;
+	}
+	
 	public String getBookNote() {
 		return bookNote;
 	}
