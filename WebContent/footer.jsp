@@ -2,6 +2,7 @@
   pageEncoding="UTF-8"%>
   <div class="clear"></div>
 
+</div>
 	<!-- Footer -->
 		<div id="footer">
 			
