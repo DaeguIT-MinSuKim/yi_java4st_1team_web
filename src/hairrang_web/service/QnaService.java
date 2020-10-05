@@ -29,4 +29,12 @@ public class QnaService {
 	public int insertQna(QnA qna) {
 		return dao.insertQnA(qna);
 	}
+	
+	public QnA selectQnaByNo(int qnaNo) {
+		return dao.selectQnAByIdNo(qnaNo);
+	}
+	
+	public int updateQna(QnA qna) {
+		return dao.updateQnA(qna);
+	}
 }

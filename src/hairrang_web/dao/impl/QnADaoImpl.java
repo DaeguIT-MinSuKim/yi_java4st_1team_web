@@ -47,13 +47,30 @@ public class QnADaoImpl implements QnADao {
 		qna.setQnaNo(rs.getInt("QNA_NO"));
 		qna.setQnaTitle(rs.getString("QNA_TITLE"));
 		qna.setQnaRegDate(rs.getTimestamp("QNA_REGDATE").toLocalDateTime());
+		try {
+		qna.setQnaContent(rs.getString("QNA_CONTENT"));
+		} catch(SQLException e) {
+		}
 		qna.setQnaResYn(rs.getString("RES_YN"));
 		return qna;
 	}
 
 	@Override
-	public QnA selectQnAByIdNo(Guest guest, QnA qna) {
-		// TODO Auto-generated method stub
+	public QnA selectQnAByIdNo(int qnaNo) {
+		String sql = "SELECT * FROM QNA WHERE QNA_NO =?";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1,qnaNo);
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					do {
+						return getQnA(rs);
+					}while(rs.next());
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 		return null;
 	}
 
@@ -73,8 +90,18 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public int updateQnA(QnA qna) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "UPDATE QNA  " + 
+				"	SET QNA_CONTENT = ?, " + 
+				"		QNA_REGDATE = SYSDATE  " + 
+				"	WHERE QNA_NO = ?";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, qna.getQnaContent());
+			pstmt.setInt(2, qna.getQnaNo());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
@@ -122,7 +149,7 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public ArrayList<QnA> selectQnaAllById(Guest guest) {
-		String sql = "SELECT QNA_NO,QNA_TITLE,QNA_FILE,QNA_REGDATE,RES_YN FROM QNA_VIEW WHERE GUEST_ID = ? ORDER BY QNA_NO DESC";
+		String sql = "SELECT QNA_NO,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_REGDATE,RES_YN FROM QNA WHERE GUEST_ID = ? ORDER BY QNA_NO DESC";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, guest.getGuestId());

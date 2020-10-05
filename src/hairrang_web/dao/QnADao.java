@@ -9,7 +9,7 @@ public interface QnADao {
 
 	ArrayList<QnA> selctQnaAll();
 	
-	QnA selectQnAByIdNo(Guest guest,QnA qna);
+	QnA selectQnAByIdNo(int qnaNo);
 	
 	int insertQnA(QnA qna);
 	

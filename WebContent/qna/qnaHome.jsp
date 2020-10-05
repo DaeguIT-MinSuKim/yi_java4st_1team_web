@@ -20,7 +20,7 @@
 		<c:forEach items="${qnaList}" var="qna">
 			<tr>
 				<td>${qna.qnaNo}</td>
-				<td><a href="qnaView.do?no=${qna.qnaNo}"> ${qna.qnaTitle}</a></td>
+				<td><a href="qnaDetail.do?no=${qna.qnaNo}"> ${qna.qnaTitle}</a></td>
 				<%-- <td><fmt:formatDate value="${qna.qnaRegDate}" type="date" /></td> --%>
 				<td><c:choose>
 						<c:when test="${qna.qnaResYn eq 'n' }"> no </c:when>

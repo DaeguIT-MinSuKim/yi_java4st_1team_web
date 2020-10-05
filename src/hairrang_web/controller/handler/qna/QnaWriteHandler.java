@@ -19,18 +19,18 @@ public class QnaWriteHandler implements Command {
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		String url = "qna/qnaWrite.jsp";
-		HttpSession session  =request.getSession();
+		HttpSession session = request.getSession();
 		Guest loginUser = (Guest) session.getAttribute("loginUser");
 		System.out.println(loginUser);
-		
-		if(loginUser == null) {
-			//db에서 비회원정보를 가져온다
+
+		if (loginUser == null) {
+			// db에서 비회원정보를 가져온다
 		}
-		
-		if(request.getMethod().equals("GET")) {
+
+		if (request.getMethod().equals("GET")) {
 			System.out.println("GET");
 			return url;
-		}else {
+		} else {
 			System.out.println("POST");
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
@@ -38,8 +38,6 @@ public class QnaWriteHandler implements Command {
 			service.insertQna(qna);
 			return "qnaHome.do";
 		}
-		
-		
-		
+
 	}
 }
