@@ -78,6 +78,7 @@ input:checked+label {
 	}
 .map {width:800px; margin:0 auto; text-align:left;}
 
+
 .text { width:500px; text-align:left;}
 
 button {width:150px; height:50px; background:#bdbdbd; color:white; border:none; font-size:15px; font-weight:bold; float:right; margin:5px;}
@@ -156,15 +157,15 @@ td {padding:20px; }
 	       <table style="width:300px;">
 	       <tr>
 		       <td>상호명</td>
-		       <td>헤어랑</td>
+		       <td style="padding:5px;">헤어랑</td>
 	       </tr>
 	       <tr>
 		       <td>대표자</td>
-		       <td>이지수</td>
+		       <td style="padding:5px;">이지수</td>
 	       </tr>
 	       <tr>
 		       <td>사업자번호</td>
-		       <td>123-12-12345</td>
+		       <td style="padding:5px;">123-12-12345</td>
 	       </tr>
 	       </table>
        </td>

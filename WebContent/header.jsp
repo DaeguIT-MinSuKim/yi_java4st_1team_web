@@ -10,14 +10,13 @@
 <title>hairrang</title>
 <!-- <link rel="stylesheet" href="style.css"> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.dropotron.min.js"></script>
 <script src="js/skel.min.js"></script>
 <script src="js/init.js"></script>
 <script type="text/javascript" src="member/member.js"></script>
-<style>
-	body {text-align:Center;}
-</style>
+  
 </head>
 <body class="homepage">
 
@@ -28,6 +27,7 @@
 		<div id="header">
 			<div>
 				<!-- guestmenu -->
+				
 				<nav id="guest"> 
 				<c:choose>
        			<c:when test="${empty sessionScope.loginUser}">
@@ -45,6 +45,7 @@
 		       	</c:otherwise>       
 		       	</c:choose>
 				</nav>
+				</div>
 				
 				<nav id="nav">
 					<ul>
@@ -56,16 +57,17 @@
 								<li><a href="hair.jsp">HAIR</a></li>
 								
 							</ul></li>
-						<li><a href="reservationList.do">RESERVATION</a></li>
+						<li><a href="reservation.jsp">RESERVATION</a></li>
 						<li><a href="">COMMUNICATION</a>
 							<ul>
 								<li><a href="notice.jsp">NOTICE</a></li>
 								<li><a href="event.jsp">EVENT</a></li>
-								<li><a href="qnaHome.do">Q&A</a></li>
+								<li><a href="qna.jsp">Q&A</a></li>
 							</ul></li>
 					</ul>
 				</nav>
-			</div>
+			
+		
 		</div>
 	</div>
 	<!--헤더파일 들어가는 곳 끝 -->
