@@ -37,4 +37,8 @@ public class QnaService {
 	public int updateQna(QnA qna) {
 		return dao.updateQnA(qna);
 	}
+	
+	public int deleteQna(QnA qna) {
+		return dao.deleteQnA(qna);
+	}
 }

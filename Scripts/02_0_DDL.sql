@@ -58,11 +58,8 @@ CREATE TABLE GUEST (
 	info_yn char(1) /*마케팅수신동의 y, n*/
 );
 
-<<<<<<< HEAD
+
 --ALTER TABLE guest ADD info_yn char(1);
-=======
-ALTER TABLE guest ADD info_yn char(1);
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git
 --ALTER TABLE guest RENAME COLUMN guest_join_day TO guest_join_date;
 
 ALTER TABLE GUEST

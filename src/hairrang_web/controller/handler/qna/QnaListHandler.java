@@ -24,8 +24,8 @@ public class QnaListHandler implements Command {
 		Guest loginUser = (Guest) session.getAttribute("loginUser");
 		System.out.println("list에서 loginuset>>");
 		if(loginUser != null) {
-			//비회원로그인
-			System.out.println("비회원 로그인 작성해야함");
+			System.out.println("로그인 하자");
+			return "login.do?url='qnaList.do'";
 		}
 		ArrayList<QnA> list = service.qnaListById(loginUser);
 		

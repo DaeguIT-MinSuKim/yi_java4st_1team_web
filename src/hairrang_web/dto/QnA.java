@@ -128,4 +128,9 @@ public class QnA {
 		this.qnaContent = qnaContent;
 	}
 
+	public QnA(int qnaNo) {
+		super();
+		this.qnaNo = qnaNo;
+	}
+
 }

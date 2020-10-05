@@ -106,8 +106,14 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public int deleteQnA(QnA qna) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "DELETE FROM QNA WHERE QNA_NO = ?";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, qna.getQnaNo());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
