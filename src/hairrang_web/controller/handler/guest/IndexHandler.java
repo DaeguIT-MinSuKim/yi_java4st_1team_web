@@ -14,7 +14,7 @@ public class IndexHandler implements Command {
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		
-		return "index.jsp";
+		return "main/main.jsp";
 	}
 
 }

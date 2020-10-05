@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
     <%@ include file="../header.jsp" %>  
-	<br>
-	<br>
-	<br><br>
+
 <style>
 .table {
 	width:500px;
@@ -24,7 +22,6 @@ input {width:200px; border: 1px solid #e8e8e8;}
 #buttons {width:800px; margin:0 auto; text-align:Center; padding:50px;}
 .submit, .cancel {width:200px;}
 .step {
-	
 	background:#f8f9fa;
 	width:700px;
 	height:80px;

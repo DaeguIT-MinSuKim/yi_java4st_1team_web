@@ -238,14 +238,9 @@ v@import url("font-awesome.min.css");
 		border-bottom:1px solid #e3e3e3;
 		
 	}
-
-		#header .container {
+	#header .container {
 			position: relative;
 		}
-
-	.homepage #logo {
-		
-	}
 
 	.homepage #nav {
 		position: static;	
@@ -379,7 +374,6 @@ v@import url("font-awesome.min.css");
 /* Footer */
 
 	#footer {
-		
 		background-color: #F3F3F3;
 		padding: 5em 0 3em 0;
 		text-align: center;
@@ -390,11 +384,13 @@ v@import url("font-awesome.min.css");
 		right:0;
 		
 			}
+			
+	#footer ul {float:right;}
 	#footer ul li {
-		/* display:inline-block; */
+		display:inline;
 		padding: 5px;
-		
 	}
+	.footer-menu {color:gray;}
 	
 		
 /* Copyright */

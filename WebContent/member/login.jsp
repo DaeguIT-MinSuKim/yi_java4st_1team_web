@@ -8,7 +8,9 @@
    $(function(){
 	   if ($(".main").length > 0 ){
 	      $("#wrapper").css({width:'100%'});      
+	      $("#wrapper").css({margin:'40px auto'});  
 	   }
+	   
    })
 
 </script>
@@ -18,7 +20,7 @@
 	width:600px;
 	margin:0 auto;
 	text-align: Center;
-	margin-bottom:80px;
+	margin-bottom:120px;
 }
 
 fieldset {
@@ -76,11 +78,15 @@ fieldset input {
 	border:2px solid gray;
 	width:120px;
 	background:gray;
-	}   
+	}
+	
+
+.button {width:100%; height:50px; color:black; border:none; font-size:15px; font-weight:bold; margin:5px; background: white; border:1px solid #777; cursor: pointer;}   
+
 </style>
 <body>
 <div class="main">
-	<img src="images/main1.jpg" style="width: 100%;">
+	<img src="images/main1.jpg" style="width: 100%; top:0;">
 	<form class="login-form" method="post" action="login.do">
 	<div id="subwrapper">
 		<!-- div class="line"></div> -->
@@ -94,8 +100,8 @@ fieldset input {
 		
 		<div class="clear" style="padding:10px;"></div>
 		<div id="buttons">
-			<input type="button" value="로그인" class="login-btn" onclick="location='index.do'"> 
-			<input type="button" value="회원가입" class="join-btn" onclick="location='contract.do'">
+			<input type="button" class="button" value="로그인" onclick="location='index.do'"> 
+			<input type="button" class="button" value="회원가입" onclick="location='contract.do'">
 			<br>
 			<br>
 			<a href="guestSearch.do" class="search">아이디/비밀번호 찾기</a>
