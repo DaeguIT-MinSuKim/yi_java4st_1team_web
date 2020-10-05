@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Booking;
+import hairrang_web.dto.Guest;
 import hairrang_web.service.BookingService;
 
 /**
@@ -30,14 +31,22 @@ public class BookingDetailHandler implements Command {
 		if(request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("BookingDetailHandler >> GET");
 			
-			/*
-			 * 세션으로부터 아이디 얻어서, 해당 아이디의 예약 사항인지 체크 후 예약 정보 가져오기.
-			 */
-			
 			int no = Integer.parseInt(request.getParameter("no"));
 			Booking booking = new Booking(no);
 			System.out.println("파라미터 no: " + no);
 			System.out.println(booking);
+			
+			/*
+			 * 세션으로부터 아이디 얻어서, 해당 아이디의 예약 사항인지 체크 후 예약 정보 가져오기.
+			
+			Session session = request.getSession();
+			String loginUser = request.getAttribute("loginUser");
+			int res = service.checkUser(booking, new Guest(loginUser));
+			if(res != 1) {
+				// 잘못된 접근입니다.
+			}
+			 
+			 */
 			
 			Booking findBook = service.getBookingByBookingNo(booking);
 			request.setAttribute("booking", findBook);

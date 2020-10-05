@@ -19,5 +19,5 @@ public interface BookingDao {
 	
 	int deleteBooking(Booking booking);
 	
-	int isValidId(Booking booking, Guest guest);
+	int checkUser(Booking booking, Guest guest);
 }

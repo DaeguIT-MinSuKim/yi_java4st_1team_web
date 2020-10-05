@@ -19,7 +19,7 @@ public class BookingService {
 		return dao.selectBookingByGuestId(new Guest(id));
 	}
 	
-	public int isValidId(Booking booking, Guest guest) {
-		return dao.isValidId(booking, guest);
+	public int checkUser(Booking booking, Guest guest) {
+		return dao.checkUser(booking, guest);
 	}
 }

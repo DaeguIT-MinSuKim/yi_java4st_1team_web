@@ -175,7 +175,7 @@ public class BookingDaoImpl implements BookingDao {
 	}
 
 	@Override
-	public int isValidId(Booking booking, Guest guest) {
+	public int checkUser(Booking booking, Guest guest) {
 		String sql = "SELECT 1 FROM BOOKING WHERE BOOK_NO = ? AND GUEST_ID = ?";
 		
 		try(Connection con = JndiDs.getConnection();
