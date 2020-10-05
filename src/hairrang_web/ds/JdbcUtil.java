@@ -14,7 +14,7 @@ public class JdbcUtil {
 	public static Connection getConnection() {
 		
 		Connection con = null;
-		String proptiesPath = "Db.properties";
+		String proptiesPath = "db.properties";
 		
 		try (InputStream is = ClassLoader.getSystemResourceAsStream(proptiesPath)) {
 			
@@ -33,25 +33,25 @@ public class JdbcUtil {
 		return con;
 	}
 	
-	// <DB ?—°ê²? ?•´? œ 1> ë©”ì†Œ?“œ : ps + conn
+	// <DB ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ 1> ë©”ì†Œ?ï¿½ï¿½ : ps + conn
 		public static void dbClose(PreparedStatement ps, Connection conn) throws SQLException {
 			if (ps != null)
 				ps.close();
 			if (conn != null)
 				conn.close();
-			System.out.println("??›ë°˜ë‚©, DB Close!!");
+			System.out.println("?ï¿½ï¿½?ï¿½ï¿½ë°˜ë‚©, DB Close!!");
 		}
 
-		// <DB ?—°ê²? ?•´? œ 2> ë©”ì†Œ?“œ : st + conn
+		// <DB ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ 2> ë©”ì†Œ?ï¿½ï¿½ : st + conn
 		public static void dbClose(Statement st, Connection conn) throws SQLException {
 			if (st != null)
 				st.close();
 			if (conn != null)
 				conn.close();
-			System.out.println("??›ë°˜ë‚©, DB Close!!");
+			System.out.println("?ï¿½ï¿½?ï¿½ï¿½ë°˜ë‚©, DB Close!!");
 		}
 
-		// <DB ?—°ê²? ?•´? œ 3> ë©”ì†Œ?“œ : rs + ps + conn
+		// <DB ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ 3> ë©”ì†Œ?ï¿½ï¿½ : rs + ps + conn
 		public static void dbClose(ResultSet rs, PreparedStatement ps, Connection conn) throws SQLException {
 			if (rs != null)
 				rs.close();
@@ -59,10 +59,10 @@ public class JdbcUtil {
 				ps.close();
 			if (conn != null)
 				conn.close();
-			System.out.println("??›ë°˜ë‚©, DB Close!!");
+			System.out.println("?ï¿½ï¿½?ï¿½ï¿½ë°˜ë‚©, DB Close!!");
 		}
 
-		// <DB ?—°ê²? ?•´? œ 4> ë©”ì†Œ?“œ : rs + st + conn
+		// <DB ?ï¿½ï¿½ï¿½? ?ï¿½ï¿½?ï¿½ï¿½ 4> ë©”ì†Œ?ï¿½ï¿½ : rs + st + conn
 		public static void dbClose(ResultSet rs, Statement st, Connection conn) throws SQLException {
 			if (rs != null)
 				rs.close();
@@ -70,6 +70,6 @@ public class JdbcUtil {
 				st.close();
 			if (conn != null)
 				conn.close();
-			System.out.println("??›ë°˜ë‚©, DB Close!!");
+			System.out.println("?ï¿½ï¿½?ï¿½ï¿½ë°˜ë‚©, DB Close!!");
 		}
 }

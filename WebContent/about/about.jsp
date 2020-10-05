@@ -7,11 +7,11 @@
 
 <style>
 
-body {
+/* body {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-}
+} */
 
 p {
 	margin: 0 0 20px;
@@ -19,9 +19,8 @@ p {
 }
 
 .main {
+	margin-top:50px;
 	text-align: center;
-	width: 1500px;
-	margin: 0 auto;
 	background: #ffffff;
 }
 

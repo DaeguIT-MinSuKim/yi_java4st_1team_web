@@ -3,16 +3,22 @@
 <%@ include file="../header.jsp"%>
 <br>
 <br>
+<script>
+   /*전체적용 할 페이지에 이거 쓰면됨~~~~~*/
+   $(function(){
+	   if ($(".main").length > 0 ){
+	      $("#wrapper").css({width:'100%'});      
+	   }
+   })
 
+</script>
 <style>
-body {
-}
 
-#wrapper {
-	width:800px;
+#subwrapper {
+	width:600px;
 	margin:0 auto;
 	text-align: Center;
-	padding:100px;
+	margin-bottom:80px;
 }
 
 fieldset {
@@ -73,13 +79,12 @@ fieldset input {
 	}   
 </style>
 <body>
+<div class="main">
 	<img src="images/main1.jpg" style="width: 100%;">
 	<form class="login-form" method="post" action="login.do">
-	<div id="wrapper">
-		<div class="line"></div>
-		<p style="font-size:40px; color:gray;">LOGIN</p>
-		
-		<br>
+	<div id="subwrapper">
+		<!-- div class="line"></div> -->
+		<br><br><p style="font-size:40px; color:gray;">LOGIN</p>
 		<fieldset>
 			<legend></legend>
 			 <label></label>
@@ -97,7 +102,8 @@ fieldset input {
 		</div> 
 		</fieldset>
 		</div>
-</form>
 
+</form>
+</div>
 </body>
 <%@ include file="../footer.jsp"%>

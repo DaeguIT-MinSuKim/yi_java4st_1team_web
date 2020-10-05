@@ -58,7 +58,7 @@ CREATE TABLE GUEST (
 	info_yn char(1) /*마케팅수신동의 y, n*/
 );
 
---ALTER TABLE guest ADD info_yn char(1);
+ALTER TABLE guest ADD info_yn char(1);
 --ALTER TABLE guest RENAME COLUMN guest_join_day TO guest_join_date;
 
 ALTER TABLE GUEST
