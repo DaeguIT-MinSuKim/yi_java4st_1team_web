@@ -10,6 +10,7 @@
 
 SELECT * FROM BOOKING;
 INSERT INTO BOOKING VALUES(60, 'test', sysdate + 10 - 6/24, 15, 2, sysdate, 1, null);
+INSERT INTO BOOKING VALUES(61, 'test', sysdate + 12 - 2/24, 10, 2, sysdate, 1, null);
 
 SELECT * FROM hair;
 SELECT * FROM HAIR_KIND;

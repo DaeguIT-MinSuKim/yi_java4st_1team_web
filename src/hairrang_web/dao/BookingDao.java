@@ -11,7 +11,7 @@ public interface BookingDao {
 	
 	Booking selectBookingByBookingNo(Booking booking);
 	
-	Booking selectBookingByGuestId(Guest guest);
+	ArrayList<Booking> selectBookingByGuestId(Guest guest);
 	
 	int insertBooking(Booking booking);
 	

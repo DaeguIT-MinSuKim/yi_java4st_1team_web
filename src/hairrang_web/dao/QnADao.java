@@ -9,7 +9,7 @@ public interface QnADao {
 
 	ArrayList<QnA> selctQnaAll();
 	
-	QnA selectQnAByIdNo(Guest guest,QnA qna);
+	QnA selectQnAByIdNo(int qnaNo);
 	
 	int insertQnA(QnA qna);
 	
@@ -17,6 +17,12 @@ public interface QnADao {
 	
 	int deleteQnA(QnA qna);
 	
+	ArrayList<QnA> selectNoticeAll();
+	
 	//비회윈이 문의 넣었을때
 	int checkPwd();
+	
+	ArrayList<QnA> selectQnaAllById(Guest guest);
+	
+	int nextQnaNo();
 }

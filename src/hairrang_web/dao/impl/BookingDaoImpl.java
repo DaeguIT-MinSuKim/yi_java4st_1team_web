@@ -76,7 +76,7 @@ public class BookingDaoImpl implements BookingDao {
 
 	
 	@Override
-	public Booking selectBookingByGuestId(Guest guest) {
+	public ArrayList<Booking> selectBookingByGuestId(Guest guest) {
 		String sql = "SELECT * FROM BOOKING WHERE GUEST_ID = ?";
 		
 		try(Connection con = JndiDs.getConnection();
@@ -86,7 +86,11 @@ public class BookingDaoImpl implements BookingDao {
 			pstmt.setString(1, guest.getGuestId());
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
-					return getBooking(rs);
+					ArrayList<Booking> list = new ArrayList<Booking>();
+					do {
+						list.add(getBooking(rs));
+					} while(rs.next());
+					return list;
 				}
 			}
 		} catch (SQLException e) {

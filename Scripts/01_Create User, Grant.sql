@@ -1,5 +1,5 @@
 -- Hairrang 계정 생성
-CREATE USER hairrang_WEB IDENTIFIED BY rootroot;
+CREATE USER hairrang_web IDENTIFIED BY rootroot;
 
 -- Hairrang 권한 부여
 GRANT CONNECT, DBA, RESOURCE TO HAIRRANG_WEB;

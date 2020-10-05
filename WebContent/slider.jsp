@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-<script
-	src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
 <script> 
 $(document).ready(function(){
     $('.slider').bxSlider({
@@ -17,11 +16,11 @@ $(document).ready(function(){
     	moveSlides:1,
     	touchEnabled : (navigator.maxTouchPoints > 0) /*링크*/
     });
-	});
-
+});
 </script>
+
 <style>
-	.sliderWrap {width:98%; margin:0 auto;}
+	.sliderWrap {width:100%; margin:0 auto;}
 	.slider{
 	 	text-align:center;
 	}
@@ -41,9 +40,10 @@ $(document).ready(function(){
 </style>
 </head>
 <body>
+<<<<<<< HEAD
 <div class="sliderWrap">
 <div class="slider">
-    <div><a href="about.jsp"><img src="http://placehold.it/1900x900?text=1"></a></div>
+    <div><a href="about.jsp"><img src="http://placehold.it/1800x900?text=1"></a></div>
     <div><img src="http://placehold.it/1500x900?text=2" alt=""></div>
     <div><img src="http://placehold.it/1500x900?text=3" alt=""></div>
     <div><img src="http://placehold.it/1500x900?text=4" alt=""></div>
@@ -52,5 +52,6 @@ $(document).ready(function(){
    
   </div>
   </div>
+
 </body>
 </html>

@@ -233,62 +233,44 @@ v@import url("font-awesome.min.css");
 	/*硫붾돱*/
 	#header {
 		color: black;
-		height:4.5em;
+		height:6em;
 		background: white;
+		border-bottom:1px solid #e3e3e3;
 		
 	}
-
-		#header .container {
+	#header .container {
 			position: relative;
 		}
 
-	.homepage #logo {
+	.homepage #nav {
+		position: static;	
+		right: none;
+		
 		
 	}
-
-	.homepage #nav {
-		position: static;
-		right: none;
-		text-align: center;
-	}
 	
 	
-	/*濡쒓퀬*/
-	#logo {
-		line-height: 2em;
-		letter-spacing: 2px;
-		text-transform: uppercase;
-		font-size: 1em;
-		font-weight: 100;
-	}
 
-		#logo h1 {
-			display: inline-block;
-			margin: 0;
-			padding: 0;
-		}
-
-		#logo a {
-			color: inherit;
-		}
 	
 #guest {
 	
 }	
 #guest ul {
-	
+		float:right;
 		text-transform: uppercase;
 		text-decoration: none;
 		letter-spacing: 3px;
 		color: inherit;
-		margin-right:120px;
-		float:right;
 		display: inline-block;
 		font-size: 12px;
+		margin-right:200px;
+		
+		
 	}
 		#guest li {
 			display: inline-block;
 			
+		
 		}
 	
 			#guest>ul>li a {
@@ -299,6 +281,8 @@ v@import url("font-awesome.min.css");
 				text-transform: uppercase;
 				font-weight: 400;
 				font-size: 1em;
+				
+				
 			}
 				#guest>ul>li a:hover {
 					color:gray;
@@ -309,6 +293,7 @@ v@import url("font-awesome.min.css");
 		position: absolute;
 		top: 0;
 		right: 0;
+		margin-bottom:50px;
 		
 	}
 
@@ -321,6 +306,7 @@ v@import url("font-awesome.min.css");
 				display: inline-block;
 				margin:0 40px;
 				padding: 0 1em;
+				
 				
 			}
 
@@ -357,6 +343,7 @@ v@import url("font-awesome.min.css");
 		min-width: 10em;
 		padding: 1em 0;
 		color: white;
+		margin-top:25px;
 		
 		
 	}
@@ -391,7 +378,6 @@ v@import url("font-awesome.min.css");
 /* Footer */
 
 	#footer {
-		
 		background-color: #F3F3F3;
 		padding: 5em 0 3em 0;
 		text-align: center;
@@ -402,11 +388,13 @@ v@import url("font-awesome.min.css");
 		right:0;
 		
 			}
+			
+	#footer ul {float:right;}
 	#footer ul li {
-		display:inline-block;
+		display:inline;
 		padding: 5px;
-		
 	}
+	.footer-menu {color:gray;}
 	
 		
 /* Copyright */

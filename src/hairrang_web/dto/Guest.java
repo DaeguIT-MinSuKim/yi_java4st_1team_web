@@ -10,10 +10,12 @@ public class Guest {
 	private String guestName;
 	private LocalDate guestBirthday;
 	private String guestPhone;
+	private String guestEmail;
 	private int guestGender; // 성별 숫자로 
 	private LocalDateTime guestJoinDate;
 	private String guestNote;
 	private String delYn;
+	private String infoYn;
 	
 	public Guest() {
 	}
@@ -21,29 +23,51 @@ public class Guest {
 	public Guest(String guestId) {
 		this.guestId = guestId;
 	}
+	
+	
 
-	public Guest(String guestId, String guestPwd, String guestName, LocalDate guestBirthday, String guestPhone, int guestGender,
-			String guestNote) {
+	public Guest(String guestId, String guestName, LocalDate guestBirthday, String guestPhone, String guestEmail,int guestGender,
+			LocalDateTime guestJoinDate, String guestNote, String delYn, String infoYn) {
+		super();
 		this.guestId = guestId;
-		this.guestPwd = guestPwd;
 		this.guestName = guestName;
 		this.guestBirthday = guestBirthday;
 		this.guestPhone = guestPhone;
-		this.guestGender = guestGender;
-		this.guestNote = guestNote;
-	}
-
-	public Guest(String guestId, String guestPwd, String guestName, LocalDate guestBirthday, String guestPhone, int guestGender,
-			LocalDateTime guestJoinDate, String guestNote, String delYn) {
-		this.guestId = guestId;
-		this.guestPwd = guestPwd;
-		this.guestName = guestName;
-		this.guestBirthday = guestBirthday;
-		this.guestPhone = guestPhone;
+		this.guestEmail = guestEmail;
 		this.guestGender = guestGender;
 		this.guestJoinDate = guestJoinDate;
 		this.guestNote = guestNote;
 		this.delYn = delYn;
+		this.infoYn = infoYn;
+	}
+
+	public Guest(String guestId, String guestPwd, String guestName, LocalDate guestBirthday, String guestPhone, String guestEmail, int guestGender,
+			String guestNote, String infoYn) {
+		this.guestId = guestId;
+		this.guestPwd = guestPwd;
+		this.guestName = guestName;
+		this.guestBirthday = guestBirthday;
+		this.guestPhone = guestPhone;
+		this.guestEmail = guestEmail;
+		this.guestEmail = guestEmail;
+		this.guestGender = guestGender;
+		this.guestNote = guestNote;
+		this.infoYn = infoYn;
+	}
+
+	public Guest(String guestId, String guestPwd, String guestName, LocalDate guestBirthday, String guestPhone, String guestEmail, int guestGender,
+			LocalDateTime guestJoinDate, String guestNote, String delYn, String infoYn) {
+		this.guestId = guestId;
+		this.guestPwd = guestPwd;
+		this.guestName = guestName;
+		this.guestBirthday = guestBirthday;
+		this.guestPhone = guestPhone;
+		this.guestEmail = guestEmail;
+		this.guestGender = guestGender;
+		this.guestJoinDate = guestJoinDate;
+		this.guestNote = guestNote;
+		this.delYn = delYn;
+		this.infoYn = infoYn;
 	}
 
 	public String getGuestId() {
@@ -85,6 +109,15 @@ public class Guest {
 	public void setGuestPhone(String guestPhone) {
 		this.guestPhone = guestPhone;
 	}
+	
+	
+	public String getGuestEmail() {
+		return guestEmail;
+	}
+
+	public void setGuestEmail(String guestEmail) {
+		this.guestEmail = guestEmail;
+	}
 
 	public int getGuestGender() {
 		return guestGender;
@@ -118,11 +151,25 @@ public class Guest {
 		this.delYn = delYn;
 	}
 
+	
+	
+	public String getInfoYn() {
+		return infoYn;
+	}
+
+	public void setInfoYn(String infoYn) {
+		this.infoYn = infoYn;
+	}
+
+	
+	
+
 	@Override
 	public String toString() {
-		return "Guest [guestId=" + guestId + ", guestName=" + guestName + ", guestBirthday=" + guestBirthday
-				+ ", guestPhone=" + guestPhone + ", guestGender=" + guestGender + ", guestJoinDate=" + guestJoinDate
-				+ ", guestNote=" + guestNote + ", delYn=" + delYn + "]";
+		return "Guest [guestId=" + guestId + ", guestPwd=" + guestPwd + ", guestName=" + guestName + ", guestBirthday="
+				+ guestBirthday + ", guestPhone=" + guestPhone + ", guestEmail=" + guestEmail + ", guestGender="
+				+ guestGender + ", guestJoinDate=" + guestJoinDate + ", guestNote=" + guestNote + ", delYn=" + delYn
+				+ ", infoYn=" + infoYn + "]";
 	}
 
 	@Override
