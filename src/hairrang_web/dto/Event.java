@@ -9,8 +9,8 @@ public class Event {
 	private double eventSaleRate;
 	private LocalDate eventStart;
 	private LocalDate eventEnd;
-	private String pic;
-	private String eventContet;
+	private String eventPic;
+	private String eventContent;
 	
 	public Event() {
 	}
@@ -19,25 +19,25 @@ public class Event {
 		this.eventNo = eventNo;
 	}
 	
-	public Event(String eventName, double eventSaleRate, LocalDate eventStart, LocalDate eventEnd, String pic,
-			String eventContet) {
+	public Event(String eventName, double eventSaleRate, LocalDate eventStart, LocalDate eventEnd, String eventPic,
+			String eventContent) {
 		this.eventName = eventName;
 		this.eventSaleRate = eventSaleRate;
 		this.eventStart = eventStart;
 		this.eventEnd = eventEnd;
-		this.pic = pic;
-		this.eventContet = eventContet;
+		this.eventPic = eventPic;
+		this.eventContent = eventContent;
 	}
 
 	public Event(int eventNo, String eventName, double eventSaleRate, LocalDate eventStart, LocalDate eventEnd,
-			String pic, String eventContet) {
+			String eventPic, String eventContent) {
 		this.eventNo = eventNo;
 		this.eventName = eventName;
 		this.eventSaleRate = eventSaleRate;
 		this.eventStart = eventStart;
 		this.eventEnd = eventEnd;
-		this.pic = pic;
-		this.eventContet = eventContet;
+		this.eventPic = eventPic;
+		this.eventContent = eventContent;
 	}
 
 	public int getEventNo() {
@@ -80,27 +80,27 @@ public class Event {
 		this.eventEnd = eventEnd;
 	}
 
-	public String getPic() {
-		return pic;
+	public String getEventPic() {
+		return eventPic;
 	}
 
-	public void setPic(String pic) {
-		this.pic = pic;
+	public void setEventPic(String pic) {
+		this.eventPic = pic;
 	}
 
-	public String getEventContet() {
-		return eventContet;
+	public String getEventContent() {
+		return eventContent;
 	}
 
-	public void setEventContet(String eventContet) {
-		this.eventContet = eventContet;
+	public void setEventContet(String eventContent) {
+		this.eventContent = eventContent;
 	}
 
 	@Override
 	public String toString() {
 		return "Event [eventNo=" + eventNo + ", eventName=" + eventName + ", eventSaleRate=" + eventSaleRate
-				+ ", eventStart=" + eventStart + ", eventEnd=" + eventEnd + ", pic=" + pic + ", eventContet="
-				+ eventContet + "]";
+				+ ", eventStart=" + eventStart + ", eventEnd=" + eventEnd + ", eventPic=" + eventPic + ", eventContent="
+				+ eventContent + "]";
 	}
 
 	@Override

@@ -12,11 +12,10 @@ v@import url("font-awesome.min.css");
 /* Basic */
 
 	html, body {
-	
 		background: white;
 		width:100%;
 		height: 100%; 
-		margin: 0;
+		margin:0 auto;
 
 		
 	}
@@ -146,6 +145,7 @@ v@import url("font-awesome.min.css");
 	
 	.wrapper {
 		 flex: 1 0 auto;
+		 
 	}
 
 		.wrapper.style1 {
@@ -230,7 +230,7 @@ v@import url("font-awesome.min.css");
 				}
 
 /* Header */
-	/*메뉴*/
+	/*硫붾돱*/
 	#header {
 		color: black;
 		height:4.5em;
@@ -253,7 +253,7 @@ v@import url("font-awesome.min.css");
 	}
 	
 	
-	/*로고*/
+	/*濡쒓퀬*/
 	#logo {
 		line-height: 2em;
 		letter-spacing: 2px;
@@ -346,7 +346,7 @@ v@import url("font-awesome.min.css");
 					display: none;
 				}
 
-/* 드롭다운 */
+/* �뱶濡��떎�슫 */
 
 	.dropotron {
 		clear:both;

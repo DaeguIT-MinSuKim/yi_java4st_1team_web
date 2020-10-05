@@ -26,22 +26,22 @@ public class GuestDaoImpl implements GuestDao {
 	@Override
 	public ArrayList<Guest> selectGuestAll() {
 		String sql = "SELECT * FROM GUEST_VIEW";
-		ArrayList<Guest> list = new ArrayList<>();
-		System.out.println(list);
 		
 		try(Connection con = JndiDs.getConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery()) {
 
-			while (rs.next()) {
-				list.add(getGuest(rs));
+			if(rs.next()) {
+				ArrayList<Guest> list = new ArrayList<>();
+				while (rs.next()) {
+					list.add(getGuest(rs));
+				}
 			}
-			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 		
-		return list;
+		return null;
 	}
 
 	private Guest getGuest(ResultSet rs) throws SQLException {
@@ -71,7 +71,7 @@ public class GuestDaoImpl implements GuestDao {
 	
 	@Override
 	public Guest selectGuestById(Guest guest) {
-		String sql = "SELECT * FROM GUEST WHER GUEST_ID = ?";
+		String sql = "SELECT * FROM GUEST WHERE GUEST_ID = ?";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {

@@ -1,10 +1,23 @@
 package hairrang_web.dto;
 
+import java.util.ArrayList;
+
 public class HairKind {
 
 	private int kindNo;
 	private String kindName;
 	
+	
+	private ArrayList<Hair> hairList;
+	
+	public ArrayList<Hair> getHairList() {
+		return hairList;
+	}
+	
+	public void setHairList(ArrayList<Hair> hairList) {
+		this.hairList = hairList;
+	}
+
 	public HairKind() {
 	}
 	

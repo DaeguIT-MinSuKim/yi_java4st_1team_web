@@ -1,3 +1,7 @@
+-- DDL에 잘못 추가 했었음 지워주세요.
+DROP TABLE SALES_DETAIL
+	CASCADE CONSTRAINTS;
+
 /* 고객 */
 DROP TABLE GUEST 
 	CASCADE CONSTRAINTS;
@@ -18,9 +22,6 @@ DROP TABLE ORDER_DETAIL
 DROP TABLE BOOKING 
 	CASCADE CONSTRAINTS;
 
-/* 주문상세 */
-DROP TABLE SALES_DETAIL 
-	CASCADE CONSTRAINTS;
 
 /* 관리자 */
 DROP TABLE ADMIN 
@@ -86,12 +87,14 @@ ALTER TABLE EVENT
 /* 헤어 */
 CREATE TABLE HAIR (
 	hair_no NUMBER(10) NOT NULL, /* 헤어번호 */
-	hair_name VARCHAR2(20) NOT NULL, /* 헤어명 */
+	hair_name VARCHAR2(40) NOT NULL, /* 헤어명 */
 	hair_price NUMBER NOT NULL, /* 단가 */
 	hair_pic varchar2(200), /* 사진 */
 	hair_content VARCHAR2(1000), /* 내용 */
 	kind_no NUMBER(10) /* 분류번호 */
 );
+
+ALTER TABLE HAIR MODIFY HAIR_NAME VARCHAR2(40);
 
 ALTER TABLE HAIR
 	ADD
@@ -100,6 +103,24 @@ ALTER TABLE HAIR
 			hair_no
 		);
 
+	
+/* 주문 */
+CREATE TABLE ORDERS (
+	orders_no NUMBER(10) NOT NULL, /* 주문번호 */
+	orders_date DATE DEFAULT SYSDATE, /* 주문일자 */
+	de_no NUMBER(10), /* 디자이너번호 */
+	guest_id VARCHAR2(20) /* 고객아이디 */
+);
+
+ALTER TABLE ORDERS
+	ADD
+		CONSTRAINT PK_ORDERS
+		PRIMARY KEY (
+			orders_no
+		);
+	
+
+	
 /* 주문상세 */
 CREATE TABLE ORDER_DETAIL (
 	od_no NUMBER(10) NOT NULL, /* 주문상세번호 */
@@ -115,6 +136,7 @@ ALTER TABLE ORDER_DETAIL
 			od_no
 		);
 
+	
 /* 예약 */
 CREATE TABLE BOOKING (
 	book_no NUMBER(10) NOT NULL, /* 예약번호 */
@@ -122,7 +144,7 @@ CREATE TABLE BOOKING (
 	book_time DATE, /* 예약시간 */
 	hair_no NUMBER(10), /* 헤어번호 */
 	de_no NUMBER(10), /* 디자이너 */
-	book_regDate DATE SYSDATE,
+	book_regDate DATE DEFAULT SYSDATE,
 	book_status NUMBER(1) DEFAULT 1, /* 예약 */
 	book_note VARCHAR2(400) /* 예약비고 */
 );
@@ -144,20 +166,6 @@ ALTER TABLE BOOKING
 			book_no
 		);
 
-
-/* 주문상세 */
-CREATE TABLE SALES_DETAIL (
-	detail_no NUMBER(10) NOT NULL, /* 소영업번호 */
-	od_no NUMBER(10) NOT NULL, /* 주문상세번호 */
-	hair_no NUMBER(10) /* 헤어번호 */
-);
-
-ALTER TABLE SALES_DETAIL
-	ADD
-		CONSTRAINT PK_SALES_DETAIL
-		PRIMARY KEY (
-			detail_no
-		);
 
 /* 관리자 */
 CREATE TABLE ADMIN (
@@ -224,20 +232,7 @@ ALTER TABLE HAIR_KIND
 			kind_no
 		);
 
-/* 주문 */
-CREATE TABLE ORDERS (
-	orders_no NUMBER(10) NOT NULL, /* 주문번호 */
-	orders_date DATE DEFAULT SYSDATE, /* 주문일자 */
-	de_no NUMBER(10), /* 디자이너번호 */
-	guest_id VARCHAR2(20) /* 고객아이디 */
-);
 
-ALTER TABLE ORDERS
-	ADD
-		CONSTRAINT PK_ORDERS
-		PRIMARY KEY (
-			orders_no
-		);
 
 ALTER TABLE HAIR
 	ADD
@@ -309,25 +304,6 @@ ALTER TABLE BOOKING
 			de_no
 		);
 
-ALTER TABLE SALES_DETAIL
-	ADD
-		CONSTRAINT FK_ORDER_DETAIL_TO_SALESDE
-		FOREIGN KEY (
-			od_no
-		)
-		REFERENCES ORDER_DETAIL (
-			od_no
-		);
-
-ALTER TABLE SALES_DETAIL
-	ADD
-		CONSTRAINT FK_HAIR_TO_SALES_DETAIL
-		FOREIGN KEY (
-			hair_no
-		)
-		REFERENCES HAIR (
-			hair_no
-		);
 
 ALTER TABLE QNA
 	ADD
