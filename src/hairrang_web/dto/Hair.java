@@ -5,8 +5,8 @@ public class Hair {
 	private int hairNo;
 	private String hairName;
 	private int hairPrice;
-	private String pic;
-	private String content;
+	private String hairPic;
+	private String hairContent;
 	private int kindNo;
 	
 	public Hair() {
@@ -16,21 +16,21 @@ public class Hair {
 		this.hairNo = hairNo;
 	}
 
-	public Hair(String hairName, int hairPrice, String pic, String content, int kindNo) {
+	public Hair(String hairName, int hairPrice, String hairPic, String hairContent, int kindNo) {
 		super();
 		this.hairName = hairName;
 		this.hairPrice = hairPrice;
-		this.pic = pic;
-		this.content = content;
+		this.hairPic = hairPic;
+		this.hairContent = hairContent;
 		this.kindNo = kindNo;
 	}
 
-	public Hair(int hairNo, String hairName, int hairPrice, String pic, String content, int kindNo) {
+	public Hair(int hairNo, String hairName, int hairPrice, String hairPic, String hairContent, int kindNo) {
 		this.hairNo = hairNo;
 		this.hairName = hairName;
 		this.hairPrice = hairPrice;
-		this.pic = pic;
-		this.content = content;
+		this.hairPic = hairPic;
+		this.hairContent = hairContent;
 		this.kindNo = kindNo;
 	}
 
@@ -58,20 +58,20 @@ public class Hair {
 		this.hairPrice = hairPrice;
 	}
 
-	public String getPic() {
-		return pic;
+	public String getHairPic() {
+		return hairPic;
 	}
 
-	public void setPic(String pic) {
-		this.pic = pic;
+	public void setHairPic(String hairPic) {
+		this.hairPic = hairPic;
 	}
 
-	public String getContent() {
-		return content;
+	public String getHairContent() {
+		return hairContent;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setHairContent(String hairContent) {
+		this.hairContent = hairContent;
 	}
 
 	public int getKindNo() {
@@ -84,8 +84,8 @@ public class Hair {
 
 	@Override
 	public String toString() {
-		return "Hair [hairNo=" + hairNo + ", hairName=" + hairName + ", hairPrice=" + hairPrice + ", pic=" + pic
-				+ ", content=" + content + ", kindNo=" + kindNo + "]";
+		return "Hair [hairNo=" + hairNo + ", hairName=" + hairName + ", hairPrice=" + hairPrice + ", hairPic=" + hairPic
+				+ ", hairContent=" + hairContent + ", kindNo=" + kindNo + "]";
 	}
 
 	@Override
@@ -101,6 +101,5 @@ public class Hair {
 		return this.hairNo == ((Hair) obj).hairNo;
 	}
 
-	
 	
 }

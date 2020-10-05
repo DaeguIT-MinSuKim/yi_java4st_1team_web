@@ -16,36 +16,41 @@ import hairrang_web.dto.Guest;
 public class GuestDaoImpl implements GuestDao {
 
 	private static final GuestDaoImpl instance = new GuestDaoImpl();
+	private Connection con;
+	
+	private GuestDaoImpl() {}
 	
 	public static GuestDaoImpl getInstance() {
 		return instance;
 	}
-
-	private GuestDaoImpl() {}
 	
+	public void setCon(Connection con) {
+		this.con = con;
+	}
+
 	@Override
 	public ArrayList<Guest> selectGuestAll() {
-		String sql = "SELECT * FROM GUEST_VIEW";
-		ArrayList<Guest> list = new ArrayList<>();
-		System.out.println(list);
+		String sql = "SELECT GUEST_ID,GUEST_NAME,GUEST_BIRTHDAY,GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER,GUEST_JOIN_DATE,GUEST_NOTE,DEL_YN,INFO_YN FROM GUEST_VIEW";
 		
-		try(Connection con = JndiDs.getConnection();
-			PreparedStatement pstmt = con.prepareStatement(sql);
+		try(PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery()) {
-
-			while (rs.next()) {
-				list.add(getGuest(rs));
-			}
 			
+			if(rs.next()) {	
+				ArrayList<Guest> list = new ArrayList<>();
+				do {
+					list.add(getGuest(rs));
+					}while(rs.next());
+				return list;
+			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
 		
-		return list;
+		return null;
 	}
 
 	private Guest getGuest(ResultSet rs) throws SQLException {
-		// GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN
+		// GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN
 		
 		String guestId = rs.getString("GUEST_ID");
 		String guestPwd = null;
@@ -60,23 +65,24 @@ public class GuestDaoImpl implements GuestDao {
 		String guestName = rs.getString("GUEST_NAME");
 		LocalDate guestBirthday = rs.getTimestamp("GUEST_BIRTHDAY").toLocalDateTime().toLocalDate();
 		String guestPhone = rs.getString("GUEST_PHONE");
+		String guestEmail = rs.getString("GUEST_EMAIL");
 		int guestGender = rs.getInt("GUEST_GENDER");
 		LocalDateTime guestJoinDate = rs.getTimestamp("GUEST_JOIN_DATE").toLocalDateTime();
 		String guestNote = rs.getString("GUEST_NOTE");
 		String delYn = rs.getString("DEL_YN");
+		String infoYn = rs.getString("INFO_YN");
 		
-		return new Guest(guestId, guestPwd, guestName, guestBirthday, guestPhone, guestGender, guestJoinDate, guestNote, delYn) ;
+		return new Guest(guestId, guestName, guestBirthday, guestPhone, guestEmail, guestGender, guestJoinDate, guestNote, delYn, infoYn);
 	}
 
 	
 	@Override
 	public Guest selectGuestById(Guest guest) {
-		String sql = "SELECT * FROM GUEST WHER GUEST_ID = ?";
+		String sql = "SELECT * FROM GUEST WHERE GUEST_ID = ?";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, guest.getGuestId());
-			
 			try(ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next())
 					return getGuest(rs);
@@ -90,8 +96,8 @@ public class GuestDaoImpl implements GuestDao {
 	
 	@Override
 	public int insertGuest(Guest guest) {
-		String sql = "INSERT INTO(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_GENDER, GUEST_NOTE) "
-					+ "VALUES(?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, INFO_YN) VALUES"
+				+ "(?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -100,8 +106,9 @@ public class GuestDaoImpl implements GuestDao {
 			pstmt.setString(3, guest.getGuestName());
 			pstmt.setDate(4, Date.valueOf(guest.getGuestBirthday()));
 			pstmt.setString(5, guest.getGuestPhone());
-			pstmt.setInt(6, guest.getGuestGender());
-			pstmt.setString(7, guest.getGuestNote());
+			pstmt.setString(6, guest.getGuestEmail());
+			pstmt.setInt(7, guest.getGuestGender());
+			pstmt.setString(8, guest.getInfoYn());
 			
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -113,8 +120,7 @@ public class GuestDaoImpl implements GuestDao {
 	// 회원정보 수정시 로그인과 별도로 비밀번호 재확인이 필요한데 어떻게 처리할지 고민해보기.
 	@Override
 	public int updateGuest(Guest guest) {
-		String sql = "UPDATE GUEST SET GUEST_NAME = ?, GUEST_BIRTHDAY = ?, "
-				+ "GUEST_PHONE =?, GUEST_NOTE = ? WHERE GUEST_ID = ?";
+		String sql = "UPDATE GUEST SET GUEST_NAME = ?, GUEST_BIRTHDAY = ?, GUEST_PHONE =?, GUEST_NOTE = ?, INFO_YN = ? WHERE GUEST_ID = ? ";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -123,7 +129,8 @@ public class GuestDaoImpl implements GuestDao {
 			pstmt.setString(3, guest.getGuestPhone());
 			pstmt.setInt(4, guest.getGuestGender());
 			pstmt.setString(5, guest.getGuestNote());
-			pstmt.setString(6, guest.getGuestId());
+			pstmt.setString(6, guest.getInfoYn());
+			pstmt.setString(7, guest.getGuestId());
 			
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -179,4 +186,5 @@ public class GuestDaoImpl implements GuestDao {
 		}
 	}
 
+	
 }

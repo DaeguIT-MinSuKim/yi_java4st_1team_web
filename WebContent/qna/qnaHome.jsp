@@ -1,15 +1,53 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-<a href="qnaWrite.do">¹®ÀÇÇÏ±â</a><br>
-<a href="qnaList.do">¹®ÀÇ³»¿ª</a><br>
-<h1>¸¹ÀÌ ¹°¾îº¸´Â Áú¹®</h1>
-adminÀÌ ¾´ ´ëÇ¥ QnA¸®½ºÆ® ¿©±â ¸¸µé±â(¿¹Á¤)
+	<h2>ë¬¸ì˜ì‚¬í•­</h2>
+	<table id="qnatList">
+		<tr>
+			<th>ë²ˆí˜¸</th>
+			<th>ì œëª©</th>
+			<!-- <th>ë“±ë¡ì¼</th> -->
+			<th>ë‹µë³€ ì—¬ë¶€</th>
+		</tr>
+		<c:forEach items="${qnaList}" var="qna">
+			<tr>
+				<td>${qna.qnaNo}</td>
+				<td><a href="qnaView.do?no=${qna.qnaNo}"> ${qna.qnaTitle}</a></td>
+				<%-- <td><fmt:formatDate value="${qna.qnaRegDate}" type="date" /></td> --%>
+				<td><c:choose>
+						<c:when test="${qna.qnaResYn eq 'n' }"> no </c:when>
+						<c:when test="${qna.qnaResYn eq 'y' }"> yes </c:when>
+					</c:choose></td>
+			</tr>
+		</c:forEach>
+	</table>
+	<h2>ê³µì§€ì‚¬í•­</h2>
+	<table id="noticeList">
+		<tr>
+			<th>ë²ˆí˜¸</th>
+			<th>ì œëª©</th>
+			<!-- <th>ë“±ë¡ì¼</th> -->
+			<!-- <th>ë‹µë³€ ì—¬ë¶€</th> -->
+		</tr>
+		<c:forEach items="${noticeList}" var="notice">
+			<tr>
+				<td>${notice.qnaNo}</td>
+				<td><a href="qnaView.do?no=${notice.qnaNo}">
+						${notice.qnaTitle}</a></td>
+				<%-- <td><fmt:formatDate value="${qna.qnaRegDate}" type="date" /></td> --%>
+			</tr>
+		</c:forEach>
+	</table>
+	<a href="qnaWrite.do">ë¬¸ì˜í•˜ê¸°</a>
+	<a href="qnaList.do">ë¬¸ì˜ë‚´ì—­</a>
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web
 </body>
 </html>

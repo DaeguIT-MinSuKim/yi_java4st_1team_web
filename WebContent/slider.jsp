@@ -43,7 +43,7 @@ $(document).ready(function(){
 <body>
 <div class="sliderWrap">
 <div class="slider">
-    <div><a href="about.jsp"><img src="http://placehold.it/1500x900?text=1"></a></div>
+    <div><a href="about.jsp"><img src="http://placehold.it/1800x900?text=1"></a></div>
     <div><img src="http://placehold.it/1500x900?text=2" alt=""></div>
     <div><img src="http://placehold.it/1500x900?text=3" alt=""></div>
     <div><img src="http://placehold.it/1500x900?text=4" alt=""></div>

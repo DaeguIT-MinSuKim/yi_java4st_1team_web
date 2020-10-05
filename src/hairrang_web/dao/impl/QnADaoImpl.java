@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import hairrang_web.dao.QnADao;
-import hairrang_web.ds.JdbcUtil;
 import hairrang_web.ds.JndiDs;
+import hairrang_web.dto.Admin;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.QnA;
 
@@ -22,17 +22,18 @@ public class QnADaoImpl implements QnADao {
 	private QnADaoImpl() {
 	}
 
+	
 	@Override
 	public ArrayList<QnA> selctQnaAll() {
 		String sql = "SELECT QNA_NO,QNA_TITLE,QNA_REGDATE,RES_YN FROM QNA_VIEW";
-		try(Connection con = JndiDs.getConnection();
+		try (Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery()){
-			if(rs.next()) {
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
 				ArrayList<QnA> list = new ArrayList<QnA>();
 				do {
 					list.add(getQnA(rs));
-				}while(rs.next());
+				} while (rs.next());
 				return list;
 			}
 		} catch (SQLException e) {
@@ -58,8 +59,16 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public int insertQnA(QnA qna) {
-		// TODO Auto-generated method stub
-		return 0;
+		String sql = "INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,RES_YN) VALUES (?,?,?,'n')";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, qna.getGuestId().getGuestId());
+			pstmt.setString(2, qna.getQnaTitle());
+			pstmt.setString(3, qna.getQnaContent());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
@@ -77,6 +86,73 @@ public class QnADaoImpl implements QnADao {
 	@Override
 	public int checkPwd() {
 		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public ArrayList<QnA> selectNoticeAll() {
+		String sql = "SELECT QNA_NO,ADMIN_ID,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_REGDATE,DEL_YN FROM QNA WHERE GUEST_ID IS NULL";
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				ArrayList<QnA> list = new ArrayList<QnA>();
+				do {
+					list.add(getNotice(rs));
+				} while (rs.next());
+				return list;
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
+	private QnA getNotice(ResultSet rs) throws SQLException {
+		QnA qna = new QnA();
+		qna.setQnaNo(rs.getInt("QNA_NO"));
+		qna.setAdminId(new Admin(rs.getString("ADMIN_ID")));
+		qna.setQnaTitle(rs.getString("QNA_TITLE"));
+		qna.setQnaContent(rs.getString("QNA_CONTENT"));
+		qna.setQnaFile(rs.getString("QNA_FILE"));
+		qna.setQnaRegDate(rs.getTimestamp("QNA_REGDATE").toLocalDateTime());
+		qna.setQnaDelYn(rs.getString("DEL_YN"));
+		return qna;
+	}
+
+	@Override
+	public ArrayList<QnA> selectQnaAllById(Guest guest) {
+		String sql = "SELECT QNA_NO,QNA_TITLE,QNA_FILE,QNA_REGDATE,RES_YN FROM QNA_VIEW WHERE GUEST_ID = ? ORDER BY QNA_NO DESC";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, guest.getGuestId());
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					ArrayList<QnA> list = new ArrayList<QnA>();
+					do {
+						list.add(getQnA(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
+	@Override
+	public int nextQnaNo() {
+		String sql = "SELECT QNA_NO_SEQ.CURRVAL+1 AS count FROM DUAL";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()){
+			if(rs.next()) {
+				return rs.getInt("count");
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 		return 0;
 	}
 

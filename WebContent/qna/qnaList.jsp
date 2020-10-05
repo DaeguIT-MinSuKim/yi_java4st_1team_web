@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table id="cartList">
+	<h2>${loginUser.guestId }의 문의내역</h2>
+	<table id="qnatList">
 		<tr>
 			<th>번호</th>
 			<th>제목</th>

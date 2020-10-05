@@ -6,11 +6,11 @@ public class Booking {
 
 	private int bookNo;
 	private Guest guest;
-	private LocalDateTime bookTime;
+	private LocalDateTime bookDate;
 	private Hair hair;
 	private Designer designer;
 	private LocalDateTime bookRegDate;
-	private String bookStatus;
+	private int bookStatus;
 	private String bookNote;
 	
 	public Booking() {
@@ -20,19 +20,23 @@ public class Booking {
 		this.bookNo = bookNo;
 	}
 
-	public Booking(Guest guest, LocalDateTime bookTime, Hair hair, Designer designer, String bookNote) {
+	public Booking(Guest guest) {
 		this.guest = guest;
-		this.bookTime = bookTime;
+	}
+
+	public Booking(Guest guest, LocalDateTime bookDate, Hair hair, Designer designer, String bookNote) {
+		this.guest = guest;
+		this.bookDate = bookDate;
 		this.hair = hair;
 		this.designer = designer;
 		this.bookNote = bookNote;
 	}
 
-	public Booking(int bookNo, Guest guest, LocalDateTime bookTime, Hair hair, Designer designer,
-			LocalDateTime bookRegDate, String bookStatus, String bookNote) {
+	public Booking(int bookNo, Guest guest, LocalDateTime bookDate, Hair hair, Designer designer,
+			LocalDateTime bookRegDate, int bookStatus, String bookNote) {
 		this.bookNo = bookNo;
 		this.guest = guest;
-		this.bookTime = bookTime;
+		this.bookDate = bookDate;
 		this.hair = hair;
 		this.designer = designer;
 		this.bookRegDate = bookRegDate;
@@ -40,6 +44,7 @@ public class Booking {
 		this.bookNote = bookNote;
 	}
 
+	
 	public int getBookNo() {
 		return bookNo;
 	}
@@ -56,12 +61,12 @@ public class Booking {
 		this.guest = guest;
 	}
 
-	public LocalDateTime getBookTime() {
-		return bookTime;
+	public LocalDateTime getBookDate() {
+		return bookDate;
 	}
 
-	public void setBookTime(LocalDateTime bookTime) {
-		this.bookTime = bookTime;
+	public void setBookDate(LocalDateTime bookDate) {
+		this.bookDate = bookDate;
 	}
 
 	public Hair getHair() {
@@ -88,11 +93,11 @@ public class Booking {
 		this.bookRegDate = bookRegDate;
 	}
 
-	public String getBookStatus() {
+	public int getBookStatus() {
 		return bookStatus;
 	}
 
-	public void setBookStatus(String bookStatus) {
+	public void setBookStatus(int bookStatus) {
 		this.bookStatus = bookStatus;
 	}
 
@@ -103,25 +108,18 @@ public class Booking {
 	public void setBookNote(String bookNote) {
 		this.bookNote = bookNote;
 	}
-	
-	@Override
-	public String toString() {
-		return "Booking [bookNo=" + bookNo + ", guest=" + guest + ", bookTime=" + bookTime + ", hair=" + hair
-				+ ", designer=" + designer + ", bookRegDate=" + bookRegDate + ", bookStatus=" + bookStatus
-				+ ", bookNote=" + bookNote + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + bookNo;
-		return result;
-	}
 
 	@Override
 	public boolean equals(Object obj) {
 		return this.bookNo == ((Booking) obj).bookNo;
 	}
+
+	@Override
+	public String toString() {
+		return "Booking [bookNo=" + bookNo + ", guest=" + guest + ", bookDate=" + bookDate + ", hair=" + hair
+				+ ", designer=" + designer + ", bookRegDate=" + bookRegDate + ", bookStatus=" + bookStatus
+				+ ", bookNote=" + bookNote + "]";
+	}
+	
 	
 }
