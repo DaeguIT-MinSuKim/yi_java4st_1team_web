@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp"%>
-<br>
-<br>
-<br><br>
+
 <style>
 article {
 	padding-top:100px;
@@ -86,7 +84,7 @@ article {
 	 margin:0 auto;
 }
 
-
+.button {width:130px; height:50px; color:black; border:none; font-size:15px; font-weight:bold; margin:5px; width:200px; background: white; border:1px solid #777;}
 
 </style>
 	 <div class="div-step">
@@ -166,8 +164,8 @@ article {
      </div>
       <br><br><br><br>
       
-      <input type="button" value="다음 단계" class="submit"  onclick="go_next()"> 
-      <input type="button" value="취소" class="cancel"> 
+      <input type="button" class="button" value="다음 단계" onclick="go_next()"> 
+      <input type="button" class="button" value="취소" > 
     </form>
     </div>
   </article>

@@ -23,10 +23,7 @@
  
 <style>
 	#header {position:fixed; width:100%; z-index:9999; margin:0 auto; text-align:center;}
-	.bx-viewport {height:500px !important;}
-	#wrapper {width:1200px; margin:0 auto;}
-	
-	
+	#wrapper {width:1200px; margin:170px auto;}
 </style>  
 </head>
 <body class="homepage">
