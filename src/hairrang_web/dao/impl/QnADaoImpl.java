@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import hairrang_web.dao.QnADao;
 import hairrang_web.ds.JdbcUtil;
+import hairrang_web.ds.JndiDs;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.QnA;
 
@@ -25,7 +26,7 @@ public class QnADaoImpl implements QnADao {
 	@Override
 	public ArrayList<QnA> selctQnaAll() {
 		String sql = "SELECT QNA_NO,QNA_TITLE,QNA_REGDATE,RES_YN FROM QNA_VIEW";
-		try(Connection con = JdbcUtil.getConnection();
+		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()){
 			if(rs.next()) {
