@@ -34,26 +34,6 @@ fieldset input {
 	margin:10px;
 	}
 
-.login-btn{
-   background: gray;
-    border: none;
-    color: white; 
-    text-transform: uppercase;
-    border-radius: 0;
-    font-size: 16px;
-    height: 50px;
-    width: 100%;
-    }
-.join-btn{
-	background: gray;
-    border: none;
-    color: white; 
-    text-transform: uppercase;
-    border-radius: 0;
-    font-size: 16px;
-    height: 50px;
-    width: 100%;
-    }
     
 .id, .pwd{
     box-shadow: none;
@@ -81,7 +61,7 @@ fieldset input {
 	}
 	
 
-.button {width:100%; height:50px; color:black; border:none; font-size:15px; font-weight:bold; margin:5px; background: white; border:1px solid #777; cursor: pointer;}   
+.login-button {width:100%; height:50px; color:black; border:none; font-size:15px; font-weight:bold; margin:5px; background: white; border:1px solid #777; cursor: pointer;}   
 
 </style>
 <body>
@@ -100,8 +80,8 @@ fieldset input {
 		
 		<div class="clear" style="padding:10px;"></div>
 		<div id="buttons">
-			<input type="button" class="button" value="로그인" onclick="location='index.do'"> 
-			<input type="button" class="button" value="회원가입" onclick="location='contract.do'">
+			<input type="button" class="login-button" value="로 그 인" onclick="location='index.do'"> 
+			<input type="button" class="login-button" value="회 원 가 입" onclick="location='contract.do'">
 			<br>
 			<br>
 			<a href="guestSearch.do" class="search">아이디/비밀번호 찾기</a>

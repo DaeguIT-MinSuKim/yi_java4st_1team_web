@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-    <%@ include file="../header.jsp" %>  
-	<br>
-	<br>
-	<br><br>
+    <%@ include file="header.jsp" %>  
+
 <style>
 .content {
 	width:800px;
@@ -61,7 +59,6 @@
 	<div class="button">
 	<input type="button" value="메인페이지로 이동" class="go_main" onClick="location.href='index.do'">
 	<input type="button" value="실시간 예약" class="go_main" onClick="location.href='index.do'">
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git
 	</div>
 	
 	
