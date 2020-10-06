@@ -11,17 +11,20 @@
 <!-- <link rel="stylesheet" href="style.css"> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-<script src="js/jquery.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 
+<script src="js/jquery.min.js"></script>
 <script src="js/jquery.dropotron.min.js"></script>
 <script src="js/skel.min.js"></script>
 <script src="js/init.js"></script>
 <script type="text/javascript" src="member/member.js"></script>
  
- <!--slider -->
+<!--slider -->
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
- 
+
+<!-- 세부 페이지  적용 css -->
+<link rel="stylesheet" href="css/design.css">
 <style>
 	#header {position:fixed; width:100%; z-index:9999; margin:0 auto; text-align:center;}
 	#wrapper {width:1200px; margin:170px auto;}
@@ -48,7 +51,7 @@
 				</c:when>
 				<c:otherwise>
 				 <li>
-		         ${sessionScope.loginUser.name}(${sessionScope.loginUser.id})님 안녕하세요.
+		         ${sessionScope.loginUser.guestName}(${sessionScope.loginUser.guestId})님 안녕하세요.
 		       	</li>
 		       	<li><a href="logout.do">LOGOUT</a></li>
 		       	</c:otherwise>       
@@ -66,7 +69,7 @@
 								<li><a href="hair.jsp">HAIR</a></li>
 								
 							</ul></li>
-						<li><a href="reservation.jsp">RESERVATION</a></li>
+						<li><a href="booking.do">RESERVATION</a></li>
 						<li><a href="">COMMUNICATION</a>
 							<ul>
 								<li><a href="notice.jsp">NOTICE</a></li>
