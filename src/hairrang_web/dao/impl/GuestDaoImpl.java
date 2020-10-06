@@ -184,7 +184,9 @@ public class GuestDaoImpl implements GuestDao {
 			pstmt.setString(1, guest.getGuestId());
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
-					return getGuest(rs);
+					Guest loginUser = new Guest(rs.getString("GUEST_ID"));
+					loginUser.setGuestName(rs.getString("GUEST_NAME"));
+					return loginUser;
 				}
 			}
 		} catch (SQLException e) {
