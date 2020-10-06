@@ -21,4 +21,8 @@ public class GuestService{
 		return dao.insertGuest(guest);
 	}
 	
+	public Guest selectGuestByIdName(Guest guest) {
+		return dao.selectGuestByIdName(guest);
+	}
+	
 }
