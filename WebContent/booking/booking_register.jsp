@@ -1,26 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>  
 <script>
-	document.title += ' - 예약하기'
+	window.onload = function() {
+		document.title += ' - 예약하기'
+		document.getElementById('bookDate').valueAsDate = new Date();
+	}
 </script>
 <form>
 	<ul>
 		<li><label for="bookName">예약자 : </label>
-		<input type="text" name="bookName" readOnly></li>
+		<input type="text" name="bookName" value="${loginUser }" readOnly></li>
 		<li><label for="bookDate">예약일 : </label>
-		<input type="date" name="bookDate"></li>
+		<input type="date" name="bookDate" id="bookDate"></li>
 	</ul>
-	
+	<div class="time_table">
+		<ul>
+		    <c:forEach var="i"  begin="9" end="19">
+		    	<c:forEach var="j" begin="0" end="1">
+					<li>${i>9 ? i :'0'}${i>9 ? '' : i} : ${j==0 ? '00' : j*30}</li>		    
+		    	</c:forEach>
+		    </c:forEach>
+		</ul>
+	</div>
 </form>
-<div class="time_table">
-	<ul>
-	    <c:forEach var="i"  begin="9" end="19">
-	    	<c:forEach var="j" begin="0" end="1">
-				<li>${i>9 ? i :'0'}${i>9 ? '' : i} : ${j==0 ? '00' : j*30}</li>		    
-	    	</c:forEach>
-	    </c:forEach>
-	</ul>
-</div>
+
 
 
 <!-- 

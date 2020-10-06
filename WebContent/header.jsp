@@ -50,7 +50,7 @@
 				</c:when>
 				<c:otherwise>
 				 <li>
-		         ${sessionScope.loginUser.name}(${sessionScope.loginUser.id})님 안녕하세요.
+		         ${sessionScope.loginUser.guestName}(${sessionScope.loginUser.guestId})님 안녕하세요.
 		       	</li>
 		       	<li><a href="logout.do">LOGOUT</a></li>
 		       	</c:otherwise>       
