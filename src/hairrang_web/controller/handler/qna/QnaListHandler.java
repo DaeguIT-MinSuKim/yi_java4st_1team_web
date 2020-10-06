@@ -23,7 +23,7 @@ public class QnaListHandler implements Command {
 		HttpSession session  = request.getSession();
 		Guest loginUser = (Guest) session.getAttribute("loginUser");
 		System.out.println("list에서 loginuset>>");
-		if(loginUser != null) {
+		if(loginUser == null) {
 			System.out.println("로그인 하자");
 			return "login.do?url='qnaList.do'";
 		}
