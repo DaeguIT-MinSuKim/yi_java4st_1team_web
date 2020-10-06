@@ -11,7 +11,6 @@
 <!-- <link rel="stylesheet" href="style.css"> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
-<<<<<<< HEAD
 <script src="js/jquery.min.js"></script>
 
 <script src="js/jquery.dropotron.min.js"></script>

@@ -78,6 +78,7 @@ button {width:130px; height:50px; color:black; border:none; font-size:15px; font
 td {padding:20px; }
 
 .about-img {margin-bottom:-6px; opacity:.20;}
+
 </style>
 
 </head>
