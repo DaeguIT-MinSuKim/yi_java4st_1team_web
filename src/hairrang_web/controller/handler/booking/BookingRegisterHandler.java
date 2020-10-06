@@ -29,6 +29,8 @@ private BookingService service;
 			// test용
 			String loginUser = "test";
 			if(loginUser != null) {
+				// test용으로 loginUser request에 set
+				request.setAttribute("loginUser", loginUser);
 				return "booking/booking_register.jsp";
 			} else {
 				// 경고 후 로그인 화면으로 안내
