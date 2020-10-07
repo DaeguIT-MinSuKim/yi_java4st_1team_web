@@ -1,11 +1,13 @@
 package hairrang_web.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hairrang_web.dao.QnADao;
 import hairrang_web.dao.impl.QnADaoImpl;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.QnA;
+import hairrang_web.utils.Paging;
 
 public class QnaService {
 	private QnADao dao = QnADaoImpl.getInstance();
@@ -40,5 +42,13 @@ public class QnaService {
 	
 	public int deleteQna(QnA qna) {
 		return dao.deleteQnA(qna);
+	}
+	
+	public int coutnQna() {
+		return dao.countQnA();
+	}
+	
+	public List<QnA> selectPagingQnA(Paging paging){
+		return dao.selectPagingQnA(paging);
 	}
 }

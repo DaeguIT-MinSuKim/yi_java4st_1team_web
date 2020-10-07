@@ -216,6 +216,11 @@ CREATE TABLE QNA (
 	del_yn CHAR(1) /* 삭제여부 */
 );
 
+ALTER TABLE qna ADD notice_yn number(1);
+
+ALTER TABLE qna MODIFY del_yn DEFAULT 'n';
+ALTER TABLE qna MODIFY notice_yn DEFAULT 0;
+
 ALTER TABLE QNA
 	ADD
 		CONSTRAINT PK_QNA

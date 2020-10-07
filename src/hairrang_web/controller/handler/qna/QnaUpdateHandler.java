@@ -12,19 +12,34 @@ import hairrang_web.service.QnaService;
 
 public class QnaUpdateHandler implements Command {
 	private QnaService service = new QnaService();
-	
+
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		String url = "qna/qnaList.do";
+		String url = "qnaList.do";
 		int qnaNo = Integer.parseInt(request.getParameter("no"));
-		String qnaContent = request.getParameter("qnaContent");
-		QnA qna = new QnA();
-		qna.setQnaNo(qnaNo);
-		qna.setQnaContent(qnaContent);
-		int res = service.updateQna(qna);
-		System.out.println("뭐고"+res);
-		return url;
+		
+		System.out.println("번호머냐"+qnaNo);
+		
+		if (request.getMethod().equals("GET")) {
+			QnA qna = service.selectQnaByNo(qnaNo);
+			request.setAttribute("qna", qna);
+			return "qna/qnaUpdate.jsp";
+			
+		} else {
+			
+			System.out.println("POST");
+			QnA qna = new QnA();
+			qna.setQnaNo(qnaNo);
+			String content = request.getParameter("content");
+			qna.setQnaContent(content);
+			int res = service.updateQna(qna);
+			
+			System.out.println("뭐고" + res);
+
+			response.sendRedirect(url);
+			return null;
+		}
 	}
 
 }

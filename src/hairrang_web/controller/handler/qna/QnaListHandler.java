@@ -12,6 +12,7 @@ import hairrang_web.controller.Command;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.QnA;
 import hairrang_web.service.QnaService;
+import hairrang_web.utils.Paging;
 
 public class QnaListHandler implements Command {
 	private QnaService service = new QnaService();
@@ -27,8 +28,9 @@ public class QnaListHandler implements Command {
 			System.out.println("로그인 하자");
 			return "login.do?url='qnaList.do'";
 		}
-		ArrayList<QnA> list = service.qnaListById(loginUser);
 		
+		
+		ArrayList<QnA> list = service.qnaListById(loginUser);
 		request.setAttribute("qnaList", list);
 		
 		return url;
