@@ -47,3 +47,16 @@ UPDATE QNA
 SELECT GUEST_ID ,GUEST_NAME FROM GUEST WHERE GUEST_ID ='test';
 
 SELECT QNA_NO,QNA_TITLE,QNA_REGDATE,RES_YN FROM QNA_VIEW ORDER BY QNA_NO DESC ;
+
+ALTER TABLE qna ADD notice_yn number(1);
+UPDATE qna SET notice_yn = 1 WHERE qna_no = 4;
+SELECT * FROM (SELECT * FROM qna WHERE del_yn = 'n' ORDER BY notice_yn, qna_no) WHERE rownum BETWEEN 1 AND 10;
+
+SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY notice_yn, qna_no) no , q.* FROM qna q ORDER BY notice_yn, qna_no desc) WHERE NO BETWEEN 1 AND 5;
+
+
+
+
+(SELECT * FROM qna WHERE GUEST_ID IS NULL AND admin_id IS NOT NULL
+union
+SELECT * FROM qna WHERE guest_id IS NOT NULL)
