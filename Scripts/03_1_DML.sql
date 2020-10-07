@@ -5,6 +5,12 @@
 SELECT * FROM GUEST;
 INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
 VALUES('test', 'tt123', '테스트유저', to_date('19921015', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 2, sysdate, '머리카락이 약하심', 'n', 'y');
+INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
+VALUES('abcd', 'efghijk', '에이비', to_date('19960115', 'YYYYMMDD'), '010-1234-5678', 'abcd@test.co.kr', 2, sysdate, null, 'n', 'n');
+INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
+VALUES('test4321', '43211234', '사삼이', to_date('20001021', 'YYYYMMDD'), '010-1234-5678', 'test4321@test.co.kr', 1, sysdate, '탈모끼 있음', 'n', 'y');
+
+
 
 /* hair_kind */
 INSERT INTO HAIR_KIND(KIND_NAME) VALUES('샴푸');
@@ -54,4 +60,31 @@ INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES(
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES('강슬기', '슬기', '디자이너', NULL, '5년차');
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES('김미정', '노넴', '스탭', NULL, '2년차');
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES('이스탭', '수태', '스탭', NULL, '펌 전문가');
+
+
+/* coupon */
+SELECT * FROM event;
+SELECT * FROM coupon;
+
+-- 모든 회원에게 오픈 기념 쿠폰 발행
+INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, use_yn) 
+SELECT 1, 'test', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
+INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, use_yn) 
+SELECT 2, 'abcd', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
+INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, use_yn) 
+SELECT 3, 'test4321', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
+
+
+
+/* booking & booking_hairs */
+-- test용으로 시퀀스 사용하지 않고 60번부터 시작하는 데이터 삽입
+SELECT * FROM booking;
+INSERT INTO BOOKING(BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES(60, 'test', sysdate + 10 - 6/24, 2, sysdate, 1, null);
+INSERT INTO BOOKING(BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES(61, 'test4321', sysdate + 12 - 2/24, 2, sysdate, 1, null);
+
+INSERT INTO booking_hairs(book_no, hair_no) VALUES(60, 16);
+INSERT INTO booking_hairs(book_no, hair_no) VALUES(60, 14);
+INSERT INTO booking_hairs(book_no, hair_no) VALUES(61, 11);
 

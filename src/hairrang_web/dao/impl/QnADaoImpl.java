@@ -5,12 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import hairrang_web.dao.QnADao;
 import hairrang_web.ds.JndiDs;
 import hairrang_web.dto.Admin;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.QnA;
+import hairrang_web.utils.Paging;
 
 public class QnADaoImpl implements QnADao {
 	private static final QnADaoImpl instance = new QnADaoImpl();
@@ -187,6 +189,44 @@ public class QnADaoImpl implements QnADao {
 			throw new RuntimeException(e);
 		}
 		return 0;
+	}
+
+	@Override
+	public int countQnA() {
+		String sql = "SELECT COUNT(*) AS count FROM QNA";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()){
+			if(rs.next()) {
+				return rs.getInt("count");
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
+
+	@Override
+	public List<QnA> selectPagingQnA(Paging paging) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC,QNA_NO ) a) WHERE rn BETWEEN ? AND ?";
+		System.out.println("페이징 sql 확인용==========>>>"+sql);
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					List<QnA> list = new ArrayList<QnA>();
+					do {
+						list.add(getQnA(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
 	}
 
 }

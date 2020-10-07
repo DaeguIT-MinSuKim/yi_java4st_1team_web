@@ -1,9 +1,11 @@
 package hairrang_web.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.QnA;
+import hairrang_web.utils.Paging;
 
 public interface QnADao {
 
@@ -25,4 +27,10 @@ public interface QnADao {
 	ArrayList<QnA> selectQnaAllById(Guest guest);
 	
 	int nextQnaNo();
+	
+	//총개시물
+	int countQnA();
+	
+	//페이징처리된 게시물
+	List<QnA> selectPagingQnA(Paging paging);
 }

@@ -1,7 +1,11 @@
 /*$(function(){
-	alert("수정버튼 먹었다");
-	$('#updateButton').("click",function(){
-		$('#content').attr("readonly","false");
-		location.href='qnaDetail.do';
+	$('#updateButton').on("click",function(){
+		alert("수정버튼 먹었다");
+		if($('#content').attr.val == "ture"){
+			$('#content').attr("readonly","false");
+		}else{
+			location.href="qnaUpdate.do";
+		}
 	}
-});*/
+});
+*/
