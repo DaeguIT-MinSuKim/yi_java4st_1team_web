@@ -15,13 +15,12 @@
 	font-size:20px;
 	text-align: center;
 	color: #bbb;	
-	
+	text-decoration:none;
 }
 
 #sub_menu ul li a {
 	padding:30px 60px;
-	text-decoration:none;
-	color: #bbb;	
+	text-decoration:none;	
 }
 
 /* #sub_menu ul li a:hover {
@@ -29,7 +28,7 @@
 }
  */
 
-.info a:hover{ color: black; padding:30px 60px; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
+#sub_menu ul li a:hover{ text-decoration:none; color: black; padding:30px 60px; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
 
 </style>
 <div class="main">
