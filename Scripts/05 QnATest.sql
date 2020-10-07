@@ -88,4 +88,3 @@ SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY notice_yn DESC, qna_no) no , q
 --지수가 만들어준코드
 SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC ,QNA_NO ) a) WHERE rn BETWEEN 1 AND 10;
 
-
