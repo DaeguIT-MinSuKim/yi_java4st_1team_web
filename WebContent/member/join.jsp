@@ -4,7 +4,7 @@
 
 <style>
 .table {
-	width:500px;
+	width:520px;
 	margin:0 auto;
 	padding:20px;
 }
@@ -44,6 +44,23 @@ input {width:200px; border: 1px solid #e8e8e8;}
 $(document).on("keyup", ".phone", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
 
+/*비밀번호 확인 체크*/
+$(function(){
+ $('#pwd').keyup(function(){
+  $('font[name=check]').text('');
+	 }); //#user_pass.keyup
+
+ $('#pwdCheck').keyup(function(){
+	  if($('#pwd').val()!=$('#pwdCheck').val()){
+	  	$('font[name=check]').text('');
+	   	$('font[name=check]').html("암호가 일치하지 않습니다.");
+	   	$('input[name=pwdCheck]').attr("style","border:1px solid #e16a93")
+	  }else{
+	  	$('font[name=check]').text('');
+	  	$('font[name=check]').html("암호가 일치합니다.");
+	  }
+ });
+});
 
 </script>
 <body>
@@ -58,15 +75,17 @@ $(document).on("keyup", ".phone", function() {
 				<tr>
 					<td>아이디</td>
 					<td><input type="text" name="id" /> 
-					<input type="button" name="" value="중복확인" style="width: 100px; margin-left:30px;" /></td>
+					<input type="hidden" name="reid">
+					<input type="button" name="" value="중복확인" onclick="idcheck()" style="width: 100px; margin-left:30px;" /></td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="password" name="pwd"/></td>
+					<td><input type="password" name="pwd" id="pwd"/></td>
 				</tr>
 				<tr>
 					<td>비밀번호 확인</td>
-					<td><input type="password" name="pwdCheck" />&nbsp;</td>
+					<td><input type="password" name="pwdCheck" id="pwdCheck"/>&nbsp;
+					<font size="2" color="black" name="check"></font></td>
 				</tr>
 				<tr>
 					<td>성명</td>

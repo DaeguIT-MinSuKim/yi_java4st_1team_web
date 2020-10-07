@@ -28,7 +28,7 @@ public class GuestDaoTest {
 		dao.setCon(con);
 	}
 	
-	@Test
+	//@Test
 	public void testSelectGuestAll() {
 		System.out.println("selectGuestAll()");
 		ArrayList<Guest> list = dao.selectGuestAll();
@@ -67,6 +67,15 @@ public class GuestDaoTest {
 	//@Test
 	public void testCheckPwd() {
 		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void confirmId() {
+		//있으면 1 없으면 -1
+		int res = dao.confirmId("one");
+		Assert.assertNotNull(res);
+		System.out.println(res);
+		
 	}
 
 }

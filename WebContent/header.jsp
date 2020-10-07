@@ -5,7 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>hairrang</title>
 <!-- <link rel="stylesheet" href="style.css"> -->
@@ -26,6 +27,7 @@
 <style>
 	#header {position:fixed; width:100%; z-index:9999; margin:0 auto; text-align:center;}
 	#wrapper {width:1200px; margin:170px auto;}
+	
 </style>
 
 </head>
@@ -39,7 +41,7 @@
 			<div>
 				<!-- guestmenu -->
 				
-				<nav id="guest"> 
+				<nav id="login-bar"> 
 				<c:choose>
        			<c:when test="${empty sessionScope.loginUser}">
 					<ul>
@@ -49,10 +51,15 @@
 					</ul>
 				</c:when>
 				<c:otherwise>
-				 <li>
-		         ${sessionScope.loginUser.guestName}(${sessionScope.loginUser.guestId})님 안녕하세요.
-		       	</li>
-		       	<li><a href="logout.do">LOGOUT</a></li>
+					
+					<ul>
+						 <li>
+				         ${sessionScope.loginUser.guestName}(${sessionScope.loginUser.guestId})님 
+				       	 </li>
+				       	<li><a href="logout.do" style="font-weight:bold;">LOGOUT</a> / </li>
+				       	<li><a href="guestInfo.do"  style="font-weight:bold;">MYPAGE</a></li>
+				    </ul>
+				    
 		       	</c:otherwise>       
 		       	</c:choose>
 				</nav>

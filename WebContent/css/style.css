@@ -1,6 +1,7 @@
-v@import url("font-awesome.min.css");
+@import url("font-awesome.min.css");
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800");
-
+/*@font-face { font-family: 'S-CoreDream-4Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'S-CoreDream-3Light'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff'); font-weight: normal; font-style: normal; }*/
 /*
 	Solarize by TEMPLATED
 	templated.co @templatedco
@@ -16,6 +17,7 @@ v@import url("font-awesome.min.css");
 		width:100%;
 		height: 100%; 
 		margin:0 auto;
+		/*font-family: 'S-CoreDream-3Light'*/
 
 		
 	}
@@ -41,10 +43,6 @@ v@import url("font-awesome.min.css");
 		line-height: 1.65em;
 	}
 
-	a {
-		color: #82b440;
-		text-decoration: underline;
-	}
 
 	strong, b {
 		font-weight: 700;
@@ -249,43 +247,49 @@ v@import url("font-awesome.min.css");
 	}
 	
 	
-
+/*login nav*/
 	
-#guest {
+#login-bar {
 	
 }	
-#guest ul {
-		float:right;
+#login-bar ul {
+		/* float:right; */
 		text-transform: uppercase;
 		text-decoration: none;
 		letter-spacing: 3px;
 		color: inherit;
 		display: inline-block;
 		font-size: 12px;
-		margin-right:200px;
+		/* margin-right:200px; */
 		
 		
 	}
-		#guest li {
+		#login-bar li {
 			display: inline-block;
 			
 		
 		}
 	
-			#guest>ul>li a {
+			#login-bar>ul>li a {
 				color: inherit;
 				line-height: 1em;
 				letter-spacing: 2px;
 				text-decoration: none;
 				text-transform: uppercase;
-				font-weight: 400;
+				font-weight:400;
 				font-size: 1em;
 				
 				
 			}
-				#guest>ul>li a:hover {
+				#login-bar>ul>li a:hover {
 					color:gray;
 				}
+
+
+
+
+
+/*메뉴*/
 
 #nav {
 		clear:both;
@@ -330,6 +334,7 @@ v@import url("font-awesome.min.css");
 				#nav > ul > li > ul {
 					display: none;
 				}
+
 
 /* �뱶濡��떎�슫 */
 

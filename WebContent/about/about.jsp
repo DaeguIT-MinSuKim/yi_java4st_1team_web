@@ -66,6 +66,7 @@ input:checked+label {
 	margin:0 auto;
 	text-align:left;
 	}
+	
 .map {width:800px; margin:0 auto; text-align:left;}
 
 

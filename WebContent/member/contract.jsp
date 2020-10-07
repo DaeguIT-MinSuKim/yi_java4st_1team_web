@@ -86,7 +86,6 @@ article {
 }
 
 .button {width:130px; height:50px; color:black; border:none; font-size:15px; font-weight:bold; margin:5px; width:200px; background: white; border:1px solid #777;}
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git
 
 </style>
 	 <div class="div-step">

@@ -65,9 +65,10 @@ fieldset input {
 
 </style>
 <body>
+
 <div class="main">
 	<img src="images/main1.jpg" style="width: 100%; top:0;">
-	<form class="login-form" method="post" action="login.do">
+	<form method="post" action="login.do">
 	<div id="subwrapper">
 		<!-- div class="line"></div> -->
 		<br><br><p style="font-size:40px; color:gray;">LOGIN</p>
@@ -80,7 +81,7 @@ fieldset input {
 		
 		<div class="clear" style="padding:10px;"></div>
 		<div id="buttons">
-			<input type="button" class="login-button" value="로 그 인" onclick="location='index.do'"> 
+			<input type="submit" class="login-button" value="로 그 인" onclick="location='index.do'"> 
 			<input type="button" class="login-button" value="회 원 가 입" onclick="location='contract.do'">
 			<br>
 			<br>

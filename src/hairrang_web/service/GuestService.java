@@ -25,4 +25,7 @@ public class GuestService{
 		return dao.selectGuestByIdName(guest);
 	}
 	
+	public int confirmId(String id) {
+		return dao.confirmId(id);
+	}
 }

@@ -73,8 +73,7 @@ public class GuestDaoImpl implements GuestDao {
 		String delYn = rs.getString("DEL_YN");
 		String infoYn = rs.getString("INFO_YN");
 
-		return new Guest(guestId, guestName, guestBirthday, guestPhone, guestEmail, guestGender, guestJoinDate,
-				guestNote, delYn, infoYn);
+		return new Guest(guestId, guestPwd, guestName, guestBirthday, guestPhone, guestEmail, guestGender, guestJoinDate, guestNote, delYn, infoYn);
 	}
 
 	@Override
@@ -194,5 +193,26 @@ public class GuestDaoImpl implements GuestDao {
 		}
 		return null;
 	}
+
+	@Override
+	public int confirmId(String id) {
+		int result = -1;
+		String sql = "SELECT * FROM GUEST WHERE GUEST_ID = ?";
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);) {
+			pstmt.setString(1, id);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					result = 1;
+				}else {
+					result = -1;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+		return result;
+	}
+	
 
 }
