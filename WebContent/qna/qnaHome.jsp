@@ -83,7 +83,7 @@
 	</div>
 	
 	<div id="buttons" style="float: right">
-		<input type="button" value="글쓰기" id="updateButton" onclick="location.href='qnaWrite.do'"> 
+		<input type="button" value="수정하기" id="updateButton"> 
 		<input type="button" value="문의 내역" id="list" onclick="location.href='qnaList.do'">
 	</div>
 </body>
