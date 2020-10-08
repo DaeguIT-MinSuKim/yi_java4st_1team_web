@@ -13,7 +13,7 @@ SELECT * FROM QNA;
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn) VALUES ('test','testTitle115','n',0);
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn) VALUES ('test','testTitl2123123','n',0);
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn) VALUES ('test2','testTitl4','n',0);
-INSERT INTO QNA (ADMIN_ID,QNA_TITLE,DEL_YN, notice_yn) VALUES ('testadmin','admintestolenfoej','n', 1);
+INSERT INTO QNA (qna_no, ADMIN_ID,QNA_TITLE,DEL_YN, notice_yn) VALUES (4, 'testadmin','admintestolenfoej','n', 'y');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,RES_YN,) VALUES ('test2','what','what?','n');
 DELETE qna;
 SELECT * FROM QNA_VIEW ;
@@ -42,3 +42,5 @@ SELECT rownum, a.* FROM (SELECT * FROM qna ORDER BY notice_yn desc, qna_no desc)
 --지수가 만들어준 페이징 코드
 SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC ,QNA_NO DESC) a) WHERE rn BETWEEN 1 AND 10;
 SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY notice_yn DESC, qna_no) no , q.* FROM qna q ORDER BY notice_yn desc, qna_no desc) WHERE NO BETWEEN 1 AND 5;
+
+SELECT * FROM qna;
