@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Booking;
@@ -28,6 +29,15 @@ public class BookingDetailHandler implements Command {
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		
+		/* 로그인 여부 체크  */
+		HttpSession session = request.getSession();
+		String loginUser = (String) request.getAttribute("loginUser");
+		
+		if(loginUser == null) {
+			request.setAttribute("msg", "로그인 후 이용해주세요.");
+		}
+		
+		// 체크 후
 		if(request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("BookingDetailHandler >> GET");
 			
@@ -36,25 +46,23 @@ public class BookingDetailHandler implements Command {
 			System.out.println("파라미터 no: " + no);
 			System.out.println(booking);
 			
-			/*
-			 * 세션으로부터 아이디 얻어서, 해당 아이디의 예약 사항인지 체크 후 예약 정보 가져오기.
-			
-			Session session = request.getSession();
-			String loginUser = request.getAttribute("loginUser");
+			// 해당 세션 로그인 정보의 예약 사항인지 체크 후 예약 정보 가져오기.
 			int res = service.checkUser(booking, new Guest(loginUser));
 			if(res != 1) {
-				// 잘못된 접근입니다.
+				request.setAttribute("errorCode", -1);
+				request.setAttribute("msg", "잘못된 접근입니다.");
+				
+				// return이나 sendRedirection 등 다른 처리 필요.
 			}
-			 
-			 */
 			
+			
+			// 아이디 체크 후 예약 정보 가져와 set
 			Booking findBook = service.getBookingByBookingNo(booking);
 			request.setAttribute("booking", findBook);
 			
 		} else {
 			System.out.println("BookingDetailHandler >> POST");
 			
-			request.setAttribute("msg", "잘못된 접근입니다.");
 		}
 		
 		return "booking/booking_detail.jsp";
