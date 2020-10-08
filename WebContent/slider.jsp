@@ -33,14 +33,14 @@ $(document).ready(function(){
 	.bx-controls-direction .bx-next:before {content:"\e940"; font-family:'xeicon'}
 	
 	/*네모*/
-	.bx-pager {position:absolute; left:0; bottom:-30px; width:100%; text-align:center; margin:5px;}
+	.bx-pager {position:absolute; left:0; bottom:0px; width:100%; text-align:center; margin:5px;}
 	.bx-pager div {background-color:white;display:inline-block; font-size:0; color:transparent; width:30px; height:3px; padding:5px;}
 	.bx-pager div a {display:block; font-size:0; color:transparent; width:24px; height:3px; background:gray; }
 	.bx-pager div a.active {background:#000;}
 </style>
 </head>
 <body>
-<<<<<<< HEAD
+
 <div class="sliderWrap">
 <div class="slider">
     <div><a href="about.jsp"><img src="http://placehold.it/1800x900?text=1"></a></div>

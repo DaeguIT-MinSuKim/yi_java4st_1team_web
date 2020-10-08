@@ -29,12 +29,15 @@ public class LoginHandler implements Command{
 			String pwd = request.getParameter("pwd");
 			Guest g = service.selectGuestById(new Guest(id));
 			System.out.println(g);
+			System.out.println(pwd);
 			
 			if(g!=null) {
 				if(g.getGuestPwd().equals(pwd)) {
 					session.removeAttribute("id");
 					session.setAttribute("loginUser", g);
 					response.sendRedirect("index.do");
+				}else {
+					return "member/login_fail.jsp";
 				}
 			}else {
 				return "member/login_fail.jsp";

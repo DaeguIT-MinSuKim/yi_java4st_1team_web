@@ -6,6 +6,7 @@
 <script src="../package/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 <style>
 
 .swiper-container {
@@ -40,7 +41,6 @@
     width: 18px;
     height: 18px;
     display: inline-block;
-    border-radius: 100%;
     background: gray;
     opacity: 0.2;
 }
@@ -103,8 +103,8 @@ button.swiper-pagination-bullet {
     cursor: pointer;
 }
 .swiper-pagination-bullet-active {
-    opacity: 1;
-    background: gray;
+   
+   background:#000;
 }
 .swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
     margin: 0 4px;
@@ -150,7 +150,6 @@ $(function(){
    
    <!-- Add Pagination -->
     <div class="swiper-pagination"></div>
-
 
 </div>
 
