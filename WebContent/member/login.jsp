@@ -62,7 +62,7 @@ fieldset input {
 	
 
 .login-button {width:100%; height:50px; color:black; border:none; font-size:15px; font-weight:bold; margin:5px; background: white; border:1px solid #777; cursor: pointer;}   
-
+.search {border:none; background-color: #fff;}
 </style>
 <body>
 
@@ -85,7 +85,7 @@ fieldset input {
 			<input type="button" class="login-button" value="회 원 가 입" onclick="location='contract.do'">
 			<br>
 			<br>
-			<a href="guestSearch.do" class="search">아이디/비밀번호 찾기</a>
+			<input type="button" class="search" value="아이디/비밀번호 찾기" onclick="idpwSearch()">
 		</div> 
 		</fieldset>
 		</div>

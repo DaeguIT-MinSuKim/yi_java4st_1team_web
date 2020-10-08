@@ -52,9 +52,6 @@ function idcheck() {
 }
 
 
-
-
-
 function go_next() {
   if (document.formm.okon1[0].checked == true && document.formm.okon1[1].checked == true ) {
     document.formm.action = "join.do";
@@ -64,4 +61,14 @@ function go_next() {
   }
 }
 
+function idpwSearch() {
+	/*  if (document.formm.id.value == "") {
+	    alert('아이디를 입력하여 주십시오.');
+	    document.formm.id.focus();
+	    return;
+	  }*/
+	var url="idpwSearch.do";
+	window.open( url, "_blank_1",
+	"toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=500, height=400");
+	}
 
