@@ -21,22 +21,25 @@ public class QnaWriteHandler implements Command {
 		String url = "qna/qnaWrite.jsp";
 		HttpSession session = request.getSession();
 		Guest loginUser = (Guest) session.getAttribute("loginUser");
-		System.out.println(loginUser);
 
-		if (loginUser == null) {
-			// db에서 비회원정보를 가져온다
-		}
-
+		// 만약 get방식이면 qna작성 페이지로 이동하는곳
 		if (request.getMethod().equals("GET")) {
 			System.out.println("GET");
+
+			// 만약 로그인이 되어있지 안하면 url에 qnaWrite.do의 경로를 저장한채로 login.do로 넘기기
+			if (loginUser == null) {
+				return "login.do?url='qnaWrite.do'";
+			}
+
 			return url;
 		} else {
+			//방식이 post방식일 경우 제목과 내용을 가지고와서 isnert하는 곳
 			System.out.println("POST");
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
 			QnA qna = new QnA(loginUser, title, content);
 			service.insertQna(qna);
-			return "qnaHome.do";
+			return "qnaHome.do?nowPage=1&cntPerPage=5";
 		}
 
 	}

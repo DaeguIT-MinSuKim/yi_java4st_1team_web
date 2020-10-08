@@ -17,6 +17,8 @@ public class QnaDeleteHandler implements Command {
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		String url = "qnaHome.do";
+		
+		//qnaNo를 가져와서 서비스를 통해서 db의 qna를 삭제해줍니다
 		int qnaNo = Integer.parseInt(request.getParameter("no"));
 		int res = service.deleteQna(new QnA(qnaNo));
 		System.out.println("delete"+res);
