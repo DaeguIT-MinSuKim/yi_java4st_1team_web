@@ -17,10 +17,10 @@ public class QnaDetailHandler implements Command {
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		String url = "qna/qnaDetail.jsp";
+		
+		//리스트에 저정되어있는 no를 통해서 db에서 불러줍니다.
 		int qnaNo = Integer.parseInt(request.getParameter("no"));
-		System.out.println("번호====================="+qnaNo);
 		QnA qna = service.selectQnaByNo(qnaNo);
-		System.out.println("찾았냐~~~~~~~~~~~~~~~~~"+qna);
 		request.setAttribute("qna", qna);
 		return url;
 	}

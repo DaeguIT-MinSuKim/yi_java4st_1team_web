@@ -201,7 +201,7 @@ CREATE TABLE QNA (
 ALTER TABLE qna ADD notice_yn number(1);
 
 ALTER TABLE qna MODIFY del_yn DEFAULT 'n';
-ALTER TABLE qna MODIFY notice_yn DEFAULT 0;
+ALTER TABLE qna MODIFY notice_yn DEFAULT 'n';
 
 ALTER TABLE QNA
 	ADD

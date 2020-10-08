@@ -208,8 +208,7 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public List<QnA> selectPagingQnA(Paging paging) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC,QNA_NO ) a) WHERE rn BETWEEN ? AND ?";
-		System.out.println("페이징 sql 확인용==========>>>"+sql);
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE rn BETWEEN ? AND ?";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setInt(1, paging.getStart());

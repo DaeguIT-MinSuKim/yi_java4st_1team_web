@@ -31,48 +31,7 @@
 </script>
 </head>
 <body>
-	<%-- <h2>문의사항</h2>
-	<table id="qnatList">
-		<tr>
-			<th>번호</th>
-			<th>제목</th>
-			<!-- <th>등록일</th> -->
-			<th>답변 여부</th>
-		</tr>
-		<c:forEach items="${qnaList}" var="qna">
-			<tr>
-				<td>${qna.qnaNo}</td>
-				<td><a href="qnaDetail.do?no=${qna.qnaNo}"> ${qna.qnaTitle}</a></td>
-				<td><fmt:formatDate value="${qna.qnaRegDate}" type="date" /></td>
-				<td><c:choose>
-						<c:when test="${qna.qnaResYn eq 'n' }"> no </c:when>
-						<c:when test="${qna.qnaResYn eq 'y' }"> yes </c:when>
-					</c:choose></td>
-			</tr>
-		</c:forEach>
-	</table>
-	<h2>공지사항</h2>
-	<table id="noticeList">
-		<tr>
-			<th>번호</th>
-			<th>제목</th>
-			<!-- <th>등록일</th> -->
-			<!-- <th>답변 여부</th> -->
-		</tr>
-		<c:forEach items="${noticeList}" var="notice">
-			<tr>
-				<td>${notice.qnaNo}</td>
-				<td><a href="qnaView.do?no=${notice.qnaNo}">
-						${notice.qnaTitle}</a></td>
-				<td><fmt:formatDate value="${qna.qnaRegDate}" type="date" /></td>
-			</tr>
-		</c:forEach>
-	</table>
-	<a href="qnaWrite.do">문의하기</a>
-	<a href="qnaList.do">문의내역</a> --%>
-	
-		<hr>
-		<h1>여기서부트는 페이징~</h1>
+		<h1>문의 사항 홈</h1>
 	<div id="outter">
 		<div style="float: right;">
 			<select id="cntPerPage" name="sel" onchange="selChange()">
@@ -96,7 +55,7 @@
 			<c:forEach items="${viewAll}" var="list">
 				<tr>
 					<td>${list.qnaNo }</td>
-					<td>${list.qnaTitle }</td>
+					<td><a href="qnaDetail.do?no=${list.qnaNo}">${list.qnaTitle }</a></td>
 					<td>${list.qnaContent }</td>
 					<td>${list.qnaResYn }</td>
 				</tr>
@@ -121,6 +80,11 @@
 				<a href="qnaHome.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&rt;</a>
 			</c:if>	
 		</div>
+	</div>
+	
+	<div id="buttons" style="float: right">
+		<input type="button" value="글쓰기" id="updateButton" onclick="location.href='qnaWrite.do'"> 
+		<input type="button" value="문의 내역" id="list" onclick="location.href='qnaList.do'">
 	</div>
 </body>
 </html>

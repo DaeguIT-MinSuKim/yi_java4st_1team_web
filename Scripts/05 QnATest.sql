@@ -40,5 +40,5 @@ SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn
 SELECT rownum, a.* FROM (SELECT * FROM qna ORDER BY notice_yn desc, qna_no desc) a WHERE rownum BETWEEN 1 AND 10;
 
 --지수가 만들어준 페이징 코드
-SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC ,QNA_NO ) a) WHERE rn BETWEEN 1 AND 10;
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC ,QNA_NO DESC) a) WHERE rn BETWEEN 1 AND 10;
 SELECT * FROM (SELECT ROW_NUMBER() OVER (ORDER BY notice_yn DESC, qna_no) no , q.* FROM qna q ORDER BY notice_yn desc, qna_no desc) WHERE NO BETWEEN 1 AND 5;
