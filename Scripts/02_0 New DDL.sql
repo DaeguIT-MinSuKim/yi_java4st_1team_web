@@ -39,11 +39,11 @@ CREATE TABLE GUEST (
 	guest_birthday DATE, /* 생년월일 */
 	guest_phone VARCHAR2(13) NOT NULL, /* 전화번호 */
 	guest_email VARCHAR2(40), /* 이메일 */
-	guest_gender NUMBER(1), /* 성별 */
+	guest_gender NUMBER(1) DEFAULT 1, /* 성별 */
 	guest_join_date DATE DEFAULT SYSDATE, /* 가입일자 */
 	guest_note VARCHAR2(1000), /* 고객비고 */
 	del_yn CHAR(1) DEFAULT 'n', /* 탈퇴여부 */ -- n: 사용가능한 상태, y: 탈퇴
-	info_yn char(1) /*마케팅수신동의 y, n*/
+	info_yn char(1) DEFAULT 'n' /*마케팅수신동의 y, n*/
 );
 
 ALTER TABLE GUEST
@@ -68,8 +68,8 @@ ADD CONSTRAINT PK_EVENT PRIMARY KEY (event_no);
 /* 헤어분류 */
 CREATE TABLE HAIR_KIND (
 	kind_no NUMBER(10) NOT NULL, /* 분류번호 */
-	kind_name VARCHAR2(20) /* 분류이름 */
-	use_Yn CHAR(1) /* 사용 여부 */
+	kind_name VARCHAR2(20), /* 분류이름 */
+	use_Yn CHAR(1) DEFAULT 'y' /* 사용 여부 */
 );
 
 ALTER TABLE HAIR_KIND
@@ -84,7 +84,7 @@ CREATE TABLE HAIR (
 	hair_pic varchar2(200), /* 사진 */
 	hair_content VARCHAR2(1000), /* 내용 */
 	kind_no NUMBER(10), /* 분류번호 */
-	useYn CHAR(1) /* 사용여부 */
+	useYn CHAR(1) DEFAULT 'y' /* 사용여부 */
 );
 
 ALTER TABLE HAIR
@@ -106,8 +106,8 @@ ADD CONSTRAINT PK_HAIR PRIMARY KEY (hair_no);
 
 CREATE TABLE BOOKING (
 	book_no NUMBER(10) NOT NULL, /* 예약번호 */
-	guest_id VARCHAR2(20), /* 고객아이디 */
-	book_time DATE, /* 예약시간 */
+	guest_id VARCHAR2(20) NOT NULL, /* 고객아이디 */
+	book_time DATE NOT NULL, /* 예약시간 */
 	hair_no NUMBER(10), /* 헤어번호 */
 	de_no NUMBER(10), /* 디자이너 */
 	book_regDate DATE DEFAULT SYSDATE,

@@ -78,11 +78,12 @@ SELECT 3, 'test4321', event_no, event_start, event_end, 'n' FROM event WHERE eve
 
 /* booking & booking_hairs */
 -- test용으로 시퀀스 사용하지 않고 60번부터 시작하는 데이터 삽입
+SELECT * FROM hair;
 SELECT * FROM booking;
 INSERT INTO BOOKING(BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
-VALUES(60, 'test', sysdate + 10 - 6/24, 2, sysdate, 1, null);
+VALUES(60, 'test', sysdate + 10 - 6/24, 9, 2, sysdate, 1, null);
 INSERT INTO BOOKING(BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
-VALUES(61, 'test4321', sysdate + 12 - 2/24, 2, sysdate, 1, null);
+VALUES(61, 'test4321', sysdate + 12 - 2/24, 14, 2, sysdate, 1, null);
 
 INSERT INTO booking_hairs(book_no, hair_no) VALUES(60, 16);
 INSERT INTO booking_hairs(book_no, hair_no) VALUES(60, 14);

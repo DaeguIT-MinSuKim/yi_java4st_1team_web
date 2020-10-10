@@ -68,7 +68,7 @@ public class FrontController extends HttpServlet {
 		String command = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		
-		System.out.println("command > " + command + "\t contextPath > " + contextPath);
+//		System.out.println("command > " + command + "\t contextPath > " + contextPath);
 		System.out.println(command.substring(contextPath.length()));
 		
 		if(command.indexOf(contextPath) == 0 ) {
@@ -76,7 +76,7 @@ public class FrontController extends HttpServlet {
 		}
 		
 		Command commandHandler = handlerMap.get(command);
-		System.out.println(commandHandler);
+//		System.out.println(commandHandler);
 		
 		String viewPage = commandHandler.process(request, response);
 		System.out.println("viewPage > " + viewPage + "\n");
