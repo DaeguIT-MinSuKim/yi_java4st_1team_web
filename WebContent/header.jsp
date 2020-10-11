@@ -79,7 +79,7 @@
 						<li><a href="">COMMUNICATION</a>
 							<ul>
 								<li><a href="notice.jsp">NOTICE</a></li>
-								<li><a href="event.jsp">EVENT</a></li>
+								<li><a href="eventHome.do">EVENT</a></li>
 								<li><a href="qnaHome.do">Q&A</a></li>
 							</ul></li>
 					</ul>
