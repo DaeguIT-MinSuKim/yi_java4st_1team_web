@@ -16,6 +16,7 @@ public class LogoutHandler implements Command {
 		HttpSession session = request.getSession(false);
 		
 		if(session!=null) {
+			session.removeAttribute("redirectURI");
 			session.invalidate();
 		}
 	

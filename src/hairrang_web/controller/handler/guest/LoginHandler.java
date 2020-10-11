@@ -1,10 +1,9 @@
 package hairrang_web.controller.handler.guest;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,11 +41,25 @@ public class LoginHandler implements Command{
 					session.removeAttribute("id");
 					session.setAttribute("loginUser", g);
 					
-					String redirectUrl = (String) session.getAttribute("redirectURI");
-//					System.out.println("로그인 성공 후 리다이렉트할 주소: " + redirectUrl);
+					// (1) session이용
+					String redirectURI = (String) session.getAttribute("redirectURI");
 					
-					if(redirectUrl != null) {
-						response.sendRedirect(redirectUrl);
+					// (2) cookie이용
+					/*
+					String redirectURI = null;
+					Cookie[] cookies = request.getCookies();
+					for(Cookie c : cookies) {
+						if (c.getName().equals("redirectURI")) {
+							redirectURI = c.getValue();
+							System.out.println(redirectURI);
+						}
+					}
+					*/
+					System.out.println("로그인 성공 후 리다이렉트할 주소: " + redirectURI);
+					
+					if(redirectURI != null) {
+						session.removeAttribute("redirectURI");
+						response.sendRedirect(redirectURI);
 					} else {
 						response.sendRedirect("index.do");
 					}
