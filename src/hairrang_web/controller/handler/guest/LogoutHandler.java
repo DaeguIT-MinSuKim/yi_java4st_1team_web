@@ -18,7 +18,10 @@ public class LogoutHandler implements Command {
 		if(session!=null) {
 			session.invalidate();
 		}
-		return "index.do";
+	
+		response.sendRedirect("index.do");
+		
+		return null;
 	}
 
 }

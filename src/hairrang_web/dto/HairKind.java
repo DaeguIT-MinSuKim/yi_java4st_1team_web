@@ -7,7 +7,6 @@ public class HairKind {
 	private int kindNo;
 	private String kindName;
 	
-	
 	private ArrayList<Hair> hairList;
 	
 	public ArrayList<Hair> getHairList() {

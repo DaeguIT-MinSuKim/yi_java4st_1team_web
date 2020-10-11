@@ -36,6 +36,7 @@ public class HairDaoImpl implements HairDao {
 				do {
 					HairKind hairKind = selectHairKindByKindNo(rs.getInt("KIND_NO"));
 					hairKind.setKindName(rs.getString("KIND_NAME"));
+					list.add(hairKind);
 				} while(rs.next());
 				return list;
 			}
@@ -55,7 +56,7 @@ public class HairDaoImpl implements HairDao {
 			pstmt.setInt(1, kindNo);
 			try(ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
-					HairKind hairKind = new HairKind();
+					HairKind hairKind = new HairKind(kindNo);
 					ArrayList<Hair> list = new ArrayList<>();
 					while(rs.next()) {
 						list.add(getHair(rs));

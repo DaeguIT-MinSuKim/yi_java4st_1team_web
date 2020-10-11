@@ -4,24 +4,47 @@
 	window.onload = function() {
 		document.title += ' - 예약하기'
 		document.getElementById('bookDate').valueAsDate = new Date();
+		
+		$(".time_table ul li").click(function(){
+			console.log($(this));
+			
+			$(".active").removeClass("active");
+			$(this).attr("class", "active");
+		});
+		
 	}
 </script>
 <form>
 	<ul>
 		<li><label for="bookName">예약자 : </label>
-		<input type="text" name="bookName" value="${loginUser }" readOnly></li>
+		<input type="text" name="bookName" value="${loginUser.guestName }" readOnly></li>
 		<li><label for="bookDate">예약일 : </label>
 		<input type="date" name="bookDate" id="bookDate"></li>
+		<li><label for="bookHair">시술 : </label>
+		<select name="bookHair">
+			<c:forEach var="hairKind" items="${hairList}">
+				<option value="${hairKind.kindNo }">[${hairKind.kindNo}]${hairKind.kindName }</option>
+			</c:forEach>
+		</select></li>
+		<li><label for="bookHair">시술 : </label>
+		<select name="bookDesigner">
+			<c:forEach var="de" items="${deList}">
+				<option value="${de.deNo }">${de.deName }</option>
+			</c:forEach>
+		</select></li>		
 	</ul>
 	<div class="time_table">
 		<ul>
 		    <c:forEach var="i"  begin="9" end="19">
 		    	<c:forEach var="j" begin="0" end="1">
-					<li>${i>9 ? i :'0'}${i>9 ? '' : i} : ${j==0 ? '00' : j*30}</li>		    
+		    		<!-- <a href="#juno" time24="18:30" ampm="pm" time="6:30">6:30</a> -->
+					<li time24="${i}:${j==0 ? '00' : j*30}">${i>9 ? i :'0'}${i>9 ? '' : i} : ${j==0 ? '00' : j*30}</li>		    
 		    	</c:forEach>
 		    </c:forEach>
 		</ul>
 	</div>
+	${hairList }<br>
+	${deList }
 </form>
 
 
