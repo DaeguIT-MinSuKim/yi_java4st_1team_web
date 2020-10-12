@@ -25,7 +25,7 @@ public class HairDaoImpl implements HairDao {
 
 	@Override
 	public ArrayList<HairKind> selectHairAll() {
-		String sql = "SELECT * FROM HAIR_KIND";
+		String sql = "SELECT * FROM HAIR_KIND ORDER BY KIND_NO";
 		
 		try(Connection con = JndiDs.getConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);
