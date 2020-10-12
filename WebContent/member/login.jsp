@@ -85,7 +85,9 @@ fieldset input {
 			<input type="button" class="login-button" value="회 원 가 입" onclick="location='contract.do'">
 			<br>
 			<br>
-			<input type="button" class="search" value="아이디/비밀번호 찾기" onclick="idpwSearch()">
+			<input type="button" class="search" value="아이디찾기" onclick="go_idSearch()"> | 
+			<input type="button" class="search" value="비밀번호찾기" onclick="go_pwdSearch()"> 
+			
 		</div> 
 		</fieldset>
 		</div>

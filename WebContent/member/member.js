@@ -61,14 +61,51 @@ function go_next() {
   }
 }
 
-function idpwSearch() {
-	/*  if (document.formm.id.value == "") {
+function go_idSearch() {
+	var url="idSearch.do";
+	window.open( url, "_blank_1",
+	"toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=500, height=400");
+}
+
+
+function go_pwdSearch() {
+	var url="pwdSearch.do";
+	window.open( url, "_blank_1",
+	"toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=500, height=400");
+}
+
+
+function idSearch(){
+	if (document.formm.id_name.value == "") {
+	    alert('이름을 입력하여 주십시오.');
+	    document.formm.id_name.focus();
+	    return;
+    } else if(document.formm.id_email.value == "") {
+	    alert('이메일을 입력하여 주십시오.');
+	    document.formm.id_email.focus();
+	    return;
+    } else{
+    	document.formm.action = "idSearch.do";
+        document.formm.submit();
+    }
+};
+
+function pwdSearch(){
+	if (document.formm.id.value == "") {
 	    alert('아이디를 입력하여 주십시오.');
 	    document.formm.id.focus();
 	    return;
-	  }*/
-	var url="idpwSearch.do";
-	window.open( url, "_blank_1",
-	"toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=500, height=400");
-	}
+	} else if(document.formm.name.value == "") {
+		 alert('이름을 입력하여 주십시오.');
+		 document.formm.name.focus();
+		 return;
+	} else if(document.formm.email.value == "") {
+	    alert('이메일을 입력하여 주십시오.');
+	    document.formm.email.focus();
+	    return;
+    } else {
+    	document.formm.action = "pwdSearch.do";
+        document.formm.submit();
+    }
+};
 

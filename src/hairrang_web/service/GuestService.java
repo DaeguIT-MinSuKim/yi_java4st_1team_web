@@ -21,6 +21,10 @@ public class GuestService{
 		return dao.insertGuest(guest);
 	}
 	
+	public int updateGuestPwd(Guest guest) {
+		return dao.updateGuestPwd(guest);
+	}
+	
 	public Guest selectGuestByIdName(Guest guest) {
 		return dao.selectGuestByIdName(guest);
 	}
@@ -28,4 +32,14 @@ public class GuestService{
 	public int confirmId(String id) {
 		return dao.confirmId(id);
 	}
+	
+	public Guest findId(String name, String email) {
+		return dao.findId(name, email);
+	}
+
+	public Guest findPwd(String id, String name, String email) {
+		
+		return dao.findPwd(id, name, email);
+	}
+
 }

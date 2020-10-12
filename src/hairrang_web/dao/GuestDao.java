@@ -23,5 +23,10 @@ public interface GuestDao {
 	Guest selectGuestByIdName(Guest guest);
 	
 	int confirmId(String id);
+	
+	Guest findId(String name, String email);
+
+	Guest findPwd(String id, String name, String email);
+
 
 }

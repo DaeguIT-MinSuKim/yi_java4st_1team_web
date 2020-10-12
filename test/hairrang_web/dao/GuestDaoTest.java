@@ -69,7 +69,7 @@ public class GuestDaoTest {
 		fail("Not yet implemented");
 	}
 	
-	@Test
+	//@Test
 	public void confirmId() {
 		//있으면 1 없으면 -1
 		int res = dao.confirmId("one");
@@ -77,5 +77,21 @@ public class GuestDaoTest {
 		System.out.println(res);
 		
 	}
+	
+	//@Test
+	public void findId() {
+		Guest guest = dao.findId("김혜진", "hoon@test.co.kr");
+		Assert.assertNotNull(guest);
+		System.out.println(guest);
+	}
+	
+	@Test
+	public void findPwd() {
+		Guest guest = dao.findPwd("test2", "김혜진", "hoon@test.co.kr");
+		Assert.assertNotNull(guest);
+		System.out.println(guest);
+	}
+	
+	
 
 }

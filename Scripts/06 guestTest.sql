@@ -7,3 +7,12 @@ INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, 
 
 UPDATE GUEST SET GUEST_NAME = ?, GUEST_BIRTHDAY = ?, GUEST_PHONE =?, GUEST_NOTE = ?, info_yn WHERE GUEST_ID = 'test2';
 
+SELECT GUEST_ID FROM guest WHERE GUEST_NAME = '김혜진' AND GUEST_EMAIL='hoon@test.co.kr';
+
+SELECT * FROM guest WHERE GUEST_ID = 'test2' AND GUEST_NAME = '김혜진' AND GUEST_EMAIL='hoon@test.co.kr';
+
+UPDATE guest SET guest_pwd = '4321' WHERE guest_id = 'test';
+
+select * from guest_view where guest_id = 'test2', guest_name = ?, guest_email
+
+SELECT * FROM GUEST;

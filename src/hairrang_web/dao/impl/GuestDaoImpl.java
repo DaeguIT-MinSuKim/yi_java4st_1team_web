@@ -53,7 +53,7 @@ public class GuestDaoImpl implements GuestDao {
 		// GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_GENDER,
 		// GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN
 
-		String guestId = rs.getString("GUEST_ID");
+		String guestId =  rs.getString("GUEST_ID");
 		String guestPwd = null;
 
 		try {
@@ -62,7 +62,7 @@ public class GuestDaoImpl implements GuestDao {
 			// selectAll -> View 이용 -> PWD X
 			// selectById ->
 		}
-
+		
 		String guestName = rs.getString("GUEST_NAME");
 		LocalDate guestBirthday = rs.getTimestamp("GUEST_BIRTHDAY").toLocalDateTime().toLocalDate();
 		String guestPhone = rs.getString("GUEST_PHONE");
@@ -72,8 +72,8 @@ public class GuestDaoImpl implements GuestDao {
 		String guestNote = rs.getString("GUEST_NOTE");
 		String delYn = rs.getString("DEL_YN");
 		String infoYn = rs.getString("INFO_YN");
-
-		return new Guest(guestId, guestPwd, guestName, guestBirthday, guestPhone, guestEmail, guestGender, guestJoinDate, guestNote, delYn, infoYn);
+		
+		return new Guest(guestId, guestPwd, guestName, guestBirthday, guestPhone, guestEmail, guestGender, guestJoinDate, guestNote, delYn, infoYn);	
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class GuestDaoImpl implements GuestDao {
 	public int deleteGuest(Guest guest) {
 		String sql = "DELETE GUEST WHERE GUEST_ID = ?";
 
-		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try ( PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, guest.getGuestId());
 
 			return pstmt.executeUpdate();
@@ -213,6 +213,50 @@ public class GuestDaoImpl implements GuestDao {
 		}
 		return result;
 	}
+
 	
+	//id : name, email 
+	//pw : id, name, email
+	
+
+	@Override
+	public Guest findId(String name, String email) {
+		String sql = "SELECT GUEST_ID FROM guest WHERE GUEST_NAME = ? AND GUEST_EMAIL = ?";
+		try (Connection con = JndiDs.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, name);
+			pstmt.setString(2, email);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					Guest findUser = new Guest(rs.getString("GUEST_ID"));
+					return findUser;
+				}
+					
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
+	@Override
+	public Guest findPwd(String id, String name, String email) {
+		String sql = "SELECT * FROM guest_view WHERE GUEST_ID = ? AND GUEST_NAME = ? AND GUEST_EMAIL= ?";
+		try ( Connection con = JndiDs.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1,id);
+			pstmt.setString(2, name);
+			pstmt.setString(3, email);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return getGuest(rs);
+				}	
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
 
 }
