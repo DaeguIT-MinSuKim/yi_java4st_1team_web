@@ -15,4 +15,4 @@ UPDATE guest SET guest_pwd = '4321' WHERE guest_id = 'test';
 
 select * from guest_view where guest_id = 'test2', guest_name = ?, guest_email
 
-SELECT * FROM GUEST;
+UPDATE guest SET guest_pwd = '1234' WHERE GUEST_id = 'chini91';
