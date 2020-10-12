@@ -71,7 +71,7 @@
 						<li><a href="about.do">ABOUT</a></li>
 						<li><a href="">SALON</a>
 							<ul>
-								<li><a href="designer.jsp">DESIGNER</a></li>
+								<li><a href="designerHome.do">DESIGNER</a></li>
 								<li><a href="hair.jsp">HAIR</a></li>
 								
 							</ul></li>

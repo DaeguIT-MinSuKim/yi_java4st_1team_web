@@ -9,7 +9,7 @@
 </head>
 <body>
 	<h1>문의글 작성</h1>
-	<form name="form" method="post" action="qnaWrite.do">
+	<form name="form" method="post" action="qnaWrite.do" enctype="multipart/form-data">
 		<label>Title</label>
 		<input type="text" name="title"><br>
 		<label>Content</label>
@@ -17,6 +17,7 @@
 		<div id="buttons" style="float: right">
 			<input type="submit" value="제출하기" class="submit">
 			<input type="reset" value="초기화" class="cancel">
+			<input type="file" name="file">
 		</div>
 	</form>
 </body>
