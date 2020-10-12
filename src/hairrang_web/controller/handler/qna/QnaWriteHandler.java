@@ -1,11 +1,18 @@
 package hairrang_web.controller.handler.qna;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.sun.glass.ui.Application;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Guest;
@@ -26,6 +33,9 @@ public class QnaWriteHandler implements Command {
 		if (request.getMethod().equals("GET")) {
 			System.out.println("GET");
 
+			ServletContext context = request.getServletContext();
+			System.out.println(context);
+			
 			// 만약 로그인이 되어있지 안하면 url에 qnaWrite.do의 경로를 저장한채로 login.do로 넘기기
 			if (loginUser == null) {
 				return "login.do?url='qnaWrite.do'";
@@ -33,8 +43,45 @@ public class QnaWriteHandler implements Command {
 
 			return url;
 		} else {
-			//방식이 post방식일 경우 제목과 내용을 가지고와서 isnert하는 곳
+			// 방식이 post방식일 경우 제목과 내용을 가지고와서 isnert하는 곳
 			System.out.println("POST");
+			PrintWriter out = response.getWriter();
+			
+			//다운로드경로
+			String savePath = "upload";
+
+			//최대 업로드 파일 크기 5MB로 지정
+			int uploadFileSizeLimit = 5*1024*1024;
+			String entype = "UTF-8";
+		
+			ServletContext context = request.getServletContext();
+			System.out.println(context);
+			String uploadFilePath = context.getRealPath(savePath);
+			System.out.println("서버상으 실제 디렉토리 :");
+			System.out.println(uploadFilePath);
+			
+			try{MultipartRequest multi = new MultipartRequest(request, 		//request 객체
+															uploadFilePath, 		//서버상의 실제 디렉토리
+															uploadFileSizeLimit, 	//최대 업로드 파일 크기
+															entype, 			//인코딩방법
+															new DefaultFileRenamePolicy());	//동일한 이름이 존재하면 새로운 이름이 부여됨
+			//업로드된 파일의 이름 얻기
+			String fileName = multi.getFilesystemName("upload");
+			
+			if(fileName == null) {
+				//파일이 업로드 되지 않았을때
+				System.out.println("파일이 업로드 되지 않았음");
+			}else {
+				out.println("<br> 글쓴이 :"+multi.getParameter("name"));
+				out.println("<br> 제 &nbsp; 목 : "+ multi.getParameter("title"));
+				out.println("<br> 파일명 : "+ fileName);
+			}
+			
+			
+			}catch (Exception e) {
+				System.out.println("예외발생 :"+e);
+			}
+			
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
 			QnA qna = new QnA(loginUser, title, content);
@@ -43,4 +90,5 @@ public class QnaWriteHandler implements Command {
 		}
 
 	}
+
 }

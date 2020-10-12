@@ -19,9 +19,9 @@ public class DesignerHomeHandler implements Command {
 			throws IOException, ServletException {
 		String url = "designer/designerHome.jsp";
 		
+		//디자이너 리스트 불러옴
 		List<Designer> list = service.getDesignerList();
 		request.setAttribute("list", list);
-		
 		return url;
 	}
 
