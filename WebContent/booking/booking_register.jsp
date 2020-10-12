@@ -12,26 +12,99 @@
 			$(this).attr("class", "active");
 		});
 		
+		
+		$(function() {
+			$.ajax({
+				url: "booking.do",
+				type: "post",
+				dataType: "json",
+				success: function(data) {
+					console.log(data);
+					loadHairKindCombo($("#hairkindbox"), data);
+					$("#hairkindbox").val("");
+				}
+			});
+		
+			/* var hairKind; */
+						
+			function loadHairKindCombo(target, data) {
+				var dataArr = [];
+				var idx = 0;
+				target.empty();
+				
+				$.each(data, function(index, item) {
+					dataArr[idx++] = "<option value=" + item.kindNo + ">[" + item.kindNo + "] " + item.kindName + "</option>";
+				});
+				
+				target.append(dataArr);
+			}
+			
+			
+			$("#hairkindbox").change(function() {
+				var selectedKindNo = $("#hairkindbox option:selected").val();
+				// changeHairBox("#hairbox", selectedKindNo);
+				$.ajax({
+					url: "booking.do",
+					type: "post",
+					dataType: "json",
+					data: {
+						kindNo: selectedKindNo
+					},
+					success: function(data) {
+						loadHairBox($("#hairbox"), data);
+					},
+					error: function(error) {
+						console.log("[load hiarbox] error: " + error);
+					}
+				});
+			});
+			 
+			function loadHairBox(target, data) {
+				var dataArr = [];
+				var idx = 0;
+				target.empty();
+				
+				$.each(data, function(index, item) {
+					dataArr[idx++] = "<option value=" + item.hairNo + ">" + item.hairName+ "</option>";
+				});
+				
+				target.append(dataArr);
+			};
+			
+		});
 	}
 </script>
 <form>
 	<ul>
-		<li><label for="bookName">예약자 : </label>
-		<input type="text" name="bookName" value="${loginUser.guestName }" readOnly></li>
-		<li><label for="bookDate">예약일 : </label>
-		<input type="date" name="bookDate" id="bookDate"></li>
-		<li><label for="bookHair">시술 : </label>
-		<select name="bookHair">
-			<c:forEach var="hairKind" items="${hairList}">
-				<option value="${hairKind.kindNo }">[${hairKind.kindNo}]${hairKind.kindName }</option>
-			</c:forEach>
-		</select></li>
-		<li><label for="bookHair">시술 : </label>
-		<select name="bookDesigner">
-			<c:forEach var="de" items="${deList}">
-				<option value="${de.deNo }">${de.deName }</option>
-			</c:forEach>
-		</select></li>		
+		<li>
+			<label for="bookName">예약자 : </label>
+			<input type="text" name="bookName" value="${loginUser.guestName }" readOnly>
+		</li>
+		<li>
+			<label for="bookDate">예약일 : </label>
+			<input type="date" name="bookDate" id="bookDate">
+		</li>
+		<li>
+			<label for="bookHairKind">시술 : </label>
+			<select name="bookHairKind" id="hairkindbox">
+				<%-- <c:forEach var="hairKind" items="${hairList}">
+					<option value="${hairKind.kindNo }">[${hairKind.kindNo}]${hairKind.kindName }</option>
+				</c:forEach> --%>
+			</select>
+		</li>
+		<li>
+			<label for="bookHair">시술 : </label>
+			<select name="bookHair" id="hairbox">
+			</select>
+		</li>
+		<li>
+			<label for="bookDesigner">디자이너 : </label>
+			<select name="bookDesigner">
+				<c:forEach var="de" items="${deList}">
+					<option value="${de.deNo }">${de.deName }</option>
+				</c:forEach>
+			</select>
+		</li>		
 	</ul>
 	<div class="time_table">
 		<ul>
