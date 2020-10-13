@@ -16,4 +16,7 @@ public class EventService {
 	public Event selectEventByNo(Event event) {
 		return dao.selectEventByNo(event);
 	}
+	public ArrayList<Event> selectEventSide(Event event){
+		return dao.selectEventSide(event);
+	}
 }

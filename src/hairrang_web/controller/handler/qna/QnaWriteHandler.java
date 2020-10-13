@@ -1,7 +1,11 @@
 package hairrang_web.controller.handler.qna;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Enumeration;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -13,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.sun.glass.ui.Application;
+import com.sun.org.apache.bcel.internal.classfile.Field;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Guest;
@@ -49,13 +54,13 @@ public class QnaWriteHandler implements Command {
 			
 			//다운로드경로
 			String savePath = "upload";
-
+			
 			//최대 업로드 파일 크기 5MB로 지정
 			int uploadFileSizeLimit = 5*1024*1024;
 			String entype = "UTF-8";
-		
+			
 			ServletContext context = request.getServletContext();
-			System.out.println(context);
+			System.out.println("context :"+context);
 			String uploadFilePath = context.getRealPath(savePath);
 			System.out.println("서버상으 실제 디렉토리 :");
 			System.out.println(uploadFilePath);
@@ -67,26 +72,31 @@ public class QnaWriteHandler implements Command {
 															new DefaultFileRenamePolicy());	//동일한 이름이 존재하면 새로운 이름이 부여됨
 			//업로드된 파일의 이름 얻기
 			String fileName = multi.getFilesystemName("upload");
+			String nowDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date()); //현재시간
 			
-			if(fileName == null) {
-				//파일이 업로드 되지 않았을때
-				System.out.println("파일이 업로드 되지 않았음");
-			}else {
-				out.println("<br> 글쓴이 :"+multi.getParameter("name"));
-				out.println("<br> 제 &nbsp; 목 : "+ multi.getParameter("title"));
-				out.println("<br> 파일명 : "+ fileName);
-			}
+			//업로드된 파일 얻기
+			File findFile = new File(uploadFilePath+"/"+fileName);
+			
+			
+			String realFileName = nowDate+"-"+fileName; //현재시간과 확장자 합치기
+			System.out.println("realFileName : "+realFileName);
+			String FilegetPath = uploadFilePath+"/"+realFileName;
+			File newFile = new File(FilegetPath);
+			
+			findFile.renameTo(newFile);//파일명 변경
+			
+			String title = multi.getParameter("title");
+			String content = multi.getParameter("content");
+			QnA qna = new QnA(loginUser, title, content, FilegetPath);
+			service.insertQna(qna);
 			
 			
 			}catch (Exception e) {
 				System.out.println("예외발생 :"+e);
 			}
-			
-			String title = request.getParameter("title");
-			String content = request.getParameter("content");
-			QnA qna = new QnA(loginUser, title, content);
-			service.insertQna(qna);
-			return "qnaHome.do?nowPage=1&cntPerPage=5";
+			/*?nowPage=1&cntPerPage=5*/
+			response.sendRedirect("qnaHome.do");
+			return null;
 		}
 
 	}

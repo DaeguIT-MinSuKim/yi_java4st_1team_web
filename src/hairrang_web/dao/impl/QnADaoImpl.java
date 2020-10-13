@@ -78,12 +78,13 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public int insertQnA(QnA qna) {
-		String sql = "INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,RES_YN) VALUES (?,?,?,'n')";
+		String sql = "INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,RES_YN,QNA_FILE) VALUES (?,?,?,'n',?)";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, qna.getGuestId().getGuestId());
 			pstmt.setString(2, qna.getQnaTitle());
 			pstmt.setString(3, qna.getQnaContent());
+			pstmt.setString(4, qna.getQnaFile());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

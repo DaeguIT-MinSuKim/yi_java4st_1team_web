@@ -19,6 +19,14 @@ public class QnA {
 		// TODO Auto-generated constructor stub
 	}
 
+	public QnA(Guest guestId, String qnaTitle, String qnaContent, String qnaFile) {
+		super();
+		this.guestId = guestId;
+		this.qnaTitle = qnaTitle;
+		this.qnaContent = qnaContent;
+		this.qnaFile = qnaFile;
+	}
+
 	public QnA(int qnaNo, Guest guestId, Admin adminId, String qnaTitle, String qnaContent, String qnaFile,
 			LocalDateTime qnaRegDate, String qnaResYn, int qnaRefNo, String qnaDelYn) {
 		super();

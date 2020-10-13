@@ -138,4 +138,26 @@ public class EventDaoImpl implements EventDao {
 		}
 	}
 
+	@Override
+	public ArrayList<Event> selectEventSide(Event event) {
+		String sql = "SELECT * FROM EVENT WHERE EVENT_NO = ?-1 OR EVENT_NO = ?+1 ";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, event.getEventNo());
+			pstmt.setInt(2, event.getEventNo());
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					ArrayList<Event> list = new ArrayList<>();
+					do {
+						list.add(getEvent(rs));
+					}while(rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
 }
