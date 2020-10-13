@@ -25,10 +25,10 @@ public class QnaHomeHandler implements Command {
 		String url = "qna/qnaHome.jsp";
 		
 		//임시로 "test"계정으로 로그인했다고 가정
-		Guest loginUser = dao.selectGuestById(new Guest("test"));
+		/*Guest loginUser = dao.selectGuestById(new Guest("test"));
 		System.out.println(loginUser);
 		HttpSession session = request.getSession();
-		session.setAttribute("loginUser", loginUser);
+		session.setAttribute("loginUser", loginUser);*/
 		
 		//현재페이지랑 한페이지당 제한 문의 갯수 넘겨주는 곳
 		String nowPage = request.getParameter("nowPage");

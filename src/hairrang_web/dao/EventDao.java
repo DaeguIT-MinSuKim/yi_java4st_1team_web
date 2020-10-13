@@ -16,5 +16,7 @@ public interface EventDao {
 	
 	int deleteEvent(Event event);
 	
+	ArrayList<Event> selectEventSide(Event event);
+	
 	
 }

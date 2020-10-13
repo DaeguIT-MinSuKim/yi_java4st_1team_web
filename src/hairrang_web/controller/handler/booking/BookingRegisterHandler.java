@@ -3,6 +3,7 @@ package hairrang_web.controller.handler.booking;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -40,13 +41,11 @@ public class BookingRegisterHandler implements Command {
 			System.out.println("BookingRegisterHandler >> GET");
 
 			// 세션으로부터 아이디 얻어오기 (회원만 접근 가능)
-			// 로그인 체크 필터로 구현했기 때문에 if-else문 주석 처리
+			// 로그인 체크 필터로 구현함
 			
 			HttpSession session = request.getSession();
 			Guest loginUser = (Guest) session.getAttribute("loginUser");
 			
-//			if(loginUser != null) {
-
 			List<HairKind> hairList = hService.getHairListAll();
 			List<Designer> deList = dService.getDesignerList();
 			
@@ -54,25 +53,18 @@ public class BookingRegisterHandler implements Command {
 			request.setAttribute("deList", deList);
 			
 			return "booking/booking_register.jsp";
-			
-			/*} else {
-				
-				System.out.println(request.getHeader("referer"));
-//				session.setAttribute("prevUrl", "booking.do");
-				// 경고 후 로그인 화면으로 안내
-				response.sendRedirect("login.do");
-				
-				return null;
-			}*/
-			
 		} else {
 			System.out.println("BookingRegisterHandler >> POST");
 			
-			String kindNo = null;
-			if((kindNo = request.getParameter("kindNo")) != null) {
-				/*for (Entry<String, String[]> map : request.getParameterMap().entrySet() ) {
+			// 파라미터 값 확인
+			for (Entry<String, String[]> map : request.getParameterMap().entrySet() ) {
 					System.out.println(map.getKey() + " : " + map.getValue());
-				}*/
+			}
+			
+			String kindNo = null;
+		
+			// 헤어 대분류를 선택했을 때 헤어 소분류값 ajax로 셀렉 박스 리스트 넘기기
+			if((kindNo = request.getParameter("kindNo")) != null) {
 
 				HairKind hairKind = hService.getHairKindInfo(Integer.parseInt(kindNo));
 				System.out.println(hairKind);
@@ -90,6 +82,7 @@ public class BookingRegisterHandler implements Command {
 				pw.flush();
 				
 			} else {
+				// 페이지 로딩시 헤어 대분류 ajax로 셀렉 박스 리스트 넘기기
 				List<HairKind> hairKindList = hService.getHairListAll();
 				System.out.println(hairKindList);
 				
@@ -108,7 +101,5 @@ public class BookingRegisterHandler implements Command {
 			
 			return null;
 		}
-		
-//		return "booking/booking_list.jsp";
 	}
 }

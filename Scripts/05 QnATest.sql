@@ -10,6 +10,7 @@ INSERT INTO ADMIN VALUES ('testadmin','1234','testadmin');
 
 --연습용 qna test
 SELECT * FROM QNA;
+DELETE FROM QNA q2 ;
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn) VALUES ('test','testTitle115','n',0);
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn) VALUES ('test','testTitl2123123','n',0);
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn) VALUES ('test2','testTitl4','n',0);
