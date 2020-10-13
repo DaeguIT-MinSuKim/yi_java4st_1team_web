@@ -116,7 +116,7 @@ public class GuestDaoImpl implements GuestDao {
 	// 회원정보 수정시 로그인과 별도로 비밀번호 재확인이 필요한데 어떻게 처리할지 고민해보기.
 	@Override
 	public int updateGuest(Guest guest) {
-		String sql = "UPDATE GUEST SET GUEST_NAME = ?, GUEST_BIRTHDAY = ?, GUEST_PHONE =?, GUEST_NOTE = ?, INFO_YN = ? WHERE GUEST_ID = ? ";
+		String sql = "UPDATE GUEST SET GUEST_NAME = ?, GUEST_BIRTHDAY = ?, GUEST_EMAIL = ?, GUEST_PHONE =?, INFO_YN = ? WHERE GUEST_ID = ? ";
 
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, guest.getGuestName());

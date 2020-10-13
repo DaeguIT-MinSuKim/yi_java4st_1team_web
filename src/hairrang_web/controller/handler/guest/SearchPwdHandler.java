@@ -59,7 +59,7 @@ public class SearchPwdHandler implements Command {
 						SendMail sm = new SendMail();
 						findUser.setGuestPwd(key);
 						int res = service.updateGuestPwd(findUser);
-						System.out.println(res);
+						System.out.println("비밀번호 업데이트 결과: " + res);
 						//비밀번호 변경
 
 						sm.sendEmail(from, to, cc, subject, content);

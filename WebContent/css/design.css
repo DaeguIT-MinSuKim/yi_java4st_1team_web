@@ -20,3 +20,18 @@
 .timeselectbox .timeline .timesec {padding:15px 0 5px 58px}
 .timeselectbox .timeline .timesec li span, .timeselectbox .timeline .timesec li a {height:40px;line-height:40px;}
 .timeselectbox .timeline .timesec .line {padding-left:58px;}
+
+/*mypage sub_menu*/
+.info a, .book a, .order a, .qna a {color:#bbb;}
+.submenu_main {margin-top:50px; text-align: center; background: #ffffff; border-bottom:1px solid #bbb;}
+.sub_menu ul {}
+.sub_menu ul li {display: inline-block; font-weight:600; font-size:20px; text-align: center; color: #bbb; text-decoration:none;}
+.sub_menu ul li a {padding:30px 60px; text-decoration:none;	}
+.sub_menu ul li a:hover{ text-decoration:none; color: black; padding:30px 60px; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
+
+
+/*mypage guest_info*/
+.info_submenu {margin-top:50px; margin-bottom:100px; text-align:center; font-size:15px;}
+.info_submenu ul {}
+.info_submenu ul li {display: inline-block; width:200px;border:1px solid gray; padding:10px; margin:0 20px; color: #bbb;}
+.info_submenu ul li a {text-decoration:none; color:gray;}

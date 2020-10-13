@@ -86,8 +86,11 @@ $(function(){
 				</tr>
 				<tr>
 					<td>비밀번호 확인</td>
-					<td><input type="password" name="pwdCheck" id="pwdCheck"/>&nbsp;
-					<font size="2" color="black" name="check"></font></td>
+					<td><input type="password" name="pwdCheck" id="pwdCheck"/>
+				</tr>
+				<tr>
+					<td></td>
+					<td><font size="2" color="black" name="check"></font></td>
 				</tr>
 				<tr>
 					<td>성명</td>

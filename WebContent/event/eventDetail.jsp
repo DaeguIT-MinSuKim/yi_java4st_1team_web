@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>evnetDetail</title>
-</head>
+  <%@ include file="../header.jsp" %>  
+
 <body style="text-align: center;">
 	<div style="width: 80%; margin: auto;">
 		<hr>
@@ -16,4 +12,4 @@
 		${event.eventContent }
 	</div>
 </body>
-</html>
+<%@ include file="../footer.jsp" %>   

@@ -119,3 +119,26 @@ function pwd_confirm(){
         document.formm.submit();
     }
 };
+
+
+function info_update(){
+	if (document.formm.pwd.value == "") {
+	    alert('비밀번호를 입력하여 주십시오.');
+	    document.formm.pwd.focus();
+	    return;
+    } else{
+    	document.formm.action = "infoUpdate.do";
+        document.formm.submit();
+    }
+};
+
+function pwd_update(){
+	if (document.formm.pwd.value == "") {
+	    alert('비밀번호를 입력하여 주십시오.');
+	    document.formm.pwd.focus();
+	    return;
+    } else{
+    	document.formm.action = "pwdUpdate.do";
+        document.formm.submit();
+    }
+};
