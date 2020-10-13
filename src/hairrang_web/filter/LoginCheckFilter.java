@@ -70,10 +70,9 @@ public class LoginCheckFilter implements Filter {
 					
 					// (2) Session을 이용한 redirection
 					
-					System.out.println("2. redirectURI 세션에 설정함");
+					System.out.println("2. redirectURI 세션에 설정함: " + getThisURI(hRequest));
 					session.setAttribute("redirectURI", getThisURI(hRequest));
 					System.out.println("3. login.do로 리디렉션");
-					
 					
 					hResponse.sendRedirect("login.do");
 					return;
