@@ -184,6 +184,7 @@ CREATE TABLE QNA (
 	qna_regDate DATE DEFAULT SYSDATE, /* 작성일 */
 	res_Yn CHAR(1) DEFAULT 'n', /* 처리완료여부 */
 	qna_refNo NUMBER(10), /* 고객문의번호 */
+	notice_yn CHAR(1) DEFAULT 'n', /* 공지사항여부 */
 	del_yn CHAR(1) DEFAULT 'n' /* 삭제여부 */
 	notice_yn char(1) default 'n' /*공지사항여부*/
 );
