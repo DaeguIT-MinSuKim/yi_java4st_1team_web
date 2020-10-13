@@ -67,7 +67,8 @@ fieldset input {
 <body>
 
 <div class="main">
-<!-- 	<img src="images/main1.jpg" style="width: 100%; top:0;"> -->
+
+	<!-- <img src="images/main1.jpg" style="width: 100%; top:0;"> -->
 	<form method="post" action="login.do">
 	<div id="subwrapper">
 		<!-- div class="line"></div> -->

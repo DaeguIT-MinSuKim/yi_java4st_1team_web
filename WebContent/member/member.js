@@ -109,3 +109,13 @@ function pwdSearch(){
     }
 };
 
+function pwd_confirm(){
+	if (document.formm.pwd.value == "") {
+	    alert('비밀번호를 입력하여 주십시오.');
+	    document.formm.pwd.focus();
+	    return;
+    } else{
+    	document.formm.action = "pwdConfirm.do";
+        document.formm.submit();
+    }
+};

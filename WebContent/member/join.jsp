@@ -33,11 +33,12 @@ input {width:200px; border: 1px solid #e8e8e8;}
 }
 
 .div-step{
-
 	padding-top:50px;
 	display:table;
 	 margin:0 auto;
 }
+.idCheck {width:80px; height:30px; color:black; border:none; font-size:15px; margin:5px; width:200px; background: white; border:1px solid #777;}
+.submit, .cancel {width:80px; height:50px; color:black; border:none; font-size:15px; margin:5px; width:200px; background: white; border:1px solid #777;}
 </style>
 
 <script>
@@ -58,6 +59,7 @@ $(function(){
 	  }else{
 	  	$('font[name=check]').text('');
 	  	$('font[name=check]').html("암호가 일치합니다.");
+		$('input[name=pwdCheck]').attr("style","border:1px solid black")
 	  }
  });
 });
@@ -76,7 +78,7 @@ $(function(){
 					<td>아이디</td>
 					<td><input type="text" name="id" /> 
 					<input type="hidden" name="reid">
-					<input type="button" name="" value="중복확인" onclick="idcheck()" style="width: 100px; margin-left:30px;" /></td>
+					<input type="button" class="idCheck" value="중복확인" onclick="idcheck()" style="width: 100px; margin-left:30px;" /></td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>
