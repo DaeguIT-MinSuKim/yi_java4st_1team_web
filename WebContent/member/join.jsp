@@ -38,7 +38,7 @@ input {width:200px; border: 1px solid #e8e8e8;}
 	 margin:0 auto;
 }
 .idCheck {width:80px; height:30px; color:black; border:none; font-size:15px; margin:5px; width:200px; background: white; border:1px solid #777;}
-.submit, .cancel {width:80px; height:50px; color:black; border:none; font-size:15px; margin:5px; width:200px; background: white; border:1px solid #777;}
+.submit, .cancel {width:80px; height:50px; color:black; font-size:15px; margin:5px; width:200px; background: white; border:1px solid #777;}
 </style>
 
 <script>
@@ -46,23 +46,31 @@ $(document).on("keyup", ".phone", function() {
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
 
 /*비밀번호 확인 체크*/
-$(function(){
+$(document).ready(function(){
  $('#pwd').keyup(function(){
   $('font[name=check]').text('');
-	 }); //#user_pass.keyup
+}); //#user_pass.keyup
 
- $('#pwdCheck').keyup(function(){
+$('#pwdCheck').keyup(function(){
 	  if($('#pwd').val()!=$('#pwdCheck').val()){
 	  	$('font[name=check]').text('');
 	   	$('font[name=check]').html("암호가 일치하지 않습니다.");
-	   	$('input[name=pwdCheck]').attr("style","border:1px solid #e16a93")
+	   	$('input[name=pwdCheck]').attr("style","border:2px solid #e16a93")
 	  }else{
 	  	$('font[name=check]').text('');
 	  	$('font[name=check]').html("암호가 일치합니다.");
 		$('input[name=pwdCheck]').attr("style","border:1px solid black")
 	  }
- });
+	});	  
+	  
+	$('input[name="gender"]').click(function() { //클릭 이벤트 발생한 요소가 체크 상태인 경우
+	 	if ($(this).prop('checked')) {//체크박스 그룹의 요소 전체를 체크 해제후 클릭한 요소 체크 상태지정
+			$('input[name="gender"]').prop('checked', false);
+			$(this).prop('checked', true);
+	  }
+	});
 });
+
 
 </script>
 <body>

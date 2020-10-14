@@ -5,7 +5,7 @@
     <%@ include file="sub_menu.jsp" %>  
 <style>
 .info a{color: black; padding:30px 60px; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
-
+.btn { width:250px; height:50px; color:#777; border:none; font-size:15px; margin:5px; background: white; border:1px solid #777;}
 </style>
 <body>
 
@@ -23,9 +23,9 @@
 회원님의 정보를 안전하게 보호하기 위해 <br>
 비밀번호를 한번 더 입력하여 주세요. <br>
 	<div class="clear" style="padding:10px;"></div>
-<input type="password" name="pwd" placeholder="비밀번호" style="width:200px;">
+<input type="password" name="pwd" placeholder="비밀번호" style="width:250px;">
 <div class="clear" style="padding:5px;"></div>
-<input type="button" name="btn" value="확 인" style="width:200px;" onclick="pwd_confirm()">
+<input type="button" class="btn" value="확   인" onclick="pwd_confirm()">
 </div>
 </form>
 </body>

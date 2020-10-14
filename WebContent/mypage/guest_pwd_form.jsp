@@ -41,7 +41,7 @@ $(function(){
 	  if($('#pwd').val()!=$('#pwdCheck').val()){
 	  	$('font[name=check]').text('');
 	   	$('font[name=check]').html("암호가 일치하지 않습니다.");
-	   	$('input[name=pwdCheck]').attr("style","border:1px solid #e16a93")
+	   	$('input[name=pwdCheck]').attr("style","border:2px solid #e16a93")
 	  }else{
 	  	$('font[name=check]').text('');
 	  	$('font[name=check]').html("암호가 일치합니다.");
@@ -58,12 +58,12 @@ $(function(){
 	          history.go(-1);
 	    </script>
 	</c:when>
-	<c:when test="${message == -2}">
+	<%-- <c:when test="${message == -2}">
 	 	<script>
 	          alert('로그인이 필요합니다.')
 	         location.href="login.do";
 	    </script>
-	</c:when>
+	</c:when> --%>
 </c:choose>
 
 <div class="info_submenu">
@@ -77,7 +77,7 @@ $(function(){
 <table class="table">
 	<tr>
 		<td>아이디</td>
-		<td><input type="text" name="id" readonly/> 
+		<td><input type="text" name="id" value="${id}" readonly/> 
 	</tr>
 	<tr>
 		<td>비밀번호</td>
@@ -87,9 +87,9 @@ $(function(){
 		<td>비밀번호 확인</td>
 		<td><input type="password" name="pwdCheck" id="pwdCheck"/>
 	</tr>
-		<tr>
-			<td></td>
-			<td><font size="2" color="black" name="check"></font></td>
+	<tr>
+		<td></td>
+		<td style="padding-left:40px;"><font size="2" color="black" name="check"></font></td>
 	</tr>
 </table>
 	<div id="buttons">

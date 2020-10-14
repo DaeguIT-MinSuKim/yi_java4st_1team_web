@@ -30,9 +30,7 @@ public class PwdConfirmHandler implements Command {
 			System.out.println("get");
 			return "mypage/pwd_confirm.jsp";
 		} else {
-
 			System.out.println("post");
-			System.out.println("loginuser" + loginUser);
 			String pwd = request.getParameter("pwd").trim();
 
 			// 로그인 풀리거나 안하고 진입시

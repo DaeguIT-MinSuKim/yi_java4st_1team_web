@@ -24,7 +24,7 @@ input {margin-left:20px; width:260px; border: 1px solid #e8e8e8;}
 #buttons {width:800px; margin:0 auto; text-align:Center; padding:50px;}
 .submit, .cancel {width:200px;}
 
-.submit, .cancel {width:80px; height:50px; color:black; border:none; font-size:15px; margin:5px; width:200px; background: white; border:1px solid #777;}
+.submit, .cancel {width:200px; height:50px; color:black; font-size:15px; margin:5px; background: white; border:1px solid #777;}
 .menu input {cursor:pointer; margin:10px;}
 .info_submenu ul .info_update a {text-decoration:none; color:black;}
 
@@ -33,9 +33,34 @@ input {margin-left:20px; width:260px; border: 1px solid #e8e8e8;}
 
 <script>
 $(document).on("keyup", ".phone", function() { 
-	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
+	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); 
+});
 
-$('input:checkbox[name="gender"]').is(":checked") ==  true
+
+$(document).ready(function() {
+	var gender=${gender};
+	console.log(gender);
+	if(gender==1){
+		$("input[name=gender][value='1'").prop("checked",true);
+	}else{
+		$("input[name=gender][value='0'").prop("checked",true);
+	}
+	
+	$('input[name="gender"]').click(function() { //클릭 이벤트 발생한 요소가 체크 상태인 경우
+	     if ($(this).prop('checked')) {//체크박스 그룹의 요소 전체를 체크 해제후 클릭한 요소 체크 상태지정
+	          $('input[name="gender"]').prop('checked', false);
+	          $(this).prop('checked', true);
+	     }
+	});
+	
+	var infoYn = "${infoYn}";
+	if(infoYn=='y'){
+		$("input[name=infoYn]").prop("checked",true);
+	}else{
+		$("input[name=infoYn]").prop("checked",false);
+	}
+	
+});
 </script>
 
 <body>
@@ -46,12 +71,12 @@ $('input:checkbox[name="gender"]').is(":checked") ==  true
 	          history.go(-1);
 	    </script>
 	</c:when>
-	<c:when test="${message == -2}">
+	<%-- <c:when test="${message == -2}">
 	 	<script>
 	          alert('로그인이 필요합니다.')
 	          location.href="login.do";
 	    </script>
-	</c:when>
+	</c:when> --%>
 </c:choose>
 
 <div class="info_submenu">
@@ -67,7 +92,6 @@ $('input:checkbox[name="gender"]').is(":checked") ==  true
 		<table class="table">				<tr>
 					<td>아이디</td>
 					<td><input type="text" name="id"  value="${id}" readonly/> 
-					<input type="hidden" name="reid"">
 				</tr>
 				<tr>
 					<td>성명</td>
@@ -77,7 +101,7 @@ $('input:checkbox[name="gender"]').is(":checked") ==  true
 					<td> <input type='date' name="birth" value="${birth}"/></td>
 				</tr>
 				<tr>
-					<td>성별 ${gender}</td>
+					<td>성별</td>
 					<td><input type="checkbox" name="gender" value="0" style="width: 30px;">
 						여성 
 						<input type="checkbox" name="gender" value ="1" style="width: 30px;">
@@ -92,17 +116,14 @@ $('input:checkbox[name="gender"]').is(":checked") ==  true
 					<td>휴대폰</td>
 					<td><input type="text" name="phone" class="phone" maxlength="13" value="${phone}">
 				</tr>
-			
-
 			</table>
 			<br>
 			<div class="check">
-				
-				<input type="checkbox" name="infoCheck" value="${infoYn}" style="width:50px;">마케팅 수신에 동의합니다.<br></div>
+				<input type="checkbox" name="infoYn" value="y" style="width:50px;">마케팅 수신에 동의합니다.<br></div>
 			<br>
 			<div id="buttons">
-				<input type="button" value="수정" class="submit" onclick="info_update()">
-				<input type="reset" value="취소" class="cancel">
+				<input type="submit" value="수정" class="submit" onclick="info_update()">
+				<input type="button" value="취소" class="cancel" onclick="location.href='infoUpdate.do'">
 			</div>
 		</div>
 	</form>

@@ -122,9 +122,14 @@ function pwd_confirm(){
 
 
 function info_update(){
-	alert('인포업데이트')
+	alert('정보가 변경되었습니다');
+	document.formm.action = "guestInfoUpdate.do";
+    document.formm.submit();
+    location.reload();
 };
 
 function pwd_update(){
-	alert('pwd업데이트')
+	alert('비밀번호가 변경되었습니다.');
+	document.formm.action = "guestPwdUpdate.do";
+    document.formm.submit();
 };
