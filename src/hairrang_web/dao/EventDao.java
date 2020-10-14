@@ -16,7 +16,10 @@ public interface EventDao {
 	
 	int deleteEvent(Event event);
 	
-	ArrayList<Event> selectEventSide(Event event);
+	//eventDetail밑에 이전글 다음글 정보 불러오기
+	Event selectEventDownSide(Event event);
+	
+	Event selectEventUpSide(Event event);
 	
 	
 }

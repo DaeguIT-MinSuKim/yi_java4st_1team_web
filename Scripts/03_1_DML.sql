@@ -90,3 +90,5 @@ INSERT INTO booking_hairs(book_no, hair_no) VALUES(60, 16);
 INSERT INTO booking_hairs(book_no, hair_no) VALUES(60, 14);
 INSERT INTO booking_hairs(book_no, hair_no) VALUES(61, 11);
 
+/*테스트 admin*/
+INSERT INTO ADMIN VALUES ('testadmin','1234','testadmin');

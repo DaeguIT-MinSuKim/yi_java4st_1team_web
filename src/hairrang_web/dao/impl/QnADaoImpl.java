@@ -54,6 +54,7 @@ public class QnADaoImpl implements QnADao {
 		} catch(SQLException e) {
 		}
 		qna.setQnaResYn(rs.getString("RES_YN"));
+		qna.setGuestId(new Guest(rs.getString("GUEST_ID")));
 		return qna;
 	}
 
@@ -209,7 +210,7 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public List<QnA> selectPagingQnA(Paging paging) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE rn BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setInt(1, paging.getStart());
@@ -221,6 +222,25 @@ public class QnADaoImpl implements QnADao {
 						list.add(getQnA(rs));
 					} while (rs.next());
 					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
+	@Override
+	public QnA selectResByNo(QnA qna) {
+		String sql = "SELECT * FROM qna WHERE QNA_REFNO = ?";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1,qna.getQnaNo());
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					do {
+						return getQnA(rs);
+					}while(rs.next());
 				}
 			}
 		} catch (SQLException e) {

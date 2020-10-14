@@ -1,3 +1,4 @@
 qnaList.do
+qnaWrite.do
 booking.do
 bookingDetail.do

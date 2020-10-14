@@ -70,6 +70,7 @@ public class QnaWriteHandler implements Command {
 															uploadFileSizeLimit, 	//최대 업로드 파일 크기
 															entype, 			//인코딩방법
 															new DefaultFileRenamePolicy());	//동일한 이름이 존재하면 새로운 이름이 부여됨
+			
 			//업로드된 파일의 이름 얻기
 			String fileName = multi.getFilesystemName("upload");
 			String nowDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date()); //현재시간
@@ -85,6 +86,7 @@ public class QnaWriteHandler implements Command {
 			
 			findFile.renameTo(newFile);//파일명 변경
 			
+			//제목 내용 파일경로 db에 insert하는곳
 			String title = multi.getParameter("title");
 			String content = multi.getParameter("content");
 			QnA qna = new QnA(loginUser, title, content, FilegetPath);
