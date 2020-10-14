@@ -22,4 +22,18 @@ public class BookingService {
 	public int checkUser(Booking booking, Guest guest) {
 		return dao.checkUser(booking, guest);
 	}
+	
+	public int addBooking(Booking booking) {
+		return dao.insertBooking(booking);
+	}
+	
+	// 현재 테이블에서 가장 최근의 nookNo
+	public int getMaxBookNo() {
+		return dao.selectMaxBookNo();
+	}
+	
+	// insert시 다음에 삽입할 bookNo 구하기
+	public int getNextBookNo() {
+		return dao.selectMaxBookNo() + 1;
+	}
 }
