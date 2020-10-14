@@ -1,6 +1,7 @@
 package hairrang_web.dto;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Booking {
 
@@ -67,6 +68,11 @@ public class Booking {
 
 	public void setBookDate(LocalDateTime bookDate) {
 		this.bookDate = bookDate;
+	}
+	
+	public void setBookDate(String bookDateStr) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		this.bookDate = LocalDateTime.parse(bookDateStr, formatter);
 	}
 
 	public Hair getHair() {
