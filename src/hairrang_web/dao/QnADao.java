@@ -33,4 +33,7 @@ public interface QnADao {
 	
 	//페이징처리된 게시물
 	List<QnA> selectPagingQnA(Paging paging);
+	
+	//답변 찾기
+	QnA selectResByNo(QnA qna);
 }

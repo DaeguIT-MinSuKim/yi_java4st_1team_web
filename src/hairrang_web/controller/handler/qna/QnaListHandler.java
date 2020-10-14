@@ -24,11 +24,6 @@ public class QnaListHandler implements Command {
 		HttpSession session  = request.getSession();
 		Guest loginUser = (Guest) session.getAttribute("loginUser");
 		
-		//만약 로그인이 되어있지 안하면 url에 qnaList.do의 경로를 저장한채로 login.do로 넘기기
-		if(loginUser == null) {
-			return "login.do?url='qnaList.do'";
-		}
-		
 		//session에 저장되어있는 회원정보를 통해서 회원이 가지고 있는 qnaList를 불러오는곳
 		ArrayList<QnA> list = service.qnaListById(loginUser);
 		request.setAttribute("qnaList", list);

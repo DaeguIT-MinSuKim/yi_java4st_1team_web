@@ -22,9 +22,12 @@ public class EventDetailHandler implements Command {
 		Event event = new Event(eventNo); 
 		Event findEvent = service.selectEventByNo(event);
 		ArrayList<Event> list = service.selectEventSide(findEvent);
-
+		System.out.println("findEvent ==>"+findEvent);
+		System.out.println("list ==>"+list);
+		
+		
 		request.setAttribute("list", list);
-		request.setAttribute("event", findEvent);
+		request.setAttribute("findEvent", findEvent);
 		return url;
 	}
 
