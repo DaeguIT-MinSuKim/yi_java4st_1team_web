@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import hairrang_web.controller.Command;
 
-public class GuestInfoHandler implements Command{
+public class GuestPwdUpdateHandler implements Command{
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		return "mypage/guest_info.jsp";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
