@@ -90,6 +90,7 @@ public class QnaWriteHandler implements Command {
 			String title = multi.getParameter("title");
 			String content = multi.getParameter("content");
 			QnA qna = new QnA(loginUser, title, content, FilegetPath);
+			System.out.println("insert 하기전");
 			service.insertQna(qna);
 			
 			

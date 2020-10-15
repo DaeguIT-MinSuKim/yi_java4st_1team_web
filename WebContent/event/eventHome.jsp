@@ -28,6 +28,6 @@
 			</ul>
 		</c:forEach>
 	</div>
-
+	console.log(왜안돼);
 </body>
 <%@ include file="../footer.jsp" %>   
