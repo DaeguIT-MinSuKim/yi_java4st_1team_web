@@ -37,6 +37,7 @@ public class QnaHomeHandler implements Command {
 		//현재페이지랑 한페이지당 제한 문의 갯수 확인용
 		System.out.println(nowPage);
 		System.out.println(cntPerPage);
+		
 		//만약 처음 접속했을때 초기세팅해주는 곳 
 		int total = service.coutnQna();
 		if(nowPage == null && cntPerPage == null) {

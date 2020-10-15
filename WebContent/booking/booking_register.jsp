@@ -71,6 +71,9 @@ $(function() {
 		target.append(dataArr);
 	};
 	
+	$("#hairbox").change(function() {
+	
+	});
 	
 	/* 날짜 선택 시 타임테이블 불러오기 */
 	$("#bookDate").change(function() {
@@ -127,36 +130,25 @@ function checkBookForm() {
 	
 	console.log("일시 : " + $("#bookDate").val() + " " + $(".time_table .active").attr("time24"));
 	
-	var hair = {
-			hairNo: $('#hairbox').val()
-		};
-	
-	var designer = {
-			deNo: $('#designerBox').val()
-		};
-	
+	var hair = { hairNo: $('#hairbox').val() };
+	var designer = { deNo: $('#designerBox').val() };
 	var booking = {
 			 bookDate: $("#bookDate").val() + " " + $(".time_table .active").attr("time24"),
 			 hair: hair,
 			 designer: designer
 		};
 
-	console.log(JSON.stringify(booking));
-	
-	
 	$.ajax({
        type:"post",
        url:"bookingRegister.do",
        cache: false, // refresh할 때 중복으로 추가 되지 않게 캐시 삭제
        data: JSON.stringify(booking),
-       // success 메서드 호출하고 complete 호출 됨.
-       complete: function(data) {
+       success: function(data) {
           alert("예약이 완료되었습니다. (nextNo: " + data.responseText + ")");
           console.log(data);
           window.location.href = "bookingDetail.do?no=" + data.responseText;
        }
     });
-	
 	
 	// document.bookForm.action = "bookingRegister.do";
 	// document.bookForm.submit();
@@ -203,6 +195,10 @@ function checkBookForm() {
 					<li time24="${i}:${j==0 ? '00' : j*30}">${i>9 ? i :'0'}${i>9 ? '' : i} : ${j==0 ? '00' : j*30}</li>
 		    	</c:forEach>
 		    </c:forEach> --%>
+		</ul>
+	</div>
+	<div class="selectedHairs">
+		<ul>
 		</ul>
 	</div>
 	<input type="button" name="submit" value="예약 등록" onclick="return checkBookForm();">

@@ -212,7 +212,7 @@ public class QnADaoImpl implements QnADao {
 	public List<QnA> selectPagingQnA(Paging paging) {
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
 		try(Connection con = JndiDs.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)){
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, paging.getStart());
 			pstmt.setInt(2, paging.getEnd());
 			try(ResultSet rs = pstmt.executeQuery()){
