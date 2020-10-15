@@ -6,6 +6,7 @@ import hairrang_web.dao.BookingDao;
 import hairrang_web.dao.impl.BookingDaoImpl;
 import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
+import hairrang_web.dto.TimeTable;
 
 public class BookingService {
 
@@ -35,5 +36,9 @@ public class BookingService {
 	// insert시 다음에 삽입할 bookNo 구하기
 	public int getNextBookNo() {
 		return dao.selectMaxBookNo() + 1;
+	}
+	
+	public ArrayList<TimeTable> getTimeTable(String wantDate) {
+		return dao.getTimeTables(wantDate);
 	}
 }

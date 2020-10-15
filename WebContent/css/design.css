@@ -3,9 +3,10 @@
 /* booking */
 .time_table {width: 400px; max-width: 600px;}
 .time_table ul {font-size:0;}
-.time_table ul li {display: inline-block; margin: 6px; padding: 8px 14px; font-size:16px; width: calc((100% - 48px)/4); box-sizing:border-box; border: 1px solid #666; text-align: center; -webkit-box-sizing:border-box; }
+.time_table ul li {display: inline-block; margin: 6px; padding: 8px 14px; font-size:16px; width: calc((100% - 48px)/4); box-sizing:border-box; border: 1px solid #666; text-align: center; -webkit-box-sizing:border-box; cursor: pointer;}
 
 .time_table .active {background-color: red;}
+.time_table .disabled {background-color: lightgray; cursor: unset;}
 
 /* 준오헤어 타임테이블 쌔빌려고 했는데 실패! */
 .juno {display: block;}
@@ -21,7 +22,7 @@
 .info a, .book a, .order a, .qna a {color:#bbb;}
 .submenu_main {margin-top:50px; text-align: center; background: #ffffff; border-bottom:1px solid #bbb;}
 .sub_menu ul {}
-.sub_menu ul li {display: inline-block; font-weight:600; font-size:20px; text-align: center; color: #bbb; text-decoration:none;}
+.sub_menu ul l  i {display: inline-block; font-weight:600; font-size:20px; text-align: center; color: #bbb; text-decoration:none;}
 .sub_menu ul li a {padding:30px 60px; text-decoration:none;	}
 .sub_menu ul li a:hover{ text-decoration:none; color: black; padding:30px 60px; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
 

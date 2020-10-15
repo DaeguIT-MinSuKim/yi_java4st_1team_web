@@ -1,19 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>  
 <script>
-window.onload = function() {
-	document.title += ' - 예약하기'
-	document.getElementById('bookDate').valueAsDate = new Date();
-	
-	$(".time_table ul li").click(function(){
-		console.log($(this));
-		
+$(document).on("click", ".time_table ul li", function() {
+	if(!$(this).hasClass("disabled")) {
 		$(".active").removeClass("active");
 		$(this).attr("class", "active");
-	});
-}
-	
+	}
+})
+
 $(function() {
+	$(document).ready(function() {
+		document.title += ' - 예약하기'
+		document.getElementById('bookDate').valueAsDate = new Date();
+		
+		setTimeTable($("#bookDate").val());
+	});
+	
+	/* 헤어 대분류 불러오기 */
 	$.ajax({
 		url: "booking.do",
 		type: "post",
@@ -25,8 +28,6 @@ $(function() {
 		}
 	});
 
-	/* var hairKind; */
-				
 	function loadHairKindCombo(target, data) {
 		var dataArr = [];
 		var idx = 0;
@@ -39,10 +40,9 @@ $(function() {
 		target.append(dataArr);
 	}
 	
-	
+	/* 헤어 대분류 선택시 소분류 불러오기 */
 	$("#hairkindbox").change(function() {
 		var selectedKindNo = $("#hairkindbox option:selected").val();
-		// changeHairBox("#hairbox", selectedKindNo);
 		$.ajax({
 			url: "booking.do",
 			type: "post",
@@ -71,8 +71,45 @@ $(function() {
 		target.append(dataArr);
 	};
 	
+	
+	/* 날짜 선택 시 타임테이블 불러오기 */
+	$("#bookDate").change(function() {
+		setTimeTable($("#bookDate").val());
+	});
+	
+	// 매개변수 날짜값으로 타임테이블 불러오는 함수
+	function setTimeTable(bookDateVal) {
+		$.ajax({
+			url: "booking.do",
+			type: "post",
+			data: {
+				bookDate: bookDateVal
+			},
+			dataType: "json",
+			success: function(data) {
+				console.log(data);
+				loadTimeTable($(".time_table ul"), data);
+			}
+		});
+	}
+	
+	// 타임테이블 ajax로 불러온 데이터로 html 쓰는 함수
+	function loadTimeTable(target, data) {
+		var dataArr = [];
+		var idx = 0;
+		target.empty();
+		
+		$.each(data, function(index, item) {
+			var disabled;
+			if(item.used === 1) {
+				disabled = " class='disabled'";
+			}
+			dataArr[idx++] = "<li time24='" + item.time + "'" + disabled + ">" + item.time + "</li>";
+		});
+		target.append(dataArr);
+	}
+	
 });
-
 
 function checkBookForm() {
 	if (document.bookForm.bookHair.value == "") {
@@ -161,12 +198,11 @@ function checkBookForm() {
 	</ul>
 	<div class="time_table">
 		<ul>
-		    <c:forEach var="i"  begin="10" end="19">
+		    <%-- <c:forEach var="i"  begin="10" end="19">
 		    	<c:forEach var="j" begin="0" end="1">
-		    		<!-- <a href="#juno" time24="18:30" ampm="pm" time="6:30">6:30</a> -->
-					<li time24="${i}:${j==0 ? '00' : j*30}">${i>9 ? i :'0'}${i>9 ? '' : i} : ${j==0 ? '00' : j*30}</li>		    
+					<li time24="${i}:${j==0 ? '00' : j*30}">${i>9 ? i :'0'}${i>9 ? '' : i} : ${j==0 ? '00' : j*30}</li>
 		    	</c:forEach>
-		    </c:forEach>
+		    </c:forEach> --%>
 		</ul>
 	</div>
 	<input type="button" name="submit" value="예약 등록" onclick="return checkBookForm();">

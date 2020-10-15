@@ -2,6 +2,7 @@ package hairrang_web.controller.handler.booking;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -18,6 +19,7 @@ import hairrang_web.dto.Designer;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.Hair;
 import hairrang_web.dto.HairKind;
+import hairrang_web.dto.TimeTable;
 import hairrang_web.service.BookingService;
 import hairrang_web.service.DesignerService;
 import hairrang_web.service.HairService;
@@ -56,22 +58,41 @@ public class BookingRegisterFormHandler implements Command {
 		} else {
 			System.out.println("BookingRegisterFormHandler >> POST");
 			
+			
 			// 파라미터 값 확인
 			for (Entry<String, String[]> map : request.getParameterMap().entrySet() ) {
 					System.out.println(map.getKey() + " : " + map.getValue());
 			}
 			
 			String kindNo = null;
-		
+			String bookDate = null;
+			
+			System.out.println("bookDate: " + request.getParameter("bookDate"));
+			
 			// 헤어 대분류를 선택했을 때 헤어 소분류값 ajax로 셀렉 박스 리스트 넘기기
-			if((kindNo = request.getParameter("kindNo")) != null) {
+			if((bookDate = request.getParameter("bookDate")) != null) {
+				System.out.println("bookDate 받아서 TimeTable 가져오기");
+				ArrayList<TimeTable> timeTableList = bService.getTimeTable(bookDate);
+				System.out.println("> bookDate : " + bookDate);
+				timeTableList.stream().forEach(System.out::println);
+				
+				Gson gson = new Gson();
+				String result = gson.toJson(timeTableList, new TypeToken<List<TimeTable>>() {}.getType());
+				
+				response.setCharacterEncoding("UTF-8");
+				response.setContentType("Application/json");
+				response.setStatus(HttpServletResponse.SC_ACCEPTED);
+				
+				PrintWriter pw = response.getWriter();
+				pw.print(result);
+				pw.flush();
+				
+			} else if((kindNo = request.getParameter("kindNo")) != null) {
 				System.out.println("hairbox 읽기");
 				HairKind hairKind = hService.getHairKindInfo(Integer.parseInt(kindNo));
-				System.out.println(hairKind);
 				
 				Gson gson = new Gson();
 				String result = gson.toJson(hairKind.getHairList(), new TypeToken<List<Hair>>(){}.getType());
-				System.out.println(result);
 				
 				response.setCharacterEncoding("UTF-8");
 				response.setContentType("Application/json");
@@ -85,11 +106,9 @@ public class BookingRegisterFormHandler implements Command {
 				// 페이지 로딩시 헤어 대분류 ajax로 셀렉 박스 리스트 넘기기
 				System.out.println("hairkindbox 읽기");
 				List<HairKind> hairKindList = hService.getHairListAll();
-				System.out.println(hairKindList);
 				
 				Gson gson = new Gson();
 				String result = gson.toJson(hairKindList, new TypeToken<List<HairKind>>(){}.getType());
-				System.out.println(result);
 				
 				response.setCharacterEncoding("UTF-8");
 				response.setContentType("Application/json");

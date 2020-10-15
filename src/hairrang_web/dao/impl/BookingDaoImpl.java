@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Set;
 
 import hairrang_web.dao.BookingDao;
 import hairrang_web.dao.DesignerDao;
@@ -17,6 +18,7 @@ import hairrang_web.dto.Booking;
 import hairrang_web.dto.Designer;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.Hair;
+import hairrang_web.dto.TimeTable;
 
 public class BookingDaoImpl implements BookingDao {
 
@@ -213,5 +215,35 @@ public class BookingDaoImpl implements BookingDao {
 		}
 		
 		return 0;
+	}
+	
+	@Override
+	public ArrayList<TimeTable> getTimeTables(String wantDate) {
+		String sql = "SELECT TIMES, nvl(used, 0) AS USED " + 
+				"FROM (SELECT TO_CHAR(TO_DATE('08:30', 'hh24:mi') + LEVEL/24/2, 'hh24:mi') AS times " + 
+				"	FROM DUAL CONNECT BY LEVEL <= 20) " + 
+				"LEFT OUTER JOIN " + 
+				"	(SELECT TO_CHAR(BOOK_TIME, 'hh24:mi') AS times, 1 AS used " + 
+				"	FROM BOOKING WHERE TO_char(book_time, 'YYYY-MM-DD') = ?) " + 
+				"USING (TIMES) ORDER BY TIMES";
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			
+			pstmt.setString(1, wantDate);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					ArrayList<TimeTable> list = new ArrayList<>();
+					do {
+						list.add(new TimeTable(rs.getString("TIMES"), rs.getInt("USED")));
+					} while(rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return null;
 	}
 }
