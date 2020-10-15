@@ -166,7 +166,7 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public ArrayList<QnA> selectQnaAllById(Guest guest) {
-		String sql = "SELECT QNA_NO,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_REGDATE,RES_YN FROM QNA WHERE GUEST_ID = ? ORDER BY QNA_NO DESC";
+		String sql = "SELECT QNA_NO,GUEST_ID,GUEST_NAME,ADMIN_ID,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_REGDATE,RES_YN,QNA_REFNO,NOTICE_YN,DEL_YN,QNA_SECRET,QNA_PASSWORD FROM QNA WHERE GUEST_ID = ? ORDER BY QNA_NO DESC";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, guest.getGuestId());
