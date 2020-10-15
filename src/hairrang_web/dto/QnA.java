@@ -13,6 +13,8 @@ public class QnA {
 	private String qnaResYn;
 	private int qnaRefNo;
 	private String qnaDelYn;
+	private String qnaPassword;
+	private String qnaSecret;
 
 	public QnA() {
 		super();
@@ -28,7 +30,8 @@ public class QnA {
 	}
 
 	public QnA(int qnaNo, Guest guestId, Admin adminId, String qnaTitle, String qnaContent, String qnaFile,
-			LocalDateTime qnaRegDate, String qnaResYn, int qnaRefNo, String qnaDelYn) {
+			LocalDateTime qnaRegDate, String qnaResYn, int qnaRefNo, String qnaDelYn, String qnaPassword,
+			String qnaSecret) {
 		super();
 		this.qnaNo = qnaNo;
 		this.guestId = guestId;
@@ -40,13 +43,32 @@ public class QnA {
 		this.qnaResYn = qnaResYn;
 		this.qnaRefNo = qnaRefNo;
 		this.qnaDelYn = qnaDelYn;
+		this.qnaPassword = qnaPassword;
+		this.qnaSecret = qnaSecret;
 	}
 
 	@Override
 	public String toString() {
 		return "QnA [qnaNo=" + qnaNo + ", guestId=" + guestId + ", adminId=" + adminId + ", qnaTitle=" + qnaTitle
 				+ ", qnaContent=" + qnaContent + ", qnaFile=" + qnaFile + ", qnaRegDate=" + qnaRegDate + ", qnaResYn="
-				+ qnaResYn + ", qnaRefNo=" + qnaRefNo + ", qnaDelYn=" + qnaDelYn + "]";
+				+ qnaResYn + ", qnaRefNo=" + qnaRefNo + ", qnaDelYn=" + qnaDelYn + ", qnaPassword=" + qnaPassword
+				+ ", qnaSecret=" + qnaSecret + "]";
+	}
+
+	public String getQnaPassword() {
+		return qnaPassword;
+	}
+
+	public void setQnaPassword(String qnaPassword) {
+		this.qnaPassword = qnaPassword;
+	}
+
+	public String getQnaSecret() {
+		return qnaSecret;
+	}
+
+	public void setQnaSecret(String qnaSecret) {
+		this.qnaSecret = qnaSecret;
 	}
 
 	public int getQnaNo() {

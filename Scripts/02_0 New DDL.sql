@@ -188,6 +188,13 @@ CREATE TABLE QNA (
 	del_yn CHAR(1) DEFAULT 'n' /* 삭제여부 */
 );
 
+
+/*비밀글 여부*/
+/*ALTER TABLE QNA ADD qna_secret char(1) DEFAULT 'n';*/
+/*비밀 번호(비회원일때만)*/
+/*ALTER TABLE QNA ADD qna_password varchar2(100);*/
+
+
 --공지사항확인 추가
 /*alter table qna add notice_yn char(1) default 'n';*/
 
