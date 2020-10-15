@@ -22,9 +22,7 @@ public class QnaConfirmPasswordHandler implements Command {
 		String url = "qna/qnaConfirmPassword.jsp";
 
 		int qnaNo = Integer.parseInt(request.getParameter("no"));
-		System.out.println("qnaNo -->"+qnaNo);
 		QnA qna = service.selectQnaByNo(qnaNo);
-		System.out.println("qna -->" + qna);
 		request.setAttribute("qnaNo", qnaNo);
 
 		if (request.getMethod().equalsIgnoreCase("GET")) {
@@ -57,20 +55,28 @@ public class QnaConfirmPasswordHandler implements Command {
 				// 로그인 된 상태
 				if(loginUser != null) {
 					// 글 주인이냐?
-					if(loginUser.equals(qna.getGuestId())) {
-						//
-						// request.setAttribute("confirmRes", "y");
+					System.out.println(loginUser);
+					System.out.println(qna);
+					if((loginUser.getGuestId()).equals(qna.getGuestId().getGuestId())) {
+						request.setAttribute("confirmRes", "y");
+						return "qnaDetail.do";
 					} else {
 						// list
+						JOptionPane.showMessageDialog(null, "다른 회원 비밀글에 접속하실수없습니다.");
+						response.sendRedirect("qnaHome.do");
+						return null;
 					}
-					return url;
 				} else {
 					// 비회원인 상태
 					if(qna.getGuestId() != null) {
 						// 회원이 쓴 글에 접근
 						// 빠꾸
+						JOptionPane.showMessageDialog(null, "비회원은 회원 비밀글에 접속하실수없습니다.");
+						response.sendRedirect("qnaHome.do");
+						return null;
 					} else {
 						// 비번 검사 받아
+						return url;
 					}
 				}
 			}
@@ -85,9 +91,8 @@ public class QnaConfirmPasswordHandler implements Command {
 			// 파라미터로 넘어온 글 비밀번호가 찐 비번이랑 맞냐? 확인하는 기능.
 			// 맞으면 Detail로 틀리면 다시 qnaConfirmPassword.jsp
 			String pwd = request.getParameter("pwd");
-			System.out.println("getQnaPassword -->"+qna.getQnaPassword());
 			if(qna.getQnaPassword().equals(pwd)) {
-				// request.setAttribute("confirmRes", "y");
+				request.setAttribute("confirmRes", "y");
 				url = "qnaDetail.do";
 				return url;
 			}else {
@@ -96,7 +101,6 @@ public class QnaConfirmPasswordHandler implements Command {
 				return url;
 			}
 		}
-		return null;
 	}
 
 }
