@@ -22,7 +22,7 @@
 .info a, .book a, .order a, .qna a {color:#bbb;}
 .submenu_main {margin-top:50px; text-align: center; background: #ffffff; border-bottom:1px solid #bbb;}
 .sub_menu ul {}
-.sub_menu ul l  i {display: inline-block; font-weight:600; font-size:20px; text-align: center; color: #bbb; text-decoration:none;}
+.sub_menu ul li {display: inline-block; font-weight:600; font-size:20px; text-align: center; color: #bbb; text-decoration:none;}
 .sub_menu ul li a {padding:30px 60px; text-decoration:none;	}
 .sub_menu ul li a:hover{ text-decoration:none; color: black; padding:30px 60px; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
 
@@ -40,8 +40,16 @@
 .delete_sub2 {}
 .delete_sub3 {}
 
+/*mypage guest_book*/
+.book_wrapper {margin-top:50px;}
+#board {width:1000px; margin:0 auto; text-align:center;}
+#board tr {border-bottom:1px solid black;}
+#board th {border-top:3px solid black; padding:20px 0; font-weight:bold;}
+#board tr td {padding:20px 0;}
+
 /*about*/
 .about_main {margin-top:50px; text-align: center; background: #ffffff;}
 
 /*button*/
 .button {width:130px; height:50px; color:black; border:none; font-size:15px; margin:5px; width:200px; background: white; border:1px solid #777;}
+

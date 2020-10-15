@@ -11,7 +11,6 @@ INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, 
 VALUES('test4321', '43211234', '사삼이', to_date('20001021', 'YYYYMMDD'), '010-1234-5678', 'test4321@test.co.kr', 1, sysdate, '탈모끼 있음', 'n', 'y');
 
 
-
 /* hair_kind */
 INSERT INTO HAIR_KIND(KIND_NAME) VALUES('샴푸');
 INSERT INTO HAIR_KIND(KIND_NAME) VALUES('드라이');

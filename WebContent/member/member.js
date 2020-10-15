@@ -136,10 +136,14 @@ function pwd_update(){
 
 function go_leave(){
 	 if (document.formm.ok[0].checked == true && document.formm.ok[1].checked == true && document.formm.ok[2].checked == true ) {
-		 confirm('탈퇴하시겠습니까?');   
-		 document.formm.action = "guestInfoDelete.do";
-		    document.formm.submit();
-		  } else if (document.formm.ok[0].checked == false || document.formm.ok[1].checked == false ||  document.formm.ok[2].checked == false) {
-		    alert('약관에 동의하셔야만 합니다.');
-		  }
+		 if(confirm('탈퇴하시겠습니까?')== true){
+			 document.formm.action = "guestInfoDelete.do";
+			 document.formm.submit();
+		 }else{
+			 return;
+		 } 
+		 
+	 } else if (document.formm.ok[0].checked == false || document.formm.ok[1].checked == false ||  document.formm.ok[2].checked == false) {
+		 alert('약관에 동의하셔야만 합니다.');
+	 }
 }
