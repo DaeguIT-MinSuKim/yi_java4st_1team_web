@@ -55,17 +55,23 @@ public class SearchPwdHandler implements Command {
 
 				} else {
 					try {
+						//메일 
 						SendMail sm = new SendMail();
-						
 						findUser.setGuestPwd(key);
 						int res = service.updateGuestPwd(findUser);
-						System.out.println(res);
-						//비밀번호를  변경
+						System.out.println("비밀번호 업데이트 결과: " + res);
+						//비밀번호 변경
 
 						sm.sendEmail(from, to, cc, subject, content);
 						//메일 전송
-						
 						System.out.println("메일 전송에 성공하였습니다.");
+						
+						//변경확인
+						System.out.println("~확인~");
+						System.out.println("보낸 비밀번호->" + key);
+						Guest g = service.selectGuestById(findUser);
+						System.out.println(g);
+						
 					} catch (MessagingException me) {
 						System.out.println("메일 전송에 실패하였습니다.");
 						System.out.println("실패 이유 : " + me.getMessage());

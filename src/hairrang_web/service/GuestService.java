@@ -25,6 +25,10 @@ public class GuestService{
 		return dao.updateGuestPwd(guest);
 	}
 	
+	public int updateGuest(Guest guest) {
+		return dao.updateGuest(guest);
+	}
+	
 	public Guest selectGuestByIdName(Guest guest) {
 		return dao.selectGuestByIdName(guest);
 	}
@@ -38,8 +42,10 @@ public class GuestService{
 	}
 
 	public Guest findPwd(String id, String name, String email) {
-		
 		return dao.findPwd(id, name, email);
 	}
-
+	
+	public int updateDelYn(Guest guest) {
+		return dao.updateGuestDelYn(guest);
+	}
 }

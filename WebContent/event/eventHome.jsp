@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>이벤트 홈</title>
-</head>
+    <%@ include file="../header.jsp" %>  
+
 <body>
 	<!-- 준호 이벤트 넣는법 -->
 	<!-- <a href="#juno"><span class="thum"><img
@@ -34,4 +30,4 @@
 	</div>
 	console.log(왜안돼);
 </body>
-</html>
+<%@ include file="../footer.jsp" %>   

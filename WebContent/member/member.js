@@ -109,3 +109,37 @@ function pwdSearch(){
     }
 };
 
+function pwd_confirm(){
+	if (document.formm.pwd.value == "") {
+	    alert('비밀번호를 입력하여 주십시오.');
+	    document.formm.pwd.focus();
+	    return;
+    } else{
+    	document.formm.action = "pwdConfirm.do";
+        document.formm.submit();
+    }
+};
+
+
+function info_update(){
+	alert('정보가 변경되었습니다');
+	document.formm.action = "guestInfoUpdate.do";
+    document.formm.submit();
+    location.reload();
+};
+
+function pwd_update(){
+	alert('비밀번호가 변경되었습니다.');
+	document.formm.action = "guestPwdUpdate.do";
+    document.formm.submit();
+};
+
+function go_leave(){
+	 if (document.formm.ok[0].checked == true && document.formm.ok[1].checked == true && document.formm.ok[2].checked == true ) {
+		 confirm('탈퇴하시겠습니까?');   
+		 document.formm.action = "guestInfoDelete.do";
+		    document.formm.submit();
+		  } else if (document.formm.ok[0].checked == false || document.formm.ok[1].checked == false ||  document.formm.ok[2].checked == false) {
+		    alert('약관에 동의하셔야만 합니다.');
+		  }
+}

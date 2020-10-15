@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
-  <display-name>hairrang_web</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+	<display-name>hairrang_web</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+ 	<security-constraint>
+		<display-name>JSP Protection</display-name>
+		<web-resource-collection>
+			<web-resource-name>SecureJSPPages</web-resource-name>
+			<url-pattern>*.jsp</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>nobody</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<security-role>
+		<description>
+		Nobody should be in this role so JSP files are protected
+		from direct access.
+		</description>
+		<role-name>nobody</role-name>
+	</security-role>
+	<!-- <error-page>
+		<error-code>401</error-code>
+		<location>/error/unauthorized.html</location>
+	</error-page> -->
 </web-app>

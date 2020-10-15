@@ -9,70 +9,34 @@ p {
 	line-height: 1.5;
 }
 
-.main {
-	margin-top:50px;
-	text-align: center;
-	background: #ffffff;
-}
-
-section {
-	display: none;
-	padding: 20px 0 0;
-	border-top: 1px solid #ddd;
-}
+.about_main {margin-top:50px;text-align: center;background: #ffffff;}
+.content1, .content2{display: none; padding: 20px 0 0; border-top: 1px solid #ddd;}
 
 /*라디오버튼 숨김*/
-input {
-	display: none;
+input {display: none;}
+
+label {width: 300px;display: inline-block; margin: 0;padding: 20px;
+	font-weight: 600;font-size:20px;text-align: center;color: #bbb;border: 1px solid transparent;
 }
 
-label {
-	width: 300px;
-	display: inline-block;
-	margin: 0;
-	padding: 20px;
-	font-weight: 600;
-	font-size:20px;
-	text-align: center;
-	color: #bbb;
-	border: 1px solid transparent;
-}
-
-label:hover {
-	color: black;
-	cursor: pointer;
-}
+label:hover {color: black; cursor: pointer;}
 
 /*input 클릭시, label 스타일*/
-input:checked+label {
-	color: black;
-	border: 1px solid #ddd;
-	border-top: 2px solid gray;
-	border-bottom: 1px solid #ffffff;
-}
+input:checked+label {color: black; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
 
-#tab1:checked ~ #content1, #tab2:checked ~ #content2 {
-	display: block;
-}
+#tab1:checked ~ .content1, #tab2:checked ~ .content2 {display: block;}
 
-.content2-inner {
-	width:800px;
-	margin:0 auto;
-	
-	}
+.content2-inner {width:800px;margin:0 auto;}
 
-.content1-inner {
-	width:800px;
-	margin:0 auto;
-	text-align:left;
-	}
+.content1-inner {width:800px;margin:0 auto;text-align:left;}
 	
 .map {width:800px; margin:0 auto; text-align:left;}
 
 
 .text { width:500px; text-align:left;}
 
-button {width:130px; height:50px; color:black; border:none; font-size:15px; font-weight:bold; float:right; margin:5px; width:200px; background: white; border:1px solid #777;}
+button {width:130px; height:50px; color:black; border:none; font-size:15px; font-weight:bold; 
+float:right; margin:5px; width:200px; background: white; border:1px solid #777;}
 
 .outer {width:800px;}
 .tr {padding:50px; border-bottom:1px solid black;}
@@ -85,7 +49,7 @@ td {padding:20px; }
 </head>
 <body>
 
-<div class="main">
+<div class="about_main">
 <div class="main-inner">
     <input id="tab1" type="radio" name="tabs"> <!--디폴트 메뉴-->
     <label for="tab1">소  개</label>
@@ -93,7 +57,7 @@ td {padding:20px; }
     <input id="tab2" type="radio" name="tabs" checked>
     <label for="tab2">오시는 길</label>
 
-    <section id="content1">
+    <section class="content1">
         <div class="content1-inner">
         <p>소개</p>
         <p>소개</p>
@@ -106,7 +70,7 @@ td {padding:20px; }
     
     </section>
 	
-    <section id="content2">
+    <section class="content2">
     <div class='map'>
     	 <%@ include file="../map.jsp" %>  
     </div>

@@ -1,6 +1,7 @@
 package hairrang_web.controller.handler.event;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +21,13 @@ public class EventDetailHandler implements Command {
 		int eventNo = Integer.parseInt(request.getParameter("eno"));
 		Event event = new Event(eventNo); 
 		Event findEvent = service.selectEventByNo(event);
-		System.out.println(findEvent);
-		request.setAttribute("event", findEvent);
+		ArrayList<Event> list = service.selectEventSide(findEvent);
+		System.out.println("findEvent ==>"+findEvent);
+		System.out.println("list ==>"+list);
+		
+		
+		request.setAttribute("list", list);
+		request.setAttribute("findEvent", findEvent);
 		return url;
 	}
 

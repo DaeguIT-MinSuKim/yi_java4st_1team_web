@@ -17,6 +17,7 @@
 <script src="js/skel.min.js"></script>
 <script src="js/init.js"></script>
 <script type="text/javascript" src="member/member.js"></script>
+<script type="text/javascript" src="js/wow.js"></script>
  
 <!--slider -->
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
@@ -57,7 +58,7 @@
 				         ${sessionScope.loginUser.guestName}(${sessionScope.loginUser.guestId})님 
 				       	 </li>
 				       	<li><a href="logout.do" style="font-weight:bold;">LOGOUT</a> / </li>
-				       	<li><a href="guestInfo.do"  style="font-weight:bold;">MYPAGE</a></li>
+				       	<li><a href="infoUpdate.do"  style="font-weight:bold;">MYPAGE</a></li>
 				    </ul>
 				    
 		       	</c:otherwise>       

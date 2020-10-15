@@ -17,7 +17,7 @@
 		<div id="buttons" style="float: right">
 			<input type="submit" value="제출하기" class="submit">
 			<input type="reset" value="초기화" class="cancel">
-			<input type="file" name="file">
+			<input type="file" name="upload">
 		</div>
 	</form>
 </body>

@@ -54,6 +54,9 @@ public class QnADaoImpl implements QnADao {
 		} catch(SQLException e) {
 		}
 		qna.setQnaResYn(rs.getString("RES_YN"));
+		qna.setGuestId(new Guest(rs.getString("GUEST_ID")));
+		qna.setQnaSecret(rs.getString("QNA_SECRET"));
+		qna.setQnaPassword(rs.getString("QNA_PASSWORD"));
 		return qna;
 	}
 
@@ -78,12 +81,13 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public int insertQnA(QnA qna) {
-		String sql = "INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,RES_YN) VALUES (?,?,?,'n')";
+		String sql = "INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,RES_YN,QNA_FILE) VALUES (?,?,?,'n',?)";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, qna.getGuestId().getGuestId());
 			pstmt.setString(2, qna.getQnaTitle());
 			pstmt.setString(3, qna.getQnaContent());
+			pstmt.setString(4, qna.getQnaFile());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -208,9 +212,9 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public List<QnA> selectPagingQnA(Paging paging) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE rn BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
 		try(Connection con = JndiDs.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)){
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, paging.getStart());
 			pstmt.setInt(2, paging.getEnd());
 			try(ResultSet rs = pstmt.executeQuery()){
@@ -220,6 +224,25 @@ public class QnADaoImpl implements QnADao {
 						list.add(getQnA(rs));
 					} while (rs.next());
 					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
+	@Override
+	public QnA selectResByNo(QnA qna) {
+		String sql = "SELECT * FROM qna WHERE QNA_REFNO = ?";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1,qna.getQnaNo());
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					do {
+						return getQnA(rs);
+					}while(rs.next());
 				}
 			}
 		} catch (SQLException e) {

@@ -3,8 +3,13 @@ package hairrang_web.dao;
 import static org.junit.Assert.fail;
 
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -15,6 +20,7 @@ import org.junit.runners.MethodSorters;
 import hairrang_web.dao.impl.GuestDaoImpl;
 import hairrang_web.ds.JdbcUtil;
 import hairrang_web.dto.Guest;
+import javafx.util.converter.LocalDateStringConverter;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -54,10 +60,33 @@ public class GuestDaoTest {
 		
 	}
 
-	//@Test
+	@Test
 	public void testUpdateGuestPwd() {
-		fail("Not yet implemented");
+		Guest guest = dao.selectGuestById(new Guest("test"));
+		String pwd = "tt1234";
+		guest.setGuestPwd(pwd);
+		int res = dao.updateGuestPwd(guest);
+		Assert.assertEquals(1, res);
 	}
+	
+	//@Test
+	public void testUpdateGuestInfo() {
+		String date = "1991-12-19";
+		LocalDate birth = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
+		
+		Guest g = dao.selectGuestById(new Guest("test"));
+		System.out.println(g);
+		g.setGuestName("변경");
+		g.setGuestBirthday(birth);
+		g.setGuestGender(1);
+		g.setGuestEmail("이메일변경");
+		g.setGuestPhone("010-000-0000");
+		g.setInfoYn("n");
+		
+		int res = dao.updateGuest(g);
+		Assert.assertEquals(1, res);
+	}
+	
 
 	//@Test
 	public void testDeleteGuest() {
@@ -85,7 +114,7 @@ public class GuestDaoTest {
 		System.out.println(guest);
 	}
 	
-	@Test
+	//@Test
 	public void findPwd() {
 		Guest guest = dao.findPwd("test2", "김혜진", "hoon@test.co.kr");
 		Assert.assertNotNull(guest);

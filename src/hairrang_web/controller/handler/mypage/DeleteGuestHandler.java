@@ -1,4 +1,4 @@
-package hairrang_web.modle.qna;
+package hairrang_web.controller.handler.mypage;
 
 import java.io.IOException;
 
@@ -8,12 +8,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import hairrang_web.controller.Command;
 
-public class QnaHomeHandler implements Command {
+public class DeleteGuestHandler implements Command {
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		return "qna/qnaHome.jsp";
+		if (request.getMethod().equalsIgnoreCase("GET")) {
+			System.out.println("get");
+			return "mypage/pwd_confirm.jsp";
+		}else {
+			System.out.println("post");
+		}
+		return null;
 	}
 
 }

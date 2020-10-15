@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
+import hairrang_web.dto.TimeTable;
 
 public interface BookingDao {
 
@@ -20,4 +21,9 @@ public interface BookingDao {
 	int deleteBooking(Booking booking);
 	
 	int checkUser(Booking booking, Guest guest);
+
+	int selectMaxBookNo();
+
+	ArrayList<TimeTable> getTimeTables(String wantDate);
+	
 }
