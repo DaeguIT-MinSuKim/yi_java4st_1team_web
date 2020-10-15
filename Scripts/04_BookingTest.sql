@@ -8,7 +8,8 @@
  *NOSHOW 누적시 패널티 같은 거..? 별도 관리..
  */
 
-SELECT * FROM BOOKING;
+
+
 SELECT max(book_no) FROM booking;
 
 SELECT * FROM BOOKING WHERE BOOK_NO = 60 AND GUEST_ID = 'test';
