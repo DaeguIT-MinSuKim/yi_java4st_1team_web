@@ -42,8 +42,10 @@ public class GuestService{
 	}
 
 	public Guest findPwd(String id, String name, String email) {
-		
 		return dao.findPwd(id, name, email);
 	}
-
+	
+	public int updateDelYn(Guest guest) {
+		return dao.updateGuestDelYn(guest);
+	}
 }

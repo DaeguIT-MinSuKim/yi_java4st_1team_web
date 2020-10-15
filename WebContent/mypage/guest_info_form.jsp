@@ -83,6 +83,7 @@ $(document).ready(function() {
 	<ul>
 		<li class="info_update"><a href="infoUpdate.do">개인정보 변경</a></li>  
 		<li class="pwd_update"><a href="pwdUpdate.do">비밀번호 변경</a></li> 
+		<li class="guest_delete"><a href="infoDelete.do">회원탈퇴</a></li> 
 	</ul>
 </div>
 

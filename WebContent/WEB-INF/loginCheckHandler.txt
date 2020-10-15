@@ -10,3 +10,4 @@ guestInfoUpdate.do
 guestPwdUpdate.do
 infoUpdate.do
 pwdUpdate.do
+infoDelete.do
