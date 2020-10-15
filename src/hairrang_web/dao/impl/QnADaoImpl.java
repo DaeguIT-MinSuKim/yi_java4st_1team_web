@@ -55,6 +55,8 @@ public class QnADaoImpl implements QnADao {
 		}
 		qna.setQnaResYn(rs.getString("RES_YN"));
 		qna.setGuestId(new Guest(rs.getString("GUEST_ID")));
+		qna.setQnaSecret(rs.getString("QNA_SECRET"));
+		qna.setQnaPassword(rs.getString("QNA_PASSWORD"));
 		return qna;
 	}
 

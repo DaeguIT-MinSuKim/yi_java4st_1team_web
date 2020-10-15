@@ -185,8 +185,17 @@ CREATE TABLE QNA (
 	res_Yn CHAR(1) DEFAULT 'n', /* 처리완료여부 */
 	qna_refNo NUMBER(10), /* 고객문의번호 */
 	notice_yn CHAR(1) DEFAULT 'n', /* 공지사항여부 */
-	del_yn CHAR(1) DEFAULT 'n' /* 삭제여부 */
+	del_yn CHAR(1) DEFAULT 'n' ,/* 삭제여부 */
+	qna_secret char(1) DEFAULT 'n',
+	qna_password varchar2(100)
 );
+
+
+/*비밀글 여부*/
+/*ALTER TABLE QNA ADD qna_secret char(1) DEFAULT 'n';*/
+/*비밀 번호(비회원일때만)*/
+/*ALTER TABLE QNA ADD qna_password varchar2(100);*/
+
 
 --공지사항확인 추가
 /*alter table qna add notice_yn char(1) default 'n';*/
