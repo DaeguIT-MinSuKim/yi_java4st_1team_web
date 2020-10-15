@@ -3,13 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
 <body style="text-align: center;">
 	<div style="width: 80%; margin: auto;">
+		<h1>${findEvent.eventName }</h1>
+		<br> ${findEvent.eventStart} ~ ${findEvent.eventEnd }
 		<hr>
-		<h1>${event.eventName }</h1>
-		<br> ${event.eventStart} ~ ${event.eventEnd }
-		<hr>
-		<br> <img alt="" src="${event.eventPic }"><br>
-		<br> ${event.eventContent }
+		<br> <img alt="" src="${findEvent.eventPic }"><br>
+		<br> ${findEvent.eventContent }
 	</div>
+	
+	
+	
+	
+	
 	
 	<br><br><br><br>
 	<div style="display: block; text-align: center;">

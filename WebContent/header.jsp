@@ -57,7 +57,7 @@
 				         ${sessionScope.loginUser.guestName}(${sessionScope.loginUser.guestId})님 
 				       	 </li>
 				       	<li><a href="logout.do" style="font-weight:bold;">LOGOUT</a> / </li>
-				       	<li><a href="guestInfo.do"  style="font-weight:bold;">MYPAGE</a></li>
+				       	<li><a href="infoUpdate.do"  style="font-weight:bold;">MYPAGE</a></li>
 				    </ul>
 				    
 		       	</c:otherwise>       

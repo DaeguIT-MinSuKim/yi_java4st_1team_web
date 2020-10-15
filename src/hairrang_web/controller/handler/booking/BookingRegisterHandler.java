@@ -3,9 +3,6 @@ package hairrang_web.controller.handler.booking;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.reflect.Type;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,16 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
 import hairrang_web.service.BookingService;
+import hairrang_web.utils.GsonLocalDateTime;
 
 /**
  * 예약 등록 핸들러
@@ -55,7 +48,7 @@ public class BookingRegisterHandler implements Command {
 					System.out.println(map.getKey() + " : " + map.getValue());
 			}
 			*/
-			Gson gson = new GsonBuilder()
+			/*Gson gson = new GsonBuilder()
 					.registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
 						@Override
 						public LocalDateTime deserialize(JsonElement json, Type typeOfT,
@@ -63,10 +56,15 @@ public class BookingRegisterHandler implements Command {
 							return LocalDateTime.parse(json.getAsString(),
 									DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 						}
-					}).create();
+					}).create();*/
+			
+			GsonBuilder builder = GsonLocalDateTime.getLocalDateTimeParsing("yyyy-MM-dd HH:mm");
+			Gson gson = builder.create();
+			
 			Booking newBooking = gson.fromJson(new InputStreamReader(request.getInputStream(), "UTF-8"), Booking.class);
 			newBooking.setGuest((Guest) request.getSession().getAttribute("loginUser"));
 			System.out.println("json 변환 후 newBooking: " + newBooking);
+			System.out.println("parsing 끝나고 builder: " + builder + ", gson: " + gson);
 			
 			int res = service.addBooking(newBooking);
 			int nextNo = 0;

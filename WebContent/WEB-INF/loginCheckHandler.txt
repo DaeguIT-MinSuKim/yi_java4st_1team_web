@@ -1,3 +1,13 @@
 qnaList.do
+qnaWrite.do
 booking.do
 bookingDetail.do
+guestBook.do
+guestOrder.do
+guestQna.do
+pwdConfirm.do
+guestInfoUpdate.do
+guestPwdUpdate.do
+infoUpdate.do
+pwdUpdate.do
+infoDelete.do

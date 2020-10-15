@@ -46,7 +46,7 @@ public class JoinHandler implements Command{
 			g.setGuestBirthday(guestBirthday);
 			g.setGuestPhone(guestPhone);
 			g.setGuestEmail(guestEmail);
-			g.setGuestGender(Integer.parseInt(guestGender)); //0여자 1남자
+			g.setGuestGender(Integer.parseInt(guestGender)); //2여자 1남자
 			g.setInfoYn(infoYn); 
 			
 			System.out.println(g);

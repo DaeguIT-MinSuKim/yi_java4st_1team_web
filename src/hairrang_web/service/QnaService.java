@@ -51,4 +51,8 @@ public class QnaService {
 	public List<QnA> selectPagingQnA(Paging paging){
 		return dao.selectPagingQnA(paging);
 	}
+	
+	public QnA selectResQnaByNo(QnA qna) {
+		return dao.selectResByNo(qna);
+	}
 }

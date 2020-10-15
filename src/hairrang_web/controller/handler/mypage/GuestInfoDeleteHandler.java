@@ -1,4 +1,4 @@
-package hairrang_web.controller.handler.guest;
+package hairrang_web.controller.handler.mypage;
 
 import java.io.IOException;
 
@@ -11,35 +11,23 @@ import hairrang_web.controller.Command;
 import hairrang_web.dto.Guest;
 import hairrang_web.service.GuestService;
 
-public class PwdConfirmHandler implements Command {
+public class GuestInfoDeleteHandler implements Command{
 	private GuestService service = new GuestService();
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		
 		HttpSession session = request.getSession();
 		Guest loginUser = (Guest) session.getAttribute("loginUser");
-		
+
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("get");
-			return "mypage/guest_pwdConfirm.jsp";
-		}else {
+			return "mypage/pwd_confirm.jsp";
+		} else {
 			System.out.println("post");
-			String pwd = request.getParameter("pwd").trim();
-			Guest guest = service.selectGuestById(loginUser);
-			System.out.println(pwd);
-			System.out.println(guest);
-			System.out.println(guest.getGuestPwd());
+			int res = service.updateDelYn(new Guest(loginUser.getGuestId()));
+			System.out.println("변경결과: " +res);
 			
-			if(guest.getGuestPwd().equals(pwd)) {
-				request.setAttribute("id", loginUser.getGuestId());
-			}else {
-				request.setAttribute("message", -1);
-			}
-			return "mypage/guest_info_form.jsp";
+			return "mypage/guest_delete_confirm.jsp";
 		}
-		
-		
 	}
-
 }

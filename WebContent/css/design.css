@@ -30,5 +30,18 @@
 /*mypage guest_info*/
 .info_submenu {margin-top:50px; margin-bottom:100px; text-align:center; font-size:15px;}
 .info_submenu ul {}
-.info_submenu ul li {display: inline-block; width:200px;border:1px solid gray; padding:10px; margin:0 20px; color: #bbb;}
-.info_submenu ul li a {text-decoration:none; color:gray;}
+.info_submenu ul li {display: inline-block; width:150px;border:1px solid #fff; padding:10px; margin:0 5px; color: #bbb;}
+.info_submenu ul li a {text-decoration:none; color:gray;padding:10px; width:200px;} 
+.info_submenu ul li a:hover {text-decoration:none; color:black;} 
+
+/*mypage guest_delete*/
+.delete_wrapper {width:800px; margin:0 auto; text-align:center;}
+.delete_sub1 {}
+.delete_sub2 {}
+.delete_sub3 {}
+
+/*about*/
+.about_main {margin-top:50px; text-align: center; background: #ffffff;}
+
+/*button*/
+.button {width:130px; height:50px; color:black; border:none; font-size:15px; margin:5px; width:200px; background: white; border:1px solid #777;}
