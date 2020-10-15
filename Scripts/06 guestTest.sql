@@ -21,3 +21,5 @@ UPDATE guest SET INFO_YN = 'n' WHERE GUEST_ID = 'chini91';
 
 
 UPDATE guest SET del_yn = 'n' WHERE GUEST_ID = 'chini91';
+
+SELECT ROWNUM FROM booking WHERE GUEST_ID = 'chini91';

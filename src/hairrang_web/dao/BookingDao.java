@@ -22,4 +22,5 @@ public interface BookingDao {
 	int checkUser(Booking booking, Guest guest);
 
 	int selectMaxBookNo();
+	
 }
