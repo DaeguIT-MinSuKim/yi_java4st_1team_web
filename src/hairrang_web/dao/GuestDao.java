@@ -15,6 +15,8 @@ public interface GuestDao {
 	int updateGuest(Guest guest);
 
 	int updateGuestPwd(Guest guest);
+	
+	int updateGuestDelYn(Guest guest);
 
 	int deleteGuest(Guest guest);
 
@@ -27,6 +29,7 @@ public interface GuestDao {
 	Guest findId(String name, String email);
 
 	Guest findPwd(String id, String name, String email);
-
+	
+	
 
 }

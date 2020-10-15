@@ -37,7 +37,7 @@ public class LoginHandler implements Command{
 			
 			// 아이디가 존재하는 경우, 비밀번호와 일치하는지 확인 후 redirect
 			if(g!=null) {
-				if(g.getGuestPwd().equals(pwd)) {
+				if(g.getGuestPwd().equals(pwd) && !g.getDelYn().equals("y")) {
 					session.removeAttribute("id");
 					session.setAttribute("loginUser", g);
 					

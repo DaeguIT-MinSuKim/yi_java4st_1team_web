@@ -17,4 +17,7 @@ select * from guest_view where guest_id = 'test2', guest_name = ?, guest_email
 
 UPDATE guest SET guest_pwd = '1234' WHERE GUEST_id = 'chini91';
 
-UPDATE guest SET INFO_YN = 'y' WHERE GUEST_ID = 'chini91';
+UPDATE guest SET INFO_YN = 'n' WHERE GUEST_ID = 'chini91';
+
+
+UPDATE guest SET del_yn = 'n' WHERE GUEST_ID = 'chini91';

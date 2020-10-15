@@ -261,5 +261,17 @@ public class GuestDaoImpl implements GuestDao {
 		return null;
 	}
 
+	@Override
+	public int updateGuestDelYn(Guest guest) {
+		String sql = "UPDATE guest SET del_yn = 'y' WHERE GUEST_ID = ?";
+		try (Connection con = JndiDs.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, guest.getGuestId());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 
 }
