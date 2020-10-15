@@ -17,6 +17,7 @@
 <script src="js/skel.min.js"></script>
 <script src="js/init.js"></script>
 <script type="text/javascript" src="member/member.js"></script>
+<script type="text/javascript" src="js/wow.js"></script>
  
 <!--slider -->
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">

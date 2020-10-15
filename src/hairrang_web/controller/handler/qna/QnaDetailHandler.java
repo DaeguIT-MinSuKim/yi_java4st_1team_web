@@ -31,8 +31,11 @@ public class QnaDetailHandler implements Command {
 		Guest loginUser = (Guest) session.getAttribute("loginUser");
 		
 		System.out.println("qna 이름 :"+qna.getGuestId().getGuestId());
+		try {
 		System.out.println("loginUser 이름 :"+loginUser.getGuestId());
-		
+		}catch (Exception e) {
+			loginUser = null;
+		}
 		request.setAttribute("loginUser", loginUser);
 		request.setAttribute("qna", qna);
 		request.setAttribute("resQna", resQna);
