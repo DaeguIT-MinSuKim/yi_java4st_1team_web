@@ -54,8 +54,12 @@
 			</tr>
 			<c:forEach items="${viewAll}" var="list">
 				<tr>
-					<td>${list.qnaNo }</td>
-					<td><a href="qnaDetail.do?no=${list.qnaNo}">${list.qnaTitle }</a></td>
+					<td>
+					<c:if test="${list.qnaSecret eq 'y'}">
+						<img src="qna/images/secret.png" alt="" style="width: 20px; height: auto;" />
+					</c:if>
+					${list.qnaNo }</td>
+					<td><a href="qnaConfirmPassword.do?no=${list.qnaNo}&secret=${list.qnaSecret}">${list.qnaTitle }</a></td>
 					<td>${list.qnaContent }</td>
 					<td>${list.qnaResYn }</td>
 				</tr>

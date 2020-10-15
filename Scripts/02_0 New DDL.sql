@@ -185,7 +185,9 @@ CREATE TABLE QNA (
 	res_Yn CHAR(1) DEFAULT 'n', /* 처리완료여부 */
 	qna_refNo NUMBER(10), /* 고객문의번호 */
 	notice_yn CHAR(1) DEFAULT 'n', /* 공지사항여부 */
-	del_yn CHAR(1) DEFAULT 'n' /* 삭제여부 */
+	del_yn CHAR(1) DEFAULT 'n' ,/* 삭제여부 */
+	qna_secret char(1) DEFAULT 'n',
+	qna_password varchar2(100)
 );
 
 
