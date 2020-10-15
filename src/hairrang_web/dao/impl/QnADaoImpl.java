@@ -45,18 +45,23 @@ public class QnADaoImpl implements QnADao {
 	}
 
 	private QnA getQnA(ResultSet rs) throws SQLException {
+		//SELECT QNA_NO,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_REGDATE,RES_YN FROM QNA WHERE GUEST_ID = ? ORDER BY QNA_NO DESC";
+		
 		QnA qna = new QnA();
 		qna.setQnaNo(rs.getInt("QNA_NO"));
 		qna.setQnaTitle(rs.getString("QNA_TITLE"));
 		qna.setQnaRegDate(rs.getTimestamp("QNA_REGDATE").toLocalDateTime());
 		try {
-		qna.setQnaContent(rs.getString("QNA_CONTENT"));
+			qna.setQnaContent(rs.getString("QNA_CONTENT"));	
+			qna.setGuestId(new Guest(rs.getString("GUEST_ID")));
+			qna.setQnaSecret(rs.getString("QNA_SECRET"));
+			qna.setQnaPassword(rs.getString("QNA_PASSWORD"));
 		} catch(SQLException e) {
 		}
 		qna.setQnaResYn(rs.getString("RES_YN"));
-		qna.setGuestId(new Guest(rs.getString("GUEST_ID")));
-		qna.setQnaSecret(rs.getString("QNA_SECRET"));
-		qna.setQnaPassword(rs.getString("QNA_PASSWORD"));
+
+		qna.setQnaFile(rs.getString("QNA_FILE"));
+		
 		return qna;
 	}
 

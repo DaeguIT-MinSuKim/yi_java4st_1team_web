@@ -17,8 +17,10 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import hairrang_web.dao.impl.BookingDaoImpl;
 import hairrang_web.dao.impl.GuestDaoImpl;
 import hairrang_web.ds.JdbcUtil;
+import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
 import javafx.util.converter.LocalDateStringConverter;
 
@@ -26,12 +28,14 @@ import javafx.util.converter.LocalDateStringConverter;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class GuestDaoTest {
 	private static GuestDaoImpl dao;
+	
 	private static Connection con = JdbcUtil.getConnection();
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception{
 		dao = GuestDaoImpl.getInstance();
 		dao.setCon(con);
+
 	}
 	
 	//@Test
@@ -60,7 +64,7 @@ public class GuestDaoTest {
 		
 	}
 
-	@Test
+	//@Test
 	public void testUpdateGuestPwd() {
 		Guest guest = dao.selectGuestById(new Guest("test"));
 		String pwd = "tt1234";
@@ -120,7 +124,6 @@ public class GuestDaoTest {
 		Assert.assertNotNull(guest);
 		System.out.println(guest);
 	}
-	
 	
 
 }

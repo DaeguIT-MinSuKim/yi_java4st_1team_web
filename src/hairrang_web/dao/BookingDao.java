@@ -25,5 +25,7 @@ public interface BookingDao {
 	int selectMaxBookNo();
 
 	ArrayList<TimeTable> getTimeTables(String wantDate);
-	
+
+	int countBookingById(String id);
+
 }

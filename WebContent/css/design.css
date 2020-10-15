@@ -28,9 +28,9 @@
 
 
 /*mypage guest_info*/
-.info_submenu {margin-top:50px; margin-bottom:100px; text-align:center; font-size:15px;}
+.info_submenu {margin-top:50px; margin-bottom:80px; text-align:center; font-size:15px;}
 .info_submenu ul {}
-.info_submenu ul li {display: inline-block; width:150px;border:1px solid #fff; padding:10px; margin:0 5px; color: #bbb;}
+.info_submenu ul li {display: inline-block; width:150px;border:1px solid #fff;  margin:0 5px; color: #bbb;}
 .info_submenu ul li a {text-decoration:none; color:gray;padding:10px; width:200px;} 
 .info_submenu ul li a:hover {text-decoration:none; color:black;} 
 

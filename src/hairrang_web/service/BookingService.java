@@ -41,4 +41,10 @@ public class BookingService {
 	public ArrayList<TimeTable> getTimeTable(String wantDate) {
 		return dao.getTimeTables(wantDate);
 	}
+	
+	public int countBookingById(String id) {
+		return dao.countBookingById(id);
+	}
+	
+
 }

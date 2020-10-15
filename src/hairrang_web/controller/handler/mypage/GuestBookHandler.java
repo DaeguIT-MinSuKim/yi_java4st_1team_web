@@ -1,6 +1,7 @@
 package hairrang_web.controller.handler.mypage;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpSession;
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
-import hairrang_web.dto.Hair;
 import hairrang_web.dto.HairKind;
 import hairrang_web.service.BookingService;
 import hairrang_web.service.HairService;
@@ -26,13 +26,10 @@ public class GuestBookHandler implements Command {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
 		Guest loginUser = (Guest) session.getAttribute("loginUser");
-		
+	
 		ArrayList<Booking> bookList = bookingService.getBookingByGuestId(loginUser.getGuestId());
-		ArrayList<HairKind> hairList = hairService.getHairListAll();
-		
-		System.out.println(hairList);
-		request.setAttribute("hairList", hairList);
 		request.setAttribute("bookList", bookList);
+
 		return "mypage/guest_book.jsp";
 	}
 

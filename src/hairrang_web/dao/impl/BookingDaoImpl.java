@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 import hairrang_web.dao.BookingDao;
 import hairrang_web.dao.DesignerDao;
@@ -18,12 +18,14 @@ import hairrang_web.dto.Booking;
 import hairrang_web.dto.Designer;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.Hair;
+import hairrang_web.dto.QnA;
 import hairrang_web.dto.TimeTable;
+import hairrang_web.utils.Paging;
 
 public class BookingDaoImpl implements BookingDao {
 
 	private static final BookingDaoImpl instance = new BookingDaoImpl();
-	
+
 	private BookingDaoImpl() {
 	}
 	
@@ -81,7 +83,7 @@ public class BookingDaoImpl implements BookingDao {
 	public ArrayList<Booking> selectBookingByGuestId(Guest guest) {
 		String sql = "SELECT * FROM BOOKING WHERE GUEST_ID = ?";
 		
-		try(Connection con = JndiDs.getConnection();
+		try (Connection con = JndiDs.getConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			
 			System.out.println("guest.getGuestId() : " + guest.getGuestId());
@@ -246,4 +248,24 @@ public class BookingDaoImpl implements BookingDao {
 		
 		return null;
 	}
+
+	@Override
+	public int countBookingById(String id) {
+		String sql = "SELECT COUNT(*) FROM BOOKING WHERE GUEST_ID = ? ";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, id);
+				try (ResultSet rs = pstmt.executeQuery()) {
+					if (rs.next()) {
+						return rs.getInt(1);
+					}
+				}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return 0;
+
+	}
+	
 }

@@ -24,7 +24,7 @@
 		from direct access.
 		</description>
 		<role-name>nobody</role-name>
-	</security-role>
+	</security-role> 
 	<!-- <error-page>
 		<error-code>401</error-code>
 		<location>/error/unauthorized.html</location>
