@@ -81,7 +81,7 @@ public class BookingDaoImpl implements BookingDao {
 	
 	@Override
 	public ArrayList<Booking> selectBookingByGuestId(Guest guest) {
-		String sql = "SELECT * FROM BOOKING WHERE GUEST_ID = ?";
+		String sql = "SELECT * FROM BOOKING WHERE GUEST_ID = ? ";
 		
 		try (Connection con = JndiDs.getConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -267,5 +267,6 @@ public class BookingDaoImpl implements BookingDao {
 		return 0;
 
 	}
+	
 	
 }

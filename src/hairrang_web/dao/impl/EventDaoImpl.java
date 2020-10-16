@@ -52,8 +52,16 @@ public class EventDaoImpl implements EventDao {
 		int eventNo = rs.getInt("EVENT_NO");
 		String eventName = rs.getString("EVENT_NAME");
 		double eventSaleRate = rs.getFloat("EVENT_SALERATE");
-		LocalDate eventStart = rs.getTimestamp("EVENT_START").toLocalDateTime().toLocalDate();
-		LocalDate eventEnd = rs.getTimestamp("EVENT_END").toLocalDateTime().toLocalDate();
+		LocalDate eventStart = null;
+		LocalDate eventEnd = null;
+		try {
+		eventStart = rs.getTimestamp("EVENT_START").toLocalDateTime().toLocalDate();
+		} catch(Exception e) {
+		}
+		try {
+			eventEnd = rs.getTimestamp("EVENT_END").toLocalDateTime().toLocalDate();
+		} catch(Exception e) {
+		}
 		String eventPic = rs.getString("EVENT_PIC");
 		String eventContent = rs.getString("EVENT_CONTENT");
 

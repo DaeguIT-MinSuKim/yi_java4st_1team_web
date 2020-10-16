@@ -12,3 +12,19 @@ INSERT INTO EVENT(EVENT_NAME,EVENT_START,EVENT_END,EVENT_PIC,EVENT_CONTENT) VALU
 SELECT * FROM (SELECT * FROM EVENT WHERE EVENT_NO <1 ORDER BY EVENT_NO DESC ) WHERE rownum = 1;
 SELECT * FROM (SELECT * FROM EVENT WHERE EVENT_NO >3 ) WHERE rownum = 1;
 
+SELECT * FROM event;
+SELECT * FROM COUPON c ;
+SELECT * FROM ORDER_DETAIL od ;
+
+/*
+INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, use_yn) 
+SELECT 1, guest_id, event_no, event_start, event_end, 'n' FROM event*/
+
+
+
+
+SELECT * FROM coupon;
+SELECT * FROM event
+
+INSERT INTO coupon(guest_id, event_no, event_start, event_end)
+SELECT guest_id, event_no, event_start, event_end FROM guest, event WHERE event_no = 3;

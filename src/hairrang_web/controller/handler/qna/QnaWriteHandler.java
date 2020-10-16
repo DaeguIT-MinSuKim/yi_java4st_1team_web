@@ -41,11 +41,13 @@ public class QnaWriteHandler implements Command {
 			ServletContext context = request.getServletContext();
 			System.out.println(context);
 			
+			/*
 			// 만약 로그인이 되어있지 안하면 url에 qnaWrite.do의 경로를 저장한채로 login.do로 넘기기
 			if (loginUser == null) {
 				return "login.do?url='qnaWrite.do'";
 			}
-
+			*/
+			
 			return url;
 		} else {
 			// 방식이 post방식일 경우 제목과 내용을 가지고와서 isnert하는 곳

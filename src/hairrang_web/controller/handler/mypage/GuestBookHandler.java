@@ -16,7 +16,6 @@ import hairrang_web.service.HairService;
 
 public class GuestBookHandler implements Command {
 	private BookingService bookingService = new BookingService();
-	private HairService hairService = new HairService();
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)

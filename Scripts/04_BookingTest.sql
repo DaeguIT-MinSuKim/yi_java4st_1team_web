@@ -44,3 +44,11 @@ FROM (SELECT TO_CHAR(TO_DATE('08:30', 'hh24:mi') + LEVEL/24/2, 'hh24:mi') AS tim
 
 -- 이미 예약된 시간
 SELECT TO_CHAR(BOOK_TIME, 'hh24:mi') FROM BOOKING WHERE TO_char(BOOK_TIME, 'YYYY-MM-DD') = '2020-10-14';
+
+
+
+INSERT INTO BOOKING(BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES(60, 'test', sysdate + 10 - 6/24, 9, 2, sysdate, 1, null);
+
+
+INSERT INTO ORDER_DETAIL(od_no, coupon_no, hair_no, price, ORDER_NO);

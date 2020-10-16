@@ -73,13 +73,13 @@
 						<li><a href="">SALON</a>
 							<ul>
 								<li><a href="designerHome.do">DESIGNER</a></li>
-								<li><a href="hair.jsp">HAIR</a></li>
+								<li><a href="hair.do">HAIR</a></li>
 								
 							</ul></li>
 						<li><a href="booking.do">RESERVATION</a></li>
 						<li><a href="">COMMUNICATION</a>
 							<ul>
-								<li><a href="notice.jsp">NOTICE</a></li>
+								<li><a href="notice.do">NOTICE</a></li>
 								<li><a href="eventHome.do">EVENT</a></li>
 								<li><a href="qnaHome.do">Q&A</a></li>
 							</ul></li>

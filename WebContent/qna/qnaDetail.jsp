@@ -23,7 +23,7 @@
 	
 	<div id="buttons" style="float: right">
 	<!--비회원이 비회원글에들어와서 비밀번호 맞고 그다음에 수정가능이잖아  -->
-	<c:if test="${loginUser.guestId eq qna.guestId.guestId || confirmRes eq y}">
+	<c:if test="${loginUser.guestId eq qna.guestId.guestId || confirmRes eq y || (qna.guestId eq null && qna.secret eq 'n')}">
 		<input type="submit" value="수정하기" id="updateButton"> 
 		<input type="button" value="삭제하기" id="delete" onclick="location.href='qnaDelete.do?no=${qna.qnaNo}'">
 	</c:if>

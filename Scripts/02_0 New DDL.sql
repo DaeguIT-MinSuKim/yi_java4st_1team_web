@@ -84,8 +84,9 @@ CREATE TABLE HAIR (
 	hair_pic varchar2(200), /* 사진 */
 	hair_content VARCHAR2(1000), /* 내용 */
 	kind_no NUMBER(10), /* 분류번호 */
-	useYn CHAR(1) DEFAULT 'y' /* 사용여부 */
+	use_yn CHAR(1) DEFAULT 'y' /* 사용여부 */
 );
+
 
 ALTER TABLE HAIR
 ADD CONSTRAINT PK_HAIR PRIMARY KEY (hair_no);
