@@ -267,6 +267,14 @@ public class BookingDaoImpl implements BookingDao {
 		return 0;
 
 	}
+
+	@Override
+	public int pagingBookingById(Paging paging, String id) {
+		String sql = "SELECT * FROM (SELECT * FROM (SELECT rownum, booking.* FROM booking WHERE GUEST_ID = ? ORDER BY book_no)" + 
+				"				WHERE ROWNUM >= ?) WHERE ROWNUM <= ? ORDER BY ROWNUM DESC";
+		return 0;
+	}
+	
 	
 	
 }
