@@ -30,11 +30,11 @@ FROM booking WHERE GUEST_ID = 'chini91' ORDER BY rownum DESC;
 SELECT rownum AS rnum, book_no FROM booking WHERE GUEST_ID = 'chini91' ORDER BY rnum DESC;
 
 --예약내역 rownum
-SELECT * FROM (SELECT * FROM (SELECT rownum, booking.* FROM booking WHERE GUEST_ID = 'chini91' ORDER BY book_no)
-				WHERE ROWNUM >= 1) WHERE ROWNUM <= 10 ORDER BY ROWNUM DESC;
-
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking WHERE GUEST_ID = 'chini91' ORDER BY book_no desc) a) 
+			WHERE rn BETWEEN 1 AND 5 ORDER BY rn;
+			
 --전체카운트
 SELECT COUNT(*) FROM BOOKING WHERE GUEST_ID = 'chini91';
 
-SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN 1 AND 10;
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking WHERE GUEST_ID = 'chini91' ORDER BY book_no) a) WHERE rn BETWEEN 6 AND 10 ORDER BY rn;
 SELECT * FROM qna;

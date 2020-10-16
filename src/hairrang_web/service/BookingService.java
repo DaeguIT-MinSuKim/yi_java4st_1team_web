@@ -7,6 +7,7 @@ import hairrang_web.dao.impl.BookingDaoImpl;
 import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.TimeTable;
+import hairrang_web.utils.Paging;
 
 public class BookingService {
 
@@ -44,6 +45,10 @@ public class BookingService {
 	
 	public int countBookingById(String id) {
 		return dao.countBookingById(id);
+	}
+	
+	public ArrayList<Booking> pagingBookingById(Paging paging, String id) {
+		return (ArrayList<Booking>) dao.pagingBookingById(paging, id);
 	}
 	
 

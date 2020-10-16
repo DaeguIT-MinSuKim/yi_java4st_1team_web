@@ -18,7 +18,6 @@ import hairrang_web.dto.Booking;
 import hairrang_web.dto.Designer;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.Hair;
-import hairrang_web.dto.QnA;
 import hairrang_web.dto.TimeTable;
 import hairrang_web.utils.Paging;
 
@@ -69,13 +68,15 @@ public class BookingDaoImpl implements BookingDao {
 		LocalDateTime bookRegDate = rs.getTimestamp("BOOK_REGDATE").toLocalDateTime();
 		int bookStatus = rs.getInt("BOOK_STATUS");
 		
+		int rownum = 0;
 		String bookNote = null;
 		try {
+			rownum = rs.getInt("rn");
 			bookNote = rs.getString("BOOK_NOTE");
 		} catch (SQLException e) {
 		}
 		
-		return new Booking(bookNo, guest, bookTime, hair, designer, bookRegDate, bookStatus, bookNote);
+		return new Booking(rownum, bookNo, guest, bookTime, hair, designer, bookRegDate, bookStatus, bookNote);
 	}
 
 	
@@ -248,6 +249,9 @@ public class BookingDaoImpl implements BookingDao {
 		
 		return null;
 	}
+	
+	
+//////////////////////////////////////페이징/////////////////////////////////////////////////
 
 	@Override
 	public int countBookingById(String id) {
@@ -269,10 +273,27 @@ public class BookingDaoImpl implements BookingDao {
 	}
 
 	@Override
-	public int pagingBookingById(Paging paging, String id) {
-		String sql = "SELECT * FROM (SELECT * FROM (SELECT rownum, booking.* FROM booking WHERE GUEST_ID = ? ORDER BY book_no)" + 
-				"				WHERE ROWNUM >= ?) WHERE ROWNUM <= ? ORDER BY ROWNUM DESC";
-		return 0;
+	public List<Booking> pagingBookingById(Paging paging, String id) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking WHERE GUEST_ID = ? ORDER BY book_no desc) a) "
+				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, id);
+			pstmt.setInt(2, paging.getStart());
+			pstmt.setInt(3, paging.getEnd());
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					List<Booking> list = new ArrayList<Booking>();
+					do {
+						list.add(getBooking(rs));
+					}while(rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
 	}
 	
 	

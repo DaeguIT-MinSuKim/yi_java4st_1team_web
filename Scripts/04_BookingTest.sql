@@ -52,3 +52,4 @@ VALUES(60, 'test', sysdate + 10 - 6/24, 9, 2, sysdate, 1, null);
 
 
 INSERT INTO ORDER_DETAIL(od_no, coupon_no, hair_no, price, ORDER_NO);
+

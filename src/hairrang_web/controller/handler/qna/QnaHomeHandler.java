@@ -1,12 +1,14 @@
 package hairrang_web.controller.handler.qna;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import hairrang_web.controller.Command;
+import hairrang_web.dto.QnA;
 import hairrang_web.service.QnaService;
 import hairrang_web.utils.Paging;
 
@@ -47,7 +49,6 @@ public class QnaHomeHandler implements Command {
 		request.setAttribute("paging", paging);
 		//QnA페이징해서 해당페이지 qna를 list화해서 보내주는곳
 		request.setAttribute("viewAll", service.selectPagingQnA(paging));
-		
 		return url;
 	}
 

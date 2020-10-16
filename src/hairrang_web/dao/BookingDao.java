@@ -1,6 +1,7 @@
 package hairrang_web.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
@@ -29,6 +30,6 @@ public interface BookingDao {
 
 	int countBookingById(String id);
 	
-	int pagingBookingById(Paging paging, String id);
+	List<Booking> pagingBookingById(Paging paging, String id);
 
 }

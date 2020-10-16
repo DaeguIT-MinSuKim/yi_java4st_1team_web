@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Booking {
-
+	private int rownum;
 	private int bookNo;
 	private Guest guest;
 	private LocalDateTime bookDate;
@@ -24,7 +24,7 @@ public class Booking {
 	public Booking(Guest guest) {
 		this.guest = guest;
 	}
-
+	
 	public Booking(Guest guest, LocalDateTime bookDate, Hair hair, Designer designer, String bookNote) {
 		this.guest = guest;
 		this.bookDate = bookDate;
@@ -33,8 +33,9 @@ public class Booking {
 		this.bookNote = bookNote;
 	}
 
-	public Booking(int bookNo, Guest guest, LocalDateTime bookDate, Hair hair, Designer designer,
+	public Booking(int rownum, int bookNo, Guest guest, LocalDateTime bookDate, Hair hair, Designer designer,
 			LocalDateTime bookRegDate, int bookStatus, String bookNote) {
+		this.rownum = rownum;
 		this.bookNo = bookNo;
 		this.guest = guest;
 		this.bookDate = bookDate;
@@ -44,8 +45,18 @@ public class Booking {
 		this.bookStatus = bookStatus;
 		this.bookNote = bookNote;
 	}
+	
+	
 
 	
+	public int getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
+	}
+
 	public int getBookNo() {
 		return bookNo;
 	}
@@ -134,7 +145,7 @@ public class Booking {
 
 	@Override
 	public String toString() {
-		return "Booking [bookNo=" + bookNo + ", guest=" + guest + ", bookDate=" + bookDate + ", hair=" + hair
+		return "Booking [rownum= " + rownum +" + bookNo=" + bookNo + ", guest=" + guest + ", bookDate=" + bookDate + ", hair=" + hair
 				+ ", designer=" + designer + ", bookRegDate=" + bookRegDate + ", bookStatus=" + bookStatus
 				+ ", bookNote=" + bookNote + "]";
 	}

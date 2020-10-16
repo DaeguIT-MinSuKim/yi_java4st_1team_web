@@ -89,7 +89,7 @@ public class Paging {
 		setTotal(total);
 		calcLastPage(getTotal(), getCntPerPage());
 		calcStartEndPage(getNowPage(), cntPage);
-		calcStartEnd(getNowPage(), getCntPerPage());
+		calcStartEnd(getNowPage(), getCntPerPage()); //현재페이지1, 5
 	}
 
 	// 제일 마지막 페이지 계산
@@ -110,9 +110,10 @@ public class Paging {
 	}
 
 	// db 쿼리에서 사용할 start, end 값 계산
-	public void calcStartEnd(int nowPage, int contPerPage) {
-		setEnd(nowPage * cntPerPage);
-		setStart(getEnd() - cntPerPage + 1);
+	public void calcStartEnd(int nowPage, int contPerPage) { //현재페이지, 페이지당 글갯수
+		setEnd(nowPage * cntPerPage); 
+		setStart(getEnd() - cntPerPage + 1); 
+		
 	}
 
 	@Override
