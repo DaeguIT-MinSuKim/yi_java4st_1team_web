@@ -61,6 +61,7 @@ public class BookingRegisterHandler implements Command {
 			GsonBuilder builder = GsonLocalDateTime.getLocalDateTimeParsing("yyyy-MM-dd HH:mm");
 			Gson gson = builder.create();
 			
+			System.out.println();
 			Booking newBooking = gson.fromJson(new InputStreamReader(request.getInputStream(), "UTF-8"), Booking.class);
 			newBooking.setGuest((Guest) request.getSession().getAttribute("loginUser"));
 			System.out.println("json 변환 후 newBooking: " + newBooking);

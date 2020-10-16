@@ -144,9 +144,10 @@ function checkBookForm() {
        cache: false, // refresh할 때 중복으로 추가 되지 않게 캐시 삭제
        data: JSON.stringify(booking),
        success: function(data) {
-          alert("예약이 완료되었습니다. (nextNo: " + data.responseText + ")");
+          alert("예약이 완료되었습니다. (nextNo: " + data + ")");
           console.log(data);
-          window.location.href = "bookingDetail.do?no=" + data.responseText;
+          window.location.href = "bookingDetail.do?no=" + data;
+          // window.location.href = "bookingDetail.do?no=" + data.responseText;
        }
     });
 	
