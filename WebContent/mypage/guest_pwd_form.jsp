@@ -5,7 +5,7 @@
     <%@ include file="sub_menu.jsp" %>  
 
 <style>
-.info a{color: black; padding:30px 60px; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
+.info a{background-color:white;  border-bottom:1px solid white;}
 .underline {font-size:30px;}
 .table {
 	width:550px;
@@ -67,12 +67,11 @@ $(function(){
 </c:choose>
 
 <div class="info_submenu">
-	<ul>
-		<li class="info_update"><a href="infoUpdate.do">개인정보 변경</a></li>  
-		<li class="pwd_update"><a href="pwdUpdate.do">비밀번호 변경</a></li> 
-		<li class="guest_delete"><a href="infoDelete.do">회원탈퇴</a></li> 
-	</ul>
+	<a href="infoUpdate.do">개인정보 변경</a> | 
+	<a href="pwdUpdate.do" style="font-weight:bold">비밀번호 변경</a> | 
+	<a href="infoDelete.do">회원탈퇴</a>
 </div>
+
 <form method="post" name="formm">
 <p style="font-size:30px; text-align:center;">비밀번호 변경</p>
 <table class="table">

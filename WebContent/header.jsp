@@ -18,6 +18,10 @@
 <script src="js/init.js"></script>
 <script type="text/javascript" src="member/member.js"></script>
 <script type="text/javascript" src="js/wow.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css">
+
+<!-- 아이콘 -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
  
 <!--slider -->
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">

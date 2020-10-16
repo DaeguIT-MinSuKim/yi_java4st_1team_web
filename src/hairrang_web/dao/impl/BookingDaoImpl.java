@@ -68,15 +68,15 @@ public class BookingDaoImpl implements BookingDao {
 		LocalDateTime bookRegDate = rs.getTimestamp("BOOK_REGDATE").toLocalDateTime();
 		int bookStatus = rs.getInt("BOOK_STATUS");
 		
-		int rownum = 0;
+		int rowNum = 0;
 		String bookNote = null;
 		try {
-			rownum = rs.getInt("rn");
+			rowNum = rs.getInt("rn");
 			bookNote = rs.getString("BOOK_NOTE");
 		} catch (SQLException e) {
 		}
 		
-		return new Booking(rownum, bookNo, guest, bookTime, hair, designer, bookRegDate, bookStatus, bookNote);
+		return new Booking(rowNum, bookNo, guest, bookTime, hair, designer, bookRegDate, bookStatus, bookNote);
 	}
 
 	

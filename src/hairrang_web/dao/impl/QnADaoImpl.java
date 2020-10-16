@@ -10,6 +10,7 @@ import java.util.List;
 import hairrang_web.dao.QnADao;
 import hairrang_web.ds.JndiDs;
 import hairrang_web.dto.Admin;
+import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.QnA;
 import hairrang_web.utils.Paging;
@@ -248,6 +249,52 @@ public class QnADaoImpl implements QnADao {
 					do {
 						return getQnA(rs);
 					}while(rs.next());
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+	
+	
+//////////////////////////////////////페이징/////////////////////////////////////////////////
+
+	@Override
+	public int countQnaById(String id) {
+		String sql = "SELECT COUNT(*) FROM qna WHERE GUEST_ID = ? ";
+		try (Connection con = JndiDs.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, id);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+		return 0;
+
+	}
+
+	@Override
+	public List<QnA> pagingQnaById(Paging paging, String id) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM qna WHERE GUEST_ID = ? ORDER BY qna_no desc) a) "
+				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		try (Connection con = JndiDs.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, id);
+			pstmt.setInt(2, paging.getStart());
+			pstmt.setInt(3, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					List<QnA> list = new ArrayList<QnA>();
+					do {
+						list.add(getQnA(rs));
+					} while (rs.next());
+					return list;
 				}
 			}
 		} catch (SQLException e) {

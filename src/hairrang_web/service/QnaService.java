@@ -55,4 +55,14 @@ public class QnaService {
 	public QnA selectResQnaByNo(QnA qna) {
 		return dao.selectResByNo(qna);
 	}
+	
+	//나의 문의내역 
+	public int countQnaById(String id) {
+		return dao.countQnaById(id);
+	}
+	
+	public List<QnA> pagingQnaById(Paging paging, String id){
+		return dao.pagingQnaById(paging, id);
+	}
+	
 }

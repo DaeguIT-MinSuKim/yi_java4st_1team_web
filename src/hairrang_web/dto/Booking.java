@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Booking {
-	private int rownum;
+	
 	private int bookNo;
 	private Guest guest;
 	private LocalDateTime bookDate;
@@ -13,6 +13,7 @@ public class Booking {
 	private LocalDateTime bookRegDate;
 	private int bookStatus;
 	private String bookNote;
+	private int rowNum;
 	
 	public Booking() {
 	}
@@ -33,9 +34,9 @@ public class Booking {
 		this.bookNote = bookNote;
 	}
 
-	public Booking(int rownum, int bookNo, Guest guest, LocalDateTime bookDate, Hair hair, Designer designer,
+	public Booking(int rowNum, int bookNo, Guest guest, LocalDateTime bookDate, Hair hair, Designer designer,
 			LocalDateTime bookRegDate, int bookStatus, String bookNote) {
-		this.rownum = rownum;
+		this.rowNum = rowNum;
 		this.bookNo = bookNo;
 		this.guest = guest;
 		this.bookDate = bookDate;
@@ -46,15 +47,12 @@ public class Booking {
 		this.bookNote = bookNote;
 	}
 	
-	
-
-	
-	public int getRownum() {
-		return rownum;
+	public int getRowNum() {
+		return rowNum;
 	}
 
-	public void setRownum(int rownum) {
-		this.rownum = rownum;
+	public void setRowNum(int rowNum) {
+		this.rowNum = rowNum;
 	}
 
 	public int getBookNo() {
@@ -145,7 +143,7 @@ public class Booking {
 
 	@Override
 	public String toString() {
-		return "Booking [rownum= " + rownum +" + bookNo=" + bookNo + ", guest=" + guest + ", bookDate=" + bookDate + ", hair=" + hair
+		return "Booking [rowNum= " + rowNum +" + bookNo=" + bookNo + ", guest=" + guest + ", bookDate=" + bookDate + ", hair=" + hair
 				+ ", designer=" + designer + ", bookRegDate=" + bookRegDate + ", bookStatus=" + bookStatus
 				+ ", bookNote=" + bookNote + "]";
 	}

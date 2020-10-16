@@ -3,6 +3,7 @@ package hairrang_web.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.QnA;
 import hairrang_web.utils.Paging;
@@ -36,4 +37,8 @@ public interface QnADao {
 	
 	//답변 찾기
 	QnA selectResByNo(QnA qna);
+	
+	//나의 문의 내역 페이징
+	List<QnA> pagingQnaById(Paging paging, String id);
+	int countQnaById(String id);
 }

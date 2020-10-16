@@ -4,19 +4,17 @@
     <%@ include file="../header.jsp" %>  
     <%@ include file="sub_menu.jsp" %>  
 <style>
-.info a{color: black; padding:30px 60px; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
-.info_submenu ul .guest_delete a {text-decoration:none; color:black;}
-
+.info a{background-color:white;  border-bottom:1px solid white;}
 </style>
 <body>
 
 <div class="info_submenu">
-	<ul>
-		<li class="info_update"><a href="infoUpdate.do">개인정보 변경</a></li>  
-		<li class="pwd_update"><a href="pwdUpdate.do">비밀번호 변경</a></li> 
-		<li class="guest_delete"><a href="infoDelete.do">회원탈퇴</a></li> 
-	</ul>
+	<a href="infoUpdate.do">개인정보 변경</a> | 
+	<a href="pwdUpdate.do">비밀번호 변경</a> | 
+	<a href="infoDelete.do" style="font-weight:bold">회원탈퇴</a>
 </div>
+
+
 <form method=post name=formm style="margin-right:0" action="guestInfoDelete.do" >
 <div class="delete_wrapper">
 	<p style="font-size:27px;"><img src="images/document.png" style="margin-bottom:-7px;">

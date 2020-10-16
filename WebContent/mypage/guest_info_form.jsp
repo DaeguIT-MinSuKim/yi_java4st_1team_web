@@ -4,21 +4,13 @@
     <%@ include file="../header.jsp" %>  
     <%@ include file="sub_menu.jsp" %>  
 <style>
-.info a{color: black; padding:30px 60px; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
+.info a{background-color:white;  border-bottom:1px solid white;}
 .underline {font-size:30px;}
-.table {
-	width:550px;
-	margin:0 auto;
-	padding:20px;
-}
+.table { width:550px; margin:0 auto; padding:20px;}
 td {width:80px; padding:10px;}
 input {margin-left:20px; width:260px; border: 1px solid #e8e8e8;}
 
-.line {
-	margin:0 auto;
-	border:2px solid gray;
-	width:120px;
-	background:gray;
+.line { margin:0 auto; border:2px solid gray; width:120px; background:gray;
 	} 	
 .check {text-align:center;}
 #buttons {width:800px; margin:0 auto; text-align:Center; padding:50px;}
@@ -80,11 +72,9 @@ $(document).ready(function() {
 </c:choose>
 
 <div class="info_submenu">
-	<ul>
-		<li class="info_update"><a href="infoUpdate.do">개인정보 변경</a></li>  
-		<li class="pwd_update"><a href="pwdUpdate.do">비밀번호 변경</a></li> 
-		<li class="guest_delete"><a href="infoDelete.do">회원탈퇴</a></li> 
-	</ul>
+	<a href="infoUpdate.do" style="font-weight:bold">개인정보 변경</a> | 
+	<a href="pwdUpdate.do">비밀번호 변경</a> | 
+	<a href="infoDelete.do">회원탈퇴</a>
 </div>
 
 <form id="join" method="post" name="formm">

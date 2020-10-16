@@ -6,78 +6,62 @@
      <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 
 <style>
-.book a {color: black; padding:30px 60px; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
+.book a {background-color:white;  border-bottom:1px solid white;}
 </style>     
 <script>
-	function selChange() {
+	/* function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
 		location.href="guestBook.do?nowPage=${paging.nowPage}&cntPerPage="+sel;
-	}
+	} */
+	
 </script>
 <body>
-<div id="outter">
-		<div style="float: right;">
-			<select id="cntPerPage" name="sel" onchange="selChange()">
-			<option value="5"
-				<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
-			<option value="10"
-				<c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
-			<option value="15"
-				<c:if test="${paging.cntPerPage == 15}">selected</c:if>>15줄 보기</option>
-			<option value="20"
-				<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄 보기</option>
-		</select>
-		</div>
 <div class="book_wrapper">
 <p style="text-align:center; font-size:30px;">예약 내역</p>
 <table id="board">
 		<tr>
-			<th>번호</th> <th>(확인용)예약번호</th> <th>예약일</th> <th>시술명</th> <th>총 금액</th> <th>예약상태</th> <th>예약등록일</th> <th>상세내역</th>
+			<th>번호</th> <!-- <th>(확인용)예약번호</th> --> <th>이용날짜</th> <th>시술 정보</th> <th>총 금액</th> <th>예약상태</th> <th>예약등록일</th> 
 		</tr>
-		<c:forEach items="${viewAll}" var="booking">
-			<tr>
-				<td>${booking.rownum}</td>
-				<td>${booking.bookNo}</td>
-				<td>
+		<c:forEach items="${viewAll}" var="booking" varStatus="status">
+			<tr onclick="location.href='guestBookDetail.do'" style="cursor:pointer;" class="mypage_title">
+				<td class="book_index">${total - ((paging.nowPage-1) * cnt + status.index)} </td>
+				<%-- <td>${booking.bookNo}</td> --%>
+				<td class="book_date">
 					<fmt:parseDate value="${booking.bookDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookDate" type="both" />
 					<fmt:formatDate value="${bookDate}" pattern="yyyy-MM-dd HH:mm" />
 				</td>
-				<td>${booking.hair.hairName}</td>
-				<td>${booking.hair.hairPrice}</td>
-				<td>${booking.bookStatus}</td>
-				<td>
-				<fmt:parseDate value="${booking.bookRegDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookReg" type="both" />
-				<fmt:formatDate value="${bookReg}" pattern="yyyy-MM-dd HH:mm" />
-			</td>
-		<td>버튼넣기</td>
+				<td class="book_name">${booking.hair.hairName}</td>
+				<td class="book_price">${booking.hair.hairPrice}</td>
+				<td class="book_status">${booking.bookStatus}</td>
+				<td class="book_reg">
+					<fmt:parseDate value="${booking.bookRegDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookReg" type="both" />
+					<fmt:formatDate value="${bookReg}" pattern="yyyy-MM-dd HH:mm" />
+				</td>
+				
 		</tr>
 		</c:forEach>
-		
 		</table>
-
-		<div style="display: block; text-align: center;">
+		<div class="paging">
 			<c:if test="${paging.startPage != 1}">
-				<a href="guestBook.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">&lt;</a>	
+				<a href="guestBook.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}"><i class="xi-angle-left"></i></a>	
 			</c:if>
-			<a href="guestBook.do?nowPage=${paging.nowPage -1}&cntPerPage=${paging.cntPerPage}">이전</a>
-			<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+			&nbsp;&nbsp;
+			<c:forEach begin="${paging.startPage}" end="${paging.endPage }" var="p">
 				<c:choose>
 					<c:when test="${p == paging.nowPage }">
-						<b>${p}</b>
+					${p}
 					</c:when>
 					<c:when test="${p != paging.nowPage }">
-						<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a>
+						<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><b style="margin:5px;">${p}</b></a>
 					</c:when>
 				</c:choose>
 			</c:forEach>
-			<a href="guestBook.do?nowPage=${paging.nowPage + 1}&cntPerPage=${paging.cntPerPage}">다음</a>
+			&nbsp;&nbsp;
 			<c:if test="${paging.endPage != paging.lastPage }">
-				<a href="guestBook.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&rt;</a>
-			</c:if>
+				<a href="guestBook.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}"><i class="xi-angle-right"></i></a>
+			</c:if>	
 		</div>
 	</div>
-	</div>
-	
 </body>
 
 

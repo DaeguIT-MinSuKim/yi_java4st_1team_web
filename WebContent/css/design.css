@@ -1,4 +1,10 @@
 @charset "UTF-8";
+@font-face {
+    font-family: 'GmarketSansLight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
  
 /* booking */
 .time_table {width: 400px; max-width: 600px;}
@@ -7,6 +13,7 @@
 
 .time_table .active {background-color: red;}
 .time_table .disabled {background-color: lightgray; cursor: unset;}
+
 
 /* 준오헤어 타임테이블 쌔빌려고 했는데 실패! */
 .juno {display: block;}
@@ -19,20 +26,26 @@
 .timeselectbox .timeline .timesec .line {padding-left:58px;}
 
 /*mypage sub_menu*/
-.info a, .book a, .order a, .qna a {color:#bbb;}
-.submenu_main {margin-top:50px; text-align: center; background: #ffffff; border-bottom:1px solid #bbb;}
+/* .info a, .book a, .order a, .qna a, .coupon a {color:#bbb;}
+.submenu_main {text-align: center; border:1px solid #fff; }
 .sub_menu ul {}
-.sub_menu ul li {display: inline-block; font-weight:600; font-size:20px; text-align: center; color: #bbb; text-decoration:none;}
-.sub_menu ul li a {padding:30px 60px; text-decoration:none;	}
-.sub_menu ul li a:hover{ text-decoration:none; color: black; padding:30px 60px; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
+.sub_menu ul li {background-color:red; padding:15px 30px; display: inline-block; font-weight:500; font-size:15px; text-align: center; color: #bbb; text-decoration:none;}
+.sub_menu ul li a {padding:15px 30px; text-decoration:none;	}
+.sub_menu ul li a:hover{ text-decoration:none; background-color:#fff; color: black; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
+ */
+.info a, .book a, .order a, .qna a, .coupon a {color:black;}
+.submenu_main { text-align: center; border:1px solid #fff; line-height:60px;}
+.sub_menu ul { width:1005px; height:60px; margin:0 auto;}
+.sub_menu ul li { width:200px; height:60px; display: inline-block; border:1px solid #e8e8e8; background-color:#f6f6f6; float:left;}
+.sub_menu ul li a { display:block; width:200px; height:60px; text-decoration:none; font-size:14px;} 
+.sub_menu ul li a:hover{background-color:white; border-bottom:2px solid white} 
 
 
 /*mypage guest_info*/
-.info_submenu {margin-top:50px; margin-bottom:80px; text-align:center; font-size:15px;}
-.info_submenu ul {}
-.info_submenu ul li {display: inline-block; width:150px;border:1px solid #fff;  margin:0 5px; color: #bbb;}
-.info_submenu ul li a {text-decoration:none; color:gray;padding:10px; width:200px;} 
-.info_submenu ul li a:hover {text-decoration:none; color:black;} 
+.mypage_title:hover { background-color:#F6F6F6; cursor:pointer;}
+.info_submenu {clear:both; margin-top:50px; margin-bottom:80px; text-align:center; font-size:15px;}
+.info_submenu a {text-decoration:none; color:gray;padding:10px; width:200px;} 
+.info_submenu a:hover {text-decoration:none; color:black;} 
 
 /*mypage guest_delete*/
 .delete_wrapper {width:800px; margin:0 auto; text-align:center;}
@@ -41,11 +54,25 @@
 .delete_sub3 {}
 
 /*mypage guest_book*/
-.book_wrapper {margin-top:50px;}
-#board {width:1000px; margin:0 auto; text-align:center;}
-#board tr {border-bottom:1px solid black;}
-#board th {border-top:3px solid black; padding:20px 0; font-weight:bold;}
-#board tr td {padding:20px 0;}
+.book_wrapper {margin-top:60px;}
+#board {clear:both; width:1000px; margin:0 auto;  text-align:center;}
+#board tr {border-bottom:1px solid #E4E4E4;}
+#board tr td {padding:15px 0;}
+#board th {border-top:3px solid black; padding:10px 0; font-weight:bold;}
+#board .book_index, .qna_index{width:50px; }
+#board .book_date, .qna_date {width:180px;}
+#board .book_name {width:400px;}
+#board .qna_title{width:400px; text-align:left; padding-left:30px;}
+#board .book_name, .qna_title a {text-decoration:none;}
+#board .book_price {width:100px;}
+#board .book_status, .qna_resYn{width:70px;}
+#board .qna_title{width:600px;}
+
+.paging {display: block; text-align: center; padding:30px;}
+.paging a {text-decoration:none;}
+
+.qna_wrapper { margin-top:60px; display: block; margin: 0 auto;}
+.qna_buttons {width:1000px; margin:0 auto; text-align:right;}
 
 /*about*/
 .about_main {margin-top:50px; text-align: center; background: #ffffff;}
