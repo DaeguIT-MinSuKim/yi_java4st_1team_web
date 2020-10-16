@@ -1,7 +1,6 @@
 package hairrang_web.controller.handler.mypage;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
-import hairrang_web.dto.HairKind;
 import hairrang_web.service.BookingService;
 import hairrang_web.service.HairService;
 
