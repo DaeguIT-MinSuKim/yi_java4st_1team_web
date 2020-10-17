@@ -15,6 +15,8 @@
 		var sel = document.getElementById('cntPerPage').value;
 		location.href="qnaHome.do?nowPage=${paging.nowPage}&cntPerPage="+sel;
 	}
+	
+
 </script>
 </head>
 <body>

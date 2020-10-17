@@ -5,6 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+function go_delQna() {
+	var url="qnaDeleteForm.do";
+	window.open( url, "_blank_1",
+	"toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=400, height=100");
+}
+</script>
 </head>
 <body>
 	<h1>문의 수정</h1>

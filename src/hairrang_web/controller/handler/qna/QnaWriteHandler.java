@@ -32,7 +32,9 @@ public class QnaWriteHandler implements Command {
 			throws IOException, ServletException {
 		String url = "qna/qnaWrite.jsp";
 		HttpSession session = request.getSession();
-		Guest loginUser = (Guest) session.getAttribute("loginUser");
+		Guest loginUser = new Guest("null");
+		loginUser = (Guest) session.getAttribute("loginUser");
+		QnA qna = new QnA();
 
 		// 만약 get방식이면 qna작성 페이지로 이동하는곳
 		if (request.getMethod().equals("GET")) {
@@ -91,13 +93,21 @@ public class QnaWriteHandler implements Command {
 			//제목 내용 파일경로 db에 insert하는곳
 			String title = multi.getParameter("title");
 			String content = multi.getParameter("content");
-			QnA qna = new QnA(loginUser, title, content, FilegetPath);
+			String secretPwd= multi.getParameter("secretPwd");
+		
+			System.out.println("lopginUser"+loginUser);
+			System.out.println("secretPwd"+secretPwd);
+			qna.setQnaTitle(title);
+			qna.setQnaContent(content);
+			qna.setQnaFile(FilegetPath);
+			qna.setQnaPassword(secretPwd);
 			System.out.println("insert 하기전");
 			service.insertQna(qna);
 			
 			
 			}catch (Exception e) {
-				System.out.println("예외발생 :"+e);
+				e.printStackTrace();
+			
 			}
 			/*?nowPage=1&cntPerPage=5*/
 			response.sendRedirect("qnaHome.do");

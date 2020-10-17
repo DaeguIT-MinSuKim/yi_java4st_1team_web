@@ -1,10 +1,9 @@
 /*$(function(){
-	$('#updateButton').on("click",function(){
-		alert("수정버튼 먹었다");
-		if($('#content').attr.val == "ture"){
-			$('#content').attr("readonly","false");
+	$('#secret').on("click",function(){
+		if($('#secret').attr.val == "true"){
+			document.getElementById('secretPwd').readOnly = true; 
 		}else{
-			location.href="qnaUpdate.do";
+			document.getElementById('secretPwd').readOnly = false; 
 		}
 	}
 });
