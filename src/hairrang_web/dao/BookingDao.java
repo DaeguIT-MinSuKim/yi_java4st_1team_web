@@ -32,4 +32,6 @@ public interface BookingDao {
 	
 	List<Booking> pagingBookingById(Paging paging, String id);
 
+	int isAvailableTime(String wantDateTime);
+
 }

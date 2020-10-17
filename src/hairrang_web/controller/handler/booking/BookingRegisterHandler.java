@@ -65,20 +65,25 @@ public class BookingRegisterHandler implements Command {
 			Booking newBooking = gson.fromJson(new InputStreamReader(request.getInputStream(), "UTF-8"), Booking.class);
 			newBooking.setGuest((Guest) request.getSession().getAttribute("loginUser"));
 			System.out.println("json 변환 후 newBooking: " + newBooking);
-			System.out.println("parsing 끝나고 builder: " + builder + ", gson: " + gson);
 			
-			int res = service.addBooking(newBooking);
-			int nextNo = 0;
+			int nextNo = -1;
 			
-			if(res == 1) {
-				nextNo = service.getMaxBookNo();
+			// 사용자가 html, script를 수정해 접근할 수도 있으므로 DB단에서 한번 더 검증
+			if (service.isAvailableTime(newBooking.getBookDateStr()) != 1) {
+				int res = service.addBooking(newBooking);
+				
+				if(res == 1) {
+					nextNo = service.getMaxBookNo();
+				} else {
+					nextNo = 0;
+				}
 			}
 			
 			response.setCharacterEncoding("UTF-8");
 			response.setStatus(HttpServletResponse.SC_ACCEPTED);
 			
 			PrintWriter pw = response.getWriter();
-			pw.print(nextNo);
+			pw.print(nextNo); // 이미 예약된 시간이면 -1, 그 외에 insert에 문제가 있으면 0, 성공적으로 insert 됐으면 nextNo 반환
 			pw.flush();
 			
 			return null;
