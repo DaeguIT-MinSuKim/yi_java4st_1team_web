@@ -14,6 +14,9 @@
 .time_table .active {background-color: red;}
 .time_table .disabled {background-color: lightgray; cursor: unset;}
 
+.addedHairList {}
+.addedHair {}
+
 
 /* 준오헤어 타임테이블 쌔빌려고 했는데 실패! */
 .juno {display: block;}

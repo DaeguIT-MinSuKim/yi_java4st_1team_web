@@ -11,108 +11,148 @@ $(document).on("click", ".time_table ul li", function() {
 $(function() {
 	$(document).ready(function() {
 		document.title += ' - 예약하기'
-		document.getElementById('bookDate').valueAsDate = new Date();
+		var today = new Date();
+		document.getElementById('bookDate').valueAsDate = today;
+		
+		var maxDate = new Date();
+		maxDate.setDate(today.getDate() + 28);
+		
+		var minDateStr = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+		var maxDateStr = maxDate.getFullYear() + "-" + (maxDate.getMonth() + 1) + "-" + maxDate.getDate();
+		document.getElementById('bookDate').min = minDateStr;
+		document.getElementById('bookDate').max = maxDateStr;
 		
 		setTimeTable($("#bookDate").val());
-	});
 	
-	/* 헤어 대분류 불러오기 */
-	$.ajax({
-		url: "booking.do",
-		type: "post",
-		dataType: "json",
-		success: function(data) {
-			console.log(data);
-			loadHairKindCombo($("#hairkindbox"), data);
-			$("#hairkindbox").val("");
-		}
-	});
-
-	function loadHairKindCombo(target, data) {
-		var dataArr = [];
-		var idx = 0;
-		target.empty();
-		
-		$.each(data, function(index, item) {
-			dataArr[idx++] = "<option value=" + item.kindNo + ">[" + item.kindNo + "] " + item.kindName + "</option>";
-		});
-		
-		target.append(dataArr);
-	}
 	
-	/* 헤어 대분류 선택시 소분류 불러오기 */
-	$("#hairkindbox").change(function() {
-		var selectedKindNo = $("#hairkindbox option:selected").val();
+		/* 헤어 대분류 불러오기 */
 		$.ajax({
 			url: "booking.do",
 			type: "post",
-			dataType: "json",
-			data: {
-				kindNo: selectedKindNo
-			},
-			success: function(data) {
-				loadHairBox($("#hairbox"), data);
-			},
-			error: function(error) {
-				console.log("[load hiarbox] error: " + error);
-			}
-		});
-	});
-	 
-	function loadHairBox(target, data) {
-		var dataArr = [];
-		var idx = 0;
-		target.empty();
-		
-		$.each(data, function(index, item) {
-			dataArr[idx++] = "<option value=" + item.hairNo + ">" + item.hairName+ "</option>";
-		});
-		
-		target.append(dataArr);
-	};
-	
-	$("#hairbox").change(function() {
-	
-	});
-	
-	/* 날짜 선택 시 타임테이블 불러오기 */
-	$("#bookDate").change(function() {
-		setTimeTable($("#bookDate").val());
-	});
-	
-	// 매개변수 날짜값으로 타임테이블 불러오는 함수
-	function setTimeTable(bookDateVal) {
-		$.ajax({
-			url: "booking.do",
-			type: "post",
-			data: {
-				bookDate: bookDateVal
-			},
 			dataType: "json",
 			success: function(data) {
 				console.log(data);
-				loadTimeTable($(".time_table ul"), data);
+				loadHairKindCombo($("#hairkindbox"), data);
+				$("#hairkindbox").val("");
 			}
 		});
-	}
 	
-	// 타임테이블 ajax로 불러온 데이터로 html 쓰는 함수
-	function loadTimeTable(target, data) {
-		var dataArr = [];
-		var idx = 0;
-		target.empty();
+		function loadHairKindCombo(target, data) {
+			var dataArr = [];
+			var idx = 0;
+			target.empty();
+			
+			$.each(data, function(index, item) {
+				dataArr[idx++] = "<option value=" + item.kindNo + ">[" + item.kindNo + "] " + item.kindName + "</option>";
+			});
+			
+			target.append(dataArr);
+		}
 		
-		$.each(data, function(index, item) {
-			var disabled;
-			if(item.used === 1) {
-				disabled = " class='disabled'";
-			}
-			dataArr[idx++] = "<li time24='" + item.time + "'" + disabled + ">" + item.time + "</li>";
+		/* 헤어 대분류 선택시 소분류 불러오기 */
+		$("#hairkindbox").change(function() {
+			var selectedKindNo = $("#hairkindbox option:selected").val();
+			$.ajax({
+				url: "booking.do",
+				type: "post",
+				dataType: "json",
+				data: {
+					kindNo: selectedKindNo
+				},
+				success: function(data) {
+					loadHairBox($("#hairbox"), data);
+				},
+				error: function(error) {
+					console.log("[load hiarbox] error: " + error);
+				}
+			});
 		});
-		target.append(dataArr);
+		 
+		function loadHairBox(target, data) {
+			var dataArr = [];
+			var idx = 0;
+			target.empty();
+			
+			$.each(data, function(index, item) {
+				dataArr[idx++] = "<option value=" + item.hairNo + ">" + item.hairName+ "</option>";
+			});
+			
+			target.append(dataArr);
+		};
+		
+		$("#hairbox").change(function(e) {
+			var hairNo = $("#hairbox option:selected").val();
+			var hairName = $("#hairbox option:selected").text();
+			
+			addHair(hairNo, hairName);
+			
+		});
+		
+		/* 날짜 선택 시 타임테이블 불러오기 */
+		$("#bookDate").change(function() {
+			setTimeTable($("#bookDate").val());
+		});
+		
+		// 매개변수 날짜값으로 타임테이블 불러오는 함수
+		function setTimeTable(bookDateVal) {
+			$.ajax({
+				url: "booking.do",
+				type: "post",
+				data: {
+					bookDate: bookDateVal
+				},
+				dataType: "json",
+				success: function(data) {
+					console.log(data);
+					loadTimeTable($(".time_table ul"), data);
+				}
+			});
+		}
+		
+		// 타임테이블 ajax로 불러온 데이터로 html 쓰는 함수
+		function loadTimeTable(target, data) {
+			var dataArr = [];
+			var idx = 0;
+			target.empty();
+			
+			$.each(data, function(index, item) {
+				dataArr[idx++] = "<li time24='" + item.time + "'" + (item.used === 1 ? " class='disabled'" : "")+ ">" + item.time + "</li>";
+			});
+			target.append(dataArr);
+		}
+	});
+});
+
+function addHair(hairNo, hairName) {
+	// console.log($(".addedHair[hairNo=" + itemNo + "]").attr("hairName"));
+	// $(".addedHair[hairNo=" + itemNo + "]").remove();
+	
+	var quantity = 1;
+	var selectedItem = $(".addedHair[hairNo=" + hairNo + "]");
+	
+	if (selectedItem.length == 0) {
+		// 처음 선택한 경우
+		var addLine = "<li class='addedHair' hairNo='" + hairNo + "' hairName='" + hairName + "' quantity='" + quantity + "'>"
+						+ hairName + " <span class='quantity'>" + quantity + "</span>회 <a href='javascript:void(0);' onclick='delHairItem(" + hairNo +"); return false;'>X</a></li>";
+		$(".addedHairList").append(addLine);
+	} else {
+		// 이미 존재하는 경우 수량을 증가시킴
+		quantity = selectedItem.attr("quantity") * 1;
+		$(selectedItem).attr("quantity", ++quantity);
+		$(selectedItem).children(".quantity").text(quantity);
 	}
 	
-});
+	
+	console.log($(".addedHair[hairNo=" + hairNo + "]").attr("hairName"));
+	// console.log(selectedItem.attr("hairName"));
+	
+	
+}
+
+function delHairItem(itemNo) {
+	// console.log($(".addedHair[hairNo=" + itemNo + "]").attr("hairName"));
+	$(".addedHair[hairNo=" + itemNo + "]").remove();
+}
 
 function checkBookForm() {
 	if (document.bookForm.bookHair.value == "") {
@@ -145,9 +185,17 @@ function checkBookForm() {
        data: JSON.stringify(booking),
        dataType: "text",
        success: function(data) {
-          alert("예약이 완료되었습니다. (nextNo: " + data + ")");
-          console.log(data);
-          window.location.href = "bookingDetail.do?no=" + data;
+    	  if (data == -1) {
+    		  alert("이미 예약된 시간입니다. 새로고침 후 다시 이용해주세요.");
+    		  location.reload();
+    	  } else if (data == 0) {
+    		  alert("오류가 발생했습니다. 다시 시도해주세요.");
+    		  location.reload();
+    	  } else {
+	          alert("예약이 완료되었습니다. (nextNo: " + data + ")");
+	          console.log(data);
+	          window.location.href = "bookingDetail.do?no=" + data;
+    	  }
        }
     });
 	
@@ -168,16 +216,14 @@ function checkBookForm() {
 			<input type="date" name="bookDate" id="bookDate">
 		</li>
 		<li>
-			<label for="bookHairKind">시술 : </label>
+			<label for="bookHairKind">시술분류 : </label>
 			<select name="bookHairKind" id="hairkindbox">
-				<%-- <c:forEach var="hairKind" items="${hairList}">
-					<option value="${hairKind.kindNo }">[${hairKind.kindNo}]${hairKind.kindName }</option>
-				</c:forEach> --%>
 			</select>
 		</li>
 		<li>
 			<label for="bookHair">시술 : </label>
 			<select name="bookHair" id="hairbox">
+				<option selected disabled>--시술 선택--</option>
 			</select>
 		</li>
 		<li>
@@ -191,43 +237,12 @@ function checkBookForm() {
 	</ul>
 	<div class="time_table">
 		<ul>
-		    <%-- <c:forEach var="i"  begin="10" end="19">
-		    	<c:forEach var="j" begin="0" end="1">
-					<li time24="${i}:${j==0 ? '00' : j*30}">${i>9 ? i :'0'}${i>9 ? '' : i} : ${j==0 ? '00' : j*30}</li>
-		    	</c:forEach>
-		    </c:forEach> --%>
 		</ul>
 	</div>
-	<div class="selectedHairs">
+	<div class="addedHairList">
 		<ul>
 		</ul>
 	</div>
 	<input type="button" name="submit" value="예약 등록" onclick="return checkBookForm();">
 </form>
-	${hairList }<br>
-	${deList }
-
-
-<!-- 
-<div class="juno">
-<div class="timeselectbox">
-	<div class="timeline" id="timeline">
-		<div class="timesec">
-			<p class="tit">오전</p>
-			<ul>
-				<li><span class="disabled">10:00</span></li>
-			</ul>
-		</div>
-		<div class="timesec">
-			<div class="line">
-				<span></span>
-			</div>
-			<p class="tit">오후</p>
-			<ul>
-				<li><span class="disabled">8:30</span></li>
-			</ul>
-		</div>
-	</div>
-</div>
-</div> -->
 <%@ include file="../footer.jsp" %>  

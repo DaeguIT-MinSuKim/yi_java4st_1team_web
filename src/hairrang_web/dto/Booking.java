@@ -75,6 +75,10 @@ public class Booking {
 		return bookDate;
 	}
 
+	public String getBookDateStr() {
+		return this.bookDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+	}
+	
 	public void setBookDate(LocalDateTime bookDate) {
 		this.bookDate = bookDate;
 	}
