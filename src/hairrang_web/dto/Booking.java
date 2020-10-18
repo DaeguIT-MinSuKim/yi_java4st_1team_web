@@ -2,18 +2,21 @@ package hairrang_web.dto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
 
 public class Booking {
 	
 	private int bookNo;
 	private Guest guest;
 	private LocalDateTime bookDate;
-	private Hair hair;
 	private Designer designer;
 	private LocalDateTime bookRegDate;
 	private int bookStatus;
 	private String bookNote;
 	private int rowNum;
+	
+	private List<BookingHairs> hairList;
 	
 	public Booking() {
 	}
@@ -26,10 +29,10 @@ public class Booking {
 		this.guest = guest;
 	}
 	
-	public Booking(Guest guest, LocalDateTime bookDate, Hair hair, Designer designer, String bookNote) {
+	public Booking(Guest guest, LocalDateTime bookDate, List<BookingHairs> hairList, Designer designer, String bookNote) {
 		this.guest = guest;
 		this.bookDate = bookDate;
-		this.hair = hair;
+		this.hairList = hairList;
 		this.designer = designer;
 		this.bookNote = bookNote;
 	}
@@ -40,7 +43,19 @@ public class Booking {
 		this.bookNo = bookNo;
 		this.guest = guest;
 		this.bookDate = bookDate;
-		this.hair = hair;
+		this.designer = designer;
+		this.bookRegDate = bookRegDate;
+		this.bookStatus = bookStatus;
+		this.bookNote = bookNote;
+	}
+	
+	public Booking(int rowNum, int bookNo, Guest guest, LocalDateTime bookDate, List<BookingHairs> hairList, Designer designer,
+			LocalDateTime bookRegDate, int bookStatus, String bookNote) {
+		this.rowNum = rowNum;
+		this.bookNo = bookNo;
+		this.guest = guest;
+		this.bookDate = bookDate;
+		this.hairList = hairList;
 		this.designer = designer;
 		this.bookRegDate = bookRegDate;
 		this.bookStatus = bookStatus;
@@ -88,14 +103,6 @@ public class Booking {
 		this.bookDate = LocalDateTime.parse(bookDateStr, formatter);
 	}
 
-	public Hair getHair() {
-		return hair;
-	}
-
-	public void setHair(Hair hair) {
-		this.hair = hair;
-	}
-
 	public Designer getDesigner() {
 		return designer;
 	}
@@ -106,6 +113,10 @@ public class Booking {
 
 	public LocalDateTime getBookRegDate() {
 		return bookRegDate;
+	}
+	
+	public String getBookRegDateStr() {
+		 return this.bookRegDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 	}
 
 	public void setBookRegDate(LocalDateTime bookRegDate) {
@@ -123,10 +134,9 @@ public class Booking {
 	public String getBookStatusStr() {
 		String str = null;
 		switch(bookStatus) {
-			case 1: str = "예약 접수"; break;
-			case 2: str = "예약 완료"; break;
+			case 1: str = "예약 완료"; break;
+			case 2: str = "방문 완료"; break;
 			case 0: str = "예약 취소"; break;
-			case 3: str = "방문 완료"; break;
 			case -1: str = "미방문"; break;
 		}
 		return str;
@@ -140,6 +150,14 @@ public class Booking {
 		this.bookNote = bookNote;
 	}
 
+	public List<BookingHairs> getHairList() {
+		return hairList;
+	}
+
+	public void setHairList(List<BookingHairs> hairList) {
+		this.hairList = hairList;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		return this.bookNo == ((Booking) obj).bookNo;
@@ -147,10 +165,11 @@ public class Booking {
 
 	@Override
 	public String toString() {
-		return "Booking [rowNum= " + rowNum +" + bookNo=" + bookNo + ", guest=" + guest + ", bookDate=" + bookDate + ", hair=" + hair
-				+ ", designer=" + designer + ", bookRegDate=" + bookRegDate + ", bookStatus=" + bookStatus
-				+ ", bookNote=" + bookNote + "]";
+		return String.format("Booking [bookNo=%s, guest=%s, bookDate=%s, designer=%s, hairList=%s]", bookNo, guest,
+				bookDate, designer, hairList);
 	}
+
+	
 	
 	
 }

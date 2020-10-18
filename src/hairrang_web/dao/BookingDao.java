@@ -16,9 +16,9 @@ public interface BookingDao {
 	
 	ArrayList<Booking> selectBookingByGuestId(Guest guest);
 	
-	int insertBooking(Booking booking);
+	// int insertBooking(Booking booking);
 	
-	int updateBooking(Booking booking);
+	// int updateBooking(Booking booking);
 	
 	int deleteBooking(Booking booking);
 	

@@ -84,7 +84,7 @@ public class HairDaoImpl implements HairDao {
 
 	@Override
 	public Hair selectHairByNo(Hair hair) {
-		String sql = "SELECT * FROM HAIR_VIEW WHERE KIND_NO = ?";
+		String sql = "SELECT * FROM HAIR_VIEW WHERE HAIR_NO = ?";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {

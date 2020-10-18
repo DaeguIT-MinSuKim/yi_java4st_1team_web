@@ -15,6 +15,7 @@ import hairrang_web.dao.GuestDao;
 import hairrang_web.dao.HairDao;
 import hairrang_web.ds.JndiDs;
 import hairrang_web.dto.Booking;
+import hairrang_web.dto.BookingHairs;
 import hairrang_web.dto.Designer;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.Hair;
@@ -34,7 +35,8 @@ public class BookingDaoImpl implements BookingDao {
 
 	@Override
 	public ArrayList<Booking> selectBookingAll() {
-		String sql = "SELECT * FROM BOOKING";
+//		String sql = "SELECT * FROM BOOKING";
+		String sql = "SELECT * FROM BOOKING_VIEW";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -52,9 +54,40 @@ public class BookingDaoImpl implements BookingDao {
 		return null;
 	}
 
+	private ArrayList<BookingHairs> selectBookingHairsByBookingNo(int bookNo) {
+		String sql = "SELECT * FROM BOOKING_HAIRS WHERE BOOK_NO = ?";
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, bookNo);
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					ArrayList<BookingHairs> list = new ArrayList<>();
+					while(rs.next()) {
+						list.add(getBookingHairs(rs));
+					}
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
 	
+	private BookingHairs getBookingHairs(ResultSet rs) throws SQLException {
+		// BOOK_NO, HAIR_NO, HAIR_QUANTITY
+		
+		HairDao hDao = HairDaoImpl.getInstance();
+		Hair hair = hDao.selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
+		int quantity = rs.getInt("HAIR_QUANTITY");
+		
+		return new BookingHairs(hair, quantity);
+	}
+
 	private Booking getBooking(ResultSet rs) throws SQLException {
 		// BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE
+		// BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, HAIR_QUANTITY, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE
 		
 		GuestDao gDao = GuestDaoImpl.getInstance();
 		HairDao hDao = HairDaoImpl.getInstance();
@@ -63,7 +96,8 @@ public class BookingDaoImpl implements BookingDao {
 		int bookNo = rs.getInt("BOOK_NO");
 		Guest guest = gDao.selectGuestById(new Guest(rs.getString("GUEST_ID")));
 		LocalDateTime bookTime = rs.getTimestamp("BOOK_TIME").toLocalDateTime();
-		Hair hair = hDao.selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
+		ArrayList<BookingHairs> hairList = selectBookingHairsByBookingNo(bookNo);
+//		Hair hair = hDao.selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
 		Designer designer = dDao.selectDesignerByNo(new Designer(rs.getInt("DE_NO")));
 		LocalDateTime bookRegDate = rs.getTimestamp("BOOK_REGDATE").toLocalDateTime();
 		int bookStatus = rs.getInt("BOOK_STATUS");
@@ -76,13 +110,14 @@ public class BookingDaoImpl implements BookingDao {
 		} catch (SQLException e) {
 		}
 		
-		return new Booking(rowNum, bookNo, guest, bookTime, hair, designer, bookRegDate, bookStatus, bookNote);
+		return new Booking(rowNum, bookNo, guest, bookTime, hairList, designer, bookRegDate, bookStatus, bookNote);
 	}
 
 	
 	@Override
 	public ArrayList<Booking> selectBookingByGuestId(Guest guest) {
-		String sql = "SELECT * FROM BOOKING WHERE GUEST_ID = ? ";
+//		String sql = "SELECT * FROM BOOKING WHERE GUEST_ID = ? ";
+		String sql = "SELECT * FROM BOOKING_VIEW WHERE GUEST_ID = ? ";
 		
 		try (Connection con = JndiDs.getConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -108,12 +143,11 @@ public class BookingDaoImpl implements BookingDao {
 	
 	@Override
 	public Booking selectBookingByBookingNo(Booking booking) {
-		String sql = "SELECT * FROM BOOKING WHERE BOOK_NO = ?";
+		String sql = "SELECT * FROM BOOKING_VIEW WHERE BOOK_NO = ?";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			
-			System.out.println("booking.getBookNo() : " + booking.getBookNo());
 			pstmt.setInt(1, booking.getBookNo());
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
@@ -126,6 +160,8 @@ public class BookingDaoImpl implements BookingDao {
 		
 		return null;
 	}
+	
+	/*
 	@Override
 	public int insertBooking(Booking booking) {
 		String sql = "INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_NOTE) VALUES(?, ?, ?, ?, ?)";
@@ -136,7 +172,7 @@ public class BookingDaoImpl implements BookingDao {
 			pstmt.setTimestamp(2, Timestamp.valueOf(booking.getBookDate()));
 			pstmt.setInt(3, booking.getHair().getHairNo());
 			pstmt.setInt(4, booking.getDesigner().getDeNo());
-//			pstmt.setInt(5, booking.getBookStatus());
+	//			pstmt.setInt(5, booking.getBookStatus());
 			pstmt.setString(5, booking.getBookNote());
 			
 			return pstmt.executeUpdate();
@@ -144,27 +180,28 @@ public class BookingDaoImpl implements BookingDao {
 			throw new RuntimeException(e);
 		}
 	}
-
+	*/
 	
-	@Override
-	public int updateBooking(Booking booking) {
-		String sql = "UPDATE BOOKING SET BOOK_TIME = ?, HAIR_NO = ?, DE_NO = ?, BOOK_STATUS = ?, BOOK_NOTE = ? WHERE BOOK_NO = ?";
-		
-		try(Connection con = JndiDs.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setTimestamp(1, Timestamp.valueOf(booking.getBookDate()));
-			pstmt.setInt(2, booking.getHair().getHairNo());
-			pstmt.setInt(3, booking.getDesigner().getDeNo());
-			pstmt.setInt(4, booking.getBookStatus());
-			pstmt.setString(5, booking.getBookNote());
-			pstmt.setString(6, booking.getGuest().getGuestId());
+	/*
+		@Override
+		public int updateBooking(Booking booking) {
+			String sql = "UPDATE BOOKING SET BOOK_TIME = ?, HAIR_NO = ?, DE_NO = ?, BOOK_STATUS = ?, BOOK_NOTE = ? WHERE BOOK_NO = ?";
 			
-			return pstmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			try(Connection con = JndiDs.getConnection();
+					PreparedStatement pstmt = con.prepareStatement(sql)) {
+				pstmt.setTimestamp(1, Timestamp.valueOf(booking.getBookDate()));
+				pstmt.setInt(2, booking.getHair().getHairNo());
+				pstmt.setInt(3, booking.getDesigner().getDeNo());
+				pstmt.setInt(4, booking.getBookStatus());
+				pstmt.setString(5, booking.getBookNote());
+				pstmt.setString(6, booking.getGuest().getGuestId());
+				
+				return pstmt.executeUpdate();
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
 		}
-	}
-
+	*/
 	
 	@Override
 	public int deleteBooking(Booking booking) {

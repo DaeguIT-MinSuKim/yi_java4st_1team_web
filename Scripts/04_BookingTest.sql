@@ -53,4 +53,14 @@ VALUES(60, 'test', sysdate + 10 - 6/24, 9, 2, sysdate, 1, null);
 
 INSERT INTO ORDER_DETAIL(od_no, coupon_no, hair_no, price, ORDER_NO);
 
-SELECT * FROM booking;
+DELETE FROM booking;
+DELETE FROM booking_hairs;
+
+SELECT * FROM booking ORDER BY book_no;
+SELECT * FROM BOOKING_HAIRS;
+ALTER TABLE BOOKING_HAIRS
+ADD hair_quantity NUMBER;
+
+SELECT BOOK_NO, GUEST_ID, BOOK_TIME, h.HAIR_NO, h.hair_quantity, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE
+FROM booking b LEFT OUTER JOIN booking_hairs h USING(book_no)
+ORDER BY book_no;

@@ -9,11 +9,18 @@
 <ul>
 	<li>${booking.bookNo }</li>
 	<li>${booking.guest.guestName }(${booking.guest.guestId })</li>
-	<li>${booking.bookDate }</li>
-	<li>${booking.hair.hairName }</li>
+	<li>${booking.bookDateStr }</li>
+	<li>
+		<ul>
+			<%-- <li>${booking.hairList }</li> --%>
+			<c:forEach var="h" items="${booking.hairList }">
+				<li>[${h.hair.hairNo }] ${h.hair.hairName } : ${h.quantity }</li>
+			</c:forEach>
+		</ul>
+	</li>
 	<li>${booking.designer.deName }</li>
-	<li>${booking.bookRegDate }</li>
-	<li>${booking.bookStatus }</li>
+	<li>${booking.bookRegDateStr }</li>
+	<li>[${booking.bookStatus }] ${booking.bookStatusStr }</li>
 	<li>${booking.bookNote }</li>
 </ul>
 </div>

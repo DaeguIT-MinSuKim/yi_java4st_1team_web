@@ -55,3 +55,22 @@ SELECT * FROM HAIR_VIEW;
 CREATE OR REPLACE VIEW HAIR_VIEW
 AS
 SELECT KIND_NO, KIND_NAME, HAIR_NO, HAIR_NAME, HAIR_PRICE, HAIR_PIC, HAIR_CONTENT FROM HAIR LEFT OUTER JOIN HAIR_KIND hk USING(KIND_NO);
+
+/* BOOKING VIEW */
+CREATE OR REPLACE VIEW booking_view
+AS
+SELECT BOOK_NO, GUEST_ID, BOOK_TIME, h.HAIR_NO, h.hair_quantity, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE
+FROM booking b LEFT OUTER JOIN booking_hairs h USING(book_no)
+ORDER BY book_no, hair_no;
+
+SELECT * FROM booking_view;
+
+
+CREATE OR REPLACE VIEW booking_hairs_view
+as
+SELECT BOOK_NO, h.hair_no, h.hair_name, h.hair_price, h.kind_no, hair_quantity
+FROM booking_hairs bh LEFT OUTER JOIN hair h ON bh.hair_no = h.hair_no;
+
+SELECT * FROM BOOKING_HAIRS_view;
+
+SELECT * FROM BOOKING_HAIRS WHERE BOOK_NO = 1;

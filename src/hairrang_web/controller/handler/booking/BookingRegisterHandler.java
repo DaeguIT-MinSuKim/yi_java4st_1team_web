@@ -46,44 +46,39 @@ public class BookingRegisterHandler implements Command {
 			// 파라미터 값 확인
 			for (Entry<String, String[]> map : request.getParameterMap().entrySet() ) {
 					System.out.println(map.getKey() + " : " + map.getValue());
-			}
-			*/
-			/*Gson gson = new GsonBuilder()
-					.registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
-						@Override
-						public LocalDateTime deserialize(JsonElement json, Type typeOfT,
-								JsonDeserializationContext context) throws JsonParseException {
-							return LocalDateTime.parse(json.getAsString(),
-									DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-						}
-					}).create();*/
-			
+			} */
+						
 			GsonBuilder builder = GsonLocalDateTime.getLocalDateTimeParsing("yyyy-MM-dd HH:mm");
 			Gson gson = builder.create();
 			
 			System.out.println();
 			Booking newBooking = gson.fromJson(new InputStreamReader(request.getInputStream(), "UTF-8"), Booking.class);
+//			newBooking.setGuest(new Guest("test"));
 			newBooking.setGuest((Guest) request.getSession().getAttribute("loginUser"));
 			System.out.println("json 변환 후 newBooking: " + newBooking);
 			
-			int nextNo = -1;
+//			int nextNo = -1;
+			int bookNo = -1;
 			
 			// 사용자가 html, script를 수정해 접근할 수도 있으므로 DB단에서 한번 더 검증
 			if (service.isAvailableTime(newBooking.getBookDateStr()) != 1) {
-				int res = service.addBooking(newBooking);
-				
-				if(res == 1) {
+//				int res = service.addBooking(newBooking);
+				bookNo = service.insertBookingWithHairList(newBooking);
+				System.out.println("넣었음");
+				/*
+				if(bookNo == 1) {
 					nextNo = service.getMaxBookNo();
 				} else {
 					nextNo = 0;
 				}
+				*/
 			}
 			
 			response.setCharacterEncoding("UTF-8");
 			response.setStatus(HttpServletResponse.SC_ACCEPTED);
 			
 			PrintWriter pw = response.getWriter();
-			pw.print(nextNo); // 이미 예약된 시간이면 -1, 그 외에 insert에 문제가 있으면 0, 성공적으로 insert 됐으면 nextNo 반환
+			pw.print(bookNo); // 이미 예약된 시간이면 -1, 그 외에 insert에 문제가 있으면 0, 성공적으로 insert 됐으면 nextNo 반환
 			pw.flush();
 			
 			return null;
