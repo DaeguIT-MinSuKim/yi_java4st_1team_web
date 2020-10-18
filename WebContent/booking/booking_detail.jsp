@@ -12,7 +12,6 @@
 	<li>${booking.bookDateStr }</li>
 	<li>
 		<ul>
-			<%-- <li>${booking.hairList }</li> --%>
 			<c:forEach var="h" items="${booking.hairList }">
 				<li>[${h.hair.hairNo }] ${h.hair.hairName } : ${h.quantity }</li>
 			</c:forEach>
