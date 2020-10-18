@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hairrang_web.dto.Booking;
+import hairrang_web.dto.BookingHairs;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.TimeTable;
 import hairrang_web.utils.Paging;
@@ -28,10 +29,19 @@ public interface BookingDao {
 
 	ArrayList<TimeTable> getTimeTables(String wantDate);
 
+	int isAvailableTime(String wantDateTime);
+	
+	/////페이징
 	int countBookingById(String id);
 	
-	List<Booking> pagingBookingById(Paging paging, String id);
+	//Booking pagingBookingById(Paging paging, String id);
 
-	int isAvailableTime(String wantDateTime);
+	ArrayList<BookingHairs> pagingBookingHairsById(Paging paging, String id);
+	
+	ArrayList<Integer> selectNoBooking(String id);
+
+	Booking pagingBookingById(Paging paging, String id, int no);
+	
+	
 
 }

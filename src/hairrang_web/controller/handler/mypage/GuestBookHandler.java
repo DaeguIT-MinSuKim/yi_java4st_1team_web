@@ -2,6 +2,7 @@ package hairrang_web.controller.handler.mypage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,14 +11,18 @@ import javax.servlet.http.HttpSession;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Booking;
+import hairrang_web.dto.BookingHairs;
 import hairrang_web.dto.Guest;
+import hairrang_web.dto.Hair;
+import hairrang_web.dto.HairKind;
 import hairrang_web.service.BookingService;
 import hairrang_web.service.HairService;
 import hairrang_web.utils.Paging;
 import sun.print.resources.serviceui;
 
 public class GuestBookHandler implements Command {
-	private BookingService service = new BookingService();
+	private BookingService bService = new BookingService();
+	private HairService hService = new HairService();
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
@@ -34,8 +39,9 @@ public class GuestBookHandler implements Command {
 //		System.out.println(nowPage);
 //		System.out.println(cntPerPage);
 
+	
 		//만약 처음 접속했을때 초기세팅해주는 곳 
-		int total = service.countBookingById(loginUser.getGuestId());
+		int total = bService.countBookingById(loginUser.getGuestId());
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "10";
@@ -51,15 +57,29 @@ public class GuestBookHandler implements Command {
 		
 		//이후 페이지 클래스로 정리하는곳
 		Paging paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-		ArrayList<Booking> list = service.pagingBookingById(paging, loginUser.getGuestId());
 		
-		System.out.println(paging);
+		//중복제외 번호리스트
+		ArrayList<Integer> noList = bService.selectNoBooking(loginUser.getGuestId());
 		
+		ArrayList<Booking> bookingList = new ArrayList<Booking>();
+		int totalPrice = 0;
+		
+		for(int bookNo:noList) {
+			bookingList.add(bService.pagingBookingById(paging, loginUser.getGuestId(), bookNo));
+			request.setAttribute("hairs",bookingList.get(0).getHairList());
+		}
+		
+		//bookingList 1- hairlist 1,2...
+		// 2- hairlist 1,2..
+		//ArrayList<BookingHairs> bookingHairs = bService.pagingBookingHairsByID(paging, loginUser.getGuestId());
+		
+		request.setAttribute("totalPrice", totalPrice);
 		request.setAttribute("cnt", cntPerPage);
 		request.setAttribute("total", total);
 		request.setAttribute("paging", paging);
-		request.setAttribute("viewAll", list);
-	
+		request.setAttribute("booking", bookingList);
+
+		
 		return "mypage/guest_book.jsp";
 	}
 

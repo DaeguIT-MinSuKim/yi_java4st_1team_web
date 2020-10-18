@@ -1,3 +1,5 @@
+SELECT * FROM user_tables;
+
 -- DDL에 잘못 추가 했었음 지워주세요.
 DROP TABLE SALES_DETAIL CASCADE CONSTRAINTS;
 
@@ -58,7 +60,7 @@ CREATE TABLE EVENT (
 	event_start DATE, /* 시작일 */
 	event_end DATE, /* 종료일 */
 	event_pic varchar2(200), /* 사진 */
-	event_content VARCHAR2(1000) /* 내용 */
+	event_content VARCHAR2(1000), /* 내용 */
 	use_yn CHAR(1) DEFAULT 'y' /*사용유무*/
 );
 
@@ -213,7 +215,7 @@ CREATE TABLE COUPON (
 	event_no NUMBER(10) NOT NULL, /* 이벤트번호 */
 	event_start DATE, /* 시작일 */
 	event_end DATE, /* 종료일 */
-	use_Yn CHAR(1) DEFAULT 'n'/* 사용여부 */
+	used_yn CHAR(1) DEFAULT 'n'/* 사용여부 */
 );
 
 ALTER TABLE COUPON
@@ -251,6 +253,7 @@ ADD CONSTRAINT PK_HB_CATEGORY PRIMARY KEY (hb_cateno);
 CREATE TABLE BOOKING_HAIRS (
 	hair_no NUMBER(10) NOT NULL, /* 헤어번호 */
 	book_no NUMBER(10) NOT NULL /* 예약번호 */
+	hair_quantity NUMBER;
 );
 
 ALTER TABLE BOOKING_HAIRS ADD CONSTRAINT PK_BOOKING_HAIRS

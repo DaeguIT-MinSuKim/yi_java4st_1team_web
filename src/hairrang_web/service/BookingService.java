@@ -59,10 +59,17 @@ public class BookingService {
 		return dao.countBookingById(id);
 	}
 	
-	public ArrayList<Booking> pagingBookingById(Paging paging, String id) {
-		return (ArrayList<Booking>) dao.pagingBookingById(paging, id);
+	public Booking pagingBookingById(Paging paging, String id, int no) {
+		return dao.pagingBookingById(paging, id, no);
 	}
 	
+	public ArrayList<BookingHairs> pagingBookingHairsByID(Paging paging, String id){
+		return dao.pagingBookingHairsById(paging, id);
+	}
+	
+	public ArrayList<Integer> selectNoBooking(String id){
+		return dao.selectNoBooking(id);
+	}
 	
 	public int insertBookingWithHairList(Booking booking) {
 		String bookingSql = "INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_NOTE) VALUES(?, ?, ?, ?)";

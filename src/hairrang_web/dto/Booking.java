@@ -154,6 +154,8 @@ public class Booking {
 		return hairList;
 	}
 
+	
+	
 	public void setHairList(List<BookingHairs> hairList) {
 		this.hairList = hairList;
 	}
