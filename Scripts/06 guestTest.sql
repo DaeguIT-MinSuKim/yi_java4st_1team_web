@@ -46,3 +46,11 @@ SELECT * FROM qna;
 
 --문의테스트
 INSERT INTO QNA(GUEST_ID, QNA_TITLE, QNA_CONTENT, QNA_REGDATE, RES_YN, NOTICE_YN, DEL_YN, QNA_SECRET) VALUES ('chini91','제목','내용',sysdate, 'n', 'n', 'n', 'n');
+
+
+--쿠폰내역 rownum
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon WHERE GUEST_ID = 'chini91' ORDER BY COUPON_ID desc) a) 
+			WHERE rn BETWEEN 1 AND 5 ORDER BY rn;		
+--쿠폰 전체카운트
+SELECT COUNT(*) FROM COUPON WHERE GUEST_ID = 'chini91';
+

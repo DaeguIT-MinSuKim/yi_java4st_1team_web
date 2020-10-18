@@ -21,10 +21,3 @@ INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, use_yn
 SELECT 1, guest_id, event_no, event_start, event_end, 'n' FROM event*/
 
 
-
-
-SELECT * FROM coupon;
-SELECT * FROM event
-
-INSERT INTO coupon(guest_id, event_no, event_start, event_end)
-SELECT guest_id, event_no, event_start, event_end FROM guest, event WHERE event_no = 3;

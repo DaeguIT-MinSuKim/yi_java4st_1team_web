@@ -11,6 +11,7 @@ public class Event {
 	private LocalDate eventEnd;
 	private String eventPic;
 	private String eventContent;
+	private String eventUseYn;
 	
 	public Event() {
 	}
@@ -20,17 +21,18 @@ public class Event {
 	}
 	
 	public Event(String eventName, double eventSaleRate, LocalDate eventStart, LocalDate eventEnd, String eventPic,
-			String eventContent) {
+			String eventContent, String eventUseYn) {
 		this.eventName = eventName;
 		this.eventSaleRate = eventSaleRate;
 		this.eventStart = eventStart;
 		this.eventEnd = eventEnd;
 		this.eventPic = eventPic;
 		this.eventContent = eventContent;
+		this.eventUseYn = eventUseYn;
 	}
 
 	public Event(int eventNo, String eventName, double eventSaleRate, LocalDate eventStart, LocalDate eventEnd,
-			String eventPic, String eventContent) {
+			String eventPic, String eventContent, String eventUseYn) {
 		this.eventNo = eventNo;
 		this.eventName = eventName;
 		this.eventSaleRate = eventSaleRate;
@@ -38,8 +40,10 @@ public class Event {
 		this.eventEnd = eventEnd;
 		this.eventPic = eventPic;
 		this.eventContent = eventContent;
+		this.eventUseYn = eventUseYn;
 	}
 
+	
 	public int getEventNo() {
 		return eventNo;
 	}
@@ -84,23 +88,31 @@ public class Event {
 		return eventPic;
 	}
 
-	public void setEventPic(String pic) {
-		this.eventPic = pic;
+	public void setEventPic(String eventPic) {
+		this.eventPic = eventPic;
 	}
 
 	public String getEventContent() {
 		return eventContent;
 	}
 
-	public void setEventContet(String eventContent) {
+	public void setEventContent(String eventContent) {
 		this.eventContent = eventContent;
+	}
+
+	public String getEventUseYn() {
+		return eventUseYn;
+	}
+
+	public void setEventUseYn(String eventUseYn) {
+		this.eventUseYn = eventUseYn;
 	}
 
 	@Override
 	public String toString() {
-		return "Event [eventNo=" + eventNo + ", eventName=" + eventName + ", eventSaleRate=" + eventSaleRate
-				+ ", eventStart=" + eventStart + ", eventEnd=" + eventEnd + ", eventPic=" + eventPic + ", eventContent="
-				+ eventContent + "]";
+		return String.format(
+				"Event [eventNo=%s, eventName=%s, eventSaleRate=%s, eventStart=%s, eventEnd=%s, eventPic=%s, eventContent=%s, eventUseYn=%s]",
+				eventNo, eventName, eventSaleRate, eventStart, eventEnd, eventPic, eventContent, eventUseYn);
 	}
 
 	@Override
