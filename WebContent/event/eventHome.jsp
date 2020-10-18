@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-    <%@ include file="../header.jsp" %>  
-
+    <%@ include file="../header.jsp" %> 
+<style>
+ul li{
+list-style-type: none;
+float: left;
+margin-left: 10px;
+}
+</style>
 <body>
 	<!-- 준호 이벤트 넣는법 -->
 	<!-- <a href="#juno"><span class="thum"><img
@@ -28,6 +34,5 @@
 			</ul>
 		</c:forEach>
 	</div>
-	console.log(왜안돼);
 </body>
 <%@ include file="../footer.jsp" %>   

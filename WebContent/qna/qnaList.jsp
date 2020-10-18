@@ -1,15 +1,9 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>게시판 목록</title>
-
-</head>
+<%@ include file="../header.jsp"%>
 <body>
-	<h2>${loginUser.guestId }의 문의내역</h2>
+	<h2>${loginUser.guestId }의문의내역</h2>
 	<table id="qnatList">
 		<tr>
 			<th>번호</th>
@@ -30,4 +24,4 @@
 		</c:forEach>
 	</table>
 </body>
-</html>
+<%@ include file="../footer.jsp"%>

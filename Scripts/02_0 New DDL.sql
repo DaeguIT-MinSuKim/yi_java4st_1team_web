@@ -58,7 +58,7 @@ CREATE TABLE EVENT (
 	event_start DATE, /* 시작일 */
 	event_end DATE, /* 종료일 */
 	event_pic varchar2(200), /* 사진 */
-	event_content VARCHAR2(1000) /* 내용 */
+	event_content VARCHAR2(1000), /* 내용 */
 	use_yn CHAR(1) DEFAULT 'y' /*사용유무*/
 );
 
