@@ -11,13 +11,14 @@ $(document).on("click", ".time_table ul li", function() {
 $(function() {
 	$(document).ready(function() {
 		document.title += ' - 예약하기'
-		var today = new Date();
-		document.getElementById('bookDate').valueAsDate = today;
+		var tomorrow = new Date();
+		tomorrow.setDate(tomorrow.getDate() + 1);
+		document.getElementById('bookDate').valueAsDate = tomorrow;
 		
 		var maxDate = new Date();
-		maxDate.setDate(today.getDate() + 28);
+		maxDate.setDate(tomorrow.getDate() + 28);
 		
-		var minDateStr = today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+		var minDateStr = tomorrow.getFullYear() + "-" + (tomorrow.getMonth() + 1) + "-" + tomorrow.getDate();
 		var maxDateStr = maxDate.getFullYear() + "-" + (maxDate.getMonth() + 1) + "-" + maxDate.getDate();
 		document.getElementById('bookDate').min = minDateStr;
 		document.getElementById('bookDate').max = maxDateStr;
@@ -27,7 +28,7 @@ $(function() {
 	
 		/* 헤어 대분류 불러오기 */
 		$.ajax({
-			url: "bookingTest.do",
+			url: "booking.do",
 			type: "post",
 			dataType: "json",
 			success: function(data) {
@@ -53,7 +54,7 @@ $(function() {
 		$("#hairkindbox").change(function() {
 			var selectedKindNo = $("#hairkindbox option:selected").val();
 			$.ajax({
-				url: "bookingTest.do",
+				url: "booking.do",
 				type: "post",
 				dataType: "json",
 				data: {
@@ -69,12 +70,13 @@ $(function() {
 		});
 		 
 		function loadHairBox(target, data) {
-			var dataArr = [];
-			var idx = 0;
+			// var dataArr = [];
 			target.empty();
+			var dataArr = "<option value='0'>--시술 선택--</option>";
 			
 			$.each(data, function(index, item) {
-				dataArr[idx++] = "<option value=" + item.hairNo + ">" + item.hairName+ "</option>";
+				dataArr += "<option value=" + item.hairNo + ">" + item.hairName+ "</option>";
+				index++;
 			});
 			
 			target.append(dataArr);
@@ -85,7 +87,7 @@ $(function() {
 			var hairName = $("#hairbox option:selected").text();
 			
 			addHair(hairNo, hairName);
-			
+			$("#hairbox option:selected").prop("selected", false);
 		});
 		
 		/* 날짜 선택 시 타임테이블 불러오기 */
@@ -96,7 +98,7 @@ $(function() {
 		// 매개변수 날짜값으로 타임테이블 불러오는 함수
 		function setTimeTable(bookDateVal) {
 			$.ajax({
-				url: "bookingTest.do",
+				url: "booking.do",
 				type: "post",
 				data: {
 					bookDate: bookDateVal
@@ -126,6 +128,9 @@ $(function() {
 function addHair(hairNo, hairName) {
 	// console.log($(".addedHair[hairNo=" + itemNo + "]").attr("hairName"));
 	// $(".addedHair[hairNo=" + itemNo + "]").remove();
+	if(hairNo == 0) {
+		return;
+	}
 	
 	var quantity = 1;
 	var selectedItem = $(".addedHair[hairNo=" + hairNo + "]");
@@ -155,7 +160,7 @@ function delHairItem(itemNo) {
 }
 
 function checkBookForm() {
-	if (document.bookForm.bookHair.value == "") {
+	if ($(".addedHair").length == 0) {
 		alert("시술을 선택해주세요");
 		document.bookForm.bookHair.focus();
 		return false;
@@ -163,21 +168,17 @@ function checkBookForm() {
 		alert("디자이너를 선택해주세요.");
 		document.bookFrom.bookDesigner.focus();
 		return false;
-	} else if($(".time_table .active").attr("time24") == "") {
+	} else if($(".time_table .active").attr("time24") === undefined) {
 		alert("예약 시간을 선택해주세요.");
 		return false;
 	}
-	
-	console.log("일시 : " + $("#bookDate").val() + " " + $(".time_table .active").attr("time24"));
 	
 	var hairList = $(".addedHairList").find("li.addedHair").get();
 	
 	var hairs= new Array();
 	for(var i=0; i < hairList.length; i++ ){
 		var bookingHairs = {
-				hair: {
-					hairNo: $(hairList[i]).attr("hairNo")
-				},
+				hair: { hairNo: $(hairList[i]).attr("hairNo") },
 				quantity: $(hairList[i]).attr("quantity")
 		};
 		hairs.push(bookingHairs);
@@ -216,12 +217,11 @@ function checkBookForm() {
         }
     });
     
-	// document.bookForm.action = "bookingRegister.do";
-	// document.bookForm.submit();
 	return true;
 }
 
 </script>
+<h4>방문일 당일 예약은 어렵습니다. (예약일로부터 최소 1일 전 예약 가능)</h4>
 <form name="bookForm">
 	<ul>
 		<li>

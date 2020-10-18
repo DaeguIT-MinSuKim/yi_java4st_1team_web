@@ -3,6 +3,7 @@ package hairrang_web.controller.handler.booking;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -53,25 +54,17 @@ public class BookingRegisterHandler implements Command {
 			
 			System.out.println();
 			Booking newBooking = gson.fromJson(new InputStreamReader(request.getInputStream(), "UTF-8"), Booking.class);
-//			newBooking.setGuest(new Guest("test"));
 			newBooking.setGuest((Guest) request.getSession().getAttribute("loginUser"));
 			System.out.println("json 변환 후 newBooking: " + newBooking);
 			
-//			int nextNo = -1;
 			int bookNo = -1;
 			
 			// 사용자가 html, script를 수정해 접근할 수도 있으므로 DB단에서 한번 더 검증
-			if (service.isAvailableTime(newBooking.getBookDateStr()) != 1) {
-//				int res = service.addBooking(newBooking);
-				bookNo = service.insertBookingWithHairList(newBooking);
-				System.out.println("넣었음");
-				/*
-				if(bookNo == 1) {
-					nextNo = service.getMaxBookNo();
-				} else {
-					nextNo = 0;
+			if (newBooking.getBookDate().toLocalDate().isAfter(LocalDate.now())) {
+				if (service.isAvailableTime(newBooking.getBookDateStr()) != 1) {
+					bookNo = service.insertBookingWithHairList(newBooking);
+					System.out.println("넣었음");
 				}
-				*/
 			}
 			
 			response.setCharacterEncoding("UTF-8");
