@@ -41,9 +41,9 @@ public class BookingDaoImpl implements BookingDao {
 				ResultSet rs = pstmt.executeQuery()) {
 			if(rs.next()) {
 				ArrayList<Booking> list = new ArrayList<>();
-				while(rs.next()) {
+				do {
 					list.add(getBooking(rs));
-				}
+				} while(rs.next());
 				return list;
 			}
 		} catch (SQLException e) {
@@ -53,7 +53,7 @@ public class BookingDaoImpl implements BookingDao {
 	}
 
 	private ArrayList<BookingHairs> selectBookingHairsByBookingNo(int bookNo) {
-		String sql = "SELECT * FROM BOOKING_HAIRS WHERE BOOK_NO = ?";
+		String sql = "SELECT * FROM BOOKING_HAIRS WHERE BOOK_NO = ? ORDER BY BOOK_NO, HAIR_NO";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -61,9 +61,9 @@ public class BookingDaoImpl implements BookingDao {
 			try(ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
 					ArrayList<BookingHairs> list = new ArrayList<>();
-					while(rs.next()) {
+					do {
 						list.add(getBookingHairs(rs));
-					}
+					} while(rs.next());
 					return list;
 				}
 			}
@@ -80,6 +80,7 @@ public class BookingDaoImpl implements BookingDao {
 		Hair hair = hDao.selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
 		int quantity = rs.getInt("HAIR_QUANTITY");
 		
+		System.out.println("getBookingHairs 안 : " + hair + ", " + quantity);
 		return new BookingHairs(hair, quantity);
 	}
 
@@ -95,8 +96,10 @@ public class BookingDaoImpl implements BookingDao {
 		Guest guest = gDao.selectGuestById(new Guest(rs.getString("GUEST_ID")));
 		LocalDateTime bookTime = rs.getTimestamp("BOOK_TIME").toLocalDateTime();
 		ArrayList<BookingHairs> hairList = selectBookingHairsByBookingNo(bookNo);
-		//Hair hair = hDao.selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
 		
+		System.out.println("getBooking 안 : " + hairList);
+//		Hair hair = hDao.selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
+
 		Designer designer = dDao.selectDesignerByNo(new Designer(rs.getInt("DE_NO")));
 		LocalDateTime bookRegDate = rs.getTimestamp("BOOK_REGDATE").toLocalDateTime();
 		int bookStatus = rs.getInt("BOOK_STATUS");

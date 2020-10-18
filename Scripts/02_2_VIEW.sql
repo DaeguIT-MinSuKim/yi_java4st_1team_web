@@ -67,7 +67,7 @@ SELECT * FROM booking_view;
 
 
 CREATE OR REPLACE VIEW booking_hairs_view
-as
+AS
 SELECT BOOK_NO, h.hair_no, h.hair_name, h.hair_price, h.kind_no, hair_quantity
 FROM booking_hairs bh LEFT OUTER JOIN hair h ON bh.hair_no = h.hair_no;
 

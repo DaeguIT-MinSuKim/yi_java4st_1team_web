@@ -62,7 +62,6 @@ public class QnaConfirmPasswordHandler implements Command {
 						return "qnaDetail.do";
 					} else {
 						// list
-						JOptionPane.showMessageDialog(null, "다른 회원 비밀글에 접속하실수없습니다.");
 						response.sendRedirect("qnaHome.do");
 						return null;
 					}
@@ -71,7 +70,6 @@ public class QnaConfirmPasswordHandler implements Command {
 					if(qna.getGuestId() != null) {
 						// 회원이 쓴 글에 접근
 						// 빠꾸
-						JOptionPane.showMessageDialog(null, "비회원은 회원 비밀글에 접속하실수없습니다.");
 						response.sendRedirect("qnaHome.do");
 						return null;
 					} else {
