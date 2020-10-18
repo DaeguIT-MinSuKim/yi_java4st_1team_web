@@ -64,14 +64,14 @@ INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES(
 
 /* coupon */
 SELECT * FROM event;
-SELECT * FROM coupon;
+SELECT * FROM coupon ORDER BY COUPON_ID;
 
 -- 모든 회원에게 오픈 기념 쿠폰 발행
-INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, use_yn) 
+INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, used_yn) 
 SELECT 1, 'test', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
-INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, use_yn) 
+INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, used_yn) 
 SELECT 2, 'abcd', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
-INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, use_yn) 
+INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, used_yn) 
 SELECT 3, 'test4321', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
 
 

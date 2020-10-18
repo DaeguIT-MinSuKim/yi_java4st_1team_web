@@ -6,21 +6,14 @@
 
 <style>
 .info a{background-color:white;  border-bottom:1px solid white;}
+
 .underline {font-size:30px;}
-.table {
-	width:550px;
-	margin:0 auto;
-	padding:20px;
+.table {width:650px;margin:0 auto;padding:20px;
 }
 td {width:100px; padding:10px;}
-input {margin-left:20px; width:260px; border: 1px solid #e8e8e8;}
+input {margin-left:20px; width:300px; border: 1px solid #e8e8e8;}
 
-.line {
-	margin:0 auto;
-	border:2px solid gray;
-	width:120px;
-	background:gray;
-	} 	
+.line {margin:0 auto;border:2px solid gray;width:120px;background:gray;} 	
 .check {text-align:center;}
 #buttons {width:800px; margin:0 auto; text-align:Center; padding:50px;}
 .submit, .cancel {width:200px;}
@@ -33,19 +26,19 @@ input {margin-left:20px; width:260px; border: 1px solid #e8e8e8;}
 <script>
 /*비밀번호 확인 체크*/
 $(function(){
- $('#pwd').keyup(function(){
+ $('#new_pwd').keyup(function(){
   $('font[name=check]').text('');
 	 }); //#user_pass.keyup
 
- $('#pwdCheck').keyup(function(){
-	  if($('#pwd').val()!=$('#pwdCheck').val()){
+ $('#new_pwdCheck').keyup(function(){
+	  if($('#new_pwd').val()!=$('#new_pwdCheck').val()){
 	  	$('font[name=check]').text('');
 	   	$('font[name=check]').html("암호가 일치하지 않습니다.");
-	   	$('input[name=pwdCheck]').attr("style","border:2px solid #e16a93")
+	   	$('input[name=new_pwdCheck]').attr("style","border:2px solid #e16a93")
 	  }else{
 	  	$('font[name=check]').text('');
 	  	$('font[name=check]').html("암호가 일치합니다.");
-		$('input[name=pwdCheck]').attr("style","border:1px solid black")
+		$('input[name=new_pwdCheck]').attr("style","border:1px solid black")
 	  }
  });
 });
@@ -54,7 +47,7 @@ $(function(){
 <c:choose>
 	<c:when test="${message == -1}">
 	 	<script>
-	          alert('비밀번호가 맞지 않습니다.')
+	          alert('현재 비밀번호가 맞지 않습니다.')
 	          history.go(-1);
 	    </script>
 	</c:when>
@@ -80,12 +73,12 @@ $(function(){
 		<td><input type="text" name="id" value="${id}" readonly/> 
 	</tr>
 	<tr>
-		<td>비밀번호</td>
-		<td><input type="password" name="pwd" id="pwd"/></td>
+		<td>변경할 비밀번호</td>
+		<td><input type="password" name="new_pwd" id="new_pwd"/></td>
 	</tr>
 	<tr>
-		<td>비밀번호 확인</td>
-		<td><input type="password" name="pwdCheck" id="pwdCheck"/>
+		<td>변경할 비밀번호 확인</td>
+		<td><input type="password" name="new_pwdCheck" id="new_pwdCheck"/>
 	</tr>
 	<tr>
 		<td></td>

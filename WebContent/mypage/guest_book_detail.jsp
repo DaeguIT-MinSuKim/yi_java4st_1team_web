@@ -2,6 +2,9 @@
 	pageEncoding="UTF-8"%>
     <%@ include file="../header.jsp" %>  
      <%@ include file="sub_menu.jsp" %>
+<style>
+.book a {background-color:white;  border-bottom:1px solid white;}
+</style>
 <body>
 예약상세
 </body>

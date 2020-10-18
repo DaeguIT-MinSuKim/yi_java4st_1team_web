@@ -16,16 +16,6 @@ SELECT * FROM event;
 SELECT * FROM COUPON c ;
 SELECT * FROM ORDER_DETAIL od ;
 
-/*
-INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, use_yn) 
-SELECT 1, guest_id, event_no, event_start, event_end, 'n' FROM event*/
-
-
-
-
-SELECT * FROM coupon;
-SELECT * FROM event
-
 INSERT INTO coupon(guest_id, event_no, event_start, event_end)
 SELECT guest_id, event_no, event_start, event_end FROM guest, event WHERE event_no = 3;
 
@@ -73,4 +63,3 @@ SELECT guest_id,
 		END AS "2019-10-20기준 해당함?"
 FROM event, GUEST g
 WHERE event_no = 1;
-

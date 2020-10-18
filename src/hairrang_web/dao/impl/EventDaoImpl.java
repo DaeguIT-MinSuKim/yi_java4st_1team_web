@@ -64,8 +64,9 @@ public class EventDaoImpl implements EventDao {
 		}
 		String eventPic = rs.getString("EVENT_PIC");
 		String eventContent = rs.getString("EVENT_CONTENT");
+		String eventUseYn = rs.getString("USE_YN");
 
-		return new Event(eventNo, eventName, eventSaleRate, eventStart, eventEnd, eventPic, eventContent);
+		return new Event(eventName, eventSaleRate, eventStart, eventEnd, eventPic, eventContent, eventUseYn);
 	}
 
 	@Override
@@ -90,7 +91,7 @@ public class EventDaoImpl implements EventDao {
 
 	@Override
 	public int insertEvent(Event event) {
-		String sql = "INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT) "
+		String sql = "INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT, USE_YN) "
 				+ "VALUES(?, ?, ?, ?, ?, ?)";
 
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -112,7 +113,7 @@ public class EventDaoImpl implements EventDao {
 	@Override
 	public int updateEvent(Event event) {
 		String sql = "UPDATE EVENT SET EVENT_NAME = ?, EVENT_SALERATE = ?, EVENT_START = ?, "
-				+ "EVENT_END = ?, EVENT_PIC = ?, EVENT_CONTENT = ? WHERE EVENT_NO = ?";
+				+ "EVENT_END = ?, EVENT_PIC = ?, EVENT_CONTENT = ?, USE_YN = ? WHERE EVENT_NO = ?";
 
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 

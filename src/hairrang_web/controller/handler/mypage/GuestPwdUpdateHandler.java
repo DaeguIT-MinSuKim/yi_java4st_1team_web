@@ -27,9 +27,9 @@ public class GuestPwdUpdateHandler implements Command{
 			System.out.println("post");
 			System.out.println("수정전" + loginUser.getGuestPwd());
 			
-			String pwd = request.getParameter("pwd");
+			String update_pwd = request.getParameter("new_pwd");
 			service.selectGuestById(new Guest(loginUser.getGuestId()));
-			loginUser.setGuestPwd(pwd);
+			loginUser.setGuestPwd(update_pwd);
 			service.updateGuestPwd(loginUser);
 			System.out.println("수정후" + loginUser.getGuestPwd());
 			
