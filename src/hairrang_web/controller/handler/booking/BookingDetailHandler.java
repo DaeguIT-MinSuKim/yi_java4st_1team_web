@@ -48,11 +48,11 @@ public class BookingDetailHandler implements Command {
 			
 			// 해당 세션 로그인 정보의 예약 사항인지 체크 후 예약 정보 가져오기.
 			int res = service.checkUser(booking, new Guest(loginUser));
-			if(res != 1) {
+			if(res == 0) {
 				request.setAttribute("errorCode", -1);
 				request.setAttribute("msg", "잘못된 접근입니다.");
 				
-				// return이나 sendRedirection 등 다른 처리 필요.
+				return "index.do";
 			}
 			
 			
