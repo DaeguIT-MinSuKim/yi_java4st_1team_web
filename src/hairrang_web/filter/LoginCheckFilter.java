@@ -109,11 +109,15 @@ public class LoginCheckFilter implements Filter {
 				filterList.add(line);
 			}
 			
-			System.out.println(">>> Login이 필요한 uri 목록 <<<");
-			filterList.stream().forEach(System.out::println);
+//			System.out.println(">>> Login이 필요한 uri 목록 <<<");
+//			filterList.stream().forEach(System.out::println);
 			
+			System.out.println("[LoginCheckFilter 매핑 완료!]");
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.out.println("[LoginCheckFilter 매핑 실패!]");
+		} finally {
+			System.out.println("[LoginCheckFilter init() 수행 끝남]");
 		}
 	}
 

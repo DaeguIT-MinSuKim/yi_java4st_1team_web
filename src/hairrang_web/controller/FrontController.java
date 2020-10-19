@@ -42,15 +42,19 @@ public class FrontController extends HttpServlet {
 				handlerMap.put((String)entry.getKey(), command);
 			}
 			
-			
+			/*
 			// 확인용
 			for(Entry<String, Command> e : handlerMap.entrySet()) {
 				System.out.println(e.getKey() + " : " + e.getValue());
 			}
-			
+			*/
+			System.out.println("[FrontController 매핑 완료!]");
 			
 		} catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+			System.out.println("[FrontController 매핑 실패!]");
 			e.printStackTrace();
+		} finally {
+			System.out.println("[FrontController init() 수행 끝남]");
 		}
 	}
 
