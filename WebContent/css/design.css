@@ -5,7 +5,23 @@
     font-weight: normal;
     font-style: normal;
 }
- 
+
+.event div {
+	display: block;
+	text-align: center;
+}
+
+.event ul li{
+	list-style-type: none;
+	/* display: inline; */
+	float: left;
+	margin-left: 10px;
+}
+
+.clear {
+	clear: both;
+}
+
 /* booking */
 .time_table {width: 400px; max-width: 600px;}
 .time_table ul {font-size:0;}

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../header.jsp"%>
+<script src="qna/qna.js"></script>
 <body>
 	<h1>문의글 작성</h1>
 	<form name="form" method="post" action="qnaWrite.do"
@@ -11,9 +12,9 @@
 		<textarea rows="8" cols="65" name="content"></textarea>
 		<br>
 		<div id="leftButtons" style="float: left;">
-			<input type="button" name="secret" id="secret">
+			<input type="checkbox" name="secret" id="secret" value="sss">
 			 <c:if test="${loginUser == null }">
-			 	<input type="text" name="secretPwd" id="secretPwd">
+			 	<input type="text" name="secretPwd" id="secretPwd" readonly>
 			 </c:if>
 		</div>
 		<div id="rightButtons" style="float: right">

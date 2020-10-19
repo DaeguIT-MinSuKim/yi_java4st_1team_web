@@ -2,13 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     <%@ include file="../header.jsp" %> 
-<style>
-ul li{
-list-style-type: none;
-float: left;
-margin-left: 10px;
-}
-</style>
 <body>
 	<!-- 준호 이벤트 넣는법 -->
 	<!-- <a href="#juno"><span class="thum"><img
@@ -20,19 +13,17 @@ margin-left: 10px;
 			<p class="cate">NEWS</p>
 		</div></a> -->
 	<h1>이벤트</h1>
-
-
-	<div style="display: block; text-align: center;">
+	<div style="" class="event">
 		<c:forEach items="${list }" var="event">
 			<ul>
-				<li><a href="eventDetail.do?eno=${event.eventNo }"><span><img
-							src="${event.eventPic }" alt=""></span>
-						<div>
-							<p>
-								<span>${event.eventName }</span>
-						</div></a></li>
+				<li><a href="eventDetail.do?eno=${event.eventNo }"><span>
+					<img src="${event.eventPic }" alt=""></span>
+					<div>
+						<span>${event.eventName }</span>
+					</div></a></li>
 			</ul>
 		</c:forEach>
 	</div>
+	<div class=".clear"></div>
 </body>
 <%@ include file="../footer.jsp" %>   
