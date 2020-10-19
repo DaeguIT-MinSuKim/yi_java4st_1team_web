@@ -13,7 +13,7 @@ public class AdminDesignerListHandler implements Command {
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		
-		String url = "/admin/booking/booking_list.jsp";
+		String url = "/admin/designer/designer_list.jsp";
 		
 		if(request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println(getClass().getSimpleName() + ">> GET");
