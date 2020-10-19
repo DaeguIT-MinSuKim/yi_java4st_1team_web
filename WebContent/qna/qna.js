@@ -1,10 +1,14 @@
-/*$(function(){
-	$('#secret').on("click",function(){
-		if($('#secret').attr.val == "true"){
-			document.getElementById('secretPwd').readOnly = true; 
-		}else{
-			document.getElementById('secretPwd').readOnly = false; 
-		}
-	}
-});
-*/
+$(document).ready(function() {
+	$(function() {
+		$('#secret').on("click",function(){
+			if($('#secret').is(":checked")){
+				$("#secretPwd").attr("readonly", false);
+				// document.getElementById('secretPwd').readOnly = false; 
+			}else{
+				$("#secretPwd").attr("readonly", true);
+				$("#secretPwd").val("");
+				//document.getElementById('secretPwd').readOnly = true; 
+			}
+		})
+	});
+})

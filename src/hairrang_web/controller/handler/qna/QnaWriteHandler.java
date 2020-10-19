@@ -94,13 +94,21 @@ public class QnaWriteHandler implements Command {
 			String title = multi.getParameter("title");
 			String content = multi.getParameter("content");
 			String secretPwd= multi.getParameter("secretPwd");
-		
+			String secretChecked = multi.getParameter("secret");
+			System.out.println("비밀번호 체크: " + secretChecked);
+			if(secretChecked !=null) {
+				secretChecked = "y";
+			}else {
+				secretChecked = "n";
+			}
+			
 			System.out.println("lopginUser"+loginUser);
 			System.out.println("secretPwd"+secretPwd);
 			qna.setQnaTitle(title);
 			qna.setQnaContent(content);
 			qna.setQnaFile(FilegetPath);
 			qna.setQnaPassword(secretPwd);
+			qna.setQnaSecret(secretChecked);
 			System.out.println("insert 하기전");
 			service.insertQna(qna);
 			

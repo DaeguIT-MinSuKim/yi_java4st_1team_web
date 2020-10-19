@@ -51,8 +51,9 @@ public class BookingDaoImpl implements BookingDao {
 		}
 		return null;
 	}
-
-	private ArrayList<BookingHairs> selectBookingHairsByBookingNo(int bookNo) {
+	
+	@Override
+	public ArrayList<BookingHairs> selectBookingHairsByBookingNo(int bookNo) {
 		String sql = "SELECT * FROM BOOKING_HAIRS WHERE BOOK_NO = ? ORDER BY BOOK_NO, HAIR_NO";
 		
 		try(Connection con = JndiDs.getConnection();
@@ -77,9 +78,14 @@ public class BookingDaoImpl implements BookingDao {
 		// BOOK_NO, HAIR_NO, HAIR_QUANTITY
 		
 		HairDao hDao = HairDaoImpl.getInstance();
-		Hair hair = hDao.selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
-		int quantity = rs.getInt("HAIR_QUANTITY");
-		
+		Hair hair = null; 
+		int quantity = 0;
+		try {
+			hair = hDao.selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
+			quantity = rs.getInt("HAIR_QUANTITY");
+		}catch(SQLException e) {
+			
+		}
 		System.out.println("getBookingHairs 안 : " + hair + ", " + quantity);
 		return new BookingHairs(hair, quantity);
 	}
@@ -313,7 +319,7 @@ public class BookingDaoImpl implements BookingDao {
 
 	@Override
 	public int countBookingById(String id) {
-		String sql = "SELECT COUNT(*) FROM BOOKING_view WHERE GUEST_ID = ? ";
+		String sql = "SELECT COUNT(*) FROM (SELECT DISTINCT book_no FROM booking_view WHERE guest_id = ?)";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, id);
@@ -374,8 +380,9 @@ public class BookingDaoImpl implements BookingDao {
 	
 	@Override
 	public ArrayList<BookingHairs> pagingBookingHairsById(Paging paging, String id) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_view WHERE GUEST_ID = ? ORDER BY book_no desc) a) "
-				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT distinct(book_no) FROM booking_view WHERE GUEST_ID = ? ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+//				"SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_view WHERE GUEST_ID = ? ORDER BY book_no desc) a) "
+//				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, id);

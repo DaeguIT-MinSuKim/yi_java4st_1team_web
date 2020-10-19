@@ -5,9 +5,28 @@
 <%@ include file="../header.jsp" %>  
 <script>
 function go_delQna() {
-	var url="qnaDeleteForm.do?no="+document.getElementById("no").value;
+	if(${loginUser == null}){
+		if(confirm("정말 삭제하시겠습니까?")) {
+			()
+			document.form.action = 'qnaPassword.do?type=d';
+			document.form.submit();
+			return true;
+		} else {
+			return false;
+		}
+	}else{
+		if(confirm("정말 삭제하시겠습니까?")) {
+			()
+			document.form.action = 'qnaDelete.do';
+			document.form.submit();
+			return true;
+		} else {
+			return false;
+	}
+	/* var url="qnaDeleteForm.do?no="+document.getElementById("no").value;
 	window.open( url, "_blank_1",
-	"toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=400, height=100");
+	"toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=400, height=100"); */
+	
 }
 </script>
 <body>
@@ -27,10 +46,9 @@ function go_delQna() {
 	<!--비회원이 비회원글에들어와서 비밀번호 맞고 그다음에 수정가능이잖아  -->
 	<c:if test="${loginUser.guestId eq qna.guestId.guestId || confirmRes eq y || (qna.guestId eq null && qna.secret eq 'n')}">
 		<input type="submit" value="수정하기" id="updateButton" onclick="location.href='qnaUpdate.do?no=${qna.qnaNo}'"> 
-		<input type="button" value="삭제하기" id="delete" onclick="go_delQna()">
+		<input type="button" value="삭제하기" id="delete" onclick="return go_delQna();">
 	</c:if>
 		<input type="button" value="문의홈" id="home" onclick="location.href='qnaHome.do'">
-		 <input type="button" value="목록보기" id="list" onclick="location.href='qnaList.do'">
 	</div>
 	</form>
 </body>

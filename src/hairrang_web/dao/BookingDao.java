@@ -31,6 +31,8 @@ public interface BookingDao {
 
 	int isAvailableTime(String wantDateTime);
 	
+	ArrayList<BookingHairs> selectBookingHairsByBookingNo(int bookNo);
+	
 	/////페이징
 	int countBookingById(String id);
 	

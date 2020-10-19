@@ -18,26 +18,32 @@
 </script>
 <body>
 <div class="book_wrapper">
-${booking}
+
 <br>
 <table id="board">
 	<tr>
-		<th>번호</th> <th>(확인용)예약번호</th>  <th>이용날짜</th> <th>시술 정보</th> <th>총 금액</th> <th>예약상태</th> <th>예약등록일</th> 
+		<th>번호</th> <th>이용날짜</th> <th>시술 정보</th> <th>총 금액</th> <th>예약상태</th> <th>예약등록일</th> 
 	</tr>
-
-	<c:forEach items="${booking}" var="booking" varStatus="status">
- 	<tr onclick="location.href='guestBookDetail.do'" style="cursor:pointer;" class="mypage_title">
- 		<td class="book_index">${total - ((paging.nowPage-1) * cnt + status.index)} </td>
- 		<td>${booking.bookNo}</td>
+	<c:forEach var="booking" items="${booking}" varStatus="status">
+ 	<tr onclick="location.href='guestBookDetail.do?bookNo=${booking.bookNo}&status=${booking.bookStatus}'" style="cursor:pointer;" class="mypage_title">
+ 		<td class="book_index">${total - ((paging.nowPage-1) * cnt + status.index)} 
+ 		<input type="hidden" value="${booking.bookNo}" name="bookNo">
+ 		</td>
  		<td class="book_date">
 			<fmt:parseDate value="${booking.bookDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookDate" type="both" />
 			<fmt:formatDate value="${bookDate}" pattern="yyyy-MM-dd HH:mm" />
 		</td>
 		<td class="book_name">${booking.hairList.get(0).hair.hairName} 외  ${fn:length(booking.hairList)-1}건</td>
 		<td class="book_price">
-			<%-- <fmt:formatNumber value="${hairList.hair.hairName}" type="currency"/>  --%>
+			<%-- <c:set var="pSum" value="0" />
+			<c:forEach items="${booking.hairList}" var="h">
+				<c:set var="pSum" value="${pSum }+${h.hair.hairPrice }*${h.quantity }" />
+			</c:forEach>
+			${pSum } --%>
+			<%-- <fmt:formatNumber value="${pSum}" type="currency"/> --%>
+			${pp.get(status.index)}
 		</td>
-		<td class="book_status">${booking.bookStatus}</td>
+		<td class="book_status">${booking.bookStatus}<input type="hidden" value="${booking.bookStatus}" name="status"></td>
 		<td class="book_reg">
 			<fmt:parseDate value="${booking.bookRegDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookReg" type="both" />
 			<fmt:formatDate value="${bookReg}" pattern="yyyy-MM-dd HH:mm" />

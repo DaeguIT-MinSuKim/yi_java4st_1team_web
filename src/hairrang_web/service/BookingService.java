@@ -71,6 +71,10 @@ public class BookingService {
 		return dao.selectNoBooking(id);
 	}
 	
+	public ArrayList<BookingHairs> selectBookingHairsByBookingNo(int bookNo){
+		return dao.selectBookingHairsByBookingNo(bookNo);
+	}
+	
 	public int insertBookingWithHairList(Booking booking) {
 		String bookingSql = "INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_NOTE) VALUES(?, ?, ?, ?)";
 		String hairsSql = "INSERT INTO BOOKING_HAIRS(BOOK_NO, HAIR_NO, HAIR_QUANTITY) VALUES(?, ?, ?)";

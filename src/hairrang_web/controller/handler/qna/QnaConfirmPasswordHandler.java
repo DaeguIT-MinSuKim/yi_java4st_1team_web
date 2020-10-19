@@ -36,6 +36,7 @@ public class QnaConfirmPasswordHandler implements Command {
 			
 
 			String secret = request.getParameter("secret");
+			System.out.println(secret);
 
 			//로그인을 했고 로그인 아디이랑 게시물 아이디가 맞거나 또는 비밀글이 아닐때
 			// 1. 비밀글인가? 확인받기
@@ -49,8 +50,10 @@ public class QnaConfirmPasswordHandler implements Command {
 			// 1-2. 비밀글이 아니다. -> qnaDetail.jsp
 			
 			//
-			if (secret == null) {
-				return url;
+			if (secret.equalsIgnoreCase("n")) {
+				System.out.println("비밀글이 아닐때");
+				return "qnaDetail.do";
+				
 			}else {
 				// 로그인 된 상태
 				if(loginUser != null) {
@@ -59,21 +62,26 @@ public class QnaConfirmPasswordHandler implements Command {
 					System.out.println(qna);
 					if((loginUser.getGuestId()).equals(qna.getGuestId().getGuestId())) {
 						request.setAttribute("confirmRes", "y");
+						System.out.println("비밀글이고 로그인이 되어있고 로그인인되어있는 회원과 글회원이 맞을때");
 						return "qnaDetail.do";
 					} else {
 						// list
+						System.out.println("비밀글이고 로그인이 되어있고 로그인인되어있는 회원과 글회원이 맞지않을때");
 						response.sendRedirect("qnaHome.do");
 						return null;
 					}
 				} else {
 					// 비회원인 상태
-					if(qna.getGuestId() != null) {
+					System.out.println(qna);
+					if(qna.getGuestId().getGuestId() != null) {
 						// 회원이 쓴 글에 접근
 						// 빠꾸
+						System.out.println("비밀글이고 비회원이고 게시글의 회원의 아이디가 있을때");
 						response.sendRedirect("qnaHome.do");
 						return null;
 					} else {
 						// 비번 검사 받아
+						System.out.println("비밀글이고 비회원이고 게시글의 회원의 아이디가 없을때");
 						return url;
 					}
 				}

@@ -1,10 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
 <script>
 function go_QnaUpdate() {
 	var url="qnaUpdateForm.do?title="+document.getElementById("title").value+
@@ -14,7 +9,7 @@ function go_QnaUpdate() {
 	"toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=400, height=100");
 }
 </script>
-</head>
+<%@ include file="../header.jsp"%>
 <body>
 	<h1>문의 수정</h1>
 	<form name="form" method="post" action="qnaUpdate.do">
@@ -32,4 +27,4 @@ function go_QnaUpdate() {
 	</div>
 	</form>
 </body>
-</html>
+<%@ include file="../footer.jsp"%>

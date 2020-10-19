@@ -252,8 +252,8 @@ ADD CONSTRAINT PK_HB_CATEGORY PRIMARY KEY (hb_cateno);
 /* 예약헤어정보 */
 CREATE TABLE BOOKING_HAIRS (
 	hair_no NUMBER(10) NOT NULL, /* 헤어번호 */
-	book_no NUMBER(10) NOT NULL /* 예약번호 */
-	hair_quantity NUMBER;
+	book_no NUMBER(10) NOT NULL, /* 예약번호 */
+	hair_quantity NUMBER
 );
 
 ALTER TABLE BOOKING_HAIRS ADD CONSTRAINT PK_BOOKING_HAIRS

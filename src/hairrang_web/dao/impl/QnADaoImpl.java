@@ -87,7 +87,7 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public int insertQnA(QnA qna) {
-		String sql = "INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_PASSWORD) VALUES (?,?,?,?,?)";
+		String sql = "INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_PASSWORD,QNA_SECRET) VALUES (?,?,?,?,?,?)";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			if(qna.getGuestId() ==null) {
@@ -100,6 +100,7 @@ public class QnADaoImpl implements QnADao {
 			pstmt.setString(3, qna.getQnaContent());
 			pstmt.setString(4, qna.getQnaFile());
 			pstmt.setString(5, qna.getQnaPassword());
+			pstmt.setString(6, qna.getQnaSecret());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
