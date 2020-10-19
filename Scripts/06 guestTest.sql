@@ -74,7 +74,7 @@ WHERE b.guest_id = 'test';
 SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_view WHERE GUEST_ID = 'test'AND book_no = 60 ORDER BY book_no desc) a) 
 			WHERE rn BETWEEN 1 AND 10 ORDER BY rn ;		
 --예약 내역 전체카운트
-SELECT COUNT(*) FROM BOOKING_view WHERE GUEST_ID = 'test';
+SELECT COUNT(*) FROM (SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test');
 
 --중복제외 book_no
 SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test';
@@ -83,6 +83,11 @@ SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test';
 SELECT BOOK_NO,GUEST_ID,BOOK_TIME,HAIR_NO,HAIR_QUANTITY,DE_NO,BOOK_REGDATE,BOOK_STATUS,BOOK_NOTE FROM booking_view;
 SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test';
 SELECT * FROM booking;
-SELECT * FROM booking_hairs ORDER BY book_no;
+SELECT * FROM booking_hairs WHERE book_no = 60 ORDER BY book_no;
 SELECT * FROM hair;
 -- 60번 헤어14*2=20, 16*1=8 => 28만원 / 62번 12*2=8, 10*1=3 =>11만원
+
+
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT distinct(book_no) FROM booking_view WHERE GUEST_ID = 'test' ORDER BY book_no desc) a) WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
+
+SELECT * FROM BOOKING_HAIRS WHERE BOOK_NO = 60 ORDER BY BOOK_NO, HAIR_NO;

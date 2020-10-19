@@ -29,13 +29,6 @@
 .timeselectbox .timeline .timesec .line {padding-left:58px;}
 
 /*mypage sub_menu*/
-/* .info a, .book a, .order a, .qna a, .coupon a {color:#bbb;}
-.submenu_main {text-align: center; border:1px solid #fff; }
-.sub_menu ul {}
-.sub_menu ul li {background-color:red; padding:15px 30px; display: inline-block; font-weight:500; font-size:15px; text-align: center; color: #bbb; text-decoration:none;}
-.sub_menu ul li a {padding:15px 30px; text-decoration:none;	}
-.sub_menu ul li a:hover{ text-decoration:none; background-color:#fff; color: black; border: 1px solid #ddd; border-top: 2px solid gray; border-bottom: 1px solid #ffffff;}
- */
 .info a, .book a, .order a, .qna a, .coupon a {color:black;}
 .submenu_main { text-align: center; border:1px solid #fff; line-height:60px;}
 .sub_menu ul { width:1005px; height:60px; margin:0 auto;}
@@ -71,6 +64,16 @@
 #board .book_status, .qna_resYn{width:70px;}
 #board .qna_title{width:600px;}
 
+/*mypage guest_book_detail*/
+.book_detail_wrapper {width:1000px; margin:0 auto; margin-top:60px;}
+table { width:1000px; margin:0 auto;}
+table tr {border-bottom:1px solid #E4E4E4;}
+
+.div_price {text-align:right; margin-top:30px; border-top:1px solid black; border-bottom:1px solid black;}
+.book_detail_bottons {width:1000px; margin:0 auto; text-align:center; padding:30px;}
+
+
+/**/
 .paging {display: block; text-align: center; padding:30px;}
 .paging a {text-decoration:none;}
 
