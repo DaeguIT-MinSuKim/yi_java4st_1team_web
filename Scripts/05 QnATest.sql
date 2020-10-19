@@ -13,7 +13,7 @@ SELECT * FROM QNA;
 DELETE FROM QNA q2 ;
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn,qna_secret,qna_password) VALUES ('nottest','nottesttest','n','n','y','123');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn) VALUES ('test','testTitl2123123','n',0);
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn) VALUES ('test2','testTitl4','n',0);
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn) VALUES ('test','testTitl4','n',0);
 INSERT INTO QNA (ADMIN_ID,QNA_TITLE,DEL_YN, notice_yn) VALUES ('testadmin','admintestolenfoej','n', 'y');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,RES_YN,) VALUES ('test2','what','what?','n');
 DELETE qna;

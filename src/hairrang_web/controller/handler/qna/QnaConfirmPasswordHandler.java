@@ -1,6 +1,7 @@
 package hairrang_web.controller.handler.qna;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -67,7 +68,11 @@ public class QnaConfirmPasswordHandler implements Command {
 					} else {
 						// list
 						System.out.println("비밀글이고 로그인이 되어있고 로그인인되어있는 회원과 글회원이 맞지않을때");
-						response.sendRedirect("qnaHome.do");
+						response.setContentType("text/html; charset=UTF-8");
+						PrintWriter writer = response.getWriter();
+						writer.println("<script>alert('다른회원의 비회원 글입니다.'); location.href='qnaHome.do';</script>");
+						writer.close();
+//						response.sendRedirect("qnaHome.do");
 						return null;
 					}
 				} else {
@@ -77,12 +82,17 @@ public class QnaConfirmPasswordHandler implements Command {
 						// 회원이 쓴 글에 접근
 						// 빠꾸
 						System.out.println("비밀글이고 비회원이고 게시글의 회원의 아이디가 있을때");
+						response.setContentType("text/html; charset=UTF-8");
+						PrintWriter writer = response.getWriter();
+						writer.println("<script>alert('회원의 비회원 글입니다.'); location.href='qnaHome.do';</script>");
+						writer.close();
 						response.sendRedirect("qnaHome.do");
 						return null;
 					} else {
 						// 비번 검사 받아
+						//비회원은 빠구
 						System.out.println("비밀글이고 비회원이고 게시글의 회원의 아이디가 없을때");
-						return url;
+						return null;
 					}
 				}
 			}

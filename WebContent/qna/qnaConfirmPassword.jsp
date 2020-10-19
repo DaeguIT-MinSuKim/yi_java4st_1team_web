@@ -10,8 +10,9 @@
 	<section style="width: 450px; height: auto;">
 		<form action="qnaConfirmPassword.do" method="post">
 			<h1>비밀번호 입력</h1>
-			<input type="password" name="pwd"> <input type="hidden"
-				name="no" value="${qnaNo}">
+			<input type="password" name="pwd">
+			 <input type="hidden" name="no" value="${qnaNo}">
+			 <input type="hidden" name="type" value="${type}">
 	</form>
 	</section>
 </body>

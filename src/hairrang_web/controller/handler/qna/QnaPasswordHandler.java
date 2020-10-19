@@ -20,9 +20,13 @@ public class QnaPasswordHandler implements Command {
 		String type = request.getParameter("type");
 		System.out.println("type"+type);
 		int qnaNo = Integer.parseInt(request.getParameter("no"));
+		System.out.println("qnaNo"+qnaNo);
 		QnA qna = service.selectResQnaByNo(new QnA(qnaNo));
+		System.out.println(request.getHeader("referer").toString());
+		
 
 		if(request.getMethod().equalsIgnoreCase("GET")) {
+			request.setAttribute("type", type);
 			request.setAttribute("qna", qna);
 			return url;
 		}else {
