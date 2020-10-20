@@ -1,0 +1,5 @@
+@charset "UTF-8";
+
+#wrapper #content-wrapper {min-width:1200px}
+.dataTables_filter {text-align: right;}
+.table-responsive {overflow-x:hidden !important}
