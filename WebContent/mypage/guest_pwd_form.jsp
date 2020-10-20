@@ -8,8 +8,7 @@
 .info a{background-color:white;  border-bottom:1px solid white;}
 
 .underline {font-size:30px;}
-.table {width:650px;margin:0 auto;padding:20px;
-}
+.pwdform {width:650px;margin:0 auto;padding:20px;}
 td {width:100px; padding:10px;}
 input {margin-left:20px; width:300px; border: 1px solid #e8e8e8;}
 
@@ -67,7 +66,7 @@ $(function(){
 
 <form method="post" name="formm">
 <p style="font-size:30px; text-align:center;">비밀번호 변경</p>
-<table class="table">
+<table class="pwdform">
 	<tr>
 		<td>아이디</td>
 		<td><input type="text" name="id" value="${id}" readonly/> 

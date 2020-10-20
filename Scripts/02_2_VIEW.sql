@@ -24,6 +24,7 @@ SELECT
 	FROM GUEST;
 	
 SELECT * FROM guest_view;
+SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test' AND book_status = '0' ORDER BY book_no DESC;
 
 /* ADMIN_VIEW */
 CREATE OR REPLACE VIEW ADMIN_VIEW

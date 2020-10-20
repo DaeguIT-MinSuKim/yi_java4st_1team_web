@@ -18,8 +18,7 @@ import hairrang_web.service.HairService;
 import hairrang_web.utils.Paging;
 
 public class GuestBookHandler implements Command {
-	private BookingService bService = new BookingService();
-	private HairService hService = new HairService();
+	private BookingService service = new BookingService();
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
@@ -42,7 +41,7 @@ public class GuestBookHandler implements Command {
 
 		
 			//만약 처음 접속했을때 초기세팅해주는 곳 
-			int total = bService.countBookingById(loginUser.getGuestId());
+			int total = service.countBookingById(loginUser.getGuestId());
 			if (nowPage == null && cntPerPage == null) {
 				nowPage = "1";
 				cntPerPage = "10";
@@ -60,21 +59,17 @@ public class GuestBookHandler implements Command {
 			Paging paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
 			
 			//중복제외 번호리스트
-			ArrayList<Integer> noList = bService.selectNoBooking(loginUser.getGuestId());
+			ArrayList<Integer> noList = service.selectNoBooking(loginUser.getGuestId());
 			ArrayList<Booking> bookingList = new ArrayList<Booking>();
 			
 			for(int bookNo:noList) {
-				bookingList.add(bService.pagingBookingById(paging, loginUser.getGuestId(), bookNo));
+				bookingList.add(service.pagingBookingById(paging, loginUser.getGuestId(), bookNo));
 			}
 			
 			
 			//bookingList 1- hairlist 1,2...
 			// 2- hairlist 1,2..
-			ArrayList<BookingHairs> bookingHairs = bService.pagingBookingHairsByID(paging, loginUser.getGuestId());
 			ArrayList<Integer> prices = new ArrayList<>();
-			
-			System.out.println(">> BookingHairs 출력");
-			bookingHairs.stream().forEach(System.out::println);
 			
 			for(Booking book : bookingList) {
 				int sum = 0;
@@ -84,14 +79,29 @@ public class GuestBookHandler implements Command {
 				prices.add(sum);
 			}
 			
-			/*for(BookingHairs hair : bookingHairs) {
-				int sum = hair.getHair().getHairPrice() * hair.getQuantity();
-				prices.add(sum);
-			}*/
-			
-//			System.out.println("금액 계산");
-//			prices.stream().forEach(System.out::println);
-			
+//			///예약상태별 필터링
+//			
+//			ArrayList<Integer> status0NoList = service.selectNoStatus0(loginUser.getGuestId());
+//			ArrayList<Integer> status1NoList = service.selectNoStatus1(loginUser.getGuestId());
+//			System.out.println(status0NoList);
+//			System.out.println(status1NoList);
+//			
+//			ArrayList<Booking> status0List = new ArrayList<Booking>();
+//			ArrayList<Booking> status1List = new ArrayList<Booking>();
+//			
+//			for(int status0:status0NoList) {
+//				status0List.add(service.selectBookStatus0(paging, loginUser.getGuestId(), status0));
+//			}
+//			
+//			for(int status1:status1NoList) {
+//				status1List.add(service.selectBookStatus1(paging, loginUser.getGuestId(), status1));
+//			}
+//			
+//			status0List.stream().forEach(System.out::println);
+//			
+//			request.setAttribute("0List", status0List);
+//			request.setAttribute("1List", status1List);
+
 			request.setAttribute("pp", prices);
 			request.setAttribute("cnt", cntPerPage);
 			request.setAttribute("total", total);

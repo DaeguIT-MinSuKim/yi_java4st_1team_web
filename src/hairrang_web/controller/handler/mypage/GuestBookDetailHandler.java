@@ -19,33 +19,27 @@ public class GuestBookDetailHandler implements Command {
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		HttpSession session = request.getSession();
-		Guest loginUser = (Guest) session.getAttribute("loginUser");
-		
-		int bookNo = Integer.parseInt(request.getParameter("bookNo"));
-		
-		Booking selBooking = bService.getBookingByBookingNo(new Booking(bookNo));
-		
-		int sum= 0;
-		for(BookingHairs hairs:selBooking.getHairList()) {
-			sum += hairs.getHair().getHairPrice() * hairs.getQuantity();
-		}
-		
-		request.setAttribute("booking", selBooking);
-		request.setAttribute("price", sum);
-		/*		ArrayList<BookingHairs> hairList = bService.selectBookingHairsByBookingNo(bookNo);
+		if (request.getMethod().equalsIgnoreCase("GET")) {
+			HttpSession session = request.getSession();
+			Guest loginUser = (Guest) session.getAttribute("loginUser");
 			
-				int sum= 0;
-				for(BookingHairs hairs:hairList) {
-					sum += hairs.getHair().getHairPrice() * hairs.getQuantity();
-				}
-				
-				request.setAttribute("price", sum);
-				request.setAttribute("guest", loginUser.getGuestName());
-				request.setAttribute("bookNo", bookNo);
-				request.setAttribute("hairList", hairList);
-		*/	
-		return "mypage/guest_book_detail.jsp";
+			int bookNo = Integer.parseInt(request.getParameter("bookNo"));
+			Booking selBooking = bService.getBookingByBookingNo(new Booking(bookNo));
+			
+			int sum= 0;
+			for(BookingHairs hairs:selBooking.getHairList()) {
+				sum += hairs.getHair().getHairPrice() * hairs.getQuantity();
+			}
+			
+			request.setAttribute("booking", selBooking);
+			request.setAttribute("price", sum);
+			request.setAttribute("bookNo", bookNo);
+			
+			return "mypage/guest_book_detail.jsp";
+			
+		}else {
+			return "mypage/guest_book_detail.jsp";
+		}	
 	}
 
 }

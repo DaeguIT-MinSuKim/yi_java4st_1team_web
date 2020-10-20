@@ -86,7 +86,7 @@ public class BookingDaoImpl implements BookingDao {
 		}catch(SQLException e) {
 			
 		}
-		System.out.println("getBookingHairs 안 : " + hair + ", " + quantity);
+		//System.out.println("getBookingHairs 안 : " + hair + ", " + quantity);
 		return new BookingHairs(hair, quantity);
 	}
 
@@ -103,7 +103,7 @@ public class BookingDaoImpl implements BookingDao {
 		LocalDateTime bookTime = rs.getTimestamp("BOOK_TIME").toLocalDateTime();
 		ArrayList<BookingHairs> hairList = selectBookingHairsByBookingNo(bookNo);
 		
-		System.out.println("getBooking 안 : " + hairList);
+		//System.out.println("getBooking 안 : " + hairList);
 //		Hair hair = hDao.selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
 
 		Designer designer = dDao.selectDesignerByNo(new Designer(rs.getInt("DE_NO")));
@@ -130,7 +130,7 @@ public class BookingDaoImpl implements BookingDao {
 		try (Connection con = JndiDs.getConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			
-			System.out.println("guest.getGuestId() : " + guest.getGuestId());
+			//System.out.println("guest.getGuestId() : " + guest.getGuestId());
 			pstmt.setString(1, guest.getGuestId());
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
@@ -315,6 +315,21 @@ public class BookingDaoImpl implements BookingDao {
 	}
 	
 	
+	@Override
+	public int updateBookingStaus(Booking booking) {
+		String sql = "UPDATE booking SET BOOK_STATUS = 0 WHERE book_no = ?";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, booking.getBookNo());
+			
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+		
+	}
+	
+	
 //////////////////////////////////////페이징/////////////////////////////////////////////////
 
 	@Override
@@ -380,7 +395,7 @@ public class BookingDaoImpl implements BookingDao {
 	
 	@Override
 	public ArrayList<BookingHairs> pagingBookingHairsById(Paging paging, String id) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT distinct(book_no) FROM booking_view WHERE GUEST_ID = ? ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT distinct(book_no) FROM booking_view WHERE GUEST_ID = ? AND book_no = ? ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
 //				"SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_view WHERE GUEST_ID = ? ORDER BY book_no desc) a) "
 //				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
 		try(Connection con = JndiDs.getConnection();
@@ -403,9 +418,141 @@ public class BookingDaoImpl implements BookingDao {
 		return null;
 	}
 
+
+	@Override
+	public Booking selectBookStatus1(Paging paging, String id, int no) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM "
+				+ "(SELECT distinct(book_no) FROM booking_view WHERE guest_id = ? AND book_status = '1' AND book_no = ?  ORDER BY book_no desc) a) "
+				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, id);
+			pstmt.setInt(2, no);
+			pstmt.setInt(3, paging.getStart());
+			pstmt.setInt(4, paging.getEnd());
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					/* List<Booking> list = new ArrayList<Booking>(); */
+					//BOOK_NO,GUEST_ID,BOOK_TIME,HAIR_NO,HAIR_QUANTITY,DE_NO,BOOK_REGDATE,BOOK_STATUS,BOOK_NOTE
+					
+					Booking booking = new Booking();
+					GuestDao gDao = GuestDaoImpl.getInstance();
+					DesignerDao dDao = DesignerDaoImpl.getInstance();
+					HairDao hDao = HairDaoImpl.getInstance();
+					
+					booking.setBookNo(rs.getInt("BOOK_NO"));
+					booking.setGuest(gDao.selectGuestById(new Guest(rs.getString("GUEST_ID"))));
+					booking.setBookDate(rs.getTimestamp("BOOK_TIME").toLocalDateTime());
+					booking.setDesigner(dDao.selectDesignerByNo(new Designer(rs.getInt("DE_NO"))));
+					booking.setBookRegDate(rs.getTimestamp("BOOK_REGDATE").toLocalDateTime());
+					booking.setBookStatus(rs.getInt("BOOK_STATUS"));
+					booking.setBookNote(rs.getString("BOOK_NOTE"));
+					
+					ArrayList<BookingHairs> list = new ArrayList<BookingHairs>();
+					booking.setHairList(list);
+					
+					do {
+						list.add(getBookingHairs(rs));
+					}while(rs.next());
+					return booking;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+		
+	}
+
+	@Override
+	public Booking selectBookStatus0(Paging paging, String id, int no) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM "
+				+ "(SELECT distinct(book_no) FROM booking_view WHERE guest_id = ? AND book_status = '0' AND book_no = ? ORDER BY book_no desc) a) "
+				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, id);
+			pstmt.setInt(2, no);
+			pstmt.setInt(3, paging.getStart());
+			pstmt.setInt(4, paging.getEnd());
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					/* List<Booking> list = new ArrayList<Booking>(); */
+					//BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, HAIR_QUANTITY, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE
+					
+					Booking booking = new Booking();
+					GuestDao gDao = GuestDaoImpl.getInstance();
+					DesignerDao dDao = DesignerDaoImpl.getInstance();
+					HairDao hDao = HairDaoImpl.getInstance();
+					System.out.println("gdao" + gDao);
+					
+					booking.setBookNo(rs.getInt("BOOK_NO"));
+					booking.setGuest(gDao.selectGuestById(new Guest(rs.getString("GUEST_ID"))));
+					booking.setBookDate(rs.getTimestamp("BOOK_TIME").toLocalDateTime());
+					booking.setDesigner(dDao.selectDesignerByNo(new Designer(rs.getInt("DE_NO"))));
+					booking.setBookRegDate(rs.getTimestamp("BOOK_REGDATE").toLocalDateTime());
+					booking.setBookStatus(rs.getInt("BOOK_STATUS"));
+					booking.setBookNote(rs.getString("BOOK_NOTE"));
+					
+					ArrayList<BookingHairs> list = new ArrayList<BookingHairs>();
+					booking.setHairList(list);
+					do {
+						list.add(getBookingHairs(rs));
+					}while(rs.next());
+						return booking;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+	
 	@Override
 	public ArrayList<Integer> selectNoBooking(String id) {
-		String sql = "SELECT DISTINCT book_no FROM booking_view WHERE guest_id = ?";
+		String sql = "SELECT DISTINCT book_no FROM booking_view WHERE guest_id = ? ORDER BY book_no desc";
+		try (Connection con = JndiDs.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+				pstmt.setString(1, id);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					ArrayList<Integer> list = new ArrayList<>();
+					do {
+						list.add(rs.getInt(1));
+					} while (rs.next());
+					return list;
+				}
+			}
+	} catch (SQLException e) {
+		throw new RuntimeException();
+	}
+		return null;
+	}
+
+	@Override
+	public ArrayList<Integer> selectNoStatus0(String id) {
+		String sql = "SELECT DISTINCT book_no FROM booking_view WHERE guest_id = ? AND book_status = '0' ORDER BY book_no DESC";
+		try (Connection con = JndiDs.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+				pstmt.setString(1, id);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					ArrayList<Integer> list = new ArrayList<>();
+					do {
+						list.add(rs.getInt(1));
+					} while (rs.next());
+					return list;
+				}
+			}
+	} catch (SQLException e) {
+		throw new RuntimeException();
+	}
+		return null;
+	}
+
+	@Override
+	public ArrayList<Integer> selectNoStatus1(String id) {
+		String sql = "SELECT DISTINCT book_no FROM booking_view WHERE guest_id = ? AND book_status = '1' ORDER BY book_no DESC";
 		try (Connection con = JndiDs.getConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 				pstmt.setString(1, id);

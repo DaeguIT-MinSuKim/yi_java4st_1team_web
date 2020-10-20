@@ -67,12 +67,32 @@ public class BookingService {
 		return dao.pagingBookingHairsById(paging, id);
 	}
 	
+	public ArrayList<BookingHairs> selectBookingHairsByBookingNo(int bookNo){
+		return dao.selectBookingHairsByBookingNo(bookNo);
+	}
+	
+	public int updateBookingStatus(Booking booking) {
+		return dao.updateBookingStaus(booking);
+	}
+	
+	public Booking selectBookStatus1(Paging paging, String id, int no) {
+		return dao.selectBookStatus1(paging, id, no);
+	}
+	
+	public Booking selectBookStatus0(Paging paging, String id, int no) {
+		return dao.selectBookStatus0(paging, id, no);
+	}
+	
 	public ArrayList<Integer> selectNoBooking(String id){
 		return dao.selectNoBooking(id);
 	}
 	
-	public ArrayList<BookingHairs> selectBookingHairsByBookingNo(int bookNo){
-		return dao.selectBookingHairsByBookingNo(bookNo);
+	public ArrayList<Integer> selectNoStatus0 (String id){
+		return dao.selectNoStatus0(id);
+	}
+	
+	public ArrayList<Integer> selectNoStatus1 (String id){
+		return dao.selectNoStatus1(id);
 	}
 	
 	public int insertBookingWithHairList(Booking booking) {

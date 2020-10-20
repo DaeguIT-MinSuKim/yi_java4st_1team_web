@@ -82,6 +82,7 @@ SELECT 3, 'test4321', event_no, event_start, event_end, 'n' FROM event WHERE eve
 SELECT * FROM hair;
 SELECT * FROM booking;
 SELECT * FROM booking_hairs;
+/*
 
 INSERT INTO BOOKING(BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
 VALUES(60, 'test', sysdate + 10 - 6/24, 9, 2, sysdate, 1, null);
@@ -95,6 +96,7 @@ INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(60, 14, 2);
 INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(61, 11, 1);
 INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(62, 10, 1);
 INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(62, 12, 2);
+*/
 
 
 /*테스트 admin*/
