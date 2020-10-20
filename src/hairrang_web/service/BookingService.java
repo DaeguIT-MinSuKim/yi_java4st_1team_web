@@ -59,6 +59,14 @@ public class BookingService {
 		return dao.countBookingById(id);
 	}
 	
+	public int countStatus1(String id) {
+		return dao.countStatus1(id);
+	}
+	
+	public int countStatus0(String id) {
+		return dao.countStatus0(id);
+	}
+	
 	public Booking pagingBookingById(Paging paging, String id, int no) {
 		return dao.pagingBookingById(paging, id, no);
 	}

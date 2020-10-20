@@ -24,10 +24,6 @@ public class GuestBookHandler implements Command {
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		
-
-		if (request.getMethod().equalsIgnoreCase("GET")) {
-			System.out.println("get");
-			// TODO Auto-generated method stub
 			HttpSession session = request.getSession();
 			Guest loginUser = (Guest) session.getAttribute("loginUser");
 			
@@ -65,7 +61,7 @@ public class GuestBookHandler implements Command {
 			for(int bookNo:noList) {
 				bookingList.add(service.pagingBookingById(paging, loginUser.getGuestId(), bookNo));
 			}
-			
+			//System.out.println(bookingList);
 			
 			//bookingList 1- hairlist 1,2...
 			// 2- hairlist 1,2..
@@ -80,25 +76,31 @@ public class GuestBookHandler implements Command {
 			}
 			
 //			///예약상태별 필터링
-//			
-//			ArrayList<Integer> status0NoList = service.selectNoStatus0(loginUser.getGuestId());
-//			ArrayList<Integer> status1NoList = service.selectNoStatus1(loginUser.getGuestId());
-//			System.out.println(status0NoList);
-//			System.out.println(status1NoList);
-//			
-//			ArrayList<Booking> status0List = new ArrayList<Booking>();
-//			ArrayList<Booking> status1List = new ArrayList<Booking>();
-//			
-//			for(int status0:status0NoList) {
-//				status0List.add(service.selectBookStatus0(paging, loginUser.getGuestId(), status0));
-//			}
-//			
-//			for(int status1:status1NoList) {
-//				status1List.add(service.selectBookStatus1(paging, loginUser.getGuestId(), status1));
-//			}
-//			
-//			status0List.stream().forEach(System.out::println);
-//			
+			
+			ArrayList<Integer> status0NoList = service.selectNoStatus0(loginUser.getGuestId()); //이거는 나옴
+			ArrayList<Booking> status0List = new ArrayList<Booking>();
+			//System.out.println(status0NoList);
+			
+			for(int status0:status0NoList) {
+				//status0List.add(service.selectBookStatus0(paging, loginUser.getGuestId(), status0));
+				//System.out.println("status0" + status0);
+			}
+		
+			status0List.stream().forEach(System.out::println);
+
+			
+			////////////////////////////////
+			ArrayList<Integer> status1NoList = service.selectNoStatus1(loginUser.getGuestId());
+			ArrayList<Booking> status1List = new ArrayList<Booking>();
+			for(int status1:status1NoList) {
+				//status1List.add(service.selectBookStatus1(paging, loginUser.getGuestId(), status1));
+				System.out.println("status1" + status1);
+			}
+			//System.out.println(status1List);
+			
+//			request.setAttribute("List1", status0NoList);
+//			request.setAttribute("List2", status1NoList);
+			
 //			request.setAttribute("0List", status0List);
 //			request.setAttribute("1List", status1List);
 
@@ -107,10 +109,7 @@ public class GuestBookHandler implements Command {
 			request.setAttribute("total", total);
 			request.setAttribute("paging", paging);
 			request.setAttribute("booking", bookingList);
-			
-		} else {
-			System.out.println("post");
-		}
+
 		
 		return "mypage/guest_book.jsp";
 	}

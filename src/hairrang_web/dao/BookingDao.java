@@ -37,7 +37,11 @@ public interface BookingDao {
 		
 	/////페이징
 	int countBookingById(String id);
-
+	
+	int countStatus1(String id);
+	
+	int countStatus0(String id);
+	
 	ArrayList<BookingHairs> pagingBookingHairsById(Paging paging, String id);
 	
 	ArrayList<Integer> selectNoBooking(String id);
@@ -49,9 +53,8 @@ public interface BookingDao {
 	Booking pagingBookingById(Paging paging, String id, int no);
 	
 	Booking selectBookStatus1(Paging paging, String id, int no);
-	
+
 	Booking selectBookStatus0(Paging paging, String id, int no);
-	
 
 
 }
