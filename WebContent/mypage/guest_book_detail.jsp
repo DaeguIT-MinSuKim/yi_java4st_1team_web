@@ -71,7 +71,6 @@
 <br>
 <div class="div_price">
 <p>총 결제 금액 : ${price}</p>
-
 </div>
 <div class="book_detail_bottons">
 	<input type="button" class="button" value="예약 취소">
