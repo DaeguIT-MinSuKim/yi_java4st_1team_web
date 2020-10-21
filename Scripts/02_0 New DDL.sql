@@ -3,6 +3,9 @@ SELECT * FROM user_tables;
 -- DDL에 잘못 추가 했었음 지워주세요.
 DROP TABLE SALES_DETAIL CASCADE CONSTRAINTS;
 
+--hairboard에 헤어no 지운다요
+ALTER TABLE HAIR_BOARD DROP COLUMN hair_no;
+
 /* 고객 */
 DROP TABLE GUEST CASCADE CONSTRAINTS;
 /* 디자이너 */
@@ -229,7 +232,7 @@ CREATE TABLE HAIR_BOARD (
 	hboard_no NUMBER(10) NOT NULL, /* 글번호 */
 	hboard_cateno NUMBER(10), /* 카테고리 코드 */
 	hboard_title VARCHAR2(100), /* 제목 */
-	hair_no NUMBER(10), /* 헤어번호 */
+	/*hair_no NUMBER(10), 헤어번호 */
 	hboard_content VARCHAR2(1000), /* 내용 */
 	hboard_pic varchar2(200), /* 사진 */
 	hboard_regDate DATE DEFAULT SYSDATE/* 작성일 */
@@ -321,9 +324,11 @@ ALTER TABLE COUPON
 ADD CONSTRAINT FK_EVENT_TO_COUPON FOREIGN KEY (event_no)
 		REFERENCES EVENT (event_no);
 
+/*
 ALTER TABLE HAIR_BOARD
 ADD CONSTRAINT FK_HAIR_TO_HAIR_BOARD FOREIGN KEY (hair_no)
 		REFERENCES HAIR (hair_no);
+*/
 
 ALTER TABLE HAIR_BOARD
 ADD CONSTRAINT FK_HB_CATEGORY_TO_HAIR_BOARD FOREIGN KEY (hboard_cateno)
