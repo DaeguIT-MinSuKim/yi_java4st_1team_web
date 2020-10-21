@@ -423,9 +423,8 @@ public class BookingDaoImpl implements BookingDao {
 
 	@Override
 	public Booking selectBookStatus1(Paging paging, String id, int no) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM "
-				+ "(SELECT distinct(book_no) FROM booking_view WHERE guest_id = ? AND book_status = 1 AND book_no = ?  ORDER BY book_no desc) a) "
-				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_view "
+				+ "WHERE GUEST_ID = ? AND book_status = 1 AND book_no = ? ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, id);
@@ -469,7 +468,7 @@ public class BookingDaoImpl implements BookingDao {
 
 	@Override
 	public Booking selectBookStatus0(Paging paging, String id, int no) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT distinct(book_no) FROM booking_view "
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_view "
 				+ "WHERE GUEST_ID = ? AND book_status = 0 AND book_no = ? ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){

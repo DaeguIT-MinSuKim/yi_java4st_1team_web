@@ -18,8 +18,12 @@
 </script>
 <body>
 <div class="book_wrapper">
-<br>
-<input type="button" value="status0" onclick="location.href='status0.do'">
+
+<div class="tcenter" style="padding:10px;">
+	<input type="button" value="전체보기" onclick="location.href='guestBook.do'">
+	<input type="button" value="예약완료" onclick="location.href='status1.do'">
+	<input type="button" value="예약취소" onclick="location.href='status0.do'">
+</div>
 <table id="board">
 	<tr>
 		<th>번호</th> <th>이용날짜</th> <th>시술 정보</th> <th>총 금액</th> <th>예약상태</th> <th>예약등록일</th> 
