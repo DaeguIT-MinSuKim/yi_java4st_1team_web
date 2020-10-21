@@ -44,6 +44,8 @@
 .timeselectbox .timeline .timesec li span, .timeselectbox .timeline .timesec li a {height:40px;line-height:40px;}
 .timeselectbox .timeline .timesec .line {padding-left:58px;}
 
+
+
 /*mypage sub_menu*/
 .info a, .book a, .order a, .qna a, .coupon a {color:black;}
 .submenu_main { text-align: center; border:1px solid #fff; line-height:60px;}
@@ -66,7 +68,7 @@
 .delete_sub3 {}
 
 /*mypage guest_book*/
-.book_wrapper {margin-top:60px;}
+.book_wrapper {margin:0 auto; margin-top:60px; width:1000px;}
 #board {clear:both; width:1000px; margin:0 auto;  text-align:center;}
 #board tr {border-bottom:1px solid #E4E4E4;}
 #board tr td {padding:15px 0;}

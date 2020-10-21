@@ -56,11 +56,17 @@ VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-09-28', 'YYYY-MM-DD'), to_dat
 
 /* designer */
 SELECT * FROM DESIGNER;
-INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES('박원장', '원', '원장', NULL, '20년 경력을 자랑하는 헤어랑의 원장');
+/*INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES('박원장', '원', '원장', NULL, '20년 경력을 자랑하는 헤어랑의 원장');
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES('배주현', '아이린', '디자이너', NULL, '펌의 신');
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES('강슬기', '슬기', '디자이너', NULL, '5년차');
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES('김미정', '노넴', '스탭', NULL, '2년차');
-INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES('이스탭', '수태', '스탭', NULL, '펌 전문가');
+INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES('이스탭', '수태', '스탭', NULL, '펌 전문가');*/
+
+INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('손승완', '웬디', '원장', 'designer/images/wd.jpg','#찰떡스타일링 #정형화되지않은스타일 #얼굴형보완 #내츄럴웨이브 #연예인머리 #컨셉세팅펌');
+INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('배주현', '아이린', '디자이너', 'designer/images/irene.jpg','#내추럴컷 #레이어드컷 #스타일링커트 #루즈컷 #유럽피안컷 #팜므파탈 #손질없이커트만으로멋나는 #얼굴보완컷 #퍼스널컬러디렉팅');
+INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('강슬기', '슬기', '디자이너', 'designer/images/sk.jpg','#클래식 #고급스러움 #단발머리 #단발컷 #풍성한웨이브 #로맨틱웨이브 #드라마틱볼륨 #글램웨이브 #러블리헤어');
+INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('김예림', '예리', '디자이너', 'designer/images/yr.jpg','#단발컷 #태슬컷 #내츄럴웨이브펌 #볼륨레이어컷 #볼륨펌');
+INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('박수영', '조이', '스탭', 'designer/images/joy.jpg','#레이어드컷 #단발레이어드컷 #풍성한볼륨 #볼륨매직 #글램웨이브 #긴머리웨이브 #러블리헤어 ');
 
 
 /* coupon */
@@ -76,6 +82,9 @@ INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, used_y
 SELECT 3, 'test4321', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
 
 
+
+/* hair_board */
+SELECT * FROM HAIR_BOARD;
 
 /* booking & booking_hairs */
 -- test용으로 시퀀스 사용하지 않고 60번부터 시작하는 데이터 삽입

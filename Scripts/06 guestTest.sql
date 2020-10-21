@@ -99,13 +99,29 @@ SELECT COUNT(*) FROM (SELECT DISTINCT book_no FROM booking_view WHERE guest_id =
 
 SELECT * FROM BOOKING_HAIRS WHERE BOOK_NO = 60 ORDER BY BOOK_NO, HAIR_NO;
 
-
-SELECT * FROM (SELECT rownum RN, a.* FROM
-(SELECT distinct(book_no) FROM booking_view WHERE GUEST_ID = 'test' AND book_status = '0' AND book_no = '5' ORDER BY book_no desc) a)
-WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
-
 SELECT * FROM GUEST;
 
 SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT distinct(book_no) FROM booking_view WHERE GUEST_ID = 'test' AND book_status = 1 AND book_no = 2 ORDER BY book_no desc) a) WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
 
 SELECT BOOK_NO,GUEST_ID,BOOK_TIME,HAIR_NO,HAIR_QUANTITY,DE_NO,BOOK_REGDATE,BOOK_STATUS,BOOK_NOTE FROM booking_view;
+
+
+CREATE OR REPLACE VIEW booking_view
+AS
+SELECT BOOK_NO, GUEST_ID, BOOK_TIME, h.HAIR_NO, h.hair_quantity, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE
+FROM booking b LEFT OUTER JOIN booking_hairs h USING(book_no)
+ORDER BY book_no, hair_no;
+
+SELECT * FROM booking_view;
+
+SELECT * FROM (SELECT rownum RN, a.* FROM 
+(SELECT * FROM booking_view 
+WHERE GUEST_ID = 'test' AND book_status = 1 AND book_no = 2 ORDER BY book_no desc) a) 
+WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
+
+
+
+---
+SELECT * FROM (SELECT rownum RN, a.* FROM 
+(SELECT * FROM booking_view WHERE GUEST_ID = 'test' AND book_no = 2 AND BOOK_STATUS = 1 ORDER BY book_no desc) a) 
+WHERE rn BETWEEN 1 AND 10 ORDER BY rn;

@@ -1,21 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-    <%@ include file="../header.jsp" %>  
-     <%@ include file="sub_menu.jsp" %>
-     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
-     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
-
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+    <%@ include file="../header.jsp" %> 
+    <%@ include file="sub_menu.jsp" %>
 <style>
 .book a {background-color:white;  border-bottom:1px solid white;}
-</style>     
-<script>
-	/* function selChange() {
-		var sel = document.getElementById('cntPerPage').value;
-		location.href="guestBook.do?nowPage=${paging.nowPage}&cntPerPage="+sel;
-	} */
-	
-</script>
+</style>
+
 <body>
 <div class="book_wrapper">
 
@@ -28,7 +21,7 @@
 	<tr>
 		<th>번호</th> <th>이용날짜</th> <th>시술 정보</th> <th>총 금액</th> <th>예약상태</th> <th>예약등록일</th> 
 	</tr>
-	<c:forEach var="booking" items="${booking}" varStatus="status">
+	<c:forEach var="booking" items="${list}" varStatus="status">
  	<tr onclick="location.href='guestBookDetail.do?bookNo=${booking.bookNo}'" style="cursor:pointer;" class="mypage_title">
  		<td class="book_index">${total - ((paging.nowPage-1) * cnt + status.index)} 
  		<input type="hidden" value="${booking.bookNo}" name="bookNo">
@@ -86,5 +79,4 @@
 	</div> 
 
 </body>
-
 <%@ include file="../footer.jsp" %>  

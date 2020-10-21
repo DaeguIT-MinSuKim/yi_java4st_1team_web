@@ -74,35 +74,6 @@ public class GuestBookHandler implements Command {
 				}
 				prices.add(sum);
 			}
-			
-//			///예약상태별 필터링
-			
-			ArrayList<Integer> status0NoList = service.selectNoStatus0(loginUser.getGuestId()); //이거는 나옴
-			ArrayList<Booking> status0List = new ArrayList<Booking>();
-			//System.out.println(status0NoList);
-			
-			for(int status0:status0NoList) {
-				//status0List.add(service.selectBookStatus0(paging, loginUser.getGuestId(), status0));
-				//System.out.println("status0" + status0);
-			}
-		
-			status0List.stream().forEach(System.out::println);
-
-			
-			////////////////////////////////
-			ArrayList<Integer> status1NoList = service.selectNoStatus1(loginUser.getGuestId());
-			ArrayList<Booking> status1List = new ArrayList<Booking>();
-			for(int status1:status1NoList) {
-				//status1List.add(service.selectBookStatus1(paging, loginUser.getGuestId(), status1));
-				System.out.println("status1" + status1);
-			}
-			//System.out.println(status1List);
-			
-//			request.setAttribute("List1", status0NoList);
-//			request.setAttribute("List2", status1NoList);
-			
-//			request.setAttribute("0List", status0List);
-//			request.setAttribute("1List", status1List);
 
 			request.setAttribute("pp", prices);
 			request.setAttribute("cnt", cntPerPage);
