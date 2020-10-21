@@ -28,7 +28,7 @@ public class DesignerDaoImpl implements DesignerDao {
 
 	@Override
 	public ArrayList<Designer> selectDesignerAll() {
-		String sql = "SELECT * FROM DESIGNER";
+		String sql = "SELECT * FROM DESIGNER WHERE use_yn = 'y' ORDER BY decode(de_level, '원장', 1, '디자이너', 2,'스탭', 3, 4)";
 		
 		try(Connection con = JndiDs.getConnection();
 			PreparedStatement pstmt = con.prepareStatement(sql);

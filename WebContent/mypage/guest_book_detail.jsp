@@ -39,6 +39,10 @@
 			<fmt:formatDate value="${bookDate}" pattern="yyyy-MM-dd HH:mm" />
 		</td>
 	</tr>
+	<tr>
+		<td>담당 디자이너</td>
+		<td class="border-left-line">${booking.designer.deName}</td>
+	</tr>
 </table>
 
 <br><br>

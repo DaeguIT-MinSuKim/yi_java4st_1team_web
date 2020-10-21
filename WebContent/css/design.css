@@ -68,7 +68,7 @@
 .delete_sub3 {}
 
 /*mypage guest_book*/
-.book_wrapper {margin-top:60px; width:1000px;}
+.book_wrapper {margin:0 auto; margin-top:60px; width:1000px;}
 #board {clear:both; width:1000px; margin:0 auto;  text-align:center;}
 #board tr {border-bottom:1px solid #E4E4E4;}
 #board tr td {padding:15px 0;}
