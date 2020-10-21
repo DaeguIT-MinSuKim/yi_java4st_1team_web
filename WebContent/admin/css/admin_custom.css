@@ -10,3 +10,29 @@
 .dataTables_filter {text-align: right;}
 .table-responsive {overflow-x:hidden !important}
  */
+
+ /* 목록 뽑는 곳에서 */
+.table-list td:first-child, td:nth-child(2){text-align: center;}
+.table-list td:last-child{padding: 6px;}
+
+/* .table-form .form-control {
+    font-size: inherit !important;
+} */
+
+.table-form .fix-height {
+    height: 32px !important;
+}
+
+.table-from .sm-length {
+    width: 400px;
+}
+
+.table-form td {
+    padding: .4rem !important;
+    vertical-align: middle !important;
+    border-top: none !important;
+}
+
+.table-form .control-inline {
+    display: inline-block;
+}

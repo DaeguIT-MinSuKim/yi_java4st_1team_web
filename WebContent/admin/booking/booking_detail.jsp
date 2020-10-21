@@ -14,7 +14,7 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
 	<div class="card-header py-2">
-		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
+		<h6 class="m-1 font-weight-bold text-primary" style="font-size: 1.3em">
 			리스트 예제
 			<a href="#" class="btn btn-danger btn-sm" style="float: right;">
 				<span class="text">삭제</span></a>
