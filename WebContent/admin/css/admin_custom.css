@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
-#wrapper #content-wrapper {min-width:1200px}
+/*
+#dataTable_wrapper {min-width:1000px} // 상하 모듈 우측에 고정
+#dataTable {min-width:1000px} // 상하 모듈 고정된 상태에서 좌우로 스크롤시 그자리 그대로 
+ */
+ 
+#wrapper #content-wrapper {min-width:1080px}
+/*
 .dataTables_filter {text-align: right;}
 .table-responsive {overflow-x:hidden !important}
+ */
