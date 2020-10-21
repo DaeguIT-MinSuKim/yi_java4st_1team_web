@@ -1,7 +1,5 @@
 package hairrang_web.dao.impl;
 
-import static org.hamcrest.CoreMatchers.describedAs;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../include/header.jsp"%>
 <script>
 	document.title += ' - 예약 목록'
@@ -16,14 +16,10 @@
 	<div class="card-header py-2">
 		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
 			리스트 예제
-			<a href="#" class="btn btn-danger btn-sm" style="float: right;">
-				<span class="text">삭제</span></a>
-			<a href="#" class="btn btn-success btn-sm" style="float: right; margin-right: 10px;">
-				<span class="text">등록</span></a>
-			<a href="#" class="btn btn-secondary btn-sm" style="float: right; margin-right: 10px;">
-				<span class="text">전체선택</span></a>
-			<a href="#" class="btn btn-outline-secondary btn-sm" style="float: right; margin-right: 10px;">
-				<span class="text">선택해제</span></a>
+			<a href="#" id="deleteSelected"class="btn btn-danger btn-sm" style="float: right;"><span class="text">삭제</span></a>
+			<a href="#" id="addNew" class="btn btn-success btn-sm" style="float: right;  margin-right: 10px;"><span class="text">등록</span></a>
+			<a href="#" id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">전체선택</span></a>
+			<a href="#" id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">선택해제</span></a>
 		</h6>
 	</div>
 	<!-- card-body -->
@@ -33,17 +29,16 @@
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
 				<!-- 테이블 상단 필터링 시작 -->
-				<div class="row">
+				<div class="row mb-2">
 					<div class="col-sm-12 col-md-6">
 						<div class="dataTables_length" id="dataTable_length">
-							<label> <select name="dataTable_length"
-								aria-controls="dataTable"
-								class="custom-select custom-select-sm form-control form-control-sm">
+							<label>
+								<select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
 									<option value="10">10줄 보기</option>
 									<option value="25">25줄 보기</option>
 									<option value="50">50줄 보기</option>
 									<option value="100">100줄 보기</option>
-							</select>
+								</select>
 							</label>
 						</div>
 					</div>
@@ -65,30 +60,37 @@
 				<table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th style="width: 58px; min-width: 58px; max-width: 58px;">선택</th>
-							<th style="width: 100px; min-width: 100px; max-width: 100px;">예약번호</th>
+							<th>선택</th>
+							<th>예약번호</th>
 							<th>예약일시</th>
 							<th>고객명</th>
 							<th>연락처</th>
 							<th>시술</th>
 							<th>예약상태</th>
-							<th style="width: 186px; min-width: 186px; max-width: 186px;"></th>
+							<th>주문전환</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
+						<c:forEach var="booking" items="${list }">
 						<tr>
-							<td><input type="checkbox"></td>
-							<td>1</td>
-							<td>2020-10-20 오후 2:00</td>
-							<td>김뫄뫄</td>
-							<td>010-1234-5678</td>
-							<td>[1]디자인 컷</td>
-							<td>예약완료</td>
-							<td><a href="#" class="btn bg-gray-200 btn-sm"><span class="text-gray-800">상세보기</span></a>
-								<a href="#" class="btn btn-info btn-sm"><span class="text">수정</span></a>
-								<a href="#" class="btn btn-danger btn-sm"><span class="text">삭제</span></a>
+							<td><input type="checkbox" bookNo="${booking.bookNo }"></td>
+							<td>${booking.bookNo }</td>
+							<td>${booking.bookDateStr }</td>
+							<td>${booking.guest.guestName }</td>
+							<td>${booking.guest.guestPhone }</td>
+							<td>${booking.howManyHairItems }</td>
+							<td>${booking.bookStatus }</td>
+							<td>
+								<a href="#" class="btn bg-warning btn-sm bookingToOrderButton"><span class="text-gray-800">주문하기</span></a>
+							</td>
+							<td>
+								<a href="#" class="btn bg-gray-200 btn-sm detailViewButton"><span class="text-gray-800">상세보기</span></a>
+								<a href="#" class="btn btn-info btn-sm modifyButton"><span class="text">수정</span></a>
+								<a href="#" class="btn btn-danger btn-sm deleteButton"><span class="text">삭제</span> </a>
 							</td>
 						</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 				<!-- 테이블 끝 -->
