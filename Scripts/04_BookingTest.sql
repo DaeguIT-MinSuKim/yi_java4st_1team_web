@@ -64,5 +64,3 @@ SELECT BOOK_NO, GUEST_ID, BOOK_TIME, h.HAIR_NO, h.hair_quantity, DE_NO, BOOK_REG
 FROM booking b LEFT OUTER JOIN booking_hairs h USING(book_no)
 ORDER BY book_no, hair_no;
 
-SELECT * FROM booking_hairs;
-SELECT * FROM booking;
