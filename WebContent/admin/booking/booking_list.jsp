@@ -85,7 +85,7 @@
 								<a href="#" class="btn bg-warning btn-sm bookingToOrderButton"><span class="text-gray-800">주문하기</span></a>
 							</td>
 							<td>
-								<a href="#" class="btn bg-gray-200 btn-sm detailViewButton"><span class="text-gray-800">상세보기</span></a>
+								<a href="bookingDetail.do?no=${booking.bookNo}" class="btn bg-gray-200 btn-sm detailViewButton"><span class="text-gray-800">상세보기</span></a>
 								<a href="#" class="btn btn-info btn-sm modifyButton"><span class="text">수정</span></a>
 								<a href="#" class="btn btn-danger btn-sm deleteButton"><span class="text">삭제</span> </a>
 							</td>
