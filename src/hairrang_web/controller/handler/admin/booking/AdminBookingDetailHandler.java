@@ -1,7 +1,6 @@
 package hairrang_web.controller.handler.admin.booking;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +10,10 @@ import hairrang_web.controller.Command;
 import hairrang_web.dto.Booking;
 import hairrang_web.service.BookingService;
 
-public class AdminBookingListHandler implements Command {
+public class AdminBookingDetailHandler implements Command {
 	BookingService service;
 	
-	public AdminBookingListHandler() {
+	public AdminBookingDetailHandler() {
 		service = new BookingService();
 	}
 	
@@ -22,13 +21,14 @@ public class AdminBookingListHandler implements Command {
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		
-		String url = "/admin/booking/booking_list.jsp";
+		String url = "/admin/booking/booking_detail.jsp";
 		
 		if(request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println(getClass().getSimpleName() + ">> GET");
 			
-			ArrayList<Booking> list = service.getBookingListAll();
-			request.setAttribute("list", list);
+			int no = Integer.parseInt(request.getParameter("no"));
+			Booking booking = service.getBookingByBookingNo(new Booking(no));
+			request.setAttribute("booking", booking);
 			
 		} else {
 			System.out.println(getClass().getSimpleName() + ">> POST");

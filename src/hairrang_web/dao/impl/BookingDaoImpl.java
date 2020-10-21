@@ -34,8 +34,8 @@ public class BookingDaoImpl implements BookingDao {
 
 	@Override
 	public ArrayList<Booking> selectBookingAll() {
-//		String sql = "SELECT * FROM BOOKING";
-		String sql = "SELECT * FROM BOOKING_VIEW";
+		String sql = "SELECT * FROM BOOKING";
+//		String sql = "SELECT * FROM BOOKING_VIEW";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);

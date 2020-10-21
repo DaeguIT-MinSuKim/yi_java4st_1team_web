@@ -19,6 +19,10 @@ public class BookingService {
 
 	private BookingDao dao = BookingDaoImpl.getInstance();
 	
+	public ArrayList<Booking> getBookingListAll() {
+		return dao.selectBookingAll();
+	}
+	
 	public Booking getBookingByBookingNo(Booking booking) {
 		return dao.selectBookingByBookingNo(booking);
 	}
