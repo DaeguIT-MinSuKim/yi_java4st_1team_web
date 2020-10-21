@@ -17,7 +17,7 @@ import hairrang_web.dto.Guest;
 import hairrang_web.service.BookingService;
 import hairrang_web.utils.Paging;
 
-public class status0 implements Command {
+public class GuestBookStatus0 implements Command {
 	private BookingService service = new BookingService();
 	
 	@Override
@@ -62,14 +62,25 @@ public class status0 implements Command {
 		
 		for(int status0:status0NoList) {
 			statusList.add(service.selectBookStatus0(paging, loginUser.getGuestId(), status0));
-			
-			
 		}
 		
-		System.out.println("nolist: " + statusList);
+		ArrayList<Integer> prices = new ArrayList<>();
+		
+		for(Booking book : statusList) {
+			int sum = 0;
+			for(BookingHairs bh : book.getHairList()) {
+				sum += bh.getHair().getHairPrice() * bh.getQuantity();
+			}
+			prices.add(sum);
+		}
+		
 		request.setAttribute("list", statusList);
+		request.setAttribute("pp", prices);
+		request.setAttribute("cnt", cntPerPage);
+		request.setAttribute("total", total);
+		request.setAttribute("paging", paging);
 
-		return "mypage/status0.jsp";
+		return "mypage/book_status0.jsp";
 	}
 	
 }
