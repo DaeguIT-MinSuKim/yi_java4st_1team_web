@@ -6,6 +6,7 @@ UPDATE DESIGNER SET DE_PIC = 'designer/images/sk.jpg' WHERE de_no = 3;
 UPDATE DESIGNER SET DE_PIC = 'designer/images/yr.jpg' WHERE de_no = 4; 
 UPDATE DESIGNER SET DE_PIC = 'designer/images/joy.jpg' WHERE de_no = 5; 
 
+
 --원장-디자이너-스탭순 정렬
 SELECT * FROM designer WHERE use_yn = 'y'
 ORDER BY decode(de_level, '원장', 1, '디자이너', 2,'스탭', 3, 4);

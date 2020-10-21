@@ -77,7 +77,7 @@
 						<li><a href="">SALON</a>
 							<ul>
 								<li><a href="designerHome.do">DESIGNER</a></li>
-								<li><a href="hair.do">HAIR</a></li>
+								<li><a href="hBoard.do">HAIR</a></li>
 								
 							</ul></li>
 						<li><a href="booking.do">RESERVATION</a></li>

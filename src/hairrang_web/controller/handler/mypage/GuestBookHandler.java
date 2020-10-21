@@ -58,6 +58,13 @@ public class GuestBookHandler implements Command {
 			ArrayList<Integer> noList = service.selectNoBooking(loginUser.getGuestId());
 			ArrayList<Booking> bookingList = new ArrayList<Booking>();
 			
+			//리스트없을때
+			if(noList == null) {
+				request.setAttribute("message", -1);
+				return "mypage/guest_book.jsp";
+			}
+			
+			
 			for(int bookNo:noList) {
 				bookingList.add(service.pagingBookingById(paging, loginUser.getGuestId(), bookNo));
 			}
@@ -74,7 +81,8 @@ public class GuestBookHandler implements Command {
 				}
 				prices.add(sum);
 			}
-
+			
+			
 			request.setAttribute("pp", prices);
 			request.setAttribute("cnt", cntPerPage);
 			request.setAttribute("total", total);

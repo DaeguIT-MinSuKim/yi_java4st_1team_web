@@ -13,6 +13,7 @@ VALUES('test4321', '43211234', '사삼이', to_date('20001021', 'YYYYMMDD'), '01
 
 
 /* hair_kind */
+SELECT * FROM HAIR_KIND;
 INSERT INTO HAIR_KIND(KIND_NAME) VALUES('샴푸');
 INSERT INTO HAIR_KIND(KIND_NAME) VALUES('드라이');
 INSERT INTO HAIR_KIND(KIND_NAME) VALUES('커트');
@@ -55,6 +56,7 @@ VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-09-28', 'YYYY-MM-DD'), to_dat
 
 
 /* designer */
+
 SELECT * FROM DESIGNER;
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('손승완', '웬디', '원장', 'designer/images/wd.jpg','#찰떡스타일링 #정형화되지않은스타일 #얼굴형보완 #내츄럴웨이브 #연예인머리 #컨셉세팅펌');
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('배주현', '아이린', '디자이너', 'designer/images/irene.jpg','#내추럴컷 #레이어드컷 #스타일링커트 #루즈컷 #유럽피안컷 #팜므파탈 #손질없이커트만으로멋나는 #얼굴보완컷 #퍼스널컬러디렉팅');
@@ -66,6 +68,14 @@ INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES 
 /* coupon */
 SELECT * FROM event;
 SELECT * FROM coupon ORDER BY COUPON_ID;
+
+
+/*HB_CATEGORY*/
+SELECT * FROM HB_CATEGORY;
+INSERT INTO HB_CATEGORY(HB_CATENAME) VALUES ('숏헤어');
+INSERT INTO HB_CATEGORY(HB_CATENAME) VALUES ('미디움헤어');
+INSERT INTO HB_CATEGORY(HB_CATENAME) VALUES ('롱헤어');
+INSERT INTO HB_CATEGORY(HB_CATENAME) VALUES ('맨헤어');
 
 
 
@@ -113,13 +123,6 @@ INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, used_y
 SELECT 3, 'test4321', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
 
 
-
-/*HB_CATEGORY*/
-SELECT * FROM HB_CATEGORY;
-INSERT INTO HB_CATEGORY(HB_CATENAME) VALUES ('숏헤어');
-INSERT INTO HB_CATEGORY(HB_CATENAME) VALUES ('미디움헤어');
-INSERT INTO HB_CATEGORY(HB_CATENAME) VALUES ('롱헤어');
-INSERT INTO HB_CATEGORY(HB_CATENAME) VALUES ('맨헤어');
 
 /* hair_board */
 SELECT * FROM HAIR_BOARD;

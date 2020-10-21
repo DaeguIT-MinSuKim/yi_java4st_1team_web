@@ -58,6 +58,11 @@ public class GuestBookStatus1 implements Command {
 		System.out.println("번호" + status1NoList);
 		ArrayList<Booking> status1List = new ArrayList<Booking>();
 		
+		if(status1NoList == null) {
+			request.setAttribute("message", -1);
+			return "mypage/book_status1.jsp";
+		}
+		
 		for(int status1:status1NoList) {
 			status1List.add(service.selectBookStatus1(paging, loginUser.getGuestId(), status1));
 		}

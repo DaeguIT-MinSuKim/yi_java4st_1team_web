@@ -22,6 +22,12 @@
 	<tr>
 		<th>번호</th> <th>이용날짜</th> <th>시술 정보</th> <th>총 금액</th> <th>예약상태</th> <th>예약등록일</th> 
 	</tr>
+	<c:choose>
+		<c:when test="${message == -1}">
+			 <tr><td colspan="6">예약완료건이 존재하지 않습니다.<td></tr>		
+		 </c:when>
+	</c:choose>
+	
 	<c:forEach var="booking" items="${list}" varStatus="status">
  	<tr onclick="location.href='guestBookDetail.do?bookNo=${booking.bookNo}'" style="cursor:pointer;" class="mypage_title">
  		<td class="book_index">${total - ((paging.nowPage-1) * cnt + status.index)} 

@@ -3,8 +3,8 @@ SELECT * FROM user_tables;
 -- DDL에 잘못 추가 했었음 지워주세요.
 DROP TABLE SALES_DETAIL CASCADE CONSTRAINTS;
 
---hairboard에 헤어no 지운다요
-ALTER TABLE HAIR_BOARD DROP COLUMN hair_no;
+/*--hairboard에 헤어no 지운다요
+ALTER TABLE HAIR_BOARD DROP COLUMN hair_no;*/
 
 /* 고객 */
 DROP TABLE GUEST CASCADE CONSTRAINTS;

@@ -17,6 +17,7 @@ public class Booking {
 	private int rowNum;
 	
 	private List<BookingHairs> hairList;
+	
 	public Booking() {
 	}
 

@@ -59,6 +59,10 @@ public class GuestBookStatus0 implements Command {
 		ArrayList<Integer> status0NoList = service.selectNoStatus0(loginUser.getGuestId()); //이거는 나옴
 		ArrayList<Booking> statusList = new ArrayList<Booking>();
 		//System.out.println(status0NoList);
+		if(status0NoList == null) {
+			request.setAttribute("message", -1);
+			return "mypage/book_status0.jsp";
+		}
 		
 		for(int status0:status0NoList) {
 			statusList.add(service.selectBookStatus0(paging, loginUser.getGuestId(), status0));
