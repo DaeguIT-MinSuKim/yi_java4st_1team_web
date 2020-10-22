@@ -1,6 +1,7 @@
 package hairrang_web.controller.handler.mypage;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +21,32 @@ public class GuestBookDetailHandler implements Command {
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		if (request.getMethod().equalsIgnoreCase("GET")) {
+			// 로그아웃 상태에서 해당 핸들러 접근 불가 처리 해놓음
 			HttpSession session = request.getSession();
 			Guest loginUser = (Guest) session.getAttribute("loginUser");
 			
+			String bookNoStr = request.getParameter("bookNo");
+			
+			// 파라미터 없이 직접 접근한 경우 guestBook 화면으로 리디렉션
+			if(bookNoStr == null) {
+				response.sendRedirect("guestBook.do");
+				return null;
+			}
+			
 			int bookNo = Integer.parseInt(request.getParameter("bookNo"));
+			Booking booking = new Booking(bookNo);
+			
+			int res = bService.checkUser(booking, loginUser);
+			
+			// 해당 예약정보가 로그인 유저의 예약건이 아닌 경우 index 화면으로 리디렉션
+			if(res == 0) {
+				response.setContentType("text/html; charset=UTF-8;");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('잘못된 접근입니다');location.href='index.do';</script>");
+				out.flush();
+				return null;
+			}
+			
 			Booking selBooking = bService.getBookingByBookingNo(new Booking(bookNo));
 			
 			int sum= 0;

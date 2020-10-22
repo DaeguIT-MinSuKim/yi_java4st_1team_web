@@ -31,7 +31,8 @@ public class BookingDetailHandler implements Command {
 		
 		/* 로그인 여부 체크  */
 		HttpSession session = request.getSession();
-		String loginUser = (String) request.getAttribute("loginUser");
+		Guest loginUser = (Guest) session.getAttribute("loginUser");
+		System.out.println("loginUser: " + loginUser);
 		
 		if(loginUser == null) {
 			request.setAttribute("msg", "로그인 후 이용해주세요.");
@@ -44,10 +45,11 @@ public class BookingDetailHandler implements Command {
 			int no = Integer.parseInt(request.getParameter("no"));
 			Booking booking = new Booking(no);
 			System.out.println("파라미터 no: " + no);
-			System.out.println(booking);
 			
 			// 해당 세션 로그인 정보의 예약 사항인지 체크 후 예약 정보 가져오기.
-			int res = service.checkUser(booking, new Guest(loginUser));
+			int res = service.checkUser(booking, loginUser);
+			System.out.println("로그인 유저랑 일치하는지 체크: " + res);
+			
 			if(res == 0) {
 				request.setAttribute("errorCode", -1);
 				request.setAttribute("msg", "잘못된 접근입니다.");
