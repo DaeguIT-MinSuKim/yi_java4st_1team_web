@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
-
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Booking;
 import hairrang_web.dto.BookingHairs;
