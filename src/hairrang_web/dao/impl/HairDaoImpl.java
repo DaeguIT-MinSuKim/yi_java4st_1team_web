@@ -58,9 +58,9 @@ public class HairDaoImpl implements HairDao {
 				if(rs.next()) {
 					HairKind hairKind = new HairKind(kindNo);
 					ArrayList<Hair> list = new ArrayList<>();
-					while(rs.next()) {
+					do {
 						list.add(getHair(rs));
-					}
+					}while(rs.next());
 					hairKind.setHairList(list);
 					return hairKind;
 				}

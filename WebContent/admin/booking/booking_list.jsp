@@ -2,7 +2,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../include/header.jsp"%>
 <script>
-	document.title += ' - 예약 목록'
+$(function() {
+	$(document).ready(function() {
+		document.title += ' - 예약 목록';
+		
+		$(".bookingToOrderButton").on("click", function() {
+			var trIdx = $(this).closest("tr").prevAll().length;
+			console.log(trIdx);
+		});
+	});
+	
+});
 </script>
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800 font-weight">목록 템플릿</h1>
@@ -14,13 +24,25 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
 	<div class="card-header py-2">
-		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
-			리스트 예제
+		<h6 class=" font-weight-bold text-primary" style="font-size: 1.3em;">
+			<div class="mt-2 float-left">
+             	예약 내역 목록
+            </div>
+            <div class="float-right">
+				<a href="#" id="addNew" class="btn btn-success btn-sm" style="float: right;"><span class="text">등록</span></a>
+	            <a href="#" id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;"><span class="text">선택삭제</span></a>
+				<a href="#" id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">전체선택</span></a>
+				<a href="#" id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">선택해제</span></a>
+            </div>			
+		</h6>
+		<!-- <h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
+		
+			예약 내역
 			<a href="#" id="deleteSelected"class="btn btn-danger btn-sm" style="float: right;"><span class="text">삭제</span></a>
 			<a href="#" id="addNew" class="btn btn-success btn-sm" style="float: right;  margin-right: 10px;"><span class="text">등록</span></a>
 			<a href="#" id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">전체선택</span></a>
 			<a href="#" id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">선택해제</span></a>
-		</h6>
+		</h6> -->
 	</div>
 	<!-- card-body -->
 	<div class="card-body">
@@ -74,7 +96,7 @@
 					<tbody>
 						<c:forEach var="booking" items="${list }">
 						<tr>
-							<td><input type="checkbox" bookNo="${booking.bookNo }"></td>
+							<td><input type="checkbox" no="${booking.bookNo }"></td>
 							<td>${booking.bookNo }</td>
 							<td>${booking.bookDateStr }</td>
 							<td>${booking.guest.guestName }</td>
@@ -82,11 +104,11 @@
 							<td>${booking.howManyHairItems }</td>
 							<td>${booking.bookStatus }</td>
 							<td>
-								<a href="#" class="btn bg-warning btn-sm bookingToOrderButton"><span class="text-gray-800">주문하기</span></a>
+								<a href="bookingToOrder.do?no=${booking.bookNo }" class="btn bg-warning btn-sm bookingToOrderButton"><span class="text-gray-800">주문하기</span></a>
 							</td>
 							<td>
 								<a href="bookingDetail.do?no=${booking.bookNo}" class="btn bg-gray-200 btn-sm detailViewButton"><span class="text-gray-800">상세보기</span></a>
-								<a href="#" class="btn btn-info btn-sm modifyButton"><span class="text">수정</span></a>
+								<!-- <a href="#" class="btn btn-info btn-sm modifyButton"><span class="text">수정</span></a> -->
 								<a href="#" class="btn btn-danger btn-sm deleteButton"><span class="text">삭제</span> </a>
 							</td>
 						</tr>
@@ -118,13 +140,16 @@
 							</ul>
 						</div>
 					</div>
-					<!-- 페이징 -->
 				</div>
-				<!-- bootStrap table wrapper-->
+				<!-- 페이징 -->
 			</div>
-			<!-- tableRespnsible -->
+			<!-- bootStrap table wrapper-->
 		</div>
-		<!-- cardBody-->
+		<!-- tableRespnsible -->
+	</div>
+	<!-- cardBody-->
+	<div class="card-footer">
+			ㅎㅇㅎㅇ
 	</div>
 </div>
 

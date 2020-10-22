@@ -232,10 +232,17 @@
           <h1 class="h3 mb-2 text-gray-800 font-weight">등록 페이지</h1>
           <p class="mb-4">여기에 간단한 설명 추가해주세요. 이렇게 링크도 달아도 됩니다. <a target="_blank" href="https://datatables.net">링크</a></p>
 
-          <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-2">
-              <h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">등록 예제
+              <h6 class=" font-weight-bold text-primary" style="font-size: 1.3em;">
+                <div class="mt-2 pl-3 float-left">
+                  예제
+                </div>
+                <div class="float-right">
+                  <a href="#" id="prevPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">이전</span></a>
+                  <a href="#" id="nextPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">다음</span></a>
+                  <a href="#" id="toList" class="btn btn-primary btn-sm" style="margin-right: 10px;"><span class="text">목록</span></a>
+                </div>			
                 <!-- <a href="#" class="btn btn-danger btn-sm" style="float: right;">
                   <span class="text">삭제</spa>
                 </a>
@@ -244,7 +251,6 @@
                 </a> -->
               </h6>
             </div>
-            <!-- card-body -->
             <div class="card-body">
               <form>
                 <div class="form-group row">
@@ -307,7 +313,117 @@
                 </div>
               </form>
             </div>
+            <div class="card-footer p-1">
+              <div class="row control-inline">
+                <div class="col-12 text-right">
+                  <!-- <a href="#" id="prevPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">이전</span></a>
+                  <a href="#" id="nextPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">다음</span></a>
+                  <a href="#" id="toList" class="btn btn-primary btn-sm" style="margin-right: 10px;"><span class="text">목록</span></a> -->
+                  <a href="#" class="btn btn-danger btn-sm" ><span class="text">삭제</span></a>
+				          <a href="#" class="btn btn-warning btn-sm" ><span class="text-gray-800">주문하기</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- card -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-2">
+              <h6 class=" font-weight-bold text-primary" style="font-size: 1.3em;">
+                <div class="mt-2 pl-3 float-left">
+                  주문하기
+                </div>
+                <div class="float-right">
+                  <a href="#" id="prevPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">이전</span></a>
+                  <a href="#" id="nextPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">다음</span></a>
+                  <a href="#" id="toList" class="btn btn-primary btn-sm" style="margin-right: 10px;"><span class="text">목록</span></a>
+                </div>			
+                <!-- <a href="#" class="btn btn-danger btn-sm" style="float: right;">
+                  <span class="text">삭제</spa>
+                </a>
+                <a href="#" class="btn btn-info btn-sm" style="float: right;  margin-right: 10px;">
+                  <span class="text">수정</span>
+                </a> -->
+              </h6>
+            </div>
+            <!-- card-body -->
+            <div class="card-body">
+              <form>
+                <div class="form-group row">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">고객</label>
+                  <div class="col-sm-5">
+                    <input type="email" class="form-control" id="inputEmail3" placeholder="검색 후 선택해주세요.">
+                  </div>
+                  <div class="col-auto">
+                    <a href="#" class="btn btn-primary btn-sm">
+                      <span class="text">검색</spa>
+                    </a>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="inputPassword3" class="col-sm-2 col-form-label">예약건</label>
+                  <div class="col-sm-5" name="bookingDetail">
+                    예약 고객인 경우 검색 후 해당 예약건을 선택해주세요.
+                  </div>
+                </div>
+                
+                <fieldset class="form-group">
+                  <div class="row">
+                    <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
+                    <div class="col-sm-10">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                        <label class="form-check-label" for="gridRadios1">
+                          First radio
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                        <label class="form-check-label" for="gridRadios2">
+                          Second radio
+                        </label>
+                      </div>
+                      <div class="form-check disabled">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3" disabled>
+                        <label class="form-check-label" for="gridRadios3">
+                          Third disabled radio
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+                <div class="form-group row">
+                  <div class="col-sm-2">Checkbox</div>
+                  <div class="col-sm-10">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="gridCheck1">
+                      <label class="form-check-label" for="gridCheck1">
+                        Example checkbox
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm" style="text-align: right;">
+                    <button type="submit" class="btn btn-primary">등록</button>
+                  </div>
+                </div>
+              </form>
+            </div>
             <!-- cardBody-->
+            <!-- card-footer -->
+            <div class="card-footer p-1">
+              <div class="row control-inline">
+                <div class="col-12 text-right">
+                  <!-- <a href="#" id="prevPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">이전</span></a>
+                  <a href="#" id="nextPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">다음</span></a>
+                  <a href="#" id="toList" class="btn btn-primary btn-sm" style="margin-right: 10px;"><span class="text">목록</span></a> -->
+                  <a href="#" class="btn btn-danger btn-sm" ><span class="text">삭제</span></a>
+				          <a href="#" class="btn btn-warning btn-sm" ><span class="text-gray-800">주문하기</span></a>
+                </div>
+              </div>
+            </div>
+            <!-- card-footer -->
           </div>
         </div>
         <!-- /.container-fluid -->

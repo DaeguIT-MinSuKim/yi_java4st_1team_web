@@ -5,10 +5,9 @@
 	document.title += ' - 예약 목록'
 </script>
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800 font-weight">목록 템플릿</h1>
+<h1 class="h3 mb-2 text-gray-800 font-weight">주문 관리</h1>
 <p class="mb-4">
-	여기에 간단한 설명 추가해주세요. 이렇게 링크도 달아도 됩니다. <a target="_blank"
-		href="https://datatables.net">링크</a>
+	여기에 간단한 설명 추가해주세요. 이렇게 링크도 달아도 됩니다. <a target="_blank" href="https://datatables.net">링크</a>
 </p>
 
 <!-- DataTales Example -->
@@ -16,11 +15,11 @@
 	<div class="card-header py-2" style="padding: 0px;">
 		<h6 class=" font-weight-bold text-primary" style="font-size: 1.3em;">
 			<div class="mt-2 float-left pl-3">
-             	예약 상세내역
+             	주문하기
             </div>
             <div class="float-right">
-                <a href="#" id="prevPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">이전</span></a>
-                <a href="#" id="nextPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">다음</span></a>
+                <!-- <a href="#" id="prevPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">이전</span></a>
+                <a href="#" id="nextPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">다음</span></a> -->
                 <a href="#" id="toList" class="btn btn-primary btn-sm" style="margin-right: 10px;"><span class="text">목록</span></a>
             </div>			
 		</h6>
