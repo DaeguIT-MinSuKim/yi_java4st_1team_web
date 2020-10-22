@@ -31,7 +31,7 @@ function deselectAll(){
 		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
 			
 			<!--  <a href="#" id="deleteSelected"class="btn btn-danger btn-sm" style="float: right;"><span class="text">삭제</span></a>-->
-			<a href="#" id="addNew" class="btn btn-success btn-sm" style="float: left;  margin-right: 10px;"><span class="text">고객  등록</span></a>
+				<input type="button" value="고객 등록" class="btn btn-success btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='guestAdd.do' ">
 				<button type="button" onclick="selectAll()" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">
 					전체선택
 				</button>
