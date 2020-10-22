@@ -16,8 +16,6 @@ import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.sun.glass.ui.Application;
-import com.sun.org.apache.bcel.internal.classfile.Field;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Guest;
