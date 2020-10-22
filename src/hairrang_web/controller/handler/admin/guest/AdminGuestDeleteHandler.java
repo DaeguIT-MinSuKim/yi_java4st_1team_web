@@ -19,21 +19,23 @@ public class AdminGuestDeleteHandler implements Command {
 		if(request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("get");
 			String id = request.getParameter("id");
-			System.out.println(id);
-			return "guest/guest_list.jsp";
+			Guest guest = service.selectGuestById(new Guest(id));
+			//System.out.println(guest);
+			request.setAttribute("guest", guest);
+			
+			return "guest/guest_delete_form.jsp";
 		}else {
 			System.out.println("post");
-			String id = request.getParameter("id");
-			System.out.println(id);
 			
-			int res = service.updateDelYn(new Guest(id));
+			String guest = request.getParameter("guest");
+			//System.out.println("id:" + guest);
+			int res = service.updateDelYn(new Guest(guest));
+			//System.out.println(res);
 			
-			System.out.println("업뎃햇나:" + id);
-			System.out.println(id);
-			System.out.println("처리결과:" + res);
-			
-			return "guest/guest_list.jsp";
+			response.sendRedirect("guestList.do");
 		}
+		return null;
+		
 	}
 	
 

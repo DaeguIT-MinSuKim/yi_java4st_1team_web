@@ -2,13 +2,21 @@
 <%@ include file="../include/header.jsp" %>
   <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <script>
-	document.title += ' - 고객 목록';
+document.title += ' - 고객 목록';
 	
-	function selChange() {
+function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
 		location.href="guestList.do?nowPage=1&cntPerPage="+sel;
-	}
-	
+};
+
+function selectAll(){
+	$('[name=check]').prop('checked', true);
+};
+
+function deselectAll(){
+	$('[name=check]').prop('checked', false);
+};
+
 </script>
 
 <!-- Page Heading -->
@@ -22,10 +30,14 @@
 	<div class="card-header py-2">
 		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
 			
-			<a href="#" id="deleteSelected"class="btn btn-danger btn-sm" style="float: right;"><span class="text">삭제</span></a>
-			<a href="#" id="addNew" class="btn btn-success btn-sm" style="float: right;  margin-right: 10px;"><span class="text">등록</span></a>
-			<a href="#" id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">전체선택</span></a>
-			<a href="#" id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">선택해제</span></a>
+			<!--  <a href="#" id="deleteSelected"class="btn btn-danger btn-sm" style="float: right;"><span class="text">삭제</span></a>-->
+			<a href="#" id="addNew" class="btn btn-success btn-sm" style="float: left;  margin-right: 10px;"><span class="text">고객  등록</span></a>
+				<button type="button" onclick="selectAll()" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">
+					전체선택
+				</button>
+				<button type="button" onclick="deselectAll()" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;">
+					선택해제
+				</button>
 		</h6>
 	</div>
 	<!-- card-body -->
@@ -83,15 +95,15 @@
 							<th>비고</th>
 							<th>탈퇴</th>
 							<th>정보동의</th>
-							<th></th>
-							<th>회원 정보</th>
+							<th>주문 전환</th>
+							<th>상세보기</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="guest" items="${list}" varStatus="status">
 						<tr>
 							<td><input type="checkbox" name="check" value="${guest.guestId}"></td>
-							<td style="width:50px;"> ${total - ((paging.nowPage-1) * cnt + status.index)}</td>
+							<td style="width:30px;"> ${total - ((paging.nowPage-1) * cnt + status.index)}</td>
 							<td style="width:100px;">${guest.guestId}</td>
 							<td style="width:100px;">${guest.guestName }</td>
 							<td style="width:130px;">${guest.guestBirthday}</td>
@@ -109,14 +121,16 @@
 							<td style="width:200px;">${guest.guestNote}</td>
 							<td style="width:60px;">${guest.delYn}</td>
 							<td style="width:80px;">${guest.infoYn}</td>
-							<td>
+							<td style="width:100px;">
 								<a href="#" class="btn bg-warning btn-sm bookingToOrderButton"><span class="text-gray-800">주문</span></a>
 							</td>
 							<td>
-								<input type="text" name="id" value="${guest.guestId}">
-								<a href="#" class="btn bg-gray-200 btn-sm detailViewButton"><span class="text-gray-800">상세보기</span></a>
-								<input type="button" name="update" value="수정" class="btn btn-info btn-sm modifyButton" onclick="location.href='guestInfo.do?id=${guest.guestId}'">
-								<input type="button" name="delete" value="삭제" class="btn btn-danger btn-sm deleteButton" onclick="guest_delete()">
+								<input type="hidden" name="id" value="${guest.guestId}">
+								
+								<input type="button" name="info" value="시술정보" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestOnBInfo.do?id=${guest.guestId}'">
+								<input type="button" name="info" value="회원정보" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestInfo.do?id=${guest.guestId}'">
+								
+								
 							</td>
 						</tr>
 						</c:forEach>
@@ -167,11 +181,12 @@
 
 					<div style="text-align:center; float:center;">
 					<p>Total : ${total}</p>
+						
+						
 						<c:if test="${paging.startPage != 1}">
-							<a href="guestList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}"><i
-								class="xi-angle-left"></i></a>
+							<a href="guestList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
+							<i class="xi-angle-left"></i></a>
 						</c:if>
-						&nbsp;&nbsp;
 						
 						<c:forEach begin="${paging.startPage}" end="${paging.endPage }"
 							var="p">
@@ -185,12 +200,14 @@
 								</c:when>
 							</c:choose>
 						</c:forEach>
-						
+					
 						&nbsp;&nbsp;
 						<c:if test="${paging.endPage != paging.lastPage }">
-							<a href="guestList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}"><i
-								class="xi-angle-right"></i></a>
+							<a href="guestList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
+							<i class="xi-angle-right"></i></a>
 						</c:if>
+						
+						
 					</div>
 				</div>
 				<!-- bootStrap table wrapper-->
