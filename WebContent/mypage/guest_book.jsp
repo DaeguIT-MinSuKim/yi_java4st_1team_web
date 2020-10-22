@@ -31,7 +31,7 @@
 	
 	<c:forEach var="booking" items="${booking}" varStatus="status">
  	<tr onclick="location.href='guestBookDetail.do?bookNo=${booking.bookNo}'" style="cursor:pointer;" class="mypage_title">
- 		<td class="book_index">${total - ((paging.nowPage-1) * cnt + status.index)} 
+ 		<td class="book_index"> ${total - ((paging.nowPage-1) * cnt + status.index)}
  		<input type="hidden" value="${booking.bookNo}" name="bookNo">
  		</td>
  		<td class="book_date">

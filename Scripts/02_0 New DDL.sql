@@ -226,7 +226,6 @@ ADD CONSTRAINT PK_COUPON PRIMARY KEY (coupon_id);
 
 -- coupon에 이미지 경로 넣기
 
-
 /* 헤어게시판 */
 CREATE TABLE HAIR_BOARD (
 	hboard_no NUMBER(10) NOT NULL, /* 글번호 */

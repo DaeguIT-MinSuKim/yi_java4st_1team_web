@@ -75,6 +75,10 @@ public class BookingService {
 		return dao.pagingBookingById(paging, id, no);
 	}
 	
+	public ArrayList<Booking> pagingBookingListById(Paging paging, String id) {
+		return dao.pagingBookingListById(paging, id);
+	}
+	
 	public ArrayList<BookingHairs> pagingBookingHairsByID(Paging paging, String id){
 		return dao.pagingBookingHairsById(paging, id);
 	}

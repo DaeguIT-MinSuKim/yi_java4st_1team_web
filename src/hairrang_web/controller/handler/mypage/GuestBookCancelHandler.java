@@ -26,7 +26,7 @@ public class GuestBookCancelHandler implements Command {
 			int res = service.updateBookingStatus(new Booking(bookNo));
 			System.out.println(res);
 			
-			response.sendRedirect("guestBook.do");
+			return "/admin/guest/guest_list.jsp";
 		}
 		return null;
 	}

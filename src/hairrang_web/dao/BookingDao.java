@@ -56,5 +56,7 @@ public interface BookingDao {
 
 	Booking selectBookStatus0(Paging paging, String id, int no);
 
+	ArrayList<Booking> pagingBookingListById(Paging paging, String id);
+
 
 }

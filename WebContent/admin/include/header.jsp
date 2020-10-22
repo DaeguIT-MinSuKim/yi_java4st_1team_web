@@ -12,7 +12,10 @@
 
   <title>HAIRRANG - ADMIN PAGE</title>
 
+<!--xe 아이콘-->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">	
   <script src="vendor/jquery/jquery.min.js"></script>
+
   
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -22,7 +25,7 @@
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
   <link href="css/admin_custom.css" rel="stylesheet">
-
+<script src="guest/guest.js"></script>
 </head>
 
 <body id="page-top">
