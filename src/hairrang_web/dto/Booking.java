@@ -161,15 +161,13 @@ public class Booking {
 	}
 
 	public String getHowManyHairItems() {
+		if (this.hairList.size() == 1) {
+			return String.format("%s", hairList.get(0).getHair().getHairName());
+		}
+		
 		ArrayList<Hair> hairs = this.hairList.stream().map(BookingHairs::getHair)
 			.sorted(Comparator.comparing(Hair::getHairPrice).reversed())
 			.collect(Collectors.toCollection(ArrayList::new));
-		
-		int size = hairs.size();
-		
-		if (size == 1) {
-			return String.format("%s", hairs.get(0).getHairName());
-		}
 		
 		return String.format("%s 외 %d 건", hairs.get(0).getHairName(), hairs.size() - 1);
 	}
