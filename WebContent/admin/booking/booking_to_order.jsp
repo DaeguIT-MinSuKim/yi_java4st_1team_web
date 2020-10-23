@@ -4,12 +4,16 @@
 <script>
 $(function(){
 	$(document).ready(function() {
-		
+		document.title += ' - 예약 목록';
+		$("#hairkindbox[kindNo='4']").trigger("click");
 	});
-	document.title += ' - 예약 목록'
+	
+	// 로딩 다 끝났을 때
+	window.onload = function() {
+	};
 	
 	/* 헤어 대분류 선택시 소분류 불러오기 */
-	$("#hairkindbox li").on("click", function() {
+	$(document).on("click", "#hairkindbox li", function() {
 		console.log($(this).attr("kindNo"));
 		var selectedKindNo = $(this).attr("kindNo");
 		
@@ -42,34 +46,30 @@ $(function(){
 		
 		$.each(data, function(index, item) {
 			dataArr += "<li class='list-group-item flex-fill text-center' role='button' hairNo='"
-				+ item.hairNo + "'>[" + item.hairNo + "] "+ item.hairName+ "</li>";
+				+ item.hairNo + "' hairPrice='" + item.hairPrice + "'>[" + item.hairNo + "] "+ item.hairName+ "</li>";
 			index++;
 		});
 		
-		console.log(dataArr);
-		console.log(target);
 		target.append(dataArr);
 	};
 	
 	
-	$("#hairbox li").on("click", function() {
-		alert("눌렀다!");
-		//var hairNo = $(this).attr("hairNo");
-		//var hairName = $(this).text();
+	$(document).on("click", "#hairbox li", function() {
+		var hairNo = $(this).attr("hairNo");
+		var hairName = $(this).text();
+		var hairPrice = $(this).attr("hairPrice");
 
-		/* addHair(hairNo, hairName);
+		addHair(hairNo, hairName, hairPrice);
 		
 		if($(this).hasClass("active")) {
 			return;
 		}
 		
-		$("#hairkind .active").removeClass("active");
-		$(this).addClass("active"); */
+		$("#hairbox .active").removeClass("active");
+		$(this).addClass("active");
 	});
 	
-	/* function addHair(hairNo, hairName) {
-		// console.log($(".addedHair[hairNo=" + itemNo + "]").attr("hairName"));
-		// $(".addedHair[hairNo=" + itemNo + "]").remove();
+	function addHair(hairNo, hairName, hairPrice) {
 		if(hairNo == 0) {
 			return;
 		}
@@ -79,8 +79,9 @@ $(function(){
 		
 		if (selectedItem.length == 0) {
 			// 처음 선택한 경우
-			var addLine = "<li class='addedHair' hairNo='" + hairNo + "' hairName='" + hairName + "' quantity='" + quantity + "'>"
-							+ hairName + " <span class='quantity'>" + quantity + "</span>회 <a href='javascript:void(0);' onclick='delHairItem(" + hairNo +"); return false;'>X</a></li>";
+			var addLine = "<li class='addedHair list-group-item' hairNo='" + hairNo + "' hairName='" + hairName + "' quantity='" + quantity + "' hairPrice='" + hairPrice + "'>"
+							+ hairName + " <span class='quantity'>" + quantity + "</span>회 &nbsp;&nbsp;<a href='javascript:void(0);' onclick='delHairItem(" + hairNo +"); return false;'>"
+							+ "<i class='fas fa-times'></i></a></li>";
 			$(".addedHairList").append(addLine);
 		} else {
 			// 이미 존재하는 경우 수량을 증가시킴
@@ -89,17 +90,21 @@ $(function(){
 			$(selectedItem).children(".quantity").text(quantity);
 		}
 		
-		
+		var totalPrice = $(".totalPrice").text()*1;
+		if(totalPrice === null) {
+			totalPrice = hairPrice*1;
+		} else {
+			totalPrice += hairPrice*1;
+		}
+		$(".totalPrice").text(totalPrice);
+	
 		console.log($(".addedHair[hairNo=" + hairNo + "]").attr("hairName"));
-		// console.log(selectedItem.attr("hairName"));
-		
-		
 	}
 
-	function delHairItem(itemNo) {
+	function delHairItem(itemNo) {	
 		// console.log($(".addedHair[hairNo=" + itemNo + "]").attr("hairName"));
 		$(".addedHair[hairNo=" + itemNo + "]").remove();
-	} */
+	}
 });
 	
 </script>
@@ -108,7 +113,7 @@ $(function(){
           <p class="mb-4">여기에 간단한 설명 추가해주세요. 이렇게 링크도 달아도 됩니다. <a target="_blank" href="https://datatables.net">링크</a></p>
 
           <!-- card -->
-          <div class="card shadow mb-4" style="width: 800px;">
+          <div class="card shadow mb-4" style="max-width: 800px;">
             <div class="card-header py-2">
               <h6 class=" font-weight-bold text-primary" style="font-size: 1.3em;">
                 <div class="mt-2 pl-3 float-left">
@@ -168,8 +173,9 @@ $(function(){
                 <h7 class="mb-3 font-weight-bold">시술 대분류</h7>
                 <ul class="list-group list-group-horizontal-md" id="hairkindbox">
                		<c:forEach items="${hairKindList }" var="hk">
-                  		<li class="list-group-item flex-fill text-center" role="button" id="hairkindbox" kindNo="${hk.kindNo }">${hk.kindNo }. ${hk.kindName }</li>
-                	</c:forEach>
+                  		<li class="list-group-item flex-fill text-center" role="button" id="hairkindbox"
+                  		 kindNo="${hk.kindNo }">${hk.kindNo }. ${hk.kindName }</li>
+					</c:forEach>
                 </ul>
 
                 <div class="spacing"></div>
@@ -180,8 +186,11 @@ $(function(){
                 
                 <div class="spacing bg"></div>
 
-				<ul class="addedHairList">
+				<ul class="addedHairList list-group list-group-flush">
 				</ul>
+				
+				<div class="col-sm-12 text-right totalPrice">
+				</div>
 				
                 <div class="form-group row">
                   <div class="col-sm" style="text-align: right;">

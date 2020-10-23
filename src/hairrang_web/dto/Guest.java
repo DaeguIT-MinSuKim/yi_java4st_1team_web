@@ -11,7 +11,7 @@ public class Guest {
 	private LocalDate guestBirthday;
 	private String guestPhone;
 	private String guestEmail;
-	private int guestGender; // 성별 숫자로 
+	private int guestGender; // 성별 숫자로 0여 1남
 	private LocalDateTime guestJoinDate;
 	private String guestNote;
 	private String delYn;

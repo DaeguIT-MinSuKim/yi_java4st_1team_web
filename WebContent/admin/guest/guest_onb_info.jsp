@@ -1,25 +1,40 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-    <%@ include file="../header.jsp" %>  
-     <%@ include file="sub_menu.jsp" %>
-     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
-     <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../include/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <style>
-.book a {background-color:white;  border-bottom:1px solid white;}
-</style>     
-
-<body>
+.book_wrapper {margin:0 auto; margin-top:60px; width:1000px;}
+.board {clear:both; width:1000px; margin:0 auto;  text-align:center;}
+.board tr {border-bottom:1px solid #E4E4E4;}
+.board tr td {padding:15px 0;}
+.board th {border-top:3px solid black; padding:5px 0; font-weight:bold;}
+.board .book_index, .qna_index{width:50px; }
+.board .book_date, .qna_date {width:180px;}
+.board .book_name {width:400px;}
+.board .qna_title{width:400px; text-align:left; padding-left:30px;}
+.board .book_name, .qna_title a {text-decoration:none;}
+.board .book_price {width:100px;}
+.board .book_status, .qna_resYn{width:80px;}
+.board .qna_title{width:600px;}
+.paging {text-align:center; margin:10px;}
+.onb-buttons {text-align:center;}
+</style>
 
 <div class="book_wrapper">
+<!-- 주문 내역 -->
+<h4>주문내역</h4>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-<div class="tcenter" style="padding:10px;">
-	<input type="button" value="전체보기" onclick="location.href='guestBook.do'">
-	<input type="button" value="예약완료" onclick="location.href='status1.do'">
-	<input type="button" value="예약취소" onclick="location.href='status0.do'">
-</div>
-<table id="board">
+<!-- 예약내역 -->
+<h4>예약내역</h4>
+<table class="board">
 	<tr>
 		<th>번호</th> <th>이용날짜</th> <th>시술 정보</th> <th>총 금액</th> <th>예약상태</th> <th>예약등록일</th> 
 	</tr>
@@ -84,8 +99,12 @@
 				<a href="guestBook.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}"><i class="xi-angle-right"></i></a>
 			</c:if>	
 		</div>
-	</div> 
+	<div class="onb-buttons">
+			<input type="button" value="목록">
+			<input type="button" value="취소" class="cancel">
+	</div>
+	
+</div>
+<%@ include file="../include/footer.jsp" %>
 
-</body>
 
-<%@ include file="../footer.jsp" %>  

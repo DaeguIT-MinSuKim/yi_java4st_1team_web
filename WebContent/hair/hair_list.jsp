@@ -6,7 +6,7 @@
 
 div.gallery {margin-top:20px;}
 /* div.gallery:hover {border: 1px solid #777;} */
-div.gallery img {width: 100%; height:auto;}
+div.gallery img {width: 100%; height:auto; }
 div.content {}
 
 /*box-sizing: border-box; 지정안하면 padding, border값의 영향을 받아 box 길이값이 틀어지기 때문에 꼭 추가필요.*/

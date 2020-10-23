@@ -8,10 +8,13 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import hairrang_web.dao.GuestDao;
 import hairrang_web.ds.JndiDs;
 import hairrang_web.dto.Guest;
+import hairrang_web.dto.QnA;
+import hairrang_web.utils.Paging;
 
 public class GuestDaoImpl implements GuestDao {
 
@@ -53,7 +56,7 @@ public class GuestDaoImpl implements GuestDao {
 		// GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_GENDER,
 		// GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN
 
-		String guestId =  rs.getString("GUEST_ID");
+		String guestId = rs.getString("GUEST_ID");
 		String guestPwd = null;
 
 		try {
@@ -62,7 +65,7 @@ public class GuestDaoImpl implements GuestDao {
 			// selectAll -> View 이용 -> PWD X
 			// selectById ->
 		}
-		
+
 		String guestName = rs.getString("GUEST_NAME");
 		LocalDate guestBirthday = rs.getTimestamp("GUEST_BIRTHDAY").toLocalDateTime().toLocalDate();
 		String guestPhone = rs.getString("GUEST_PHONE");
@@ -72,16 +75,16 @@ public class GuestDaoImpl implements GuestDao {
 		String guestNote = rs.getString("GUEST_NOTE");
 		String delYn = rs.getString("DEL_YN");
 		String infoYn = rs.getString("INFO_YN");
-		
-		return new Guest(guestId, guestPwd, guestName, guestBirthday, guestPhone, guestEmail, guestGender, guestJoinDate, guestNote, delYn, infoYn);	
+
+		return new Guest(guestId, guestPwd, guestName, guestBirthday, guestPhone, guestEmail, guestGender,
+				guestJoinDate, guestNote, delYn, infoYn);
 	}
 
 	@Override
 	public Guest selectGuestById(Guest guest) {
 		String sql = "SELECT * FROM GUEST WHERE GUEST_ID = ?";
 
-		try ( Connection con = JndiDs.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, guest.getGuestId());
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next())
@@ -119,8 +122,7 @@ public class GuestDaoImpl implements GuestDao {
 	public int updateGuest(Guest guest) {
 		String sql = "UPDATE GUEST SET GUEST_NAME = ?, GUEST_BIRTHDAY = ?, GUEST_EMAIL = ?, GUEST_PHONE =?, GUEST_GENDER = ?, GUEST_NOTE = ?,INFO_YN = ? WHERE GUEST_ID = ? ";
 
-		try ( Connection con = JndiDs.getConnection(); 
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, guest.getGuestName());
 			pstmt.setDate(2, Date.valueOf(guest.getGuestBirthday()));
 			pstmt.setString(3, guest.getGuestEmail());
@@ -154,7 +156,7 @@ public class GuestDaoImpl implements GuestDao {
 	public int deleteGuest(Guest guest) {
 		String sql = "DELETE GUEST WHERE GUEST_ID = ?";
 
-		try ( Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, guest.getGuestId());
 
 			return pstmt.executeUpdate();
@@ -201,13 +203,12 @@ public class GuestDaoImpl implements GuestDao {
 	public int confirmId(String id) {
 		int result = -1;
 		String sql = "SELECT * FROM GUEST WHERE GUEST_ID = ?";
-		try (Connection con = JndiDs.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);) {
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql);) {
 			pstmt.setString(1, id);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
 					result = 1;
-				}else {
+				} else {
 					result = -1;
 				}
 			}
@@ -217,16 +218,13 @@ public class GuestDaoImpl implements GuestDao {
 		return result;
 	}
 
-	
 	//id : name, email 
 	//pw : id, name, email
-	
 
 	@Override
 	public Guest findId(String name, String email) {
 		String sql = "SELECT GUEST_ID FROM guest WHERE GUEST_NAME = ? AND GUEST_EMAIL = ?";
-		try (Connection con = JndiDs.getConnection(); 
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, name);
 			pstmt.setString(2, email);
 			try (ResultSet rs = pstmt.executeQuery()) {
@@ -234,7 +232,7 @@ public class GuestDaoImpl implements GuestDao {
 					Guest findUser = new Guest(rs.getString("GUEST_ID"));
 					return findUser;
 				}
-					
+
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -245,15 +243,14 @@ public class GuestDaoImpl implements GuestDao {
 	@Override
 	public Guest findPwd(String id, String name, String email) {
 		String sql = "SELECT * FROM guest_view WHERE GUEST_ID = ? AND GUEST_NAME = ? AND GUEST_EMAIL= ?";
-		try ( Connection con = JndiDs.getConnection(); 
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1,id);
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, id);
 			pstmt.setString(2, name);
 			pstmt.setString(3, email);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
 					return getGuest(rs);
-				}	
+				}
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -264,8 +261,7 @@ public class GuestDaoImpl implements GuestDao {
 	@Override
 	public int updateGuestDelYn(Guest guest) {
 		String sql = "UPDATE guest SET del_yn = 'y' WHERE GUEST_ID = ?";
-		try (Connection con = JndiDs.getConnection(); 
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, guest.getGuestId());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -273,5 +269,130 @@ public class GuestDaoImpl implements GuestDao {
 		}
 	}
 
+	///////페이징///////////////////////////////////////////////////////////////////////////////
 
+	@Override
+	public ArrayList<Guest> pagingGuestByAll(Paging paging) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM GUEST ORDER BY GUEST_JOIN_DATE desc) a) "
+				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					ArrayList<Guest> list = new ArrayList<Guest>();
+					do {
+						list.add(getGuest(rs));
+					} while (rs.next());
+					
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
+	@Override
+	public int countGuest() {
+		String sql = "SELECT COUNT(*) FROM guest";
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
+
+	/////검색//////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public ArrayList<Guest> searchGuestById(Paging paging, String id) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM "
+				+ "(SELECT * FROM GUEST_VIEW WHERE GUEST_ID LIKE '%' || ? || '%' ORDER BY GUEST_JOIN_DATE desc) a) "
+				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, id);
+			pstmt.setInt(2, paging.getStart());
+			pstmt.setInt(3, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					ArrayList<Guest> list = new ArrayList<Guest>();
+					do {
+						list.add(getGuest(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+		return null;
+	}
+
+	@Override
+	public ArrayList<Guest> searchGuestByName(Paging paging, String name) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM "
+				+ "(SELECT * FROM GUEST_VIEW WHERE GUEST_NAME LIKE '%' || ? || '%' ORDER BY GUEST_JOIN_DATE desc) a) "
+				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, name);
+			pstmt.setInt(2, paging.getStart());
+			pstmt.setInt(3, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					ArrayList<Guest> list = new ArrayList<Guest>();
+					do {
+						list.add(getGuest(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+		return null;
+	}
+
+	@Override
+	public int countIdSearch(String id) {
+		String sql = "SELECT COUNT(*) FROM guest WHERE GUEST_ID LIKE '%' || ? || '%'";
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, id);
+				try (ResultSet rs = pstmt.executeQuery()) {
+					if (rs.next()) {
+						return rs.getInt(1);
+					}
+				}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
+
+	@Override
+	public int countNameSearch(String name) {
+		String sql = "SELECT COUNT(*) FROM guest WHERE GUEST_NAME LIKE '%' || ? || '%'";
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, name);
+				try (ResultSet rs = pstmt.executeQuery()) {
+					if (rs.next()) {
+						return rs.getInt(1);
+					}
+				}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
 }

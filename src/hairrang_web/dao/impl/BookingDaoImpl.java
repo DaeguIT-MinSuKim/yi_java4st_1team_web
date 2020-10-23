@@ -396,6 +396,50 @@ public class BookingDaoImpl implements BookingDao {
 	}
 	
 	@Override
+	public ArrayList<Booking> pagingBookingListById(Paging paging, String id) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking WHERE GUEST_ID = ? ORDER BY book_no desc) a) "
+				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, id);
+			pstmt.setInt(2, paging.getStart());
+			pstmt.setInt(3, paging.getEnd());
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					int cnt = 1;
+					ArrayList<Booking> list = new ArrayList<Booking>();
+					//BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, HAIR_QUANTITY, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE
+					do {
+						Booking booking = new Booking();
+						GuestDao gDao = GuestDaoImpl.getInstance();
+						DesignerDao dDao = DesignerDaoImpl.getInstance();
+						HairDao hDao = HairDaoImpl.getInstance();
+						
+						int bookNo = rs.getInt("BOOK_NO");
+						booking.setBookNo(bookNo);
+						booking.setGuest(gDao.selectGuestById(new Guest(rs.getString("GUEST_ID"))));
+						booking.setBookDate(rs.getTimestamp("BOOK_TIME").toLocalDateTime());
+						booking.setDesigner(dDao.selectDesignerByNo(new Designer(rs.getInt("DE_NO"))));
+						booking.setBookRegDate(rs.getTimestamp("BOOK_REGDATE").toLocalDateTime());
+						booking.setBookStatus(rs.getInt("BOOK_STATUS"));
+						booking.setBookNote(rs.getString("BOOK_NOTE"));
+						
+						ArrayList<BookingHairs> hairList = selectBookingHairsByBookingNo(bookNo);
+						booking.setHairList(hairList);
+						
+						list.add(booking);
+						System.out.println("짐 몇번째라노? " + cnt++);
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+	
+	@Override
 	public ArrayList<BookingHairs> pagingBookingHairsById(Paging paging, String id) {
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT distinct(book_no) FROM booking_view WHERE GUEST_ID = ? AND book_no = ? ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
 //				"SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_view WHERE GUEST_ID = ? ORDER BY book_no desc) a) "
