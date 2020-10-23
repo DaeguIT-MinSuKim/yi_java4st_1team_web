@@ -4,7 +4,7 @@
 <div>
 <form method="post" name="formm">
 <input type="hidden" name="guest" value="${guest.guestId}">
-
+${data }
 <p style="">${guest.guestName}(${guest.guestId})님을 탈퇴처리 하시겠습니까?</p>
 <input type="submit" name="delete" onclick="guest_delete()" value="확인">
 <input type="button" onclick="location.href='guestList.do'" value="취소">

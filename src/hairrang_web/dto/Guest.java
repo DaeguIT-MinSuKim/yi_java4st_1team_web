@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 public class Guest {
 
+	private int guestCode;
 	private String guestId;
 	private String guestPwd;
 	private String guestName;
@@ -25,6 +26,11 @@ public class Guest {
 	}
 	
 	
+
+	public Guest(int guestCode, String guestId) {
+		this.guestCode = guestCode;
+		this.guestId = guestId;
+	}
 
 	public Guest(String guestId, String guestName, LocalDate guestBirthday, String guestPhone, String guestEmail,int guestGender,
 			LocalDateTime guestJoinDate, String guestNote, String delYn, String infoYn) {
@@ -68,6 +74,16 @@ public class Guest {
 		this.guestNote = guestNote;
 		this.delYn = delYn;
 		this.infoYn = infoYn;
+	}
+	
+	
+
+	public int getGuestCode() {
+		return guestCode;
+	}
+
+	public void setGuestCode(int guestCode) {
+		this.guestCode = guestCode;
 	}
 
 	public String getGuestId() {

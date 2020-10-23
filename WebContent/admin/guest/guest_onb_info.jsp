@@ -20,6 +20,21 @@
 .paging {text-align:center; margin:10px;}
 .onb-buttons {text-align:center;}
 </style>
+<%-- <c:choose>
+	<c:when test="${message == -1}">
+	 	<script>
+	          alert('예약내역이 없음')
+	          history.go(-1);
+	    </script>
+	</c:when>
+	<c:when test="${message == -2}">
+	 	<script>
+	          alert('로그인이 필요합니다.')
+	          location.href="login.do";
+	    </script>
+	</c:when>
+</c:choose> --%>
+
 
 <div class="book_wrapper">
 <!-- 주문 내역 -->
@@ -28,7 +43,7 @@
 <br>
 <br>
 <br>
-<br>
+<br>x
 <br>
 <br>
 

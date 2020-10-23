@@ -27,6 +27,8 @@ public class AdminGuestOnBInfoHandler implements Command {
 			
 			String id = request.getParameter("id");
 			
+//예약리스트////////////////////////////////////////////////////////////////////////////
+			
 			//현재페이지랑 한페이지당 제한 문의 갯수 넘겨주는 곳
 			String nowPage = request.getParameter("nowPage");
 			String cntPerPage = request.getParameter("cntPerPage");
@@ -56,6 +58,12 @@ public class AdminGuestOnBInfoHandler implements Command {
 			
 			ArrayList<Booking> bookingList = bService.pagingBookingListById(paging, id);
 			ArrayList<Integer> prices = new ArrayList<>();
+			
+			//리스트 null일때
+			if(bookingList == null) {
+				request.setAttribute("message", -1);
+				return "guest/guest_onb_info.jsp";
+			}
 			
 			for(Booking book : bookingList) {
 				int sum = 0;

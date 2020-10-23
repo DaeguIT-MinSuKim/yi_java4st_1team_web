@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Guest;
 import hairrang_web.service.GuestService;
@@ -58,7 +60,6 @@ public class AdminGuestListHandler implements Command {
 			request.setAttribute("paging", paging);
 			request.setAttribute("total", total);
 			request.setAttribute("cnt", cntPerPage);
-		
 			
 		} else {
 			
@@ -112,6 +113,7 @@ public class AdminGuestListHandler implements Command {
 			System.out.println("지금현채 페이지 ===>"+nowPage);
 			System.out.println("한 페이지당 나오는 게시물수 ===>"+cntPerPage);
 			System.out.println("총게시물 갯수 ===>"+total);
+			
 		
 		}
 		
