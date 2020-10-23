@@ -2,8 +2,26 @@ SELECT * FROM guest;
 SELECT * FROM GUEST_VIEW;
 SELECT GUEST_ID,GUEST_NAME,GUEST_BIRTHDAY,GUEST_PHONE,GUEST_EMAIL,GUEST_GENDER,GUEST_JOIN_DATE,GUEST_NOTE,DEL_YN,INFO_YNFROM GUEST_VIEW;
 
+
 --INSERT INTO(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE,  GUEST_GENDER, GUEST_NOTE, INFO_YN ) 
-INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chini91', '1234', '김혜진', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 1, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chini912', '1234', '김혜진', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 1, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chini913', '1234', '김혜진', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 0, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chini914', '1234', '김혜진', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 1, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chini915', '1234', '김혜진', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 0, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chini916', '1234', '김혜진', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 1, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chini917', '1234', '김혜진', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 1, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chini918', '1234', '김혜진', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 0, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chini919', '1234', '김혜진', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 0, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chini9243', '1234', '김혜진일', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 1, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chini9234', '1234', '김혜진이', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 1, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chini9d4', '1234', '김혜진삼', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 1, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chisdfsfd', '1234', '김혜진사', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 0, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('chiniasd', '1234', '김혜진오', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 1, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('asdsda', '1234', '김혜진육', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 0, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('dfsdfd', '1234', '김혜진칠', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 0, '메모', 'y');
+INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_NOTE, INFO_YN) VALUES ('fica', '1234', '김혜진', TO_date('1991-12-19','yyyy--MM-dd'), '010-5656-5656', 'text2@tes2t.com', 1, '메모', 'y');
+
+
 DELETE guest WHERE GUEST_ID = 'chini91';
 UPDATE GUEST SET GUEST_NAME = ?, GUEST_BIRTHDAY = ?, GUEST_PHONE =?, GUEST_NOTE = ?, info_yn WHERE GUEST_ID = 'test2';
 
@@ -71,23 +89,79 @@ LEFT JOIN hair h ON bh.hair_no = h.hair_no
 WHERE b.guest_id = 'test';
 
 --예약내역 rownum
-SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_view WHERE GUEST_ID = 'test'AND book_no = 60 ORDER BY book_no desc) a) 
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_view WHERE GUEST_ID = 'test' AND BOOK_STATUS = 1 ORDER BY book_no desc) a) 
 			WHERE rn BETWEEN 1 AND 10 ORDER BY rn ;		
 --예약 내역 전체카운트
 SELECT COUNT(*) FROM (SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test');
 
 --중복제외 book_no
-SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test';
+SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test' ORDER BY book_no desc;
 
 
-SELECT BOOK_NO,GUEST_ID,BOOK_TIME,HAIR_NO,HAIR_QUANTITY,DE_NO,BOOK_REGDATE,BOOK_STATUS,BOOK_NOTE FROM booking_view;
+SELECT BOOK_NO,GUEST_ID,BOOK_TIME,HAIR_NO,HAIR_QUANTITY,DE_NO,BOOK_REGDATE,BOOK_STATUS,BOOK_NOTE FROM booking_view ORDER BY book_no desc;
 SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test';
 SELECT * FROM booking;
-SELECT * FROM booking_hairs WHERE book_no = 60 ORDER BY book_no;
+SELECT * FROM booking_hairs ORDER BY book_no;
 SELECT * FROM hair;
 -- 60번 헤어14*2=20, 16*1=8 => 28만원 / 62번 12*2=8, 10*1=3 =>11만원
 
+--예약상태 예약완료
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT distinct(book_no) FROM booking_view WHERE GUEST_ID = 'test' AND book_status = '1'  AND book_no = 2 ORDER BY book_no desc) a) WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
+SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test' AND BOOK_STATUS = '1' ORDER BY book_no desc;
+SELECT COUNT(*) FROM (SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test' AND BOOK_STATUS = '1');
 
-SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT distinct(book_no) FROM booking_view WHERE GUEST_ID = 'test' ORDER BY book_no desc) a) WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
+--예약상태 예약취소
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT distinct(book_no) FROM booking_view WHERE GUEST_ID = 'test' AND book_status = '0' ORDER BY book_no desc) a) WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
+SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test' AND BOOK_STATUS = '0' ORDER BY book_no desc;
+SELECT COUNT(*) FROM (SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test' AND BOOK_STATUS = '0');
 
 SELECT * FROM BOOKING_HAIRS WHERE BOOK_NO = 60 ORDER BY BOOK_NO, HAIR_NO;
+
+SELECT * FROM GUEST;
+
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT distinct(book_no) FROM booking_view WHERE GUEST_ID = 'test' AND book_status = 1 AND book_no = 2 ORDER BY book_no desc) a) WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
+
+SELECT BOOK_NO,GUEST_ID,BOOK_TIME,HAIR_NO,HAIR_QUANTITY,DE_NO,BOOK_REGDATE,BOOK_STATUS,BOOK_NOTE FROM booking_view;
+
+
+CREATE OR REPLACE VIEW booking_view
+AS
+SELECT BOOK_NO, GUEST_ID, BOOK_TIME, h.HAIR_NO, h.hair_quantity, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE
+FROM booking b LEFT OUTER JOIN booking_hairs h USING(book_no)
+ORDER BY book_no, hair_no;
+
+SELECT * FROM booking_view;
+
+SELECT * FROM (SELECT rownum RN, a.* FROM 
+(SELECT * FROM booking_view 
+WHERE GUEST_ID = 'test' AND book_status = 1 AND book_no = 2 ORDER BY book_no desc) a) 
+WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
+
+
+
+---
+SELECT * FROM (SELECT rownum RN, a.* FROM 
+(SELECT * FROM booking_view WHERE GUEST_ID = 'test' AND book_no = 2 AND BOOK_STATUS = 1 ORDER BY book_no desc) a) 
+WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
+--
+
+--총 게스트 페이징
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM GUEST ORDER BY GUEST_JOIN_DATE desc) a) 
+			WHERE rn BETWEEN 1 AND 5 ORDER BY rn;		
+--총 게스트 카운트
+SELECT COUNT(*) FROM guest;
+
+--게스트 아이디검색
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM GUEST WHERE GUEST_ID LIKE '%c%'ORDER BY GUEST_JOIN_DATE desc) a) 
+			WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
+--게스트 아이디 검색 카운트 
+SELECT COUNT(*) FROM guest WHERE GUEST_ID LIKE '%1%';
+
+
+--게스트 이름검색
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM GUEST WHERE GUEST_NAME LIKE '%김%'ORDER BY GUEST_JOIN_DATE desc) a) 
+			WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
+--게스트 이름검색 카운트 
+SELECT COUNT(*) FROM guest WHERE GUEST_NAME LIKE '%김%';
+
+SELECT * FROM guest;

@@ -19,6 +19,10 @@ public class BookingService {
 
 	private BookingDao dao = BookingDaoImpl.getInstance();
 	
+	public ArrayList<Booking> getBookingListAll() {
+		return dao.selectBookingAll();
+	}
+	
 	public Booking getBookingByBookingNo(Booking booking) {
 		return dao.selectBookingByBookingNo(booking);
 	}
@@ -59,20 +63,52 @@ public class BookingService {
 		return dao.countBookingById(id);
 	}
 	
+	public int countStatus1(String id) {
+		return dao.countStatus1(id);
+	}
+	
+	public int countStatus0(String id) {
+		return dao.countStatus0(id);
+	}
+	
 	public Booking pagingBookingById(Paging paging, String id, int no) {
 		return dao.pagingBookingById(paging, id, no);
+	}
+	
+	public ArrayList<Booking> pagingBookingListById(Paging paging, String id) {
+		return dao.pagingBookingListById(paging, id);
 	}
 	
 	public ArrayList<BookingHairs> pagingBookingHairsByID(Paging paging, String id){
 		return dao.pagingBookingHairsById(paging, id);
 	}
 	
+	public ArrayList<BookingHairs> selectBookingHairsByBookingNo(int bookNo){
+		return dao.selectBookingHairsByBookingNo(bookNo);
+	}
+	
+	public int updateBookingStatus(Booking booking) {
+		return dao.updateBookingStaus(booking);
+	}
+	
+	public Booking selectBookStatus1(Paging paging, String id, int no) {
+		return dao.selectBookStatus1(paging, id, no);
+	}
+	
+	public Booking selectBookStatus0(Paging paging, String id, int no) {
+		return dao.selectBookStatus0(paging, id, no);
+	}
+	
 	public ArrayList<Integer> selectNoBooking(String id){
 		return dao.selectNoBooking(id);
 	}
 	
-	public ArrayList<BookingHairs> selectBookingHairsByBookingNo(int bookNo){
-		return dao.selectBookingHairsByBookingNo(bookNo);
+	public ArrayList<Integer> selectNoStatus0 (String id){
+		return dao.selectNoStatus0(id);
+	}
+	
+	public ArrayList<Integer> selectNoStatus1 (String id){
+		return dao.selectNoStatus1(id);
 	}
 	
 	public int insertBookingWithHairList(Booking booking) {

@@ -53,7 +53,7 @@
 					${list.qnaNo }</td>
 					<td><a href="qnaConfirmPassword.do?no=${list.qnaNo}&secret=${list.qnaSecret}">${list.qnaTitle }</a></td>
 					<td>${list.qnaContent }</td>
-					<td>${list.guestId.guestName}</td>
+					<td>${list.guestId.guestId}</td>
 					<td>
 						<fmt:parseDate value="${list.qnaRegDate}" pattern="yyyy-MM-dd'T'HH:mm" var="regDate" type="both" />
 						<fmt:formatDate value="${regDate}" pattern="yyyy-MM-dd HH:mm" />

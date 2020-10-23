@@ -65,4 +65,7 @@ public class QnaService {
 		return dao.pagingQnaById(paging, id);
 	}
 	
+	public QnA passwordQna(QnA qna) {
+		return dao.checkPwd(qna);
+	}
 }

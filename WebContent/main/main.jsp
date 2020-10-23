@@ -37,6 +37,8 @@
 <p style="font-size:30px; font-weight:600">#INSTAGRAM</p><br>
 <img src="images/insta_mini.png"><span style="clear:both;font-size:15px; font-weight:600;"> hairrang_official</span><br><br>
 <%@ include file="/insta.jsp" %>
+
+
 <br><br>
 <div class="more"><a href="http://instagram.com/hairrang_official"  target="_blank">MORE</a></div>
 <br><br><br><br><br>

@@ -5,7 +5,8 @@
 <body>
 	<h1>비밀번호</h1>
 	<form action="qnaPassword.do" method="post">
-		<input type="password" id="password">
+		<input type="password" name="password">
+		<input type="hidden" name="no" value="${no}">
 		<input type="submit" value="확인">
 	</form>
 </body>

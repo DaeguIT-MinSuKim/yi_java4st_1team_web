@@ -44,6 +44,8 @@
 .timeselectbox .timeline .timesec li span, .timeselectbox .timeline .timesec li a {height:40px;line-height:40px;}
 .timeselectbox .timeline .timesec .line {padding-left:58px;}
 
+
+
 /*mypage sub_menu*/
 .info a, .book a, .order a, .qna a, .coupon a {color:black;}
 .submenu_main { text-align: center; border:1px solid #fff; line-height:60px;}
@@ -66,28 +68,35 @@
 .delete_sub3 {}
 
 /*mypage guest_book*/
-.book_wrapper {margin-top:60px;}
+.book_wrapper {margin:0 auto; margin-top:60px; width:1000px;}
 #board {clear:both; width:1000px; margin:0 auto;  text-align:center;}
 #board tr {border-bottom:1px solid #E4E4E4;}
 #board tr td {padding:15px 0;}
-#board th {border-top:3px solid black; padding:10px 0; font-weight:bold;}
+#board th {border-top:3px solid black; padding:5px 0; font-weight:bold;}
 #board .book_index, .qna_index{width:50px; }
 #board .book_date, .qna_date {width:180px;}
 #board .book_name {width:400px;}
 #board .qna_title{width:400px; text-align:left; padding-left:30px;}
 #board .book_name, .qna_title a {text-decoration:none;}
 #board .book_price {width:100px;}
-#board .book_status, .qna_resYn{width:70px;}
+#board .book_status, .qna_resYn{width:80px;}
 #board .qna_title{width:600px;}
 
 /*mypage guest_book_detail*/
-.book_detail_wrapper {width:1000px; margin:0 auto; margin-top:60px;}
-table { width:1000px; margin:0 auto;}
-table tr {border-bottom:1px solid #E4E4E4;}
+.book_detail_wrapper {width:900px; margin:0 auto; margin-top:60px;}
+.book_hair_info ,.book_detail_info { width:900px; margin:0 auto;}
+.book_hair_info tr, .book_detail_info tr {border-bottom:1px solid #E4E4E4;}
+.book_detail_info tr td {padding:5px;}
+.book_detail_info tr td:first-child {width:150px;}
+.book_detail_info tr td:last-child {padding-left:30px;}
+.book_hair_info tr td{padding:5px;}
 
 .div_price {text-align:right; margin-top:30px; border-top:1px solid black; border-bottom:1px solid black;}
 .book_detail_bottons {width:1000px; margin:0 auto; text-align:center; padding:30px;}
+.border-left-line {border-left:1px solid #E4E4E4;}
 
+
+.detail-width {width:200px;}
 
 /**/
 .paging {display: block; text-align: center; padding:30px;}
@@ -102,3 +111,7 @@ table tr {border-bottom:1px solid #E4E4E4;}
 /*button*/
 .button {width:130px; height:50px; color:black; border:none; font-size:15px; margin:5px; width:200px; background: white; border:1px solid #777;}
 
+/*common*/
+.tcenter {text-align:center;}
+.tleft{text-align:left}
+.tright{text-align:right}

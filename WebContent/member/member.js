@@ -147,3 +147,13 @@ function go_leave(){
 		 alert('약관에 동의하셔야만 합니다.');
 	 }
 }
+
+function book_cancel(){
+	if(confirm('예약을 취소하시겠습니까?')== true){
+		document.formm.action = "guestBookCancel.do";
+		document.formm.submit();
+	}else {
+		return;
+	}
+	
+}

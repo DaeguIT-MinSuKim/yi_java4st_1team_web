@@ -212,7 +212,7 @@ function checkBookForm() {
      	  } else {
  	          alert("예약이 완료되었습니다. (nextNo: " + data + ")");
  	          console.log(data);
- 	          window.location.href = "bookingDetail.do?no=" + data;
+ 	          window.location.href = "guestBookDetail.do?bookNo=" + data;
      	  }
         }
     });

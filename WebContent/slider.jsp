@@ -6,7 +6,7 @@
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
 <script> 
-$(document).ready(function(){
+$(function(){
     $('.slider').bxSlider({
     	auto: true,
     	autoHover:true, 

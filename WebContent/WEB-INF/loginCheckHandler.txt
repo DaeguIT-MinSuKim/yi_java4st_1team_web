@@ -3,6 +3,8 @@ qnaWrite.do
 booking.do
 bookingDetail.do
 guestBook.do
+guestBookDetail.do
+guestBookCancel.do
 guestOrder.do
 guestQna.do
 pwdConfirm.do

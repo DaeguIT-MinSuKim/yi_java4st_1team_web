@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import hairrang_web.dao.GuestDao;
 import hairrang_web.dao.impl.GuestDaoImpl;
 import hairrang_web.dto.Guest;
+import hairrang_web.utils.Paging;
 
 public class GuestService{
 	private GuestDao dao = GuestDaoImpl.getInstance();
@@ -47,5 +48,28 @@ public class GuestService{
 	
 	public int updateDelYn(Guest guest) {
 		return dao.updateGuestDelYn(guest);
+	}
+	public ArrayList<Guest> pagingGuestByAll(Paging paging){
+		return dao.pagingGuestByAll(paging);
+	}
+	
+	public int countGuest() {
+		return dao.countGuest();
+	}
+	
+	public ArrayList<Guest> searchGuestByName(Paging paging, String name){
+		return dao.searchGuestByName(paging, name);
+	}
+	
+	public ArrayList<Guest> searchGuestById(Paging paging,String id){
+		return dao.searchGuestById(paging, id);
+	}
+	
+	public int countIdSearch(String id) {
+		return dao.countIdSearch(id);
+	}
+	
+	public int countNameSearch(String name) {
+		return dao.countNameSearch(name);
 	}
 }

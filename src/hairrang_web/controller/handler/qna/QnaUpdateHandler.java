@@ -16,7 +16,7 @@ public class QnaUpdateHandler implements Command {
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		String url = "qnaList.do";
+		String url = "qnaHome.do";
 		//qnaNo는 get방식으로 post방식으로 둘다 정보를 불러올때 쓰이기 때문에 따로 밖에다가 선언생성하였습니다.
 		int qnaNo = Integer.parseInt(request.getParameter("no"));
 		

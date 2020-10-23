@@ -2,8 +2,10 @@ package hairrang_web.dto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Booking {
 	
@@ -17,6 +19,7 @@ public class Booking {
 	private int rowNum;
 	
 	private List<BookingHairs> hairList;
+	
 	public Booking() {
 	}
 
@@ -153,12 +156,22 @@ public class Booking {
 		return hairList;
 	}
 
-	
-	
 	public void setHairList(List<BookingHairs> hairList) {
 		this.hairList = hairList;
 	}
 
+	public String getHowManyHairItems() {
+		if (this.hairList.size() == 1) {
+			return String.format("%s", hairList.get(0).getHair().getHairName());
+		}
+		
+		ArrayList<Hair> hairs = this.hairList.stream().map(BookingHairs::getHair)
+			.sorted(Comparator.comparing(Hair::getHairPrice).reversed())
+			.collect(Collectors.toCollection(ArrayList::new));
+		
+		return String.format("%s 외 %d 건", hairs.get(0).getHairName(), hairs.size() - 1);
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		return this.bookNo == ((Booking) obj).bookNo;
@@ -170,7 +183,6 @@ public class Booking {
 				bookDate, designer, hairList);
 	}
 
-	
 	
 	
 }

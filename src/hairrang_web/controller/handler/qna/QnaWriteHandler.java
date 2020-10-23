@@ -16,8 +16,6 @@ import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.sun.glass.ui.Application;
-import com.sun.org.apache.bcel.internal.classfile.Field;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Guest;
@@ -102,8 +100,9 @@ public class QnaWriteHandler implements Command {
 				secretChecked = "n";
 			}
 			
-			System.out.println("lopginUser"+loginUser);
+			System.out.println("loginUser"+loginUser);
 			System.out.println("secretPwd"+secretPwd);
+			qna.setGuestId(loginUser);
 			qna.setQnaTitle(title);
 			qna.setQnaContent(content);
 			qna.setQnaFile(FilegetPath);

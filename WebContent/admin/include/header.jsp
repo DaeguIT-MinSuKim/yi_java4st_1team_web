@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 
 <head>
@@ -11,13 +12,21 @@
 
   <title>HAIRRANG - ADMIN PAGE</title>
 
+<!--xe 아이콘-->
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">	
+  
+  <script src="vendor/jquery/jquery.min.js"></script>
+
+  
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
+  
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="css/admin_custom.css" rel="stylesheet">
+<script src="guest/guest.js"></script>
 </head>
 
 <body id="page-top">
@@ -74,6 +83,23 @@
       <!-- 구분선 -->
       <hr class="sidebar-divider">
       
+      <div class="sidebar-heading">
+      	COMMUNICATION
+      </div>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="noticeList.do">
+          <i class="fas fa-fw fa-table"></i>
+          <span>공지사항 관리</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="qnaList.do">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Q&A 관리</span></a>
+      </li>
+      
+      <hr class="sidebar-divider">
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEvent" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
@@ -91,17 +117,13 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
-          <span>게시판 관리</span>
+          <span>기타 관리</span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">SALON:</h6>
-            <a class="collapse-item" href="hairList.do">헤어</a>
+            <a class="collapse-item" href="hairList.do">시술 코드(헤어)</a>
             <a class="collapse-item" href="designerList.do">디자이너</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">COMMUNICATION:</h6>
-            <a class="collapse-item" href="noticeList.do">공지사항 관리</a>
-            <a class="collapse-item" href="qnaList.do">Q&A 관리</a>
             <a class="collapse-item" href="hairboardList.do">헤어스타일 게시판</a>
           </div>
         </div>

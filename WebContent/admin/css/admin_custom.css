@@ -1,0 +1,60 @@
+@charset "UTF-8";
+
+/*
+#dataTable_wrapper {min-width:1000px} // 상하 모듈 우측에 고정
+#dataTable {min-width:1000px} // 상하 모듈 고정된 상태에서 좌우로 스크롤시 그자리 그대로 
+ */
+
+#wrapper #content-wrapper {min-width:1080px}
+/*
+.dataTables_filter {text-align: right;}
+.table-responsive {overflow-x:hidden !important}
+ */
+
+ /* 목록 뽑는 곳에서 */
+#dataTable td:first-child, td:nth-child(2){text-align: center;}
+#dataTable td:first-child { width: 58px; min-width: 58px; max-width: 58px; }
+#dataTable td:nth-child(2) { width: 100px; min-width: 100px; max-width: 100px; }
+#dataTable td:last-child{padding: 6px; width: 190px; min-width: 190px; max-width: 190px}
+
+.divider {
+    height: 0;
+    margin: 1.2rem 0;
+    overflow: hidden;
+    border-top: 1px solid #eaecf4;
+}
+
+.spacing {
+    height: 1rem;
+    overflow: hidden;
+}
+
+.bg {
+    height: 2rem;
+}
+
+/* .table-form .form-control {
+    font-size: inherit !important;
+} */
+
+#dataTable td {
+    vertical-align: middle !important;
+}
+
+.table-form .fix-height {
+    height: 32px !important;
+}
+
+.table-from .sm-length {
+    width: 400px;
+}
+
+.table-form td {
+    padding: .4rem !important;
+    vertical-align: middle !important;
+    border-top: none !important;
+}
+
+.table-form .control-inline {
+    display: inline-block;
+}

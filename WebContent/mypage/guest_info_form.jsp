@@ -59,7 +59,7 @@ $(document).ready(function() {
 <c:choose>
 	<c:when test="${message == -1}">
 	 	<script>
-	          alert('비밀번호가 맞지 않습니다.')
+	          alert('예약내역이 없음')
 	          history.go(-1);
 	    </script>
 	</c:when>
