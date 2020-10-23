@@ -10,9 +10,17 @@ $(function() {
 			var trIdx = $(this).closest("tr").prevAll().length;
 			console.log(trIdx);
 		});
+		
+		$(document).on('click', '.deleteButton', function() {
+			/* console.log($(this).attr("bookNo")); */
+			var idx = $(this).parents('tr:first').children("td").eq(1).text();
+		    console.log(idx);
+		});
+
+
 	});
 	
-});
+});z
 </script>
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800 font-weight">목록 템플릿</h1>
@@ -109,7 +117,7 @@ $(function() {
 							<td>
 								<a href="bookingDetail.do?no=${booking.bookNo}" class="btn bg-gray-200 btn-sm detailViewButton"><span class="text-gray-800">상세보기</span></a>
 								<!-- <a href="#" class="btn btn-info btn-sm modifyButton"><span class="text">수정</span></a> -->
-								<a href="#" class="btn btn-danger btn-sm deleteButton"><span class="text">삭제</span> </a>
+								<a href="#" class="btn btn-danger btn-sm deleteButton" bookNo="${booking.bookNo }"><span class="text">삭제</span> </a>
 							</td>
 						</tr>
 						</c:forEach>
