@@ -163,4 +163,11 @@ public class QnA {
 		this.qnaNo = qnaNo;
 	}
 
+	public QnA(int qnaNo, String qnaTitle, String qnaContent) {
+		super();
+		this.qnaNo = qnaNo;
+		this.qnaTitle = qnaTitle;
+		this.qnaContent = qnaContent;
+	}
+
 }

@@ -23,7 +23,7 @@ public interface QnADao {
 	ArrayList<QnA> selectNoticeAll();
 	
 	//비회윈이 문의 넣었을때
-	int checkPwd();
+	QnA checkPwd(QnA qna);
 	
 	ArrayList<QnA> selectQnaAllById(Guest guest);
 	

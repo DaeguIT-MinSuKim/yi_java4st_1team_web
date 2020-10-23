@@ -15,13 +15,13 @@ function go_QnaUpdate() {
 	<form name="form" method="post" action="qnaUpdate.do">
 	<input type="hidden" name="no" value="${qna.qnaNo}" id="no">
 		<label>제목</label>
-		<input type="text" readonly id="title" value="${qna.qnaTitle }"><br>
+		<input type="text" readonly name="title" id="title" value="${qna.qnaTitle }"><br>
 		<label>내용</label>
-		<textarea name="content" id="content">${qna.qnaContent}</textarea><br>
+		<textarea name="content"  id="content">${qna.qnaContent}</textarea><br>
 	
 	
 	<div id="buttons" style="float: right">
-		<input type="button" value="수정하기" id="updateButton" onclick="go_QnaUpdate()"> 
+		<input type="submit" value="수정하기" id="updateButton" > 
 		<input type="reset" value="초기화" id="reset" >
 		<input type="button" value="취소" id="home" onclick="location.href='qnaHome.do'">
 	</div>

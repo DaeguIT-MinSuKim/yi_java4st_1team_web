@@ -87,7 +87,7 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public int insertQnA(QnA qna) {
-		String sql = "INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_PASSWORD,QNA_SECRET) VALUES (?,?,?,?,?,?)";
+		String sql = "INSERT INTO QNA (GUEST_ID,GUEST_NAME,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_PASSWORD,QNA_SECRET) VALUES (?,?,?,?,?,?,?)";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			if(qna.getGuestId() ==null) {
@@ -95,12 +95,13 @@ public class QnADaoImpl implements QnADao {
 				
 			}else {
 				pstmt.setString(1, qna.getGuestId().getGuestId());
+				pstmt.setString(2, qna.getGuestId().getGuestName());
 			}
-			pstmt.setString(2, qna.getQnaTitle());
-			pstmt.setString(3, qna.getQnaContent());
-			pstmt.setString(4, qna.getQnaFile());
-			pstmt.setString(5, qna.getQnaPassword());
-			pstmt.setString(6, qna.getQnaSecret());
+			pstmt.setString(3, qna.getQnaTitle());
+			pstmt.setString(4, qna.getQnaContent());
+			pstmt.setString(5, qna.getQnaFile());
+			pstmt.setString(6, qna.getQnaPassword());
+			pstmt.setString(7, qna.getQnaSecret());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -136,9 +137,21 @@ public class QnADaoImpl implements QnADao {
 	}
 
 	@Override
-	public int checkPwd() {
-		// TODO Auto-generated method stub
-		return 0;
+	public QnA checkPwd(QnA qna) {
+		String sql = "SELECT * FROM QNA WHERE QNA_NO =? AND QNA_PASSWORD = ? ";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, qna.getQnaNo());
+			pstmt.setString(2, qna.getQnaPassword());
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					return getQnA(rs);
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
 	}
 
 	@Override

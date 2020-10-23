@@ -13,9 +13,7 @@
 		<br>
 		<div id="leftButtons" style="float: left;">
 			<input type="checkbox" name="secret" id="secret" value="sss">
-			 <c:if test="${loginUser == null }">
-			 	<input type="text" name="secretPwd" id="secretPwd" readonly>
-			 </c:if>
+			<input type="text" name="secretPwd" id="secretPwd" readonly>
 		</div>
 		<div id="rightButtons" style="float: right">
 			<input type="submit" value="제출하기" class="submit"> <input

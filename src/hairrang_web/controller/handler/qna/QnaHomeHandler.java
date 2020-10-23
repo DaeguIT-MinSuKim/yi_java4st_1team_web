@@ -1,14 +1,14 @@
 package hairrang_web.controller.handler.qna;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import hairrang_web.controller.Command;
-import hairrang_web.dto.QnA;
+import hairrang_web.dto.Guest;
 import hairrang_web.service.QnaService;
 import hairrang_web.utils.Paging;
 
@@ -18,6 +18,11 @@ public class QnaHomeHandler implements Command {
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+		
+		HttpSession session = request.getSession();
+		Guest guest =  (Guest) session.getAttribute("loginUser");
+		System.out.println("지금 로그인 현황"+guest);
+		
 		System.out.println("현재 접속중인 handler ==> QnaHomeHandler");
 		String url = "qna/qnaHome.jsp";
 		

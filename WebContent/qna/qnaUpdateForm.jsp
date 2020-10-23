@@ -7,23 +7,32 @@
 <title>Insert title here</title>
 <script>
 	function QnaUpdate() {
-		window.opener.top.location.href = "qnaUpdate.do?title="
-				+ document.getElementById("title").value + "&content="
-				+ document.getElementById("content").value + "&no="
-		document.getElementById("no").value;
-		window.close()
-	};
-	function QnaCancel() {
-		self.close();
+		if (confirm("정말 수정하시겠습니까?")) {
+			var no = document.getElementById("no").value;
+			alert(qna);
+			document.form.action = 'qnaUpdate.do?no=' + no;
+			document.form.submit();
+			return true;
+		} else {
+			return false;
+		}
 	};
 </script>
 </head>
 <body>
-	<input type="hidden" value="${title }" id="title">
-	<input type="hidden" value="${content }" id="content">
-	<input type="hidden" id="no" value="${no}" name="no"> 정말로
-	수정하시겠습니까?
-	<input type="button" value="수정" onclick="QnaUpdate()">
-	<input type="button" value="취소" onclick="QnaCancel()">
+	<hr>
+	${qna}
+	<hr>
+
+
+	<%-- <input type="hidden" value="${qna}" name="qna" id="qna"> --%>
+	정말로 수정하시겠습니까?
+	<form action="qnaUpdate.do" method="get">
+		<input type="hidden" id="no" value="${qna.qnaNo}" name="no"> <input
+			type="hidden" value="${qna.qnaTitle }" name="title"> <input
+			type="hidden" value="${qna.qnaContent }" name="content"> <input
+			type="submit" value="수정"> <input type="button" value="취소"
+			onclick="QnaCancel()">
+	</form>
 </body>
 </html>
