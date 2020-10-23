@@ -100,8 +100,9 @@ public class QnaWriteHandler implements Command {
 				secretChecked = "n";
 			}
 			
-			System.out.println("lopginUser"+loginUser);
+			System.out.println("loginUser"+loginUser);
 			System.out.println("secretPwd"+secretPwd);
+			qna.setGuestId(loginUser);
 			qna.setQnaTitle(title);
 			qna.setQnaContent(content);
 			qna.setQnaFile(FilegetPath);
