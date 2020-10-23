@@ -29,13 +29,6 @@ $(document).on('click', '[name=delete]', function() {
    
     console.log(array);
     
-	/* var delArr = {};
-    for(var i=0; i < $("#dataTable input[name=check]:checked").length; i++ ){
-  		delArr[i] += $("#dataTable input[name=check]:checked").eq(i).val();
-    }
-   	
-    console.log(delArr);  */
-    
     /* if(array==0){
     	alert('삭제할 회원을 선택하세요');
     	return;
@@ -60,18 +53,15 @@ $(document).on('click', '[name=delete]', function() {
     	return;
     }
   
-   
-    /* var guest =  JSON.stringify(array);  */
+    /* var delArr = {};
+    for(var i=0; i < $("#dataTable input[name=check]:checked").length; i++ ){
+  		delArr[i] += $("#dataTable input[name=check]:checked").eq(i).val();
+    }
+   	
+    console.log(delArr);  */
    	
 });
 
-
-/* function guest_delete(){
-	console.log($('#dataTable input[name=hidden]').val());
-	
-	document.formm.action = "guestDelete.do";
-    document.formm.submit();
-} */
 
 </script>
 
