@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
+<script src="booking/admin_order.js"></script>
 <script>
 $(function(){
 	$(document).ready(function() {
@@ -11,132 +12,14 @@ $(function(){
 	// 로딩 다 끝났을 때
 	window.onload = function() {
 	};
-	
-	/* 헤어 대분류 선택시 소분류 불러오기 */
-	$(document).on("click", "#hairkindbox li", function() {
-		console.log($(this).attr("kindNo"));
-		var selectedKindNo = $(this).attr("kindNo");
-		
-		if($(this).hasClass("active")) {
-			return;
-		}
-		
-		$("#hairkindbox .active").removeClass("active");
-		$(this).addClass("active");
-		
-		$.ajax({
-			url: "bookingToOrder.do",
-			type: "post",
-			dataType: "json",
-			data: {
-				kindNo: selectedKindNo
-			},
-			success: function(data) {
-				loadHairBox($("#hairbox"), data);
-			},
-			error: function(error) {
-				console.log("[load hiarbox] error: " + error);
-			}
-		});
-	});
-	
-	function loadHairBox(target, data) {
-		target.empty();
-		var dataArr = "";
-		
-		$.each(data, function(index, item) {
-			dataArr += "<li class='list-group-item flex-fill text-center' role='button' hairNo='"
-				+ item.hairNo + "' hairPrice='" + item.hairPrice + "'>[" + item.hairNo + "] "+ item.hairName+ "</li>";
-			index++;
-		});
-		
-		target.append(dataArr);
-	};
-	
-	
-	$(document).on("click", "#hairbox li", function() {
-		var hairNo = $(this).attr("hairNo");
-		var hairName = $(this).text();
-		var hairPrice = $(this).attr("hairPrice");
-
-		addHair(hairNo, hairName, hairPrice);
-		
-		if($(this).hasClass("active")) {
-			return;
-		}
-		
-		$("#hairbox .active").removeClass("active");
-		$(this).addClass("active");
-	});
-	
-	function addHair(hairNo, hairName, hairPrice) {
-		if(hairNo == 0) {
-			return;
-		}
-		
-		var quantity = 1;
-		var selectedItem = $(".addedHair[hairNo=" + hairNo + "]");
-		
-		if (selectedItem.length == 0) {
-			// 처음 선택한 경우
-			var addLine = "<li class='addedHair list-group-item' hairNo='" + hairNo + "' hairName='" + hairName + "' quantity='" + quantity + "' hairPrice='" + hairPrice + "'>"
-							+ hairName + " <span class='quantity'>" + quantity + "</span>회 &nbsp;&nbsp;<a href='javascript:void(0);' onclick='delHairItem(" + hairNo +"); return false;'>"
-							+ "<i class='fas fa-times'></i></a></li>";
-			$(".addedHairList").append(addLine);
-		} else {
-			// 이미 존재하는 경우 수량을 증가시킴
-			quantity = selectedItem.attr("quantity") * 1;
-			$(selectedItem).attr("quantity", ++quantity);
-			$(selectedItem).children(".quantity").text(quantity);
-		}
-		
-		var totalPrice = $(".totalPrice").attr("totalPrice")*1;
-		
-		if(totalPrice === null) {
-			totalPrice = hairPrice*1;
-		} else {
-			totalPrice += hairPrice*1;
-		}
-		
-		var totalPriceStr = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-		$(".totalPrice").attr("totalPrice", totalPrice);
-		$(".totalPrice").text(totalPriceStr);
-	}
-	
-	$("#nonMemberCK").change(function() {
-		console.log($(this));
-		if($(this).is(":checked")) {
-			$("#guestInput").val("비회원");
-			$("#guestInput").attr("readonly", true);
-			$("div[name=bookingDetail]").text("-");
-		} else {
-			$("#guestInput").attr("readonly", false);
-			$("#guestInput").val("");
-			$("div[name=bookingDetail]").text("예약 고객인 경우 검색창을 통해 해당 예약건을 선택해주세요.");
-		}
-	});
-	
 });
-
-function delHairItem(itemNo) {
-	// console.log($(".addedHair[hairNo=" + itemNo + "]").attr("hairName"));
-	var item = $(".addedHair[hairNo=" + itemNo + "]").get();
-	var price = $(item).attr("hairPrice") * $(item).attr("quantity");
-	$(".addedHair[hairNo=" + itemNo + "]").remove();
-	
-	var totalPrice = $(".totalPrice").attr("totalPrice")*1 - price;
-	var totalPriceStr = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	$(".totalPrice").attr("totalPrice", totalPrice);
-	$(".totalPrice").text(totalPriceStr);
-	
-}
 </script>
 <!-- GuestSearch Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="guestSearchModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg modal-dialog-scrollable">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">고객 검색 및 예약건 선택</h5>
+				<h5 class="modal-title" id="guestSearchModalLabel">고객 검색 및 예약건 선택</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -197,49 +80,37 @@ function delHairItem(itemNo) {
 				<div class="divider"></div>
 				<div class="spacing"></div>
 				<h6 class="font-weight-bold">금일 예약건 조회</h6>
-				<table class="table table-bordered col-10">
+				<table class="table table-bordered table-hover text-center" id="todayBookingTable">
 					<thead>
 						<tr>
-							<td></td>
 							<td>예약번호</td>
 							<td>예약일</td>
+							<td>아이디</td>
+							<td>이름</td>
 							<td>시술</td>
 							<td>디자이너</td>
-							<td>예약등록일</td>
+							<td>연락처</td>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td></td>
-							<td>1</td>
-							<td>2020-10-31 10:00</td>
-							<td>헤어 케어</td>
-							<td>스탭</td>
-							<td>010-1234-5678</td>
-						</tr>
-						<tr class="table-primary">
-							<td></td>
-							<td>2</td>
-							<td>2020-11-4 18:00</td>
-							<td>디지털 펌</td>
-							<td>원장</td>
-							<td>010-1234-5678</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>3</td>
-							<td>2020-11-10 14:00</td>
-							<td>프리미엄 컬러</td>
-							<td>디자이너</td>
-							<td>2020-10-20</td>
-						</tr>
+						<c:forEach var="todayB" items="${todayBookingList }">
+							<tr role="button">
+								<td>${todayB.bookNo }</td>
+								<td>${todayB.bookDateStr }</td>
+								<td>${todayB.guest.guestId }</td>
+								<td>${todayB.guest.guestName } </td>
+								<td>${todayB.howManyHairItems }</td>
+								<td>${todayB.designer.deNo }</td>
+								<td>${todayB.guest.guestPhone }</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 				<div class="spacing"></div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-primary" id="modalConfirm" data-dismiss="modal">선택 완료</button>
 			</div>
 		</div>
 	</div>
@@ -272,6 +143,8 @@ function delHairItem(itemNo) {
             <!-- card-body -->
             <div class="card-body p-5">
               <form>
+              	<input type="hidden" name="guestId" value="">
+              	<input type="hidden" name="bookNo" value="">
                 <div class="form-group row">
                   <label for="inputEmail3" class="col-3 col-form-label font-weight-bold">고객</label>
                   <div class="col-5">

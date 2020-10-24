@@ -178,4 +178,8 @@ public class BookingService {
         }
     }
 
+    
+    public ArrayList<Booking> getTodayBookingList() {
+    	return dao.selectBookingAllToday();
+    }
 }

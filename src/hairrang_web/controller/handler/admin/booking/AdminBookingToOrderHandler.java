@@ -45,10 +45,12 @@ public class AdminBookingToOrderHandler implements Command {
 			Booking booking = bService.getBookingByBookingNo(new Booking(no));
 			ArrayList<Designer> deList = dService.getDesignerList();
 			ArrayList<HairKind> hairKindList = hService.getHairListAll();
+			ArrayList<Booking> todayBookingList = bService.getTodayBookingList();
 			
 			request.setAttribute("booking", booking);
 			request.setAttribute("deList", deList);
 			request.setAttribute("hairKindList", hairKindList);
+			request.setAttribute("todayBookingList", todayBookingList);
 			
 		} else {
 			System.out.println(getClass().getSimpleName() + ">> POST");
