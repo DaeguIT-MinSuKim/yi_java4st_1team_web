@@ -263,8 +263,15 @@ ALTER TABLE BOOKING_HAIRS ADD CONSTRAINT PK_BOOKING_HAIRS
 			hair_no,
 			book_no
 		);
+/*공지사항*/
+CREATE TABLE NOTICE (
+	notice_no NUMBER NOT NULL,  /*공지번호*/
+	notice_title varchar2(100), /*공지제목*/
+	notice_content varchar2(1000) /*공지내용*/
+);
 
-
+ALTER TABLE NOTICE
+ADD CONSTRAINT PK_NOTICE_NO PRIMARY KEY (notice_no);
 
 /* 제약 조건 */
 ALTER TABLE HAIR
