@@ -83,7 +83,7 @@
 						<li><a href="booking.do">RESERVATION</a></li>
 						<li><a href="">COMMUNICATION</a>
 							<ul>
-								<li><a href="notice.do">NOTICE</a></li>
+								<li><a href="noticeHome.do">NOTICE</a></li>
 								<li><a href="eventHome.do">EVENT</a></li>
 								<li><a href="qnaHome.do">Q&A</a></li>
 							</ul></li>

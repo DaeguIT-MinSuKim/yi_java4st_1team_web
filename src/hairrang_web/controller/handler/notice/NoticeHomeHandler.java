@@ -1,4 +1,4 @@
-package hairrang_web.controller.handler.admin.notice;
+package hairrang_web.controller.handler.notice;
 
 import java.io.IOException;
 
@@ -10,22 +10,13 @@ import hairrang_web.controller.Command;
 import hairrang_web.service.NoticeService;
 import hairrang_web.utils.Paging;
 
-public class AdminNoticeListHandler implements Command {
+public class NoticeHomeHandler implements Command {
 	private NoticeService service = new NoticeService();
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-
-		String url = "/admin/notice/notice_list.jsp";
-
-		if (request.getMethod().equalsIgnoreCase("GET")) {
-			System.out.println(getClass().getSimpleName() + ">> GET");
-
-		} else {
-			System.out.println(getClass().getSimpleName() + ">> POST");
-
-		}
+		String url = "notice/noticeHome.jsp";
 
 		// 현재페이지랑 한페이지당 제한 문의 갯수 넘겨주는 곳
 		String nowPage = request.getParameter("nowPage");
@@ -55,7 +46,6 @@ public class AdminNoticeListHandler implements Command {
 		request.setAttribute("paging", paging);
 		// QnA페이징해서 해당페이지 qna를 list화해서 보내주는곳
 		request.setAttribute("viewAll", service.selectPagingNotice(paging));
-
 		return url;
 	}
 
