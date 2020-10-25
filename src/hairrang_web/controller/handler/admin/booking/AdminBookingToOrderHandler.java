@@ -56,6 +56,7 @@ public class AdminBookingToOrderHandler implements Command {
 			System.out.println(getClass().getSimpleName() + ">> POST");
 			
 			String kindNo = null;
+			String bookNo = null;
 			
 			if((kindNo = request.getParameter("kindNo")) != null) {
 				System.out.println("hairbox 읽기");
@@ -64,6 +65,24 @@ public class AdminBookingToOrderHandler implements Command {
 				
 				Gson gson = new Gson();
 				String result = gson.toJson(hairKind.getHairList(), new TypeToken<List<Hair>>(){}.getType());
+				System.out.println(result);
+				
+				response.setCharacterEncoding("UTF-8");
+				response.setContentType("Application/json");
+				response.setStatus(HttpServletResponse.SC_ACCEPTED);
+				
+				PrintWriter pw = response.getWriter();
+				pw.print(result);
+				pw.flush();
+				
+				return null;
+			} else if ((bookNo = request.getParameter("bookNo")) != null) {
+				System.out.println("bookNo 데이터 가져오기");
+				System.out.println(bookNo);
+				Booking booking = bService.getBookingByBookingNo(new Booking(Integer.parseInt(bookNo)));
+				
+				Gson gson = new Gson();
+				String result = gson.toJson(booking, new TypeToken<Booking>() {}.getType());
 				System.out.println(result);
 				
 				response.setCharacterEncoding("UTF-8");

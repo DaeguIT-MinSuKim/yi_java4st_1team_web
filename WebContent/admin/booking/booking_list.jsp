@@ -110,7 +110,7 @@ $(function() {
 							<td>${booking.guest.guestName }</td>
 							<td>${booking.guest.guestPhone }</td>
 							<td>${booking.howManyHairItems }</td>
-							<td>${booking.bookStatus }</td>
+							<td>${booking.bookStatusStr }</td>
 							<td>
 								<a href="bookingToOrder.do?no=${booking.bookNo }" class="btn bg-warning btn-sm bookingToOrderButton"><span class="text-gray-800">주문하기</span></a>
 							</td>

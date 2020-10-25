@@ -158,6 +158,9 @@ $(function(){
                     <a href="#" class="btn btn-primary btn-sm" name="guestSearchBtn" data-toggle="modal" data-target="#exampleModal">
                       <span class="text">검색</spa>
                     </a>
+                    <a href="#" class="btn btn-secondary btn-sm" name="guestClearBtn" onclick="setClear()">
+                      <span class="text">취소</spa>
+                    </a>
                   </div>
                   <!-- <div class="w-100"></div>
                   <div class="col-md-5 offset-md-3">
