@@ -58,5 +58,9 @@ public interface BookingDao {
 
 	ArrayList<Booking> pagingBookingListById(Paging paging, String id);
 
+	/* Admin */
+	
+	ArrayList<Booking> selectBookingAllToday();
+
 
 }

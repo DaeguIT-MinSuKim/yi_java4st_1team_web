@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 import hairrang_web.dao.BookingDao;
 import hairrang_web.dao.DesignerDao;
@@ -657,5 +657,28 @@ public class BookingDaoImpl implements BookingDao {
 	}
 	
 	
+	/* Admin 쪽 */
+	
+	@Override
+	public ArrayList<Booking> selectBookingAllToday() {
+		String sql = "SELECT * FROM booking WHERE TO_CHAR(SYSDATE, 'YYYY-MM-DD') = ?";
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, LocalDate.now().toString());
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					ArrayList<Booking> list = new ArrayList<>();
+					do {
+						list.add(getBooking(rs));
+					} while(rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
 	
 }
