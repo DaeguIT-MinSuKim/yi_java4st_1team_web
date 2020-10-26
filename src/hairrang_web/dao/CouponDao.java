@@ -11,4 +11,6 @@ public interface CouponDao {
 	ArrayList<Coupon> pagingCouponById(Paging paging, String id);
 	
 	int countCouponById(String id);
+
+	ArrayList<Coupon> selectAvailableCouponToday(String id);
 }	

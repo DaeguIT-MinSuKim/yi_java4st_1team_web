@@ -49,21 +49,45 @@ public class CouponDaoImpl implements CouponDao{
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, id);
-				try(ResultSet rs = pstmt.executeQuery()){
-					if(rs.next()) {
-						ArrayList<Coupon> list = new ArrayList<Coupon>();
-						do {
-							list.add(getCoupon(rs));
-						}while(rs.next());
-						return list;
-					}
+			try(ResultSet rs = pstmt.executeQuery()){
+				if(rs.next()) {
+					ArrayList<Coupon> list = new ArrayList<Coupon>();
+					do {
+						list.add(getCoupon(rs));
+					}while(rs.next());
+					return list;
 				}
-			}catch(SQLException e) {
-				throw new RuntimeException();
 			}
+		}catch(SQLException e) {
+			throw new RuntimeException();
+		}
 		return null;
 	}
 
+	
+	// 오늘자 사용가능한 쿠폰 보여주기
+	@Override
+	public ArrayList<Coupon> selectAvailableCouponToday(String id) {
+		String sql = "SELECT * FROM coupon WHERE guest_id = ? AND USED_YN = 'n' AND SYSDATE BETWEEN EVENT_START AND EVENT_END";
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, id);
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					ArrayList<Coupon> list = new ArrayList<Coupon>();
+					do {
+						list.add(getCoupon(rs));
+					} while(rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+		
+		return null;
+	}
 	
 //////////////////////////////////////페이징/////////////////////////////////////////////////
 	

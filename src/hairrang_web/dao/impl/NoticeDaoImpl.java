@@ -40,7 +40,7 @@ public class NoticeDaoImpl implements NoticeDao {
 
 	@Override
 	public List<Notice> selectPagingNotice(Paging paging) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM notice  ORDER BY notice_no DESC) a) WHERE  rn BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM notice  ORDER BY notice_no DESC) a) WHERE notice_delyn = 'n' and  rn BETWEEN ? AND ?";
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, paging.getStart());
 			pstmt.setInt(2, paging.getEnd());
@@ -135,4 +135,42 @@ public class NoticeDaoImpl implements NoticeDao {
 		return null;
 	}
 
+	@Override
+	public int deleteNotice(Notice notice) {
+		String sql = "UPDATE NOTICE SET NOTICE_DELYN ='y' WHERE NOTICE_NO =?";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setInt(1, notice.getNoticeNo());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public int insertNotice(Notice notice) {
+		String sql = "INSERT INTO NOTICE(NOTICE_TITLE,NOTICE_CONTENT) VALUES(?,?)";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, notice.getNoticeTitle());
+			pstmt.setString(2, notice.getNoticeContent());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public int updateNotice(Notice notice) {
+		String sql = "UPDATE NOTICE SET NOTICE_TITLE=?, NOTICE_CONTENT=? WHERE NOTICE_NO =?";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, notice.getNoticeTitle());
+			pstmt.setString(2, notice.getNoticeContent());
+			pstmt.setInt(3, notice.getNoticeNo());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

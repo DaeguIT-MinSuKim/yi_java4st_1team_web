@@ -192,90 +192,47 @@ $(function(){
                     </div>
                 </div>
 
-                <div class="divider"></div>
+                <div class="col-sm divider"></div>
+                <div class="spacing"></div>
 
-                <p class="h7 font-weight-bold">시술 대분류</p>
+                <h7 class="mb-3 font-weight-bold">시술 대분류</h7>
                 <ul class="list-group list-group-horizontal-md" id="hairkindbox">
                		<c:forEach items="${hairKindList }" var="hk">
-                  		<li class="list-group-item flex-fill text-center" role="button" id="hairkindbox" kindNo="${hk.kindNo }">
-                  		${hk.kindNo }. ${hk.kindName }</li>
+                  		<li class="list-group-item flex-fill text-center" role="button" id="hairkindbox"
+                  		 kindNo="${hk.kindNo }">${hk.kindNo }. ${hk.kindName }</li>
 					</c:forEach>
                 </ul>
 
-                <div class="spacing m-2"></div>
+                <div class="spacing"></div>
                 
-                <p class="h7 font-weight-bold">시술 소분류</p>
+                <h7 class="mt-3 mb-3 font-weight-bold">시술 소분류</h7>
                 <ul class="list-group list-group-horizontal-md" id="hairbox">
                 </ul>
                 
-                <div class="spacing"></div>
-                <div class="divider "></div>
+                <div class="spacing bg"></div>
 
-				<table class="table table-borderless text-right addedHairList" id="addedHairList">
-                  <!-- <tr>
-                    <td class="text-center" style="width: 40px;" >1</td>
-                    <td class="text-left" >탈색</td>
-                    <td style="width: 100px" >70,000원</td>
-                    <td class="text-left" style="width: 50px;">x <span class="quantity">2</span></td>
-                    <td style="width: 100px;">140,000원</td>
-                    <td style="width: 40px;"><i class="fas fa-times"></i></td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">2</td>
-                    <td class="text-left">프리미엄 염색</td>
-                    <td>80,000원</td>
-                    <td class="text-left" >x <span class="quantity">1</span></td>
-                    <td>80,000원</td>
-                    <td><i class="fas fa-times"></i></td>
-                  </tr> -->
-                </table>
-
-                <div class="divider"></div>
-                <div class="row mb-3 pr-1">
-                  <div class="col-4"></div>
-                  <div class="col-2 m-auto font-weight-bold">사용가능 쿠폰</div>
-                  <div class="col-3">
-                    <select class="form-control" id="couponBox" disabled>
-                    </select>
-                  </div>
-                  <div class="col-3">
-                    <select class="form-control" id="couponTargetBox" disabled>
-                    </select>
-                  </div>
-                </div>
-
+				<ul class="addedHairList list-group list-group-flush">
+				</ul>
+				
+				<!-- <div class="col-sm-12 text-right totalPrice">
+				</div> -->
+				
 				<div class="divider"></div>
 
-                <div class="row pr-1 mb-2">
-                  <div class="col-6 text-right font-weight-bold">
-                  	합계
-                  </div>
-                  <div class="col-6 text-right">
-                    <span class="text-right m-auto" id="totalAmount" totalAmount="">0</span>
-                    	<span class="align-bottom">원</span>
-                  </div>
-                </div>
-				
-                <div class="row pr-1 mb-2">
-                  <div class="col-6 text-right font-weight-bold">
-                  	 할인 금액
-                  </div>
-                  <div class="col-6 text-right">
-                    <span class="text-right m-auto" id="discountAmount" discountAmount="">0</span>
-                    	<span class="align-bottom">원</span>
-                  </div>
-                </div>
-
-	            <div class="row text-right pr-1">
-                	<span class="col-sm-6 text-right font-weight-bold m-auto">총 금액</span>
-					<span class="col-sm-6">
-                    <span class="h4 text-right m-auto" id="totalPrice" name="totalPrice" totalPrice="">0</span>
-                    	<span class="align-bottom">원</span>
-                  	</span>
+	            <div class="row">
+                	<div class="col-4">
+                	</div>
+                	<div class="row col-8">
+                  		<div class="col-sm-4 col-form-label text-left pt-2">
+                  			<span style="line-height: 2.2;">합계</span></div>
+                  		<div class="col-sm-8 col-form-label text-right align-middle">
+                  			<span class="totalPrice h4" name="totalPrice" totalPrice="">0</span><span class="align-bottom pl-2">원</span>
+                  		</div>
+                	</div>
                 </div>
 
                 <div class="divider"></div>
-				<div class="spacing bg"></div>
+                
                 
                 <div class="form-group row">
                   <div class="col-sm" style="text-align: right;">
