@@ -9,13 +9,12 @@ public class Coupon {
 	
 	public Coupon() {}
 
-		public Coupon(int couponId, Guest guest, Event event, String usedYn) {
+	public Coupon(int couponId, Guest guest, Event event, String usedYn) {
 		this.couponId = couponId;
 		this.guest = guest;
 		this.event = event;
 		this.usedYn = usedYn;
 	}
-
 
 	public int getCouponId() {
 		return couponId;

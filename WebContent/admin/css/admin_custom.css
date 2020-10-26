@@ -11,11 +11,23 @@
 .table-responsive {overflow-x:hidden !important}
  */
 
- /* 목록 뽑는 곳에서 */
+/* 목록 뽑는 곳에서 */
 #dataTable td:first-child, td:nth-child(2){text-align: center;}
 #dataTable td:first-child { width: 58px; min-width: 58px; max-width: 58px; }
 #dataTable td:nth-child(2) { width: 100px; min-width: 100px; max-width: 100px; }
 #dataTable td:last-child{padding: 6px; width: 190px; min-width: 190px; max-width: 190px}
+
+
+#addedHairList tr:first-child td:first-child {width: 40px;}
+#addedHairList tr:first-child td:nth-child(3) {width: 100px;}
+#addedHairList tr:first-child td:nth-child(4) {width: 50px;}
+#addedHairList tr:first-child td:nth-child(5) {width: 100px;}
+#addedHairList tr:first-child td:nth-child(6) {width: 40px;}
+
+#addedHairList td:first-child {text-align: center;}
+#addedHairList td:nth-child(2) {text-align: left;}
+#addedHairList td:nth-child(4) {text-align: left;}
+
 
 .divider {
     height: 0;

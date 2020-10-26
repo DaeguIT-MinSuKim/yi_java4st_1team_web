@@ -36,8 +36,23 @@ SELECT to_char(sysdate,'yyyy-') || to_char(guest_birthday ,'MM-dd') AS today+15 
 
 --지수
 INSERT INTO coupon(COUPON_ID, guest_id, event_no, event_start, event_end) 
-SELECT 21, 'chini91', event_no, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(guest_birthday - 15, 'MM-DD')) AS START_date,
+SELECT 4, 'test', event_no, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(guest_birthday - 15, 'MM-DD')) AS START_date,
    TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(guest_birthday + 15, 'MM-DD')) AS end_date FROM event, GUEST g
-   WHERE event_no = 1 AND guest_id = 'chini91';
+   WHERE event_no = 1 AND guest_id = 'test';
 --------
-  
+
+SELECT * FROM coupon;
+
+SELECT * FROM coupon
+WHERE guest_id = 'test'
+AND USED_YN = 'n'
+AND SYSDATE BETWEEN EVENT_START AND event_end;
+
+SELECT * FROM EVENT;
+
+CREATE OR REPLACE VIEW coupon_view
+as
+SELECT c.*, e.EVENT_NAME, e.EVENT_SALERATE
+FROM COUPON c LEFT OUTER JOIN Event e ON (c.EVENT_NO  = e.EVENT_NO );
+
+SELECT * FROM coupon_view;

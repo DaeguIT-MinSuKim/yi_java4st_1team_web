@@ -92,6 +92,7 @@ $(document).on("click", "#todayBookingTable tr[role=button]", function() {
 });
 
 
+var hairListRow = 1;
 /* 시술 추가 */
 function addHair(hairNo, hairName, hairPrice) {
 	if(hairNo == 0) {
@@ -103,28 +104,39 @@ function addHair(hairNo, hairName, hairPrice) {
 	
 	if (selectedItem.length == 0) {
 		// 처음 선택한 경우
-		var addLine = "<li class='addedHair list-group-item' hairNo='" + hairNo + "' hairName='" + hairName + "' quantity='" + quantity + "' hairPrice='" + hairPrice + "'>"
-						+ hairName + " <span class='quantity'>" + quantity + "</span>회 &nbsp;&nbsp;<a href='javascript:void(0);' onclick='delHairItem(" + hairNo +"); return false;'>"
-						+ "<i class='fas fa-times'></i></a></li>";
-		$(".addedHairList").append(addLine);
+		var hairPriceStr = hairPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
+		var addTr = "<tr class='addedHair' hairNo='" + hairNo+ "' hairName='" + hairName + "' hairPrice='" + hairPrice + "' quantity='" + quantity + "'>"
+						+ "<td>" + hairListRow + "</td><td>" + hairName + "</td>"
+						+ "<td>" + hairPriceStr + "</td><td>x <span class='quanityty'>1</span></td>"
+						+ "<td>" + hairPriceStr + "</td>"
+						+ "<td><a href='javascript:void(0);' onclick='delHairItem(" + hairNo +")'><i class='fas fa-times'></td></tr>";
+//		var addLine = "<li class='addedHair list-group-item' hairNo='" + hairNo + "' hairName='" + hairName + "' quantity='" + quantity + "' hairPrice='" + hairPrice + "'>"
+//						+ hairName + " <span class='quantity'>" + quantity + "</span>회 &nbsp;&nbsp;<a href='javascript:void(0);' onclick='delHairItem(" + hairNo +"); return false;'>"
+//						+ "<i class='fas fa-times'></i></a></li>";
+		$(".addedHairList").append(addTr);
 	} else {
 		// 이미 존재하는 경우 수량을 증가시킴
 		quantity = selectedItem.attr("quantity") * 1;
-		$(selectedItem).attr("quantity", ++quantity);
-		$(selectedItem).children(".quantity").text(quantity);
+		quantity += 1;
+		var price = hairPrice * quantity; 
+		$(selectedItem).children().eq(4).text(price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원");
+		$(selectedItem).attr("quantity", quantity);
+		$(selectedItem).find("span").text(quantity);
 	}
 	
-	var totalPrice = $(".totalPrice").attr("totalPrice")*1;
+	var totalAmount = $("#totalAmount").attr("totalAmount")*1;
 	
-	if(totalPrice === null) {
-		totalPrice = hairPrice*1;
+	if(totalAmount === null) {
+		totalAmount = hairPrice*1;
 	} else {
-		totalPrice += hairPrice*1;
+		totalAmount += hairPrice*1;
 	}
 	
-	var totalPriceStr = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	$(".totalPrice").attr("totalPrice", totalPrice);
-	$(".totalPrice").text(totalPriceStr);
+	var totalAmountStr = totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	$("#totalAmount").attr("totalAmount", totalAmount);
+	$("#totalAmount").text(totalAmountStr);
+	
+	calTotalPrice();
 }
 
 /* 추가된 시술 삭제 */
@@ -134,15 +146,26 @@ function delHairItem(itemNo) {
 	var price = $(item).attr("hairPrice") * $(item).attr("quantity");
 	$(".addedHair[hairNo=" + itemNo + "]").remove();
 	
-	var totalPrice = $(".totalPrice").attr("totalPrice")*1 - price;
-	var totalPriceStr = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	$(".totalPrice").attr("totalPrice", totalPrice);
-	$(".totalPrice").text(totalPriceStr);
+	var totalAmount = $("#totalAmount").attr("totalAmount")*1 - price;
+	var totalAmountStr = totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	$("#totalAmount").attr("totalAmount", totalAmount);
+	$("#totalAmount").text(totalAmountStr);
+	
+	calTotalPrice();
 }
+
+function calTotalPrice() {
+	var totalAmount = $("#totalAmount").attr("totalAmount") * 1;
+	var discountAmount = $("#discountAmount").attr("discountAmount") * 1;
+	
+	var totalPrice = (totalAmount - discountAmount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	$("#totalPrice").attr("totalPrice", totalAmount-discountAmount);
+	$("#totalPrice").text(totalPrice);
+}
+
 
 var selectedBookingNo = 0; // 선택된 예약번호
 var selBooking; // 선택된 예약 정보
-
 
 /* 모달창 선택완료시 주문화면에 set */
 $(document).on("click", "#modalConfirm", function(){ 
@@ -196,15 +219,24 @@ function setOrderViewClear() {
 	$("#nonMemberCK").prop("checked", false);
 	$("#designerSelector").val("");
 	$(".addedHairList").empty();
-	$(".totalPrice").text("0");
-	$(".totalPrice").attr("totalPrice", "0");
+	
+	$("#couponBox").empty();
+	$("#couponBox").prop("disabled", true);
+	$("#couponTargetBox").empty();
+	$("#couponTargetBox").prop("disabled", true);
+	
+	
+	$("#totalAmount").text("0");
+	$("#totalAmount").attr("totalAmount", 0);
+	$("#discountAmount").text("0");
+	$("#discountAmount").attr("discountAmount", 0);
+	$("#totalPrice").text("0");
+	$("#totalPrice").attr("totalPrice", 0);
 }
 
 /* DB에서 조회한 예약정보 화면에 set */
 function setBookingInfo(selBooking) {
 	setOrderViewClear();
-	
-	console.log(selBooking);
 	
 	$("#guestInput").prop("readonly", false);
 	$("#nonMemberCK").prop("checked", false);
@@ -221,6 +253,8 @@ function setBookingInfo(selBooking) {
 			addHair(hairNo, hairName, hairPrice);
 		}
 	});
+	
+	loadCouponList(selBooking.guest.guestId);
 }
 
 
@@ -232,6 +266,40 @@ function setClear() {
 	selectedBookingNo = 0;
 	$("#todayBookingTable .table-primary").removeClass("table-primary"); // 모달창 선택 clear
 }
+
+
+function loadCouponList(guestId) {
+	$.ajax({
+		url: "bookingToOrder.do",
+		type: "post",
+		dataType: "json",
+		data: {
+			guestId: guestId
+		},
+		success: function(data) {
+			console.log(data);
+			loadCouponBox($("#couponBox"), data);
+			$("#couponBox").prop("disabled", false);
+			$("#couponTargetBox").prop("disabled", false);
+		},
+		error: function(error) {
+			console.log("[load couponList] error: " + error);
+		}
+	});
+}
+
+function loadCouponBox(target, data) {
+	target.empty();
+	var dataArr = "<option value=''>사용 안 함</option>";
+	
+	$.each(data, function(index, item) {
+		dataArr += "<option value='" + item.couponId+ "'>" + item.event.eventName + "</option>";
+		index++;
+	});
+	
+	target.append(dataArr);
+};
+
 /* 주문등록 버튼 클릭 시 input 값들 다 읽어오기 */
 $(function(){
 	

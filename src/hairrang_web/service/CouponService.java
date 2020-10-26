@@ -14,6 +14,10 @@ public class CouponService {
 		return dao.selectCouponById(id);
 	}
 	
+	public ArrayList<Coupon> getAvailableCouponListToday(String id) {
+		return dao.selectAvailableCouponToday(id);
+	}
+	
 	public ArrayList<Coupon> pagingCouponById(Paging paging, String id){
 		return dao.pagingCouponById(paging, id);
 	}
