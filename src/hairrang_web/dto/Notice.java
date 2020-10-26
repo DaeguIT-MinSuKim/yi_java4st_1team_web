@@ -5,6 +5,15 @@ public class Notice {
 	private String noticeTitle;
 	private String noticeContent;
 	private String noticeDelYn;
+	private String noticeFile;
+
+	public String getNoticeFile() {
+		return noticeFile;
+	}
+
+	public void setNoticeFile(String noticeFile) {
+		this.noticeFile = noticeFile;
+	}
 
 	public String getNoticeDelYn() {
 		return noticeDelYn;
@@ -41,7 +50,7 @@ public class Notice {
 	@Override
 	public String toString() {
 		return "Notice [noticeNo=" + noticeNo + ", noticeTitle=" + noticeTitle + ", noticeContent=" + noticeContent
-				+ ", noticeDelYn=" + noticeDelYn + "]";
+				+ ", noticeDelYn=" + noticeDelYn + ", noticeFile=" + noticeFile + "]";
 	}
 
 	public Notice(int noticeNo, String noticeTitle, String noticeContent, String noticeDelYn) {

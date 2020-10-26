@@ -9,6 +9,10 @@ INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('4번째공지','4번째�
 
 UPDATE NOTICE SET NOTICE_DELYN ='n';
 
+DELETE FROM NOTICE WHERE NOTICE_NO >5;
+
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM notice WHERE notice_delyn = 'n'  ORDER BY notice_no DESC) a) WHERE rn BETWEEN 1 AND 5;
+
 
 
 

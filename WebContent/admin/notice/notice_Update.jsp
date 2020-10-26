@@ -15,11 +15,11 @@
 					no : no,
 					title : title,
 					content : content
-					
+
 				},
 				dataType : "text",
 				success : function(res) {
-					location.href="noticeList.do";
+					location.href = "noticeList.do";
 					alert("수정이 완료되었습니다.");
 					location.reload;
 				},
@@ -31,17 +31,19 @@
 	}
 </script>
 <h1>공지사항 작성</h1>
-<div>
-	<label>제목</label> <input type="text" id="title" value="${notice.noticeTitle }"/><br> <label>내용</label>
-	<textarea rows="30" cols="100" id="content" >${notice.noticeContent }</textarea>
+<form>
+	<div>
+		<label>제목</label> <input type="text" id="title"
+			value="${notice.noticeTitle }" /><br> <label>내용</label>
+		<textarea rows="30" cols="100" id="content">${notice.noticeContent }</textarea>
 
-	<div id="button" style="float: right;">
-		<input type="reset" value="초기화" />
-		<input type="button" value="수정완료" onclick="insertNotice()" />
-		<input type="button" value="취소" onclick="location.href='noticeList.do'" />
-		<input type="hidden" value="${notice.noticeNo }" id="no">
+		<div id="button" style="float: right;">
+			<input type="reset" value="초기화" /> <input type="button" value="수정완료"
+				onclick="insertNotice()" /> <input type="button" value="취소"
+				onclick="location.href='noticeList.do'" /> <input type="hidden"
+				value="${notice.noticeNo }" id="no">
+		</div>
 	</div>
-</div>
 
-
+</form>
 <%@ include file="../include/footer.jsp"%>
