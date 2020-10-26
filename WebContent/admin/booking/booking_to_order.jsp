@@ -32,9 +32,10 @@ $(function(){
 						</div>
 						<div class="col-sm-2 pr-0">
 							<select class="form-control">
-								<option>아이디</option>
-								<option>이름</option>
-								<option>연락처</option>
+								<option value="0">전체</option>
+								<option value="1">아이디</option>
+								<option value="2">이름</option>
+								<option value="3">연락처</option>
 							</select>
 						</div>
 						<div class="col-sm-3 pr-0">
@@ -46,7 +47,7 @@ $(function(){
 						</div>
 					</div>
 				</form>
-				<table class="table table-bordered col-8">
+				<table class="col-8 table table-bordered table-hover text-center" id="guestSearchTable">
 					<thead>
 						<tr>
 							<td></td>
@@ -56,24 +57,6 @@ $(function(){
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td></td>
-							<td>test</td>
-							<td>테스트유저</td>
-							<td>010-1234-5678</td>
-						</tr>
-						<tr class="table-primary">
-							<td></td>
-							<td>test</td>
-							<td>테스트유저</td>
-							<td>010-1234-5678</td>
-						</tr>
-						<tr>
-							<td></td>
-							<td>test</td>
-							<td>테스트유저</td>
-							<td>010-1234-5678</td>
-						</tr>
 					</tbody>
 				</table>
 				<div class="spacing"></div>
