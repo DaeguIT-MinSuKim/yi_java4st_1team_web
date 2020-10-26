@@ -35,4 +35,16 @@ public class NoticeService {
 		ArrayList<Notice> list= (ArrayList<Notice>) dao.NoticeAll();
 		return list;
 	}
+	
+	public int delelteNotice(Notice notice) {
+		return dao.deleteNotice(notice);
+	}
+	
+	public int insertNotice(Notice notice) {
+		return dao.insertNotice(notice);
+	}
+	
+	public int updateNotice(Notice notice) {
+		return dao.updateNotice(notice);
+	}
 }
