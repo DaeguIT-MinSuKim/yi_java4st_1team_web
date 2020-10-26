@@ -267,8 +267,12 @@ ALTER TABLE BOOKING_HAIRS ADD CONSTRAINT PK_BOOKING_HAIRS
 CREATE TABLE NOTICE (
 	notice_no NUMBER NOT NULL,  /*공지번호*/
 	notice_title varchar2(100), /*공지제목*/
-	notice_content varchar2(1000) /*공지내용*/
+	notice_content varchar2(1000), /*공지내용*/
+	notice_delYn char(1) /*삭제여부*/
 );
+
+/*삭제여부 추가*/
+--ALTER TABLE notice ADD notice_delYn char(1) DEFAULT 'n';
 
 ALTER TABLE NOTICE
 ADD CONSTRAINT PK_NOTICE_NO PRIMARY KEY (notice_no);

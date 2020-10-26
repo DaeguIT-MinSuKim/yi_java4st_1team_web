@@ -22,4 +22,14 @@ public interface NoticeDao {
 	Notice selectNoticeDownSide(Notice notice);
 
 	Notice selectNoticeUpSide(Notice notice);
+	
+	//삭제
+	int deleteNotice(Notice notice);
+	
+	//추가
+	int insertNotice(Notice notice);
+	
+	//수정
+	int updateNotice(Notice notice);
+	
 }
