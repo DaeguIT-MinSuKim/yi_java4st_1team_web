@@ -8,12 +8,10 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 import hairrang_web.dao.GuestDao;
 import hairrang_web.ds.JndiDs;
 import hairrang_web.dto.Guest;
-import hairrang_web.dto.QnA;
 import hairrang_web.utils.Paging;
 
 public class GuestDaoImpl implements GuestDao {
@@ -120,7 +118,7 @@ public class GuestDaoImpl implements GuestDao {
 	// 회원정보 수정시 로그인과 별도로 비밀번호 재확인이 필요한데 어떻게 처리할지 고민해보기.
 	@Override
 	public int updateGuest(Guest guest) {
-		String sql = "UPDATE GUEST SET GUEST_NAME = ?, GUEST_BIRTHDAY = ?, GUEST_EMAIL = ?, GUEST_PHONE =?, GUEST_GENDER = ?, GUEST_NOTE = ?,INFO_YN = ? WHERE GUEST_ID = ? ";
+		String sql = "UPDATE GUEST SET GUEST_NAME = ?, GUEST_BIRTHDAY = ?, GUEST_EMAIL = ?, GUEST_PHONE =?, GUEST_GENDER = ?, GUEST_NOTE = ?,INFO_YN = ?, DEL_YN = ? WHERE GUEST_ID = ? ";
 
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, guest.getGuestName());
@@ -130,7 +128,8 @@ public class GuestDaoImpl implements GuestDao {
 			pstmt.setInt(5, guest.getGuestGender());
 			pstmt.setString(6, guest.getGuestNote());
 			pstmt.setString(7, guest.getInfoYn());
-			pstmt.setString(8, guest.getGuestId());
+			pstmt.setString(8, guest.getDelYn());
+			pstmt.setString(9, guest.getGuestId());
 
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -284,7 +283,7 @@ public class GuestDaoImpl implements GuestDao {
 					do {
 						list.add(getGuest(rs));
 					} while (rs.next());
-					
+
 					return list;
 				}
 			}
@@ -361,18 +360,42 @@ public class GuestDaoImpl implements GuestDao {
 		}
 		return null;
 	}
+	
+	@Override
+	public ArrayList<Guest> searchGuestByPhone(Paging paging, String phone) {
+		//FROM guest_view WHERE REGEXP_REPLACE(guest_phone, '[^0-9]+') LIKE '%' || ? || '%'";
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM "
+				+ "(SELECT * FROM GUEST WHERE REGEXP_REPLACE(guest_phone, '[^0-9]+') LIKE '%' || ? || '%') a) "
+				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, phone);
+			pstmt.setInt(2, paging.getStart());
+			pstmt.setInt(3, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					ArrayList<Guest> list = new ArrayList<>();
+					do {
+						list.add(getGuest(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
 
 	@Override
 	public int countIdSearch(String id) {
 		String sql = "SELECT COUNT(*) FROM guest WHERE GUEST_ID LIKE '%' || ? || '%'";
-		try (Connection con = JndiDs.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)){
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, id);
-				try (ResultSet rs = pstmt.executeQuery()) {
-					if (rs.next()) {
-						return rs.getInt(1);
-					}
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
 				}
+			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -382,14 +405,30 @@ public class GuestDaoImpl implements GuestDao {
 	@Override
 	public int countNameSearch(String name) {
 		String sql = "SELECT COUNT(*) FROM guest WHERE GUEST_NAME LIKE '%' || ? || '%'";
-		try (Connection con = JndiDs.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)){
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, name);
-				try (ResultSet rs = pstmt.executeQuery()) {
-					if (rs.next()) {
-						return rs.getInt(1);
-					}
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
 				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
+
+
+	@Override
+	public int countPhoneSearch(String phone) {
+		String sql = "SELECT COUNT(*) FROM guest WHERE REGEXP_REPLACE(guest_phone, '[^0-9]+') LIKE '%' || ? || '%'";
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, phone);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
+			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

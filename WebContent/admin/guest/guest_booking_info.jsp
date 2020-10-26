@@ -20,38 +20,15 @@
 .paging {text-align:center; margin:10px;}
 .onb-buttons {text-align:center;}
 </style>
-<%-- <c:choose>
-	<c:when test="${message == -1}">
-	 	<script>
-	          alert('예약내역이 없음')
-	          history.go(-1);
-	    </script>
-	</c:when>
-	<c:when test="${message == -2}">
-	 	<script>
-	          alert('로그인이 필요합니다.')
-	          location.href="login.do";
-	    </script>
-	</c:when>
-</c:choose> --%>
-
 
 <div class="book_wrapper">
-<!-- 주문 내역 -->
-<h4>주문내역</h4>
-<br>
-<br>
-<br>
-<br>
-<br>x
-<br>
-<br>
 
 <!-- 예약내역 -->
 <h4>예약내역</h4>
+
 <table class="board">
 	<tr>
-		<th>번호</th> <th>이용날짜</th> <th>시술 정보</th> <th>총 금액</th> <th>예약상태</th> <th>예약등록일</th> 
+		<th>번호</th> <th>이용날짜</th> <th>시술 정보</th> <th>총 금액</th> <th>예약상태</th> <th>예약등록일</th> <th></th>
 	</tr>
 	<c:choose>
 		<c:when test="${message == -1}">
@@ -77,12 +54,6 @@
 			</c:if>
 		</td>
 		<td class="book_price">
-			<%-- <c:set var="pSum" value="0" />
-			<c:forEach items="${booking.hairList}" var="h">
-				<c:set var="pSum" value="${pSum }+${h.hair.hairPrice }*${h.quantity }" />
-			</c:forEach>
-			${pSum } --%>
-			<%-- <fmt:formatNumber value="${pSum}" type="currency"/> --%>
 			<fmt:formatNumber value="${pp.get(status.index)}" pattern="#,###" />
 		</td>
 		<td class="book_status">${booking.bookStatusStr}</td>
@@ -90,13 +61,23 @@
 			<fmt:parseDate value="${booking.bookRegDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookReg" type="both" />
 			<fmt:formatDate value="${bookReg}" pattern="yyyy-MM-dd HH:mm" />
 		</td>
+		<td class="book_reg">
+			<c:if test="${booking.bookStatus == 1}">
+				<input type="button" value="주문 전환" class="btn btn-dark btn-sm" onclick="go_order()">
+			</c:if>
+			<c:if test="${booking.bookStatus == 0}">
+				<input type="button" value="주문 전환" class="btn btn-dark btn-sm" disabled>
+			</c:if>
+		</td>
 	</tr>
 	</c:forEach>
 </table>
 
+
+
 <div class="paging">
 			<c:if test="${paging.startPage != 1}">
-				<a href="guestBook.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}"><i class="xi-angle-left"></i></a>	
+				<a href="guestBookingInfo.do?id=${id}&nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}"><i class="xi-angle-left"></i></a>	
 			</c:if>
 			&nbsp;&nbsp;
 			<c:forEach begin="${paging.startPage}" end="${paging.endPage }" var="p">
@@ -105,18 +86,17 @@
 					${p}
 					</c:when>
 					<c:when test="${p != paging.nowPage }">
-						<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><b style="margin:5px;">${p}</b></a>
+						<a href="guestBookingInfo.do?id=${id}&nowPage=${p}&cntPerPage=${paging.cntPerPage}"><b style="margin:5px;">${p}</b></a>
 					</c:when>
 				</c:choose>
 			</c:forEach>
 			&nbsp;&nbsp;
 			<c:if test="${paging.endPage != paging.lastPage }">
-				<a href="guestBook.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}"><i class="xi-angle-right"></i></a>
+				<a href="guestBookingInfo.do?${id}&nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}"><i class="xi-angle-right"></i></a>
 			</c:if>	
 		</div>
 	<div class="onb-buttons">
-			<input type="button" value="목록">
-			<input type="button" value="취소" class="cancel">
+			<input type="button" value="목록" onclick="location.href='guestList.do'"> 
 	</div>
 	
 </div>

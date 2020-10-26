@@ -85,7 +85,7 @@ public class AdminGuestListHandler implements Command {
 			}
 			
 			//이후 페이지 클래스로 정리하는곳
-			String opt = request.getParameter("opt"); //0 아이디, 1이름
+			String opt = request.getParameter("opt"); //0 아이디, 1이름, 2폰번호
 			String value = request.getParameter("value");
 						
 			if(opt.equals("0")) { //아이디로검색
@@ -98,12 +98,21 @@ public class AdminGuestListHandler implements Command {
 				request.setAttribute("total", total);
 				request.setAttribute("paging", paging);
 				
-			}else {//이름으로 검색
+			}else if(opt.equals("1")){//이름으로 검색
 				total = service.countNameSearch(value);
 				Paging paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
 				ArrayList<Guest> nameSearchList = service.searchGuestByName(paging, value);
 				
 				request.setAttribute("list", nameSearchList);
+				request.setAttribute("cnt", cntPerPage);
+				request.setAttribute("total", total);
+				request.setAttribute("paging", paging);
+			}else { //폰번호검색
+				total = service.countPhoneSearch(value);
+				Paging paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+				ArrayList<Guest> phoneSearch = service.searchGuestByPhone(paging, value);
+				
+				request.setAttribute("list", phoneSearch);
 				request.setAttribute("cnt", cntPerPage);
 				request.setAttribute("total", total);
 				request.setAttribute("paging", paging);

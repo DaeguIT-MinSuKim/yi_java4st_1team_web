@@ -165,3 +165,15 @@ SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM GUEST WHERE GUEST_NAME 
 SELECT COUNT(*) FROM guest WHERE GUEST_NAME LIKE '%김%';
 
 SELECT * FROM guest;
+
+SELECT * FROM BOOKING ORDER BY BOOK_REGDATE desc;
+
+--게스트 폰번호 검색
+--/FROM guest_view WHERE REGEXP_REPLACE(guest_phone, '[^0-9]+') LIKE '%' || ? || '%'";
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM GUEST WHERE REGEXP_REPLACE(guest_phone, '[^0-9]+') LIKE '%56%') a) 
+			WHERE rn BETWEEN 11 AND 20 ORDER BY rn;
+
+--카운트
+SELECT COUNT(*) FROM guest WHERE REGEXP_REPLACE(guest_phone, '[^0-9]+') LIKE '%56%';
+
+		

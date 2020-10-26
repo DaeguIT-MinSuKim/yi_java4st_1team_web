@@ -65,6 +65,10 @@ public class GuestService{
 		return dao.searchGuestById(paging, id);
 	}
 	
+	public ArrayList<Guest> searchGuestByPhone(Paging paging, String phone){
+		return dao.searchGuestByPhone(paging, phone);
+	}
+	
 	public int countIdSearch(String id) {
 		return dao.countIdSearch(id);
 	}
@@ -72,4 +76,9 @@ public class GuestService{
 	public int countNameSearch(String name) {
 		return dao.countNameSearch(name);
 	}
-}
+	
+	public int countPhoneSearch(String phone) {
+		return dao.countPhoneSearch(phone);
+	}
+}	
+

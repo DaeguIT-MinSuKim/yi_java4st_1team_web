@@ -20,24 +20,20 @@ public class AdminGuestDeleteHandler implements Command {
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		if(request.getMethod().equalsIgnoreCase("GET")) {
-			System.out.println("get");
+			System.out.println("delete > get");
 			String id = request.getParameter("id");
 			Guest guest = service.selectGuestById(new Guest(id));
-			System.out.println(guest);
 			int res = service.updateDelYn(guest);
-			
-			
-			String[] array = request.getParameterValues("array[]");
-			System.out.println(array);
-			
+			System.out.println("삭제결과 ->" + res);
 			
 			request.setAttribute("guest",guest.getGuestId());
-			return "guest/guest_list.jsp";
+			response.sendRedirect("guestList.do");
 		
 		}else {
 			System.out.println("post");
 			
-			//이렇게 써야한단다 ㅅㅂ
+			//checkbox 선택 -> 삭제
+			//이렇게 써야한단다~~~~
 			String[] array = request.getParameterValues("string[]");
 			System.out.println(Arrays.toString(array));
 			
@@ -50,7 +46,7 @@ public class AdminGuestDeleteHandler implements Command {
 			
 			return "guest/guest_list.jsp";
 		}
-
+		return null;
 		
 	}
 

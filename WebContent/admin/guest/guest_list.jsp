@@ -21,20 +21,17 @@ function deselectAll(){
 $(document).on('click', '[name=delete]', function() { 
 	/* $("#dataTable tr:nth-child(2)").css("background", "red"); */
 	 var array = new Array();
-	
-	
     $("#dataTable input[name=check]:checked").each(function() {
     	array.push(this.value);
     });
-   
     console.log(array);
     
-    /* if(array==0){
+    if(array==0){
     	alert('삭제할 회원을 선택하세요');
     	return;
     }
-    */
-   
+    
+   //셀렉트박스 선택한 사람 배열로 ajax로 넘기기
     if(confirm(array + "님을 탈퇴처리 하시겠습니까?") == true){
 	    $.ajax({
 	  		  type:'post',
@@ -53,14 +50,25 @@ $(document).on('click', '[name=delete]', function() {
     	return;
     }
   
+    //대현
     /* var delArr = {};
     for(var i=0; i < $("#dataTable input[name=check]:checked").length; i++ ){
   		delArr[i] += $("#dataTable input[name=check]:checked").eq(i).val();
     }
    	
     console.log(delArr);  */
-   	
 });
+
+$(document).on('click', '[id=btn_delete]', function() { 
+	var guest = $(this).attr('guestId');
+	if(confirm(guest + '님을 탈퇴처리 하시겠습니까?') == true) {
+		location.href="guestDelete.do?id="+guest;	
+	}else {
+		return;
+	}
+	
+});
+
 
 
 </script>
@@ -77,7 +85,7 @@ $(document).on('click', '[name=delete]', function() {
 		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
 			
 				<input type="button" value="등록" class="btn btn-success btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='guestAdd.do' ">
-				<input type="button"  value="삭제" name="delete" class="btn btn-danger btn-sm" id="btn_delete" style="float: left;" >
+				<input type="button"  value="삭제" name="delete" class="btn btn-danger btn-sm" style="float: left;" >
 				
 				<button type="button" onclick="selectAll()" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">
 					전체선택
@@ -114,8 +122,9 @@ $(document).on('click', '[name=delete]', function() {
 					<div class="col-sm-12 col-md-6">
 						<div id="dataTable_filter" class="dataTables_filter ">
 							<select class="custom-select custom-select-sm" name="opt" style="width: 80px;">
-								<option value="1">고객명</option>
 								<option value="0">아이디</option>
+								<option value="1">고객명</option>
+								<option value="2">폰번호</option>
 							</select>
 							<label>
 								<input type="text" name="value" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
@@ -144,6 +153,7 @@ $(document).on('click', '[name=delete]', function() {
 							<!-- <th>정보동의</th> -->
 							<th>주문 전환</th>
 							<th>상세보기</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -151,12 +161,13 @@ $(document).on('click', '[name=delete]', function() {
 						<tr>
 							<td><input type="checkbox" name="check" value="${guest.guestId}"></td>
 							<td style="width:20px;"> ${total - ((paging.nowPage-1) * cnt + status.index)}</td>
-							<td style="width:100px;">${guest.guestId}</td>
-							<td style="width:100px;">${guest.guestName }</td>
+							<td style="width:80px;">${guest.guestId}</td>
+							<td style="width:80px;">${guest.guestName }</td>
 							<td style="width:130px;">${guest.guestBirthday}</td>
 							<td style="width:150px;">${guest.guestPhone}</td>
-							<td style="width:200px;">${guest.guestEmail}</td>
+							<td style="width:150px;">${guest.guestEmail}</td>
 							<td style="width:50px;">
+							<a href="deleteGuest.do?id=${guest.guestId}"></a>
 							<c:if test="${guest.guestGender == 0}">여</c:if>
 							<c:if test="${guest.guestGender == 1}">남</c:if>
 							</td>
@@ -171,13 +182,13 @@ $(document).on('click', '[name=delete]', function() {
 							<td style="width:100px;">
 								<a href="#" class="btn bg-warning btn-sm bookingToOrderButton"><span class="text-gray-800">주문</span></a>
 							</td>
-							<td>
-								<input type="hidden" name="hidden" value="${guest.guestId}">
-								
-								<input type="button" name="info" value="시술" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestOnBInfo.do?id=${guest.guestId}'">
-								<input type="button" name="info" value="수정" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestInfo.do?id=${guest.guestId}'">
-								<!-- <input type="button" value="삭제" name="delete" class="btn btn-danger btn-sm" style="float: left;"> -->
-								
+							<td  style="width:150px;">
+								<input type="button" name="booking" value="예약내역" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestBookingInfo.do?id=${guest.guestId}'">
+								<input type="button" name="order" value="주문내역" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestOrderInfo.do?id=${guest.guestId}'">
+							</td>
+							<td  style="width:100px;">
+								<input type="button" name="update" value="수정" class="btn btn-dark btn-sm" onclick="location.href='guestInfo.do?id=${guest.guestId}'">
+								<input type="button" value="삭제" id="btn_delete" guestId="${guest.guestId}" class="btn btn-danger btn-sm">
 							</td>
 						</tr>
 						</c:forEach>

@@ -43,6 +43,9 @@ public interface GuestDao {
 	ArrayList<Guest> searchGuestByName(Paging paging, String name);
 	int countNameSearch(String name);
 	
+	ArrayList<Guest> searchGuestByPhone(Paging paging, String phone);
+	int countPhoneSearch(String phone); 
+	
 	
 
 }
