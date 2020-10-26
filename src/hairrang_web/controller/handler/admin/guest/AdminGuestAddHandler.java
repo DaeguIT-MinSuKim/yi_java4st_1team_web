@@ -32,11 +32,9 @@ public class AdminGuestAddHandler implements Command {
 			String guestPhone = request.getParameter("phone");
 			String guestEmail = request.getParameter("email");
 			String guestGender = request.getParameter("gender");
-			String infoYn = request.getParameter("infoCheck");
-			if(infoYn == null) {
-				infoYn = "n";
-			}
-			
+			String infoYn = request.getParameter("infoYn");
+			System.out.println(infoYn);
+		
 			Guest g = new Guest();
 			g.setGuestId(guestId);
 			g.setGuestPwd(guestPwd);
@@ -44,7 +42,7 @@ public class AdminGuestAddHandler implements Command {
 			g.setGuestBirthday(guestBirthday);
 			g.setGuestPhone(guestPhone);
 			g.setGuestEmail(guestEmail);
-			g.setGuestGender(Integer.parseInt(guestGender)); //2여자 1남자
+			g.setGuestGender(Integer.parseInt(guestGender)); //0여자 1남자
 			g.setInfoYn(infoYn); 
 			
 			System.out.println(g);

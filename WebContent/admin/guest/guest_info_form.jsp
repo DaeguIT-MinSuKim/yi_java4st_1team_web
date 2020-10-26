@@ -12,14 +12,6 @@ $(document).ready(function() {
 	}else{
 		$("input[name=gender][value='0']").prop("checked",true);
 	}
-
-	var infoYn = '${guest.infoYn}';
-	//console.log('${guest.infoYn}');
-	if(infoYn== 'y'){
-		$("input[name=infoYn]").prop("checked",true);
-	}else{
-		$("input[name=infoYn]").prop("checked",false);
-	}
 	
 	var delYn = '${guest.delYn}';
 	console.log('${guest.delYn}');
@@ -27,6 +19,13 @@ $(document).ready(function() {
 		$("input[name=delYn][value='y']").prop("checked",true);
 	}else{
 		$("input[name=delYn][value='n']").prop("checked",true);
+	}
+	
+	var infoYn= '${guest.infoYn}';
+	if(gender==1){
+		$("input[name=infoYn][value='y']").prop("checked",true);
+	}else{
+		$("input[name=infoYn][value='n']").prop("checked",true);
 	}
 	
 
@@ -40,6 +39,13 @@ $(document).ready(function() {
 	$('input[name="delYn"]').click(function() { //클릭 이벤트 발생한 요소가 체크 상태인 경우
 	     if ($(this).prop('checked')) {//체크박스 그룹의 요소 전체를 체크 해제후 클릭한 요소 체크 상태지정
 	          $('input[name="delYn"]').prop('checked', false);
+	          $(this).prop('checked', true);
+	     }
+	});
+	
+	$('input[name="infoYn"]').click(function() { //클릭 이벤트 발생한 요소가 체크 상태인 경우
+	     if ($(this).prop('checked')) {//체크박스 그룹의 요소 전체를 체크 해제후 클릭한 요소 체크 상태지정
+	          $('input[name="infoYn"]').prop('checked', false);
 	          $(this).prop('checked', true);
 	     }
 	});
@@ -101,8 +107,9 @@ $(document).ready(function() {
 					<input type="checkbox" name="delYn" value="y" style="width: 30px;">Y</td>
 				</tr>
 				<tr>
-					<td>마케팅 활용동의</td>
-					<td><input type="checkbox" name="infoYn" value="y" style="width:50px;"></td>
+					<td>마케팅 수신동의</td>
+					<td><input type="checkbox" name="infoYn" value="y" style="width:50px;">동의
+					<input type="checkbox" name="infoYn" value="n" style="width:50px;">거부</td>
 				</tr>
 			</table>
 			<br>

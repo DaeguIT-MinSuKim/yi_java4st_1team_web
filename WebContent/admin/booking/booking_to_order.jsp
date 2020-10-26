@@ -156,10 +156,10 @@ $(function(){
                   </div>
                   <div class="col-auto">
                     <a href="#" class="btn btn-primary btn-sm" name="guestSearchBtn" data-toggle="modal" data-target="#exampleModal">
-                      <span class="text">검색</spa>
+                      <span class="text">검색</span>
                     </a>
                     <a href="#" class="btn btn-secondary btn-sm" name="guestClearBtn" onclick="setClear()">
-                      <span class="text">취소</spa>
+                      <span class="text">취소</span>
                     </a>
                   </div>
                   <!-- <div class="w-100"></div>

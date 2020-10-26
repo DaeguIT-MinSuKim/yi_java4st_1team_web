@@ -50,16 +50,6 @@ public class AdminGuestInfoHandler implements Command {
 			guest.setGuestEmail(email);
 			guest.setGuestNote(note);
 			guest.setDelYn(delYn);
-
-			if(delYn == "y") {
-				delYn = "y";
-			} else {
-				delYn = "n";
-			}
-
-			if(infoYn != "y") {
-				infoYn = "n";
-			}
 			guest.setInfoYn(infoYn);
 
 			
