@@ -55,7 +55,7 @@ public class QnaWriteHandler implements Command {
 			PrintWriter out = response.getWriter();
 			
 			//다운로드경로
-			String savePath = "upload";
+			String savePath = "qna/upload";
 			
 			//최대 업로드 파일 크기 5MB로 지정
 			int uploadFileSizeLimit = 5*1024*1024;

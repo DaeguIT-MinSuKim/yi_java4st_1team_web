@@ -40,5 +40,9 @@ public interface QnADao {
 	
 	//나의 문의 내역 페이징
 	List<QnA> pagingQnaById(Paging paging, String id);
+	
 	int countQnaById(String id);
+	
+	//문의사항 공지사항 쓸때
+	int insertQnaNotice(QnA qna);
 }
