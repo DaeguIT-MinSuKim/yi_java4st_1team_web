@@ -236,10 +236,10 @@ $(document).on('click', '[id=btn_delete]', function() {
 						</div>
 					</div> 
 					<!-- 페이징 -->
-
-					<div style="text-align:center; float:center;">
+					<div class="col-sm-12 col-md-7">
+						<div class="dataTables_paginate paging_simple_numbers" style="text-align:center; display:inline-block; margin:0 auto;">
 					<p>Total : ${total}</p>
-						
+						<button class="paginate_button page-item next" id="dataTable_next" onclick="next_page()">이전</button>
 						
 						<c:if test="${paging.startPage != 1}">
 							<a href="guestList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
@@ -250,22 +250,22 @@ $(document).on('click', '[id=btn_delete]', function() {
 							var="p">
 							<c:choose>
 								<c:when test="${p == paging.nowPage }">
-								${p}
+									<div class="paginate_button page-item active">${p}</div>
 								</c:when>
 								<c:when test="${p != paging.nowPage }">
-									<a href="guestList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><b
-										style="margin: 5px;">${p}</b></a>
+									<a href="guestList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+									<div style="border:1px solid black; width:20px; text-align:center; display:inline-block"><b>${p}</b></div></a>
 								</c:when>
 							</c:choose>
 						</c:forEach>
-					
+					<button class="paginate_button page-item next" id="dataTable_next" onclick="next_page()">다음</button>
 						&nbsp;&nbsp;
 						<c:if test="${paging.endPage != paging.lastPage }">
 							<a href="guestList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
 							<i class="xi-angle-right"></i></a>
 						</c:if>
 						
-						
+						</div>
 					</div>
 				</div>
 				<!-- bootStrap table wrapper-->

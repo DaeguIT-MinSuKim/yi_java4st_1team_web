@@ -5,24 +5,37 @@
 <head>
 <meta charset="UTF-8">
 <title>idCheck</title>
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="css/admin_custom.css" rel="stylesheet">
 <script type="text/javascript">
-
-$('#myModal').on('shown.bs.modal', function () {
-	  $('#myInput').trigger('focus')
-})
 
 function idok(){
   opener.formm.id.value="${id}"; 
   opener.formm.reid.value="${id}";
   self.close();
 }
+
+function search(){
+	 if (opener.document.formm.id.value == "") {
+		    alert("아이디를 입력하여 주세요.");
+		    opener.document.formm.id.focus();
+		    return;
+	 }	    
+}
+
+	
 </script>
+<style>
+#wrap {width:380px; text-align:center;}
+</style>
 <body>
 <div id="wrap">
-  <h2>ID 중복확인</h2>
+  <span style="font-size:20px; padding:10px; font-weight:bold">
+  	ID 중복확인</span>
   <form method=post name=formm style="margin-right:0" action="idCheck.do" >
-   ID <input type=text name="id" value="${param.id}"> 
-            <input type=submit value="검색" class="submit"><br>
+   <br><input type=text name="id" value="${param.id}"> 
+            <input type="submit" name="search" onclick="search()" value="검색" class="btn btn-primary btn-sm"><br>
 <span id = "chkMsg"></span>      
     <div style="margin-top: 20px">   
       <c:if test="${message == 1}">
@@ -33,11 +46,11 @@ function idok(){
       </c:if>
       <c:if test="${message==-1}">
         ${id}는 사용 가능한 ID입니다.
-        <input type="button" value="사용" class="cancel" onclick="idok()">
+        <br><input type="button" value="사용" class="btn btn-primary btn-sm" onclick="idok()" style="margin:20px">
       </c:if>
     </div>
   </form>
-</div>  
+</div>
 
 </body>
 </html>

@@ -15,11 +15,11 @@ $(function(){
 });
 </script>
 <!-- GuestSearch Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="guestSearchModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg modal-dialog-scrollable">
+<div class="modal fade" id="guestSearchModal" tabindex="-1" aria-labelledby="guestSearchModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="guestSearchModalLabel">고객 검색 및 예약건 선택</h5>
+				<h5 class="modal-title" id="guestSearchModalLabel">고객 검색</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -27,10 +27,7 @@ $(function(){
 			<div class="modal-body">
 				<form>
 					<div class="form-group row">
-						<div class="col-sm-2">
-							<label for="guest-name" class="col-form-label font-weight-bold">고객</label>
-						</div>
-						<div class="col-sm-2 pr-0">
+						<div class="col-sm-3 pr-0">
 							<select class="form-control">
 								<option value="0">전체</option>
 								<option value="1">아이디</option>
@@ -38,7 +35,7 @@ $(function(){
 								<option value="3">연락처</option>
 							</select>
 						</div>
-						<div class="col-sm-3 pr-0">
+						<div class="col-sm-7 pr-0">
 							<input type="text" class="form-control" id="searchInput" placeholder="">
 						</div>
 						<div class="col-auto">
@@ -47,7 +44,7 @@ $(function(){
 						</div>
 					</div>
 				</form>
-				<table class="col-8 table table-bordered table-hover text-center" id="guestSearchTable">
+				<table class="table table-bordered table-hover text-center" id="guestSearchTable">
 					<thead>
 						<tr>
 							<td></td>
@@ -59,10 +56,32 @@ $(function(){
 					<tbody>
 					</tbody>
 				</table>
-				<div class="spacing"></div>
-				<div class="divider"></div>
-				<div class="spacing"></div>
-				<h6 class="font-weight-bold">금일 예약건 조회</h6>
+				<div class="row text-center">
+					<div class="paging_simple_numbers m-auto" id="guestSearchTable_paginate">
+						<ul class="pagination pagination-sm">
+						</ul>
+					</div>
+				</div> 
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-sm btn-primary" id="guestSearchModalConfirm" data-dismiss="modal">선택 완료</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- BookingSearch Modal -->
+<div class="modal fade" id="bookingSearchModal" tabindex="-1" aria-labelledby="bookingSearchModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="bookingSearchModalLabel">금일 예약건 선택</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
 				<table class="table table-bordered table-hover text-center" id="todayBookingTable">
 					<thead>
 						<tr>
@@ -92,8 +111,8 @@ $(function(){
 				<div class="spacing"></div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-				<button type="button" class="btn btn-primary" id="modalConfirm" data-dismiss="modal">선택 완료</button>
+				<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">취소</button>
+				<button type="button" class="btn btn-sm btn-primary" id="bookingSearchModalConfirm" data-dismiss="modal">선택 완료</button>
 			</div>
 		</div>
 	</div>
@@ -111,16 +130,9 @@ $(function(){
                		주문하기
                 </div>
                 <div class="float-right">
-                  <a href="#" id="prevPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">이전</span></a>
-                  <a href="#" id="nextPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">다음</span></a>
-                  <a href="#" id="toList" class="btn btn-primary btn-sm" style="margin-right: 10px;"><span class="text">목록</span></a>
+                  <a href="#" class="btn btn-sm btn-secondary" name="clearBtn" onclick="setClear()"><span class="text">취소</span></a>
+                  <a href="#" class="btn btn-sm btn-primary" id="toList"><span class="text">목록</span></a>
                 </div>			
-                <!-- <a href="#" class="btn btn-danger btn-sm" style="float: right;">
-                  <span class="text">삭제</spa>
-                </a>
-                <a href="#" class="btn btn-info btn-sm" style="float: right;  margin-right: 10px;">
-                  <span class="text">수정</span>
-                </a> -->
               </h6>
             </div>
             <!-- card-body -->
@@ -130,7 +142,7 @@ $(function(){
               	<input type="hidden" name="bookNo" value="">
                 <div class="form-group row">
                   <label for="inputEmail3" class="col-3 col-form-label font-weight-bold">고객</label>
-                  <div class="col-5">
+                  <div class="col-6">
                     <input type="text" class="form-control" id="guestInput" placeholder="검색 후 선택해주세요."><br>
                     <div class="ml-4">
 	                    <input type="checkbox" class="form-check-input" id="nonMemberCK" value="true">
@@ -138,20 +150,11 @@ $(function(){
                     </div>
                   </div>
                   <div class="col-auto">
-                    <a href="#" class="btn btn-primary btn-sm" name="guestSearchBtn" data-toggle="modal" data-target="#exampleModal">
+                    <a href="#" class="btn btn-primary btn-sm" name="guestSearchBtn" data-toggle="modal" data-target="#guestSearchModal">
                       <span class="text">검색</span>
                     </a>
-                    <a href="#" class="btn btn-secondary btn-sm" name="guestClearBtn" onclick="setClear()">
-                      <span class="text">취소</span>
-                    </a>
+                    
                   </div>
-                  <!-- <div class="w-100"></div>
-                  <div class="col-md-5 offset-md-3">
-                  	<div class="col ml-2">
-	                  	<input type="checkbox" class="form-check-input" id="nonMemberCK" value="true">
-	                    <label class="form-check-label" for="">비회원</label>
-                    </div>
-                  </div> -->
                 </div>
                 <div class="spacing"></div>
                 <div class="form-group row">
@@ -159,9 +162,14 @@ $(function(){
                   <div class="col-6 col-form-label" name="bookingDetail">
 						예약 고객인 경우 검색창을 통해 해당 예약건을 선택해주세요.
                   </div>
+                  <div class="col-auto">
+                    <a href="#" class="btn btn-primary btn-sm" name="bookingSearchBtn" data-toggle="modal" data-target="#bookingSearchModal">
+                      <span class="text">검색</span>
+                    </a>
+                  </div>
                 </div>
 
-                <div class="col-sm divider"></div>
+                <hr>
 
                 <div class="form-gruop row">
                   <label for="designerSelector" class="col-sm-3 col-form-label font-weight-bold">디자이너</label>
@@ -173,9 +181,10 @@ $(function(){
                         </c:forEach>
                       </select>
                     </div>
+                    
                 </div>
 
-                <div class="divider"></div>
+                <hr>
 
                 <p class="h7 font-weight-bold">시술 대분류</p>
                 <ul class="list-group list-group-horizontal-md" id="hairkindbox">
@@ -192,28 +201,12 @@ $(function(){
                 </ul>
                 
                 <div class="spacing"></div>
-                <div class="divider "></div>
+                <hr>
 
 				<table class="table table-borderless text-right addedHairList" id="addedHairList">
-                  <!-- <tr>
-                    <td class="text-center" style="width: 40px;" >1</td>
-                    <td class="text-left" >탈색</td>
-                    <td style="width: 100px" >70,000원</td>
-                    <td class="text-left" style="width: 50px;">x <span class="quantity">2</span></td>
-                    <td style="width: 100px;">140,000원</td>
-                    <td style="width: 40px;"><i class="fas fa-times"></i></td>
-                  </tr>
-                  <tr>
-                    <td class="text-center">2</td>
-                    <td class="text-left">프리미엄 염색</td>
-                    <td>80,000원</td>
-                    <td class="text-left" >x <span class="quantity">1</span></td>
-                    <td>80,000원</td>
-                    <td><i class="fas fa-times"></i></td>
-                  </tr> -->
                 </table>
 
-                <div class="divider"></div>
+                <hr>
                 <div class="row mb-3 pr-1">
                   <div class="col-4"></div>
                   <div class="col-2 m-auto font-weight-bold">사용가능 쿠폰</div>
@@ -227,7 +220,7 @@ $(function(){
                   </div>
                 </div>
 
-				<div class="divider"></div>
+				<hr>
 
                 <div class="row pr-1 mb-2">
                   <div class="col-6 text-right font-weight-bold">
@@ -257,11 +250,14 @@ $(function(){
                   	</span>
                 </div>
 
-                <div class="divider"></div>
+                <hr>
 				<div class="spacing bg"></div>
                 
                 <div class="form-group row">
                   <div class="col-sm" style="text-align: right;">
+                 	<a href="#" class="btn btn-secondary" name="clearBtn" onclick="setClear()">
+                      <span class="text">취소</span>
+                    </a>
                     <button type="submit" class="btn btn-primary">등록</button>
                   </div>
                 </div>
@@ -270,15 +266,6 @@ $(function(){
             <!-- cardBody-->
             <!-- card-footer -->
             <div class="card-footer p-1">
-              <div class="row control-inline">
-                <div class="col-12 text-right">
-                  <!-- <a href="#" id="prevPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">이전</span></a>
-                  <a href="#" id="nextPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">다음</span></a>
-                  <a href="#" id="toList" class="btn btn-primary btn-sm" style="margin-right: 10px;"><span class="text">목록</span></a> -->
-                  <a href="#" class="btn btn-danger btn-sm" ><span class="text">삭제</span></a>
-				          <a href="#" class="btn btn-warning btn-sm" ><span class="text-gray-800">주문하기</span></a>
-                </div>
-              </div>
             </div>
             <!-- card-footer -->
           </div>

@@ -51,11 +51,11 @@ $('#pwdCheck').keyup(function(){
 
 </script>
 <style>
-/* #add-wrapper {width:1200px; } */
-.add-table {width:600px; }
-.add-table tr td input {width:200px;}
-.add-table tr {}
-.add-table td {padding:20px; border-bottom:1px solid #858796;}
+#add-wrapper {width:600px; }
+.add-table {width:600px; margin:0 auto;}
+.add-table tr td input {width:250px;}
+.add-table tr {border-bottom:1px solid #e9e9e9;}
+.add-table td {padding:20px;}
 .add-table input {width:250px;}
 .add-buttons {}
 input {}
@@ -87,58 +87,69 @@ input {}
 		<div id="add-wrapper">
 
 			<table class="add-table">
+				
 				<tr>
 					<td>아이디</td>
 					<td><input type="text" name="id" /> 
-					<input type="hidden" name="reid"></td>
-					<td style="width:200px;"><input type="button" class="btn btn-info " value="중복확인" onclick="idcheck()" style="width: 100px;" /></td>
-					
+					<input type="hidden" name="reid">
+					<td><input type="button" class="btn btn-primary btn-sm" value="중복확인" onclick="idcheck()" style="width: 100px;" /></td>
 				</tr>
+				
+				
 				<tr>
 					<td>비밀번호</td>
 					<td><input type="password" name="pwd" id="pwd"/></td>
 					<td></td>
 				</tr>
+				
 				<tr>
 					<td>비밀번호 확인</td>
 					<td><input type="password" name="pwdCheck" id="pwdCheck"/></td>
 					<td style="width: 100px;"><font size="2" color="gray" name="check"></font></td>
+					
 				</tr>
+				
 				<tr>
 					<td>성명</td>
 					<td><input type="text" name="name"/></td>
 					<td></td>
 				</tr>
+				
 				<tr>
 					<td>생년월일</td>
 					<td> <input type='date' name="birth"/></td>
 					<td></td>
 				</tr>
+				
 				<tr>
 					<td>성별</td>
 					<td><input type="checkbox" name="gender" value="0" style="width: 30px;">
 						여성 
 						<input type="checkbox" name="gender" value ="1" style="width: 30px;">
-						남성</td>
-						<td></td>
+						남성
+					</td>
+					<td></td>
 				</tr>
+			
 				<tr>
 					<td>이메일</td>
 					<td><input type="text" name="email"> 
 					<td></td>
 				</tr>
+				
 				<tr>
 					<td>휴대폰</td>
-					<td><input type="text" name="phone" class="phone" maxlength="13">
+					<td><input type="text" name="phone" class="phone" maxlength="13"></td>
 					<td></td>
 				</tr>
+				
 				<tr>
-					<td colspan="3" style="text-align:center;">마케팅 수신 동의<br><br>
+					<td>마케팅 수신 동의</td>
+					<td>
 						<input type="checkbox" name="infoYn" value="y" style="width: 30px;"> 동의
 						<input type="checkbox" name="infoYn" value ="n" style="width: 30px;"> 거부
-					</td>
-						
-						
+					</td>	
+					<td></td>
 				</tr>
 			
 
@@ -147,10 +158,10 @@ input {}
 			<div class="clear"></div>
 			<br>
 			<div class="add-buttons" style="float:right">
-				<input type="button" value="등록" onclick="go_save()" class="btn btn-success">
-				<input type="reset" value="취소" class="btn btn-light">
+				<input type="button" value="등록" onclick="go_save()" class="btn btn-primary btn-sm">
+				<input type="reset" value="취소" class="btn btn-light btn-sm">
 				
-							</div>
+			</div>
 				</div>
 				<!-- bootStrap table wrapper-->
 			</div>
