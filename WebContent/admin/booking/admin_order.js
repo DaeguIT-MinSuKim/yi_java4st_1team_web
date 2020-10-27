@@ -1,3 +1,19 @@
+var selectedBookingNo = 0; // 선택된 예약번호
+var selBooking; // 선택된 예약 정보
+
+/* 주문하기로 들어온 경우 */
+// 1. 예약리스트에서
+$(function() {
+	var thisUrlStr = window.location.href;
+	var thisUrl = new URL(thisUrlStr);
+	selectedBookingNo = thisUrl.searchParams.get("no");
+	console.log("selectedBookingNo = " + selectedBookingNo);
+	setBookingData();
+});
+
+// 2. 고객리스트에서
+
+
 /* 헤어 대분류 선택시 소분류 불러오기 */
 $(function() {
 	$(document).on("click", "#hairkindbox li", function() {
@@ -91,6 +107,15 @@ $(document).on("click", "#todayBookingTable tr[role=button]", function() {
 	$(this).addClass("table-primary");
 });
 
+$(document).on("click", "#guestSearchTable tr[role=button]", function() {
+	if($(this).hasClass("table-primary")) {
+		return;
+	}
+	
+	$("#guestSearchTable .table-primary").removeClass("table-primary");
+	$(this).addClass("table-primary");
+});
+
 
 var hairListRow = 1;
 
@@ -165,14 +190,18 @@ function calTotalPrice() {
 	$("#totalPrice").text(totalPrice);
 }
 
-
-var selectedBookingNo = 0; // 선택된 예약번호
-var selBooking; // 선택된 예약 정보
-
 /* 모달창 선택완료시 주문화면에 set */
-$(document).on("click", "#modalConfirm", function(){ 
+$(document).on("click", "#bookingSearchModalConfirm", function(){ 
 	setBookingInfoDiv();
 	setBookingData();
+});
+
+
+$(document).on("click", "#guestSearchModalConfirm", function(){
+	setOrderViewClear();
+	$("#guestInput").prop("readonly", true);
+	$("#nonMemberCK").prop("checked", false);
+	$("#guestInput").val($("#guestSearchTable .table-primary td").eq(1).text());
 });
 
 
@@ -184,6 +213,7 @@ function setBookingData(){
         data: { bookNo: selectedBookingNo },
         dataType: "json",
         success: function(data){
+        	console.log(data);
             setBookingData_return(data);
             setBookingInfo(data);
         }
@@ -227,7 +257,6 @@ function setOrderViewClear() {
 	$("#couponTargetBox").empty();
 	$("#couponTargetBox").prop("disabled", true);
 	
-	
 	$("#totalAmount").text("0");
 	$("#totalAmount").attr("totalAmount", 0);
 	$("#discountAmount").text("0");
@@ -240,7 +269,7 @@ function setOrderViewClear() {
 function setBookingInfo(selBooking) {
 	setOrderViewClear();
 	
-	$("#guestInput").prop("readonly", false);
+	$("#guestInput").prop("readonly", true);
 	$("#nonMemberCK").prop("checked", false);
 	$("#guestInput").val(selBooking.guest.guestId);
 	$("#designerSelector").val(selBooking.designer.deNo);
@@ -256,6 +285,18 @@ function setBookingInfo(selBooking) {
 		}
 	});
 	
+	var bookDate = selBooking.bookDate.date;
+	var bookTime = selBooking.bookDate.time;
+	
+	var bookDateStr = bookDate.year + "-" + bookDate.month + "-" + bookDate.day;
+	var bookTimeStr = (bookTime.hour < 10 ? "0" + bookTime.hour : bookTime.hour) + ":" + (bookTime.minute == 0 ? "00" : bookTime.minute);
+	
+	var bookingDiv = "예약번호: " + selBooking.bookNo + " | 예약일: " + bookDateStr + " " + bookTimeStr + " | 아이디: " + selBooking.guest.guestId + " | 시술: "
+					+ (selBooking.hairList.length == 1 ? selBooking.hairList[0].hair.hairName : selBooking.hairList[0].hair.hairName + " 외 " + (selBooking.hairList.length - 1 ) + "건" ) + " | 디자이너: " + selBooking.designer.deName + " | 연락처: " + selBooking.guest.guestPhone;
+	
+	console.log(bookingDiv);
+	$("div [name=bookingDetail]").text(bookingDiv);
+	
 	loadCouponList(selBooking.guest.guestId);
 }
 
@@ -266,6 +307,7 @@ function setClear() {
 	$("div[name=bookingDetail]").text("예약 고객인 경우 검색창을 통해 해당 예약건을 선택해주세요.");	
 	
 	selectedBookingNo = 0;
+	$("#guestSearchTable .table-primary").removeClass("table-primary"); // 모달창 선택 clear
 	$("#todayBookingTable .table-primary").removeClass("table-primary"); // 모달창 선택 clear
 }
 
@@ -283,7 +325,7 @@ function loadCouponList(guestId) {
 			loadCouponBox($("#couponBox"), data);
 			$("#couponBox").prop("disabled", false);
 			loadCouponTargetBox($("#couponTargetBox"));
-			$("#couponTargetBox").prop("disabled", false);
+			$("#couponTargetBox").prop("disabled", true);
 		},
 		error: function(error) {
 			console.log("[load couponList] error: " + error);
@@ -296,7 +338,7 @@ function loadCouponBox(target, data) {
 	var dataArr = "<option value=''>사용 안 함</option>";
 	
 	$.each(data, function(index, item) {
-		dataArr += "<option value='" + item.couponId+ "'>" + item.event.eventName + "</option>";
+		dataArr += "<option value='" + item.couponId+ "' saleRate='" + Math.round(item.event.eventSaleRate * 10)/10 + "'>" + item.event.eventName + "</option>";
 		index++;
 	});
 	
@@ -306,7 +348,7 @@ function loadCouponBox(target, data) {
 
 function loadCouponTargetBox(target) {
 	target.empty();
-	var dataArr = "";
+	var dataArr = "<option value=''>선택 안 함</option>";
 	
 	var trs = $("#addedHairList").children();
 	
@@ -336,10 +378,9 @@ function searchGuest(nowPage, opt, value) {
 		},
 		success: function(data) {
 			console.log("searchGuest()");
-			console.log(data);
 			console.log(data.guestList);
 			console.log(data.paging);
-			loadGuestSearchTable($("#guestSearchTable"), data);
+			loadGuestSearchTable($("#guestSearchTable tbody"), data);
 		},
 		error: function(error) {
 			console.log("[searchGuest] error: " + error);
@@ -350,14 +391,90 @@ function searchGuest(nowPage, opt, value) {
 
 function loadGuestSearchTable(target, data) {
 	target.empty();
-	var dataArr = "";
+	var guestList = data.guestList;
+	var paging = data.paging;
 	
-	$.each(data.guestList, function(index, item) {
-		dataArr += "<tr><td></td><td>" + item.guestId + "</td><td>" + item.guestName + "</td><td>" + item.guestPhone + "</td></tr>";
+	var dataArr = "";
+	$.each(guestList, function(index, item) {
+		dataArr += "<tr role='button'><td></td><td>" + item.guestId + "</td><td>" + item.guestName + "</td><td>" + item.guestPhone + "</td></tr>";
+	});
+	target.append(dataArr);
+	
+	$("#guestSearchTable tbody tr td:first-child()").each(function(index, item) {
+		$(item).text((paging.nowPage-1) * paging.cntPerPage + index + 1);
 	});
 	
-	target.append(dataArr);
+	var pageArr = "";
+	if(paging.endPage == 1) {
+		// 시작 페이지가 0? 표시만 하기?
+		pageArr += "<li class='page-item previous disabled'><a href='#' class='page-link'><</a></li>";
+		pageArr += "<li class='page-item active'><a href='#' class='page-link' nowPage='" + paging.startPage + "'>" + paging.startPage + "</a></li>";
+		pageArr += "<li class='page-item next disabled'><a href='#' class='page-link'>></a></li>";
+	}  else {
+		pageArr += "<li class='page-item previous'><a href='#' class='page-link'><</a></li>";
+		
+		for(var i = paging.startPage; i < paging.endPaging; i++) {
+			if(i == paging.nowPaging) {
+				// i // 현재 페이지 표시만
+				pageArr += "<li class='page-item active'><a href='#' class='page-link' nowPage='" + i + "'>" + i + "</a></li>";
+			} else {
+				// nowPage=i
+				pageArr += "<li class='page-item'><a href='#' class='page-link' nowPage='" + i + "'>" + i + "</a></li>";
+			}
+		}
+		
+		pageArr += "<li class='page-item next'><a href='#' class='page-link'>></a></li>";
+	}
+	
+	if(paging.endPage != paging.lastPage) {
+		// nowPage=paging.endPage+1
+		pageArr += "<li class='page-item'><a href='#' class='page-link' nowPage='" + paging.endPage+1 + "'>" + paging.endPaging+1 + "</a></li>";
+	}
+	
+	console.log(pageArr);
+	$("#guestSearchTable_paginate ul").append(pageArr);
 }
+
+
+$(document).on("change", "#couponBox",function() {
+	var couponTargetBox = $("#couponTargetBox");
+	if($("#couponBox").val() == "") {
+		$(couponTargetBox).prop("disabled", true);
+	} else {
+		$(couponTargetBox).prop("disabled", false);
+	}
+	changeDiscountAmount($("#discountAmount"));
+});
+
+$(document).on("change", "#couponTargetBox" ,function() {
+	changeDiscountAmount($("#discountAmount"));
+});
+
+/* 쿠폰 또는 쿠폰 적용 대상 시술 변경시 할인 금액 변화 */
+function changeDiscountAmount(target){
+//	$("#couponBox :selected").val(); // 쿠폰 번호
+//	$("#couponBox :selected").attr("saleRate"); // 할인율 소수점
+	
+//	$("#couponTargetBox :selected").val(); // 시술 번호
+//	$("#couponTargetBox :selected").attr("hairPrice"); // 금액
+//	$("#couponTargetBox :selected").attr("quantity"); // 시술 회숫
+	
+	var saleRate = $("#couponBox option:selected").attr("saleRate");
+	var unitPrice = $("#couponTargetBox option:selected").attr("hairPrice");
+	var discount = 0;
+	
+	console.log("saleRate: " + saleRate);
+	console.log("unitPrice: " + unitPrice);
+	
+	if(saleRate != undefined && unitPrice != undefined) {
+		discount = saleRate * unitPrice;
+	}
+	
+	$(target).text(discount);
+	$(target).attr("discountAmount", discount);
+	calTotalPrice();
+}
+
 
 /* 주문등록 버튼 클릭 시 input 값들 다 읽어오기 */
 $(function(){
