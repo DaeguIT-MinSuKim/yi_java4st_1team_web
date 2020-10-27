@@ -53,7 +53,7 @@ $(function() {
 		
 		$.each(data, function(index, item) {
 			dataArr += "<li class='list-group-item flex-fill text-center' role='button' hairNo='"
-				+ item.hairNo + "' hairPrice='" + item.hairPrice + "'>[" + item.hairNo + "] "+ item.hairName+ "</li>";
+				+ item.hairNo + "' hairPrice='" + item.hairPrice + "'>" + item.hairName + "</li>";
 			index++;
 		});
 		
@@ -141,9 +141,6 @@ function addHair(hairNo, hairName, hairPrice) {
 						+ "<td>" + hairPriceStr + "</td><td>x <span class='quanityty'>1</span></td>"
 						+ "<td>" + hairPriceStr + "</td>"
 						+ "<td><a href='javascript:void(0);' onclick='delHairItem(" + hairNo +")'><i class='fas fa-times'></td></tr>";
-//		var addLine = "<li class='addedHair list-group-item' hairNo='" + hairNo + "' hairName='" + hairName + "' quantity='" + quantity + "' hairPrice='" + hairPrice + "'>"
-//						+ hairName + " <span class='quantity'>" + quantity + "</span>회 &nbsp;&nbsp;<a href='javascript:void(0);' onclick='delHairItem(" + hairNo +"); return false;'>"
-//						+ "<i class='fas fa-times'></i></a></li>";
 		$(".addedHairList").append(addTr);
 	} else {
 		// 이미 존재하는 경우 수량을 증가시킴
@@ -277,6 +274,7 @@ function setOrderViewClear() {
 function setBookingInfo(selBooking) {
 	setOrderViewClear();
 	
+	$("div [name=bookingDetail]").empty();
 	$("#guestInput").prop("readonly", true);
 	$("#nonMemberCK").prop("checked", false);
 	$("#guestInput").val(selBooking.guest.guestId);
@@ -299,10 +297,11 @@ function setBookingInfo(selBooking) {
 	var bookDateStr = bookDate.year + "-" + bookDate.month + "-" + bookDate.day;
 	var bookTimeStr = (bookTime.hour < 10 ? "0" + bookTime.hour : bookTime.hour) + ":" + (bookTime.minute == 0 ? "00" : bookTime.minute);
 	
-	var bookingDiv = "예약번호: " + selBooking.bookNo + " | 예약일: " + bookDateStr + " " + bookTimeStr + " | 아이디: " + selBooking.guest.guestId + " | 시술: "
-					+ (selBooking.hairList.length == 1 ? selBooking.hairList[0].hair.hairName : selBooking.hairList[0].hair.hairName + " 외 " + (selBooking.hairList.length - 1 ) + "건" ) + " | 디자이너: " + selBooking.designer.deName + " | 연락처: " + selBooking.guest.guestPhone;
+	var bookingDiv = "예약번호 : " + selBooking.bookNo + "<br>예약일 : " + bookDateStr + " " + bookTimeStr + "<br>아이디 : " + selBooking.guest.guestId + "<br>시술 : "
+					+ (selBooking.hairList.length == 1 ? selBooking.hairList[0].hair.hairName : selBooking.hairList[0].hair.hairName + " 외 " + (selBooking.hairList.length - 1 ) + "건" )
+					+ "<br>디자이너 : " + selBooking.designer.deName + "<br>연락처 : " + selBooking.guest.guestPhone;
 	
-	$("div [name=bookingDetail]").text(bookingDiv);
+	$("div [name=bookingDetail]").append(bookingDiv);
 	
 	loadCouponList(selBooking.guest.guestId);
 }
@@ -497,7 +496,25 @@ function changeDiscountAmount(target){
 
 /* 주문등록 버튼 클릭 시 input 값들 다 읽어오기 */
 function readInputOrder(){
-	//selectedBookingNo
+	if($("#nonMemberCK")) {
+		// 비회원인 경우
+	} else {
+		$("#guestInput").val();
+	}
+	
+	if(selectedBookingNo == 0) {
+		// 
+	} else {
+		// 불러온 예약건
+	}
+	
+	
+	$("#designerSelector").val();
+	
+	var addedHairList = $("#addedHairList tr");
+	
+	$("#couponBox").val();
+	$("#couponTargetBox").val();
 	
 }
 
