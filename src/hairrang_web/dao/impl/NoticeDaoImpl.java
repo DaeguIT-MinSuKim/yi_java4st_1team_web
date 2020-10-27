@@ -40,7 +40,7 @@ public class NoticeDaoImpl implements NoticeDao {
 
 	@Override
 	public List<Notice> selectPagingNotice(Paging paging) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM notice  ORDER BY notice_no DESC) a) WHERE notice_delyn = 'n' and  rn BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM notice WHERE notice_delyn = 'n'  ORDER BY notice_no DESC) a) WHERE rn BETWEEN ? AND ?";
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, paging.getStart());
 			pstmt.setInt(2, paging.getEnd());
@@ -149,11 +149,12 @@ public class NoticeDaoImpl implements NoticeDao {
 
 	@Override
 	public int insertNotice(Notice notice) {
-		String sql = "INSERT INTO NOTICE(NOTICE_TITLE,NOTICE_CONTENT) VALUES(?,?)";
+		String sql = "INSERT INTO NOTICE(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_FILE) VALUES(?,?,?)";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, notice.getNoticeTitle());
 			pstmt.setString(2, notice.getNoticeContent());
+			pstmt.setString(3, notice.getNoticeFile());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

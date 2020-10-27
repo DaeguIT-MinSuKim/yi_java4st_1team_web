@@ -93,6 +93,7 @@ $(document).on("click", "#todayBookingTable tr[role=button]", function() {
 
 
 var hairListRow = 1;
+
 /* 시술 추가 */
 function addHair(hairNo, hairName, hairPrice) {
 	if(hairNo == 0) {
@@ -103,6 +104,7 @@ function addHair(hairNo, hairName, hairPrice) {
 	var selectedItem = $(".addedHair[hairNo=" + hairNo + "]");
 	
 	if (selectedItem.length == 0) {
+		
 		// 처음 선택한 경우
 		var hairPriceStr = hairPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " 원";
 		var addTr = "<tr class='addedHair' hairNo='" + hairNo+ "' hairName='" + hairName + "' hairPrice='" + hairPrice + "' quantity='" + quantity + "'>"
@@ -280,6 +282,7 @@ function loadCouponList(guestId) {
 			console.log(data);
 			loadCouponBox($("#couponBox"), data);
 			$("#couponBox").prop("disabled", false);
+			loadCouponTargetBox($("#couponTargetBox"));
 			$("#couponTargetBox").prop("disabled", false);
 		},
 		error: function(error) {
@@ -299,6 +302,62 @@ function loadCouponBox(target, data) {
 	
 	target.append(dataArr);
 };
+
+
+function loadCouponTargetBox(target) {
+	target.empty();
+	var dataArr = "";
+	
+	var trs = $("#addedHairList").children();
+	
+	$.each(trs, function(index, item) {
+		dataArr += "<option value='" + $(item).attr("hairNo") + "' hairName='" + $(item).attr("hairName") + "' hairPrice='" + $(item).attr("hairPrice")
+					+ "' quantity='" + $(item).attr("quantity") + "'>" + $(item).attr("hairName") + "</option>";
+	});
+	
+	target.append(dataArr);
+	console.log(dataArr);
+};
+
+
+$(function() {
+	searchGuest(1, null, null);
+});
+
+function searchGuest(nowPage, opt, value) {
+	$.ajax({
+		url: "guestListEx.do",
+		type: "post",
+		dataType: "json",
+		data: {
+			nowPage: nowPage,
+			opt: opt,
+			value: value
+		},
+		success: function(data) {
+			console.log("searchGuest()");
+			console.log(data);
+			console.log(data.guestList);
+			console.log(data.paging);
+			loadGuestSearchTable($("#guestSearchTable"), data);
+		},
+		error: function(error) {
+			console.log("[searchGuest] error: " + error);
+		}
+	});
+}
+
+
+function loadGuestSearchTable(target, data) {
+	target.empty();
+	var dataArr = "";
+	
+	$.each(data.guestList, function(index, item) {
+		dataArr += "<tr><td></td><td>" + item.guestId + "</td><td>" + item.guestName + "</td><td>" + item.guestPhone + "</td></tr>";
+	});
+	
+	target.append(dataArr);
+}
 
 /* 주문등록 버튼 클릭 시 input 값들 다 읽어오기 */
 $(function(){
