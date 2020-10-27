@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <style>
 .book_wrapper {margin:0 auto; margin-top:60px; width:900px;}
-.board {clear:both; width:1000px;  text-align:center;}
+.board {clear:both; width:1000px;  text-align:center; margin:0 auto;}
 .board tr {border-bottom:1px solid #E4E4E4;}
 .board tr td {padding:15px 0;}
 .board th {border-top:3px solid black; padding:5px 0; font-weight:bold;}
@@ -51,7 +51,7 @@
 	</c:choose>
 	
 	<c:forEach var="booking" items="${booking}" varStatus="status">
- 	<tr onclick="location.href='guestBookDetail.do?bookNo=${booking.bookNo}'" style="cursor:pointer;" class="mypage_title">
+ 	<tr onclick="location.href='bookingDetail.do?no=${booking.bookNo}'" style="cursor:pointer;" class="mypage_title">
  		<td class="book_index"> ${total - ((paging.nowPage-1) * cnt + status.index)}
  		<input type="hidden" value="${booking.bookNo}" name="bookNo">
  		</td>
@@ -110,7 +110,7 @@
 			</c:if>	
 		</div>
 	<div class="onb-buttons">
-			<input type="button" value="목록" onclick="location.href='guestList.do'"> 
+			<input type="button" value="목록" onclick="location.href='guestList.do'" class="btn btn-primary btn-sm"> 
 	</div>
 	
 </div>

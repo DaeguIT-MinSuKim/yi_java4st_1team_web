@@ -69,18 +69,10 @@ $(document).on('click', '[id=btn_delete]', function() {
 	
 });
 
-function prev_page(){
-	
-	location.href="guestList.do?nowPage="+${paging.nowPage-1}+ "&cntPerPage="+${paging.cntPerPage};
-}
-
-function next_page(){
-	location.href="guestList.do?nowPage="+${paging.nowPage+1}+ "&cntPerPage="+${paging.cntPerPage};
-}
-
-
 
 </script>
+
+
 
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800 font-weight">고객 목록 - 고객 관리</h1>
@@ -162,7 +154,7 @@ function next_page(){
 							<!-- <th>정보동의</th> -->
 							<th>주문 전환</th>
 							<th>상세보기</th>
-							<th></th>
+							<th>고객 정보</th>
 						</tr>
 					</thead>
 					<tbody>
