@@ -1,8 +1,7 @@
-package hairrang_web.controller.handler.admin.notice;
+package hairrang_web.controller.handler.admin.qna;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,27 +9,29 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import hairrang_web.controller.Command;
+import hairrang_web.dto.Admin;
 import hairrang_web.dto.Notice;
-import hairrang_web.service.NoticeService;
+import hairrang_web.dto.QnA;
+import hairrang_web.service.QnaService;
 
-public class AdminNoticeInsertHandler implements Command {
-	private NoticeService service = new NoticeService();
+public class AdminQnaNoticeWriteHandler implements Command {
+	private QnaService service = new QnaService();
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		String url = "notice/notice_Insert.jsp";
+		String url = "qna/qnaNoticeWrite.jsp";
+		System.out.println("=================================================");
 
-		if (request.getMethod().equals("GET")) {
+		if (request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("GET");
-
 			return url;
-
 		} else {
 			System.out.println("POST");
 
@@ -56,13 +57,12 @@ public class AdminNoticeInsertHandler implements Command {
 
 				// 업로드된 파일의 이름 얻기
 				String fileName = multi.getFilesystemName("setload");
-				System.out.println("fileName : "+fileName);
+				System.out.println("fileName : " + fileName);
 				String nowDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date()); // 현재시간
 
 				// 업로드된 파일 얻기
 				File findFile = new File(uploadFilePath + "/" + fileName);
 
-				
 				String realFileName = nowDate + "-" + fileName; // 현재시간과 확장자 합치기
 				System.out.println("realFileName : " + realFileName);
 				String FilegetPath = uploadFilePath + "/" + realFileName;
@@ -72,34 +72,33 @@ public class AdminNoticeInsertHandler implements Command {
 
 				// 제목 내용 파일경로 db에 insert하는곳
 
+				//지금 세션에 admin저장이 안되어있어서 임시저장
+				Admin admin = new Admin("testadmin", "1234", "testadmin");
+
+				HttpSession session = request.getSession();
+				session.setAttribute("loginAdmin", admin);
+
+				//							admin = session.getAttribute("loginAdmin");
+
 				String title = multi.getParameter("title");
 				String content = multi.getParameter("content");
 
 				Notice notice = new Notice(title, content);
 				notice.setNoticeFile(FilegetPath);
 
-				int res = service.insertNotice(notice);
-				
-				
-//				response.setContentType("text/html; charset=UTF-8"); // 한글설정
-//				request.setCharacterEncoding("utf-8"); // 한글설정
-//				PrintWriter writer = response.getWriter();
-//
-//				writer.println("<script type='text/javascript'>");
-//				writer.println("function window::onload(){alert('등록이 완료되었습니다.');" // alert() 호출
-//						+ "submitReload();}"); // 다른 자바스크립트 메서드 호출
-//				writer.println("</script>");
-//				writer.flush();
-				
-				response.sendRedirect("noticeList.do");
-				
-//				return "noticeList.do";
+				QnA qna = new QnA(admin, title, content, FilegetPath);
+
+				int res = service.insertQnaNotice(qna);
+				System.out.println(res);
+
+				response.sendRedirect("qnaList.do");
 
 			} catch (Exception e) {
 				e.printStackTrace();
 
 			}
-			return null;
 		}
+		return null;
 	}
+
 }

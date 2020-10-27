@@ -68,4 +68,8 @@ public class QnaService {
 	public QnA passwordQna(QnA qna) {
 		return dao.checkPwd(qna);
 	}
+	
+	public int insertQnaNotice(QnA qna) {
+		return dao.insertQnaNotice(qna);
+	}
 }

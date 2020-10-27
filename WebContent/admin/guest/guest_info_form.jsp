@@ -54,15 +54,32 @@ $(document).ready(function() {
 
 </script>
 <style>
-#info-wrapper {width:1000px; margin:0 auto;}
-.info-table {width:1000px;}
+#info-wrapper {width:600px; margin:0 auto;}
+.info-table {width:600px;}
 .info-table tr {border-bottom:1px solid #e9e9e9;}
 .info-table td {padding:20px;}
 .info-table input {width:250px;}
 
 .info-buttons {text-align:center; margin:10px;}
 </style>
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800 font-weight">고객 정보 수정 </h1>
+<p class="mb-4">
+	<a target="_blank" href="https://datatables.net"></a>
+</p>
 <form method="post" name="formm">
+<!-- DataTales Example -->
+<div class="card shadow mb-4" style="width:700px">
+	<div class="card-header py-2">
+		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
+		</h6>
+	</div>
+	<!-- card-body -->
+	<div class="card-body">
+		<div class="table-responsive">
+			<!-- bootStrap table wrapper-->
+			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
 	<div id="info-wrapper">
 		<table class="info-table">				
 				<tr>
@@ -115,10 +132,17 @@ $(document).ready(function() {
 			<br>
 			<br>
 			<div class="info-buttons">
-				<input type="submit" value="정보 수정" class="submit" onclick="info_update()">
-				<input type="button" value="취소" class="cancel" onclick="location.href='guestInfo.do?id='+'${guest.guestId}' "><br>
+				<input type="submit" value="정보 수정" class="btn btn-primary btn-sm" onclick="info_update()">
+				<input type="button" value="취소" class="btn btn-light btn-sm " onclick="location.href='guestInfo.do?id='+'${guest.guestId}' "><br>
 			</div>
 		</div>
-	</form>
+		<!-- cardBody-->
+
+</div>
+</div>
+</div>
+</div> 
+</form>
+
 
 <%@ include file="../include/footer.jsp" %>

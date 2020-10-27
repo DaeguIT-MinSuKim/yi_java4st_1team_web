@@ -49,8 +49,10 @@ public class AdminGuestAddHandler implements Command {
 			session.setAttribute("name", request.getParameter("name"));
 			int res = service.insertGuest(g);
 			System.out.println(res);
-
+			
 			response.sendRedirect("guestList.do");
+			
+			
 		}
 		return null;
 	}

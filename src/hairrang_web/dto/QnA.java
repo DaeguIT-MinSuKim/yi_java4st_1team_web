@@ -15,15 +15,26 @@ public class QnA {
 	private String qnaDelYn;
 	private String qnaPassword;
 	private String qnaSecret;
+	private String qnaNotice;
 
 	public QnA() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	//고객 write할때
 	public QnA(Guest guestId, String qnaTitle, String qnaContent, String qnaFile) {
 		super();
 		this.guestId = guestId;
+		this.qnaTitle = qnaTitle;
+		this.qnaContent = qnaContent;
+		this.qnaFile = qnaFile;
+	}
+
+	//운영자 write할때
+	public QnA(Admin adminId, String qnaTitle, String qnaContent, String qnaFile) {
+		super();
+		this.adminId = adminId;
 		this.qnaTitle = qnaTitle;
 		this.qnaContent = qnaContent;
 		this.qnaFile = qnaFile;
@@ -53,6 +64,14 @@ public class QnA {
 				+ ", qnaContent=" + qnaContent + ", qnaFile=" + qnaFile + ", qnaRegDate=" + qnaRegDate + ", qnaResYn="
 				+ qnaResYn + ", qnaRefNo=" + qnaRefNo + ", qnaDelYn=" + qnaDelYn + ", qnaPassword=" + qnaPassword
 				+ ", qnaSecret=" + qnaSecret + "]";
+	}
+
+	public String getQnaNotice() {
+		return qnaNotice;
+	}
+
+	public void setQnaNotice(String qnaNotice) {
+		this.qnaNotice = qnaNotice;
 	}
 
 	public String getQnaPassword() {

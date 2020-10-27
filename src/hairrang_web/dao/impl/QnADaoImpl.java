@@ -323,4 +323,20 @@ public class QnADaoImpl implements QnADao {
 		return null;
 	}
 
+	@Override
+	public int insertQnaNotice(QnA qna) {
+		String sql = "INSERT INTO QNA(ADMIN_ID, QNA_TITLE, QNA_CONTENT, QNA_FILE, NOTICE_YN) VALUES(?,?,?,?,'y')";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, qna.getAdminId().getAdminId());
+			pstmt.setString(2, qna.getQnaTitle());
+			pstmt.setString(3, qna.getQnaContent());
+			pstmt.setString(4, qna.getQnaFile());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+
 }
