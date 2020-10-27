@@ -130,8 +130,8 @@ $(function(){
                		주문하기
                 </div>
                 <div class="float-right">
-                  <a href="#" class="btn btn-sm btn-secondary" name="clearBtn" onclick="setClear()"><span class="text">취소</span></a>
-                  <a href="#" class="btn btn-sm btn-primary" id="toList"><span class="text">목록</span></a>
+                  <button class="btn btn-sm btn-secondary" name="clearBtn" onclick="setClear()">취소</button>
+                  <a href="orderList.do" class="btn btn-sm btn-primary" id="toList"><span class="text">목록</span></a>
                 </div>			
               </h6>
             </div>
@@ -150,9 +150,7 @@ $(function(){
                     </div>
                   </div>
                   <div class="col-auto">
-                    <a href="#" class="btn btn-primary btn-sm" name="guestSearchBtn" data-toggle="modal" data-target="#guestSearchModal">
-                      <span class="text">검색</span>
-                    </a>
+                    <button type="button" class="btn btn-primary btn-sm" name="guestSearchBtn" data-toggle="modal" data-target="#guestSearchModal">검색</button>
                     
                   </div>
                 </div>
@@ -163,9 +161,7 @@ $(function(){
 						예약 고객인 경우 검색창을 통해 해당 예약건을 선택해주세요.
                   </div>
                   <div class="col-auto">
-                    <a href="#" class="btn btn-primary btn-sm" name="bookingSearchBtn" data-toggle="modal" data-target="#bookingSearchModal">
-                      <span class="text">검색</span>
-                    </a>
+                    <button type="button" class="btn btn-primary btn-sm" name="bookingSearchBtn" data-toggle="modal" data-target="#bookingSearchModal">검색</button>
                   </div>
                 </div>
 
@@ -255,9 +251,7 @@ $(function(){
                 
                 <div class="form-group row">
                   <div class="col-sm" style="text-align: right;">
-                 	<a href="#" class="btn btn-secondary" name="clearBtn" onclick="setClear()">
-                      <span class="text">취소</span>
-                    </a>
+                 	<button type="button" class="btn btn-secondary" name="clearBtn" onclick="setClear()">취소</button>
                     <button type="submit" class="btn btn-primary">등록</button>
                   </div>
                 </div>
@@ -265,8 +259,8 @@ $(function(){
             </div>
             <!-- cardBody-->
             <!-- card-footer -->
-            <div class="card-footer p-1">
-            </div>
+          	<!--<div class="card-footer p-1">
+            </div> -->
             <!-- card-footer -->
           </div>
 

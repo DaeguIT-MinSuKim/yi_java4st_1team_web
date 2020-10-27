@@ -56,7 +56,7 @@ AND event_end = TO_DATE(TO_CHAR(sysdate - 365, 'YYYY-') || TO_CHAR(guest_birthda
 
 
 -- 게스트 아이디, 발급대상인지만 확인
-SELECT guest_id, 
+SELECT guest_id,
 		CASE
 			WHEN TO_DATE('2019-10-20', 'YYYY-MM-DD') BETWEEN TO_DATE(TO_CHAR(sysdate - 365, 'YYYY-') ||TO_CHAR(guest_birthday, 'MM-DD')) - 15 AND TO_DATE(TO_CHAR(sysdate - 365, 'YYYY-') || TO_CHAR(guest_birthday, 'MM-DD')) + 15 THEN '발급 대상'
 			ELSE '기간에 포함 X'
