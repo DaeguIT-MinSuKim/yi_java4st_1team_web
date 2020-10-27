@@ -1,13 +1,18 @@
 var selectedBookingNo = 0; // 선택된 예약번호
 var selBooking; // 선택된 예약 정보
 
+$(document).on("keydown", "input:not(#guestSearchInput)", function(event) {
+	  if (event.keyCode === 13) {
+	    event.preventDefault();
+	  };
+});
+
 /* 주문하기로 들어온 경우 */
 // 1. 예약리스트에서
 $(function() {
 	var thisUrlStr = window.location.href;
 	var thisUrl = new URL(thisUrlStr);
 	selectedBookingNo = thisUrl.searchParams.get("no");
-	console.log("selectedBookingNo = " + selectedBookingNo);
 	setBookingData();
 });
 
@@ -17,7 +22,6 @@ $(function() {
 /* 헤어 대분류 선택시 소분류 불러오기 */
 $(function() {
 	$(document).on("click", "#hairkindbox li", function() {
-		console.log($(this).attr("kindNo"));
 		var selectedKindNo = $(this).attr("kindNo");
 		
 		if($(this).hasClass("active")) {
@@ -38,7 +42,7 @@ $(function() {
 				loadHairBox($("#hairbox"), data);
 			},
 			error: function(error) {
-				console.log("[load hiarbox] error: " + error);
+				alert("헤어 소분류를 읽어오는데 실패했습니다.");
 			}
 		});
 	});
@@ -168,7 +172,6 @@ function addHair(hairNo, hairName, hairPrice) {
 
 /* 추가된 시술 삭제 */
 function delHairItem(itemNo) {
-	// console.log($(".addedHair[hairNo=" + itemNo + "]").attr("hairName"));
 	var item = $(".addedHair[hairNo=" + itemNo + "]").get();
 	var price = $(item).attr("hairPrice") * $(item).attr("quantity");
 	$(".addedHair[hairNo=" + itemNo + "]").remove();
@@ -190,18 +193,24 @@ function calTotalPrice() {
 	$("#totalPrice").text(totalPrice);
 }
 
-/* 모달창 선택완료시 주문화면에 set */
+/* 모달창에서 booking 선택 완료시 주문화면에 set */
 $(document).on("click", "#bookingSearchModalConfirm", function(){ 
 	setBookingInfoDiv();
 	setBookingData();
 });
 
 
+/* 모달창에서 guest 선택 완료 */
 $(document).on("click", "#guestSearchModalConfirm", function(){
 	setOrderViewClear();
+	
+	var guestId = $("#guestSearchTable .table-primary td").eq(1).text();
 	$("#guestInput").prop("readonly", true);
 	$("#nonMemberCK").prop("checked", false);
-	$("#guestInput").val($("#guestSearchTable .table-primary td").eq(1).text());
+	$("div[name=bookingDetail]").text("예약 고객인 경우 검색창을 통해 해당 예약건을 선택해주세요.");	
+	$("#guestInput").val(guestId);
+	
+	loadCouponList(guestId);
 });
 
 
@@ -213,7 +222,6 @@ function setBookingData(){
         data: { bookNo: selectedBookingNo },
         dataType: "json",
         success: function(data){
-        	console.log(data);
             setBookingData_return(data);
             setBookingInfo(data);
         }
@@ -294,7 +302,6 @@ function setBookingInfo(selBooking) {
 	var bookingDiv = "예약번호: " + selBooking.bookNo + " | 예약일: " + bookDateStr + " " + bookTimeStr + " | 아이디: " + selBooking.guest.guestId + " | 시술: "
 					+ (selBooking.hairList.length == 1 ? selBooking.hairList[0].hair.hairName : selBooking.hairList[0].hair.hairName + " 외 " + (selBooking.hairList.length - 1 ) + "건" ) + " | 디자이너: " + selBooking.designer.deName + " | 연락처: " + selBooking.guest.guestPhone;
 	
-	console.log(bookingDiv);
 	$("div [name=bookingDetail]").text(bookingDiv);
 	
 	loadCouponList(selBooking.guest.guestId);
@@ -321,14 +328,13 @@ function loadCouponList(guestId) {
 			guestId: guestId
 		},
 		success: function(data) {
-			console.log(data);
 			loadCouponBox($("#couponBox"), data);
 			$("#couponBox").prop("disabled", false);
 			loadCouponTargetBox($("#couponTargetBox"));
 			$("#couponTargetBox").prop("disabled", true);
 		},
 		error: function(error) {
-			console.log("[load couponList] error: " + error);
+			alert("쿠폰 리스트를 불러오는데 실패했습니다.");
 		}
 	});
 }
@@ -358,13 +364,10 @@ function loadCouponTargetBox(target) {
 	});
 	
 	target.append(dataArr);
-	console.log(dataArr);
 };
 
 
-$(function() {
-	searchGuest(1, null, null);
-});
+/* 고객 검색 기능부 */
 
 function searchGuest(nowPage, opt, value) {
 	$.ajax({
@@ -377,20 +380,42 @@ function searchGuest(nowPage, opt, value) {
 			value: value
 		},
 		success: function(data) {
-			console.log("searchGuest()");
 			console.log(data.guestList);
 			console.log(data.paging);
 			loadGuestSearchTable($("#guestSearchTable tbody"), data);
 		},
 		error: function(error) {
-			console.log("[searchGuest] error: " + error);
+			alert("고객 검색 테이블을 불러오는 데 실패했습니다.");
 		}
 	});
 }
 
+//페이지 로드시 1페이지 셋팅
+$(function() {
+	searchGuest(1, null, null);
+});
+
+$(document).on("click", "#guestSearchBtn", function() {
+	var opt = $("#guestSearchOpt").val();
+	var input = $("#guestSearchInput").val();
+	searchGuest(1, opt, input);
+});
+
+$(document).on("keydown", "#guestSearchInput", function(event) {
+	if (event.keyCode === 13) {
+		event.preventDefault();
+		
+		var opt = $("#guestSearchOpt").val();
+		var input = $("#guestSearchInput").val();
+		searchGuest(1, opt, input);
+		console.log("엔터쳤다!");
+	};
+});
+
 
 function loadGuestSearchTable(target, data) {
 	target.empty();
+	
 	var guestList = data.guestList;
 	var paging = data.paging;
 	
@@ -431,14 +456,18 @@ function loadGuestSearchTable(target, data) {
 		pageArr += "<li class='page-item'><a href='#' class='page-link' nowPage='" + paging.endPage+1 + "'>" + paging.endPaging+1 + "</a></li>";
 	}
 	
-	console.log(pageArr);
+	$("#guestSearchTable_paginate ul").empty(pageArr);
 	$("#guestSearchTable_paginate ul").append(pageArr);
 }
 
 
+
+/* 쿠폰 또는 쿠폰 적용 대상 시술 변경시 할인 금액 변화 */
+// 쿠폰 박스 변경시
 $(document).on("change", "#couponBox",function() {
 	var couponTargetBox = $("#couponTargetBox");
 	if($("#couponBox").val() == "") {
+		$(couponTargetBox).val("");
 		$(couponTargetBox).prop("disabled", true);
 	} else {
 		$(couponTargetBox).prop("disabled", false);
@@ -446,25 +475,15 @@ $(document).on("change", "#couponBox",function() {
 	changeDiscountAmount($("#discountAmount"));
 });
 
+// 쿠폰 적용 대상 변경시
 $(document).on("change", "#couponTargetBox" ,function() {
 	changeDiscountAmount($("#discountAmount"));
 });
 
-/* 쿠폰 또는 쿠폰 적용 대상 시술 변경시 할인 금액 변화 */
 function changeDiscountAmount(target){
-//	$("#couponBox :selected").val(); // 쿠폰 번호
-//	$("#couponBox :selected").attr("saleRate"); // 할인율 소수점
-	
-//	$("#couponTargetBox :selected").val(); // 시술 번호
-//	$("#couponTargetBox :selected").attr("hairPrice"); // 금액
-//	$("#couponTargetBox :selected").attr("quantity"); // 시술 회숫
-	
 	var saleRate = $("#couponBox option:selected").attr("saleRate");
 	var unitPrice = $("#couponTargetBox option:selected").attr("hairPrice");
 	var discount = 0;
-	
-	console.log("saleRate: " + saleRate);
-	console.log("unitPrice: " + unitPrice);
 	
 	if(saleRate != undefined && unitPrice != undefined) {
 		discount = saleRate * unitPrice;
@@ -477,6 +496,12 @@ function changeDiscountAmount(target){
 
 
 /* 주문등록 버튼 클릭 시 input 값들 다 읽어오기 */
+function readInputOrder(){
+	//selectedBookingNo
+	
+}
+
+
 $(function(){
 	
 	

@@ -28,7 +28,7 @@ $(function(){
 				<form>
 					<div class="form-group row">
 						<div class="col-sm-3 pr-0">
-							<select class="form-control">
+							<select class="form-control" id="guestSearchOpt">
 								<option value="0">전체</option>
 								<option value="1">아이디</option>
 								<option value="2">이름</option>
@@ -36,10 +36,10 @@ $(function(){
 							</select>
 						</div>
 						<div class="col-sm-7 pr-0">
-							<input type="text" class="form-control" id="searchInput" placeholder="">
+							<input type="text" class="form-control" id="guestSearchInput" placeholder="">
 						</div>
 						<div class="col-auto">
-							<a href="#" class="btn btn-primary btn-sm" name="guestSearchBtn">
+							<a href="#" class="btn btn-primary btn-sm" name="guestSearchBtn" id="guestSearchBtn">
 								<span class="text">검색</span></a>
 						</div>
 					</div>
