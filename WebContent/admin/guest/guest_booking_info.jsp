@@ -4,8 +4,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <style>
-.book_wrapper {margin:0 auto; margin-top:60px; width:1000px;}
-.board {clear:both; width:1000px; margin:0 auto;  text-align:center;}
+.book_wrapper {margin:0 auto; margin-top:60px; width:900px;}
+.board {clear:both; width:1000px;  text-align:center;}
 .board tr {border-bottom:1px solid #E4E4E4;}
 .board tr td {padding:15px 0;}
 .board th {border-top:3px solid black; padding:5px 0; font-weight:bold;}
@@ -21,10 +21,24 @@
 .onb-buttons {text-align:center;}
 </style>
 
-<div class="book_wrapper">
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800 font-weight">고객 예약 내역 </h1>
+<p class="mb-4">
+	<a target="_blank" href="https://datatables.net"></a>
+</p>
+<form method="post" name="formm">
+<!-- DataTales Example -->
+<div class="card shadow mb-4" style="width:1100px">
+	<div class="card-header py-2">
+		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
+		</h6>
+	</div>
+	<!-- card-body -->
+	<div class="card-body">
+		<div class="table-responsive">
 
 <!-- 예약내역 -->
-<h4>예약내역</h4>
 
 <table class="board">
 	<tr>
@@ -100,6 +114,9 @@
 	</div>
 	
 </div>
+
+
+</div></div></form>
 <%@ include file="../include/footer.jsp" %>
 
 

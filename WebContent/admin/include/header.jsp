@@ -12,8 +12,9 @@
 
   <title>HAIRRANG - ADMIN PAGE</title>
 
-<!--xe 아이콘-->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">	
+<!--아이콘-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css?ver=191202">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/v4-shims.css?ver=191202">
   
   <script src="vendor/jquery/jquery.min.js"></script>
 

@@ -44,9 +44,10 @@ public class AdminGuestListHandler implements Command {
 			}else if(cntPerPage == null) {
 				cntPerPage ="10";
 			}
-//			System.out.println("지금현채 페이지 ===>"+nowPage);
-//			System.out.println("한 페이지당 나오는 게시물수 ===>"+cntPerPage);
-//			System.out.println("총게시물 갯수 ===>"+total);
+			System.out.println("지금현채 페이지 ===>"+nowPage);
+			System.out.println("한 페이지당 나오는 게시물수 ===>"+cntPerPage);
+			System.out.println("총게시물 갯수 ===>"+total);
+			
 			
 			//이후 페이지 클래스로 정리하는곳
 			Paging paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
@@ -60,6 +61,10 @@ public class AdminGuestListHandler implements Command {
 			request.setAttribute("paging", paging);
 			request.setAttribute("total", total);
 			request.setAttribute("cnt", cntPerPage);
+			request.setAttribute("getEndPage", paging.getEndPage());
+			
+			System.out.println("겟엔드" + paging.getEnd());
+			System.out.println("겟엔드페이지" + paging.getEndPage());
 			
 		} else {
 			
@@ -83,6 +88,11 @@ public class AdminGuestListHandler implements Command {
 			}else if(cntPerPage == null) {
 				cntPerPage ="10";
 			}
+			
+			System.out.println("지금현채 페이지 ===>"+nowPage);
+			System.out.println("한 페이지당 나오는 게시물수 ===>"+cntPerPage);
+			System.out.println("총게시물 갯수 ===>"+total);
+			
 			
 			//이후 페이지 클래스로 정리하는곳
 			String opt = request.getParameter("opt"); //0 아이디, 1이름, 2폰번호
@@ -117,11 +127,6 @@ public class AdminGuestListHandler implements Command {
 				request.setAttribute("total", total);
 				request.setAttribute("paging", paging);
 			}
-			
-			
-			System.out.println("지금현채 페이지 ===>"+nowPage);
-			System.out.println("한 페이지당 나오는 게시물수 ===>"+cntPerPage);
-			System.out.println("총게시물 갯수 ===>"+total);
 			
 		
 		}

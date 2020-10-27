@@ -69,6 +69,15 @@ $(document).on('click', '[id=btn_delete]', function() {
 	
 });
 
+function prev_page(){
+	
+	location.href="guestList.do?nowPage="+${paging.nowPage-1}+ "&cntPerPage="+${paging.cntPerPage};
+}
+
+function next_page(){
+	location.href="guestList.do?nowPage="+${paging.nowPage+1}+ "&cntPerPage="+${paging.cntPerPage};
+}
+
 
 
 </script>
@@ -84,8 +93,8 @@ $(document).on('click', '[id=btn_delete]', function() {
 	<div class="card-header py-2">
 		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
 			
-				<input type="button" value="등록" class="btn btn-success btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='guestAdd.do' ">
-				<input type="button"  value="삭제" name="delete" class="btn btn-danger btn-sm" style="float: left;" >
+				<input type="button" value="등록" class="btn btn-info btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='guestAdd.do' ">
+				<input type="button"  value="삭제" name="delete" class="btn btn-secondary btn-sm" style="float: left;" >
 				
 				<button type="button" onclick="selectAll()" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">
 					전체선택
@@ -187,8 +196,8 @@ $(document).on('click', '[id=btn_delete]', function() {
 								<input type="button" name="order" value="주문내역" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestOrderInfo.do?id=${guest.guestId}'">
 							</td>
 							<td  style="width:100px;">
-								<input type="button" name="update" value="수정" class="btn btn-dark btn-sm" onclick="location.href='guestInfo.do?id=${guest.guestId}'">
-								<input type="button" value="삭제" id="btn_delete" guestId="${guest.guestId}" class="btn btn-danger btn-sm">
+								<input type="button" name="update" value="수정" class="btn btn-primary btn-sm" onclick="location.href='guestInfo.do?id=${guest.guestId}'">
+								<input type="button" value="삭제" id="btn_delete" guestId="${guest.guestId}" class="btn btn-primary btn-sm">
 							</td>
 						</tr>
 						</c:forEach>
@@ -236,36 +245,82 @@ $(document).on('click', '[id=btn_delete]', function() {
 						</div>
 					</div> 
 					<!-- 페이징 -->
-					<div class="col-sm-12 col-md-7">
-						<div class="dataTables_paginate paging_simple_numbers" style="text-align:center; display:inline-block; margin:0 auto;">
+
+					<div style="width:100%; text-align:center; display:inline-block; margin:0 auto;">
 					<p>Total : ${total}</p>
-						<button class="paginate_button page-item next" id="dataTable_next" onclick="next_page()">이전</button>
+					
 						
 						<c:if test="${paging.startPage != 1}">
+							<div class="paging-line">
 							<a href="guestList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
-							<i class="xi-angle-left"></i></a>
+								<i class="fas fa-angle-double-left"></i>
+							</a>
+							</div>
 						</c:if>
+						<c:if test="${paging.startPage == 1}">
+							<div class="paging-line">
+								<i class="fas fa-angle-double-left"></i>
+							</a>
+							</div>
+						</c:if>
+						
+						
+						<!-- 이전페이지 -->
+						<c:choose>
+							<c:when test="${paging.nowPage != 0}">
+								<div class="paging-line">
+									<a href="guestList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
+								</div>
+							</c:when>
+							<c:when test="${paging.nowPage == 0}"> <!-- 이렇게밖에 처리못하는건가 몰러 더 생각해보겠삼,, -->
+								<script>
+									location.href="guestList.do?nowPage=1&cntPerPage=10";
+								</script>
+							</c:when>
+						
+						</c:choose>
+						
+						
 						
 						<c:forEach begin="${paging.startPage}" end="${paging.endPage }"
 							var="p">
 							<c:choose>
 								<c:when test="${p == paging.nowPage }">
-									<div class="paginate_button page-item active">${p}</div>
+									<div class="paging-line" style="font-weight:bold">${p}</div>
 								</c:when>
 								<c:when test="${p != paging.nowPage }">
+									<div class="paging-line">
 									<a href="guestList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
-									<div style="border:1px solid black; width:20px; text-align:center; display:inline-block"><b>${p}</b></div></a>
+									${p}</a></div>
 								</c:when>
 							</c:choose>
 						</c:forEach>
-					<button class="paginate_button page-item next" id="dataTable_next" onclick="next_page()">다음</button>
-						&nbsp;&nbsp;
-						<c:if test="${paging.endPage != paging.lastPage }">
-							<a href="guestList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
-							<i class="xi-angle-right"></i></a>
+						
+						
+						
+						<!-- 다음페이지 -->
+						<div class="paging-line">
+							<a href="guestList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
+						</div>
+						<c:if test="${paging.nowPage > paging.endPage}">
+							<script>
+									location.href="guestList.do?nowPage=${paging.nowPage-1}&cntPerPage=10";
+							</script>
 						</c:if>
 						
-						</div>
+					
+						<c:if test="${paging.endPage != paging.lastPage }">
+							<div class="paging-line">
+							<a href="guestList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
+							<i class="fas fa-angle-double-right"></i></a>
+							</div>
+						</c:if>
+						<c:if test="${paging.endPage == paging.lastPage }">
+							<div class="paging-line">
+							<i class="fas fa-angle-double-right"></i></a>
+							</div>
+						</c:if>
+						
 					</div>
 				</div>
 				<!-- bootStrap table wrapper-->

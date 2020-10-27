@@ -70,3 +70,6 @@
 .table-form .control-inline {
     display: inline-block;
 }
+
+/*페이징*/
+.paging-line { width:20px; display:inline-block;}
