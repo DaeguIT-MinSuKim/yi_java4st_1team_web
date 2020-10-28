@@ -51,15 +51,15 @@
 	</c:choose>
 	
 	<c:forEach var="booking" items="${booking}" varStatus="status">
- 	<tr onclick="location.href='bookingDetail.do?no=${booking.bookNo}'" style="cursor:pointer;" class="mypage_title">
+ 	<tr>
  		<td class="book_index"> ${total - ((paging.nowPage-1) * cnt + status.index)}
- 		<input type="hidden" value="${booking.bookNo}" name="bookNo">
+ 		<input type="hidden" value="${booking.bookNo}" name="no">
  		</td>
  		<td class="book_date">
 			<fmt:parseDate value="${booking.bookDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookDate" type="both" />
 			<fmt:formatDate value="${bookDate}" pattern="yyyy-MM-dd HH:mm" />
 		</td>
-		<td class="book_name">
+		<td class="book_name" onclick="location.href='bookingDetail.do?no=${booking.bookNo}'" style="cursor:pointer;" class="mypage_title">
 			<c:if test="${booking.hairList.size() == 1}">
 				${booking.hairList.get(0).hair.hairName}
 			</c:if>
@@ -75,9 +75,9 @@
 			<fmt:parseDate value="${booking.bookRegDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookReg" type="both" />
 			<fmt:formatDate value="${bookReg}" pattern="yyyy-MM-dd HH:mm" />
 		</td>
-		<td class="book_reg">
+		<td class="book_reg" style="clear:both">
 			<c:if test="${booking.bookStatus == 1}">
-				<input type="button" value="주문 전환" class="btn btn-dark btn-sm" onclick="go_order()">
+				<input type="button" value="주문 전환" class="btn btn-dark btn-sm" onclick="location.href='bookingToOrder.do?no=${booking.bookNo}'">
 			</c:if>
 			<c:if test="${booking.bookStatus == 0}">
 				<input type="button" value="주문 전환" class="btn btn-dark btn-sm" disabled>

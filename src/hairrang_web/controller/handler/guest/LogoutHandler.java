@@ -13,8 +13,10 @@ public class LogoutHandler implements Command {
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession session = request.getSession(false);
 		
+		System.out.println("머야");
 		if(session!=null) {
 			session.removeAttribute("redirectURI");
 			session.invalidate();
