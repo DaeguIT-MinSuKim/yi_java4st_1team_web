@@ -28,15 +28,15 @@
 		console.log(array);
 
 		if (array == 0) {
-			alert('삭제할 회원을 선택하세요');
+			alert('삭제할 문의을 선택하세요');
 			return;
 		}
 
 		//셀렉트박스 선택한 사람 배열로 ajax로 넘기기
-		if (confirm(array + "님을 탈퇴처리 하시겠습니까?") == true) {
+		if (confirm(array + "을 삭제처리 하시겠습니까?") == true) {
 			$.ajax({
 				type : 'post',
-				url : 'guestDelete.do',
+				url : 'qnaDelete.do',
 				data : {
 					"string" : array
 				},
@@ -46,7 +46,7 @@
 					location.reload();
 				},
 				error : function() {
-					alert('삭제할 회원을 선택하세요');
+					alert('삭제할 문의을 선택하세요');
 				}
 			});
 		} else {
@@ -63,9 +63,9 @@
 	});
 
 	$(document).on('click', '[id=btn_delete]', function() {
-		var guest = $(this).attr('guestId');
-		if (confirm(guest + '님을 탈퇴처리 하시겠습니까?') == true) {
-			location.href = "guestDelete.do?id=" + guest;
+		var no = $(this).attr('no');
+		if (confirm(no + '를 삭제처리 하시겠습니까?') == true) {
+			location.href = "qnaDelete.do?no=" + no;
 		} else {
 			return;
 		}
@@ -155,16 +155,16 @@
 							<th>답변여부</th>
 							
 							<th>답변</th>
-							<th></th>
+							<th>처리</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="qna" items="${viewAll}" varStatus="status">
 							<tr>
-								<td><input type="checkbox" name="check"value="${qna.qnaNo}"></td>
+								<td><input type="checkbox" name="check" value="${qna.qnaNo}"></td>
 								<td style="width: 20px;">${total - ((paging.nowPage-1) * cnt + status.index)}</td>
 								<td style="width: 80px;">${qna.guestId.guestId}</td>
-								<td style="width: 130px;">${qna.qnaTitle}</td>
+								<td style="width: 130px;"><a href="qnaDetail.do?no=${qna.qnaNo }">${qna.qnaTitle}</a></td>
 								<td style="width: 150px;">${qna.qnaRegDate}</td>
 								<td style="width: 150px;">${qna.qnaResYn}</td>
 								
@@ -177,18 +177,21 @@
 									</a>
 									</c:when>
 									<c:otherwise>
-									<a href="#" class="btn bg-warning btn-sm bookingToOrderButton">
+									<a href="qnaResult.do?no=${qna.qnaNo }" class="btn bg-warning btn-sm bookingToOrderButton">
 									<span class="text-gray-800">답변하기</span>
 									</a>
 									</c:otherwise>
 								</c:choose>
 								</td>
 										
-								<td style="width: 100px;"><input type="button"
+								<td style="width: 100px;">
+								<c:if test="${qna.qnaResYn eq 'y' }">
+								<input type="button"
 									name="update" value="수정" class="btn btn-dark btn-sm"
 									onclick="location.href='guestInfo.do?id=${guest.guestId}'">
+								</c:if>
 									<input type="button" value="삭제" id="btn_delete"
-									guestId="${guest.guestId}" class="btn btn-danger btn-sm">
+									no="${qna.qnaNo}" class="btn btn-danger btn-sm">
 								</td>
 							</tr>
 						</c:forEach>
@@ -203,7 +206,7 @@
 
 					<c:if test="${paging.startPage != 1}">
 						<a
-							href="guestList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
+							href="qnaList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
 							<i class="xi-angle-left"></i>
 						</a>
 					</c:if>
@@ -216,7 +219,7 @@
 								</c:when>
 							<c:when test="${p != paging.nowPage }">
 								<a
-									href="guestList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><b
+									href="qnaList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><b
 									style="margin: 5px;">${p}</b></a>
 							</c:when>
 						</c:choose>
@@ -225,7 +228,7 @@
 					&nbsp;&nbsp;
 					<c:if test="${paging.endPage != paging.lastPage }">
 						<a
-							href="guestList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
+							href="qnaList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
 							<i class="xi-angle-right"></i>
 						</a>
 					</c:if>

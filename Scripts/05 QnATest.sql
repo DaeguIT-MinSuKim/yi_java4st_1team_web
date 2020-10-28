@@ -10,7 +10,7 @@ INSERT INTO ADMIN VALUES ('testadmin','1234','testadmin');
 
 --연습용 qna test
 SELECT * FROM QNA;
-DELETE FROM QNA q2 ;
+DELETE FROM QNA q2 WHERE QNA_NO =10;
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn,qna_secret,qna_password) VALUES ('nottest','nottesttest','n','n','y','123');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn) VALUES ('test','testTitl2123123','n',0);
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn) VALUES ('test','testTitl4','n',0);
@@ -47,8 +47,13 @@ SELECT * FROM qna;
 
 --답변 qna
 UPDATE QNA 
-	SET RES_YN ='y'
-	WHERE QNA_NO = 68;
+	SET RES_YN ='n'
+	WHERE QNA_NO = 2;
+
 INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_REGDATE,QNA_REFNO) VALUES ('testadmin','답변','이내용은 답변내용입니다.',NULL,sysdate,68);
   
 INSERT INTO QNA(ADMIN_ID, QNA_TITLE, QNA_CONTENT, QNA_FILE, NOTICE_YN) VALUES('testadmin','첫첫첫','내용내용내용',null,'y');
+
+
+
+

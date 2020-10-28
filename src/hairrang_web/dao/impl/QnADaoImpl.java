@@ -126,7 +126,7 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public int deleteQnA(QnA qna) {
-		String sql = "DELETE FROM QNA WHERE QNA_NO = ?";
+		String sql = "UPDATE QNA SET DEL_YN ='y' WHERE QNA_NO = ?";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setInt(1, qna.getQnaNo());
@@ -223,7 +223,7 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public int countQnA() {
-		String sql = "SELECT COUNT(*) AS count FROM QNA";
+		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE DEL_YN = 'n' and ADMIN_ID is null or NOTICE_YN ='y'";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()){
@@ -238,7 +238,7 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public List<QnA> selectPagingQnA(Paging paging) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE DEL_YN ='n' and ADMIN_ID IS NULL or NOTICE_YN ='y'  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, paging.getStart());
@@ -337,6 +337,34 @@ public class QnADaoImpl implements QnADao {
 			throw new RuntimeException(e);
 		}
 		
+	}
+
+	@Override
+	public int insertQnaRestult(QnA qna, String qnaNo) {
+		String sql = "INSERT INTO QNA(ADMIN_ID, QNA_TITLE, QNA_CONTENT, QNA_FILE, QNA_REFNO) VALUES(?,?,?,?,?)";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, qna.getAdminId().getAdminId());
+			pstmt.setString(2, qna.getQnaTitle());
+			pstmt.setString(3, qna.getQnaContent());
+			pstmt.setString(4, qna.getQnaFile());
+			pstmt.setString(5, qnaNo);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public int updateQnaResultYn(String qnaNo) {
+		String sql = "UPDATE QNA  SET RES_YN = 'y' WHERE QNA_NO = ?";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, qnaNo);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

@@ -20,18 +20,23 @@ import hairrang_web.dto.Notice;
 import hairrang_web.dto.QnA;
 import hairrang_web.service.QnaService;
 
-public class AdminQnaNoticeWriteHandler implements Command {
-	private QnaService service = new QnaService();
+public class AdminQnaResultHandler implements Command {
+	QnaService service = new QnaService();
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		String url = "qna/qna_NoticeWrite.jsp";
-
+		String url = "qna/qna_Result.jsp";
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("GET");
+			int qnaNO = Integer.parseInt(request.getParameter("no"));
+			QnA qna = service.selectQnaByNo(qnaNO);
+			request.setAttribute("qna", qna);
 			return url;
+
 		} else {
+			System.out.println("POST");
+
 			System.out.println("POST");
 
 			// 다운로드경로
@@ -67,37 +72,48 @@ public class AdminQnaNoticeWriteHandler implements Command {
 				String FilegetPath = uploadFilePath + "/" + realFileName;
 				File newFile = new File(FilegetPath);
 
+				if(fileName == null) {
+					FilegetPath = null;
+				}
+				
 				findFile.renameTo(newFile);// 파일명 변경
 
 				// 제목 내용 파일경로 db에 insert하는곳
-
-				//지금 세션에 admin저장이 안되어있어서 임시저장
-				Admin admin = new Admin("testadmin", "1234", "testadmin");
-
+				// 아직 세션 어드민안되어이 있어서 임시로함
 				HttpSession session = request.getSession();
-				session.setAttribute("loginAdmin", admin);
-
-				//							admin = session.getAttribute("loginAdmin");
-
+//				session.getAttribute("loginAdmin");
+				
+				
+				String qnaNo = multi.getParameter("no");
+				System.out.println(qnaNo);
 				String title = multi.getParameter("title");
 				String content = multi.getParameter("content");
 
-				Notice notice = new Notice(title, content);
-				notice.setNoticeFile(FilegetPath);
+				QnA qna = new QnA(new Admin("testadmin"), title, content, FilegetPath);
+				
 
-				QnA qna = new QnA(admin, title, content, FilegetPath);
-
-				int res = service.insertQnaNotice(qna);
+				int res = service.insertQnaResult(qna, qnaNo);
 				System.out.println(res);
+
+//				response.setContentType("text/html; charset=UTF-8"); // 한글설정
+//				request.setCharacterEncoding("utf-8"); // 한글설정
+//				PrintWriter writer = response.getWriter();
+//
+//				writer.println("<script type='text/javascript'>");
+//				writer.println("function window::onload(){alert('등록이 완료되었습니다.');" // alert() 호출
+//						+ "submitReload();}"); // 다른 자바스크립트 메서드 호출
+//				writer.println("</script>");
+//				writer.flush();
 
 				response.sendRedirect("qnaList.do");
 
+//				return "noticeList.do";
+
 			} catch (Exception e) {
 				e.printStackTrace();
-
 			}
+			return null;
 		}
-		return null;
 	}
 
 }
