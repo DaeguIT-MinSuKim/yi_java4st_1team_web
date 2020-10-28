@@ -58,6 +58,7 @@ public class BookingDetailHandler implements Command {
 			}
 			
 			
+			
 			// 아이디 체크 후 예약 정보 가져와 set
 			Booking findBook = service.getBookingByBookingNo(booking);
 			request.setAttribute("booking", findBook);

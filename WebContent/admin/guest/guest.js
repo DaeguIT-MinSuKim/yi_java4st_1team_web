@@ -70,4 +70,9 @@ function go_save() {
 	  window.open( url, "_blank_1",
 	"toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=400, height=200");
 	}
+	
+	
+function go_order(){
+	location.href="bookingToOrder.do?no=${no}"
+}
 

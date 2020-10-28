@@ -73,3 +73,23 @@
 
 /*페이징*/
 .paging-line { width:20px; display:inline-block;}
+
+
+/*예약상세*/
+
+.book_hair_info ,.book_detail_info { width:600px; margin:0 auto; padding:20px;}
+.book_hair_info tr, .book_detail_info tr {border-bottom:1px solid #E4E4E4;}
+.book_detail_info tr td {padding:5px;}
+.book_detail_info tr td:first-child {width:150px;}
+.book_detail_info tr td:last-child {padding-left:30px;}
+.book_hair_info tr td{padding:5px;}
+.div_price {text-align:right; margin-top:30px; border-top:1px solid black; border-bottom:1px solid black;}
+.border-left-line {border-left:1px solid #E4E4E4;}
+.detail-width {width:200px;}
+
+
+/*common*/
+.tcenter {text-align:center;}
+.tleft{text-align:left}
+.tright{text-align:right}
+

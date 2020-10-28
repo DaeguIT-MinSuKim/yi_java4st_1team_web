@@ -54,19 +54,19 @@ public class GuestBookHandler implements Command {
 			//이후 페이지 클래스로 정리하는곳
 			Paging paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
 			ArrayList<Booking> bookingList = service.pagingBookingListById(paging, loginUser.getGuestId());
+			
+			//리스트없을때
+			if(bookingList == null) {
+				request.setAttribute("message", -1);
+				return "mypage/guest_book.jsp";
+			}
 			/*
 			//중복제외 번호리스트
 			ArrayList<Integer> noList = service.selectNoBooking(loginUser.getGuestId());
 			System.out.println("noList.size() : " + noList.size());
 			ArrayList<Booking> bookingList = new ArrayList<Booking>();
 			*/
-			/*
-			//리스트없을때
-			if(noList == null) {
-				request.setAttribute("message", -1);
-				return "mypage/guest_book.jsp";
-			}
-			*/
+			
 			
 			/*for(int bookNo:noList) {
 				bookingList.add(service.pagingBookingById(paging, loginUser.getGuestId(), bookNo));
