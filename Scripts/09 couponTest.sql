@@ -12,7 +12,7 @@ LEFT JOIN event e ON c.event_no = e.event_no WHERE c.GUEST_ID = 'chini91';
 
 --쿠폰 넣기
 INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, used_yn) 
-SELECT 14, 'test4', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
+SELECT 14, 'test', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
 
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
 VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-15', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사');
@@ -57,5 +57,63 @@ as
 SELECT c.*, e.EVENT_NAME, e.EVENT_SALERATE
 FROM COUPON c LEFT OUTER JOIN Event e ON (c.EVENT_NO  = e.EVENT_NO );
 
-SELECT * FROM coupon_view;
-SELECT * FROM ORDER_DETAIL od;
+
+SELECT * FROM coupon;
+SELECT * FROM EVENT;
+---
+INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT, USE_YN)
+VALUES ('기간지난쿠폰', 0.2, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-15', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사', 'n');
+
+INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT, USE_YN)
+VALUES ('미사용쿠폰', 0.2, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-15', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사', 'y');
+
+INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT, USE_YN)
+VALUES ('사용쿠폰', 0.2, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-30', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사', 'y');
+
+INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT, USE_YN)
+VALUES ('사용가능쿠폰', 0.2, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-30', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사', 'y');
+
+INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT, USE_YN)
+VALUES ('사용만료확인22', 0.2, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-28-18-00-00', 'YYYY-MM-DD-HH24-MI-SS'), NULL, '오픈 기념 10% 할인 행사', 'y');
+
+UPDATE COUPON SET USED_YN = 'n';
+--
+--넣기
+INSERT INTO coupon(COUPON_ID, guest_id, event_no, event_start, event_end, used_yn)
+SELECT 18, 'test', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 7;
+--
+SELECT * FROM COUPON;
+SELECT * FROM EVENT ORDER BY EVENT_NO;
+
+--
+--사용 가능 => 기간 o 사용 x
+--미사용 만료 => 기간 x 사용 x
+--사용 완료 => 기간 o 사용 o
+
+--이벤트 기간 지남 => 쿠폰 미사용 만료 : e로 설정. event_end < sysdate & coupon의 used_yn이 n인것
+
+
+UPDATE COUPON SET USED_YN = 'e' WHERE EVENT_END < sysdate AND USED_YN = 'n';
+
+SELECT c.COUPON_ID, c.GUEST_ID, c.USED_YN, e.EVENT_NO, e.EVENT_START, e.EVENT_END, e.EVENT_NAME FROM COUPON c 
+LEFT OUTER JOIN EVENT e ON e.EVENT_NO = c.EVENT_NO
+WHERE e.EVENT_END < SYSDATE AND c.USED_YN = 'e';
+
+--사용완료쿠폰 조회 => 기간 o 사용 o
+--사용
+UPDATE coupon SET USED_YN = 'y' WHERE COUPON_ID = 17 AND GUEST_ID = 'test';
+SELECT * FROM COUPON_VIEW WHERE USED_YN = 'y' AND EVENT_END >= sysdate;
+
+--사용가능 조회 => 기간 o 사용 x
+SELECT * FROM COUPON_VIEW WHERE USED_YN = 'n' AND EVENT_END >= sysdate;
+
+
+
+--생일 : 1992-10-15 => start 20200930 / end 20201030 생일 15일전후 
+SELECT 4, 'test', event_no, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(guest_birthday - 15, 'MM-DD')) AS START_date,
+   TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(guest _birthday + 15, 'MM-DD')) AS end_date FROM event, GUEST g
+   WHERE event_no = 1 AND guest_id = 'test';
+   
+
+SELECT EVENT_NO,EVENT_NAME,EVENT_SALERATE,EVENT_START,EVENT_END,EVENT_PIC,EVENT_CONTENT,USE_YN FROM event;
+SELECT COUPON_ID,GUEST_ID,EVENT_NO,EVENT_START,EVENT_END,USED_YN FROM coupon ORDER BY COUPON_ID;

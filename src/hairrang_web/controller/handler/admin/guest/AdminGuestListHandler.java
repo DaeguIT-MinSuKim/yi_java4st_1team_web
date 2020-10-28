@@ -62,9 +62,7 @@ public class AdminGuestListHandler implements Command {
 			request.setAttribute("total", total);
 			request.setAttribute("cnt", cntPerPage);
 			request.setAttribute("getEndPage", paging.getEndPage());
-			
-			System.out.println("겟엔드" + paging.getEnd());
-			System.out.println("겟엔드페이지" + paging.getEndPage());
+		
 			
 		} else {
 			

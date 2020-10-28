@@ -118,7 +118,7 @@
 				<a href="#" id="nextPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">다음</span></a>
 				<a href="#" id="toList" class="btn btn-primary btn-sm" style="margin-right: 10px;"><span class="text">목록</span></a> -->
 				<a href="#" id="delete" class="btn btn-danger btn-sm deleteButton" style="margin-right: 10px;"><span class="text">삭제</span></a>
-	          	<a href="#" id="bookingToOrder" class="btn btn-warning btn-sm bookingToOrder" ><span class="text-gray-800">주문하기</span></a>
+	          	<a href="bookingToOrder.do?no=${booking.bookNo}" id="bookingToOrder" class="btn btn-warning btn-sm bookingToOrder" ><span class="text-gray-800">주문하기</span></a>
 			</div>
 		</div>
 	</div>

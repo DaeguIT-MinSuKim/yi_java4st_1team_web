@@ -3,23 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
-<style>
-.book_wrapper {margin:0 auto; margin-top:60px; width:900px;}
-.board {clear:both; width:1000px;  text-align:center; margin:0 auto;}
-.board tr {border-bottom:1px solid #E4E4E4;}
-.board tr td {padding:15px 0;}
-.board th {border-top:3px solid black; padding:5px 0; font-weight:bold;}
-.board .book_index, .qna_index{width:50px; }
-.board .book_date, .qna_date {width:180px;}
-.board .book_name {width:400px;}
-.board .qna_title{width:400px; text-align:left; padding-left:30px;}
-.board .book_name, .qna_title a {text-decoration:none;}
-.board .book_price {width:100px;}
-.board .book_status, .qna_resYn{width:80px;}
-.board .qna_title{width:600px;}
-.paging {text-align:center; margin:10px;}
-.onb-buttons {text-align:center;}
-</style>
+
 
 
 <!-- Page Heading -->

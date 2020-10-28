@@ -200,7 +200,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 				
 			
 	
-					<!-- 페이징 -->
+					<!-- 페이징 시작 -->
 
 					<div style="width:100%; text-align:center; display:inline-block; margin:0 auto;">
 					<p>Total : ${total}</p>
@@ -235,7 +235,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 						
 						</c:choose>
 						
-						<!-- 페이징 -->
+						<!-- 페이지 숫자 -->
 						
 						<c:forEach begin="${paging.startPage}" end="${paging.endPage }"
 							var="p">
