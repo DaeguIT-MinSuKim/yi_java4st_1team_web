@@ -23,6 +23,24 @@ public class CouponDaoImpl implements CouponDao{
 		return instance;
 	}
 
+	@Override
+	public Coupon selectCouponByCouponId(Coupon coupon) {
+		String sql = "SELECT * FROM COUPON_VIEW WHERE COUPON_ID = ?";
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, coupon.getCouponId());
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					return getCoupon(rs);
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+		return null;
+	}
+	
 	private Coupon getCoupon(ResultSet rs) throws SQLException {
 		//COUPON_ID,GUEST_ID,EVENT_NO,EVENT_START,EVENT_END,USED_YN
 		EventDao eDao = EventDaoImpl.getInstance();
@@ -32,8 +50,8 @@ public class CouponDaoImpl implements CouponDao{
 		Event event = eDao.selectEventByNo(new Event(rs.getInt("EVENT_NO")));
 		coupon.setGuest(guest);
 		coupon.setEvent(event);
-		
 		coupon.setCouponId(rs.getInt("COUPON_ID"));
+		
 		guest.setGuestId(rs.getString("GUEST_ID"));
 		event.setEventNo(rs.getInt("EVENT_NO"));
 		event.setEventStart(rs.getTimestamp("EVENT_START").toLocalDateTime().toLocalDate());

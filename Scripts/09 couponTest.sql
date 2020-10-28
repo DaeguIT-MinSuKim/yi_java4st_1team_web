@@ -12,10 +12,15 @@ LEFT JOIN event e ON c.event_no = e.event_no WHERE c.GUEST_ID = 'chini91';
 
 --쿠폰 넣기
 INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, used_yn) 
+<<<<<<< HEAD
 SELECT 14, 'test', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
+=======
+SELECT 14, 'test4', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 1;
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git
 
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
-VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-15', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사');
+VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-10-21', 'YYYY-MM-DD'), to_date('2020-11-10', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사');
+
 
 UPDATE event SET USE_YN = 'n' WHERE EVENT_NO = 5;
 
@@ -57,6 +62,7 @@ as
 SELECT c.*, e.EVENT_NAME, e.EVENT_SALERATE
 FROM COUPON c LEFT OUTER JOIN Event e ON (c.EVENT_NO  = e.EVENT_NO );
 
+<<<<<<< HEAD
 
 SELECT * FROM coupon;
 SELECT * FROM EVENT;
@@ -117,3 +123,17 @@ SELECT 4, 'test', event_no, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(guest_b
 
 SELECT EVENT_NO,EVENT_NAME,EVENT_SALERATE,EVENT_START,EVENT_END,EVENT_PIC,EVENT_CONTENT,USE_YN FROM event;
 SELECT COUPON_ID,GUEST_ID,EVENT_NO,EVENT_START,EVENT_END,USED_YN FROM coupon ORDER BY COUPON_ID;
+=======
+SELECT * FROM coupon_view;
+SELECT * FROM ORDER_DETAIL od;
+
+
+-- 개인에게 6번 이벤트 쿠폰 발행
+INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end) 
+SELECT 3, 'abcd', event_no, event_start, event_end FROM event WHERE event_no = 6;
+
+SELECT * FROM event;
+SELECT * FROM coupon;
+SELECT * FROM guest;
+
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git

@@ -113,7 +113,7 @@ public class BookingService {
 	
 	public int insertBookingWithHairList(Booking booking) {
 		String bookingSql = "INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_NOTE) VALUES(?, ?, ?, ?)";
-		String hairsSql = "INSERT INTO BOOKING_HAIRS(BOOK_NO, HAIR_NO, HAIR_QUANTITY) VALUES(?, ?, ?)";
+		String hairsSql = "INSERT INTO BOOKING_HAIRS(HAIR_NO, HAIR_QUANTITY) VALUES(?, ?)";
 		
 		Connection con = null;
 		PreparedStatement bookingPstmt = null;
@@ -138,13 +138,14 @@ public class BookingService {
 			
 			for(BookingHairs hs : booking.getHairList()) {
 				hairsPstmt.setInt(1, bookingNo);
-				hairsPstmt.setInt(2, hs.getHair().getHairNo());
-				hairsPstmt.setInt(3, hs.getQuantity());
+				hairsPstmt.setInt(1, hs.getHair().getHairNo());
+				hairsPstmt.setInt(2, hs.getQuantity());
 				hairsPstmt.executeUpdate();
 			}
 			
 			con.commit();
 		} catch (SQLException e) {
+			System.out.println("예약 인서트 중 에러!");
 			rollbackUtil(con, e);
 		} finally {
 			closeUtil(con, bookingPstmt, hairsPstmt);
