@@ -252,7 +252,7 @@ $(function(){
                 <div class="form-group row">
                   <div class="col-sm" style="text-align: right;">
                  	<button type="button" class="btn btn-secondary" name="clearBtn" onclick="setClear()">취소</button>
-                    <button type="submit" class="btn btn-primary">등록</button>
+                    <button type="button" class="btn btn-primary" id="orderRegBtn">등록</button>
                   </div>
                 </div>
               </form>

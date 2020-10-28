@@ -407,7 +407,6 @@ $(document).on("keydown", "#guestSearchInput", function(event) {
 		var opt = $("#guestSearchOpt").val();
 		var input = $("#guestSearchInput").val();
 		searchGuest(1, opt, input);
-		console.log("엔터쳤다!");
 	};
 });
 
@@ -493,33 +492,81 @@ function changeDiscountAmount(target){
 	calTotalPrice();
 }
 
+$(document).on("click", "#orderRegBtn", function() {
+	var order = readInputOrder();
+	
+	alert(JSON.stringify(order));
+	$.ajax({
+		url: "orderRegister.do",
+		type: "post",
+		dataType: "text",
+		data: JSON.stringify(order),
+		success: function(data) {
+			if(data != 0) {
+				console.log(data);
+				alert("주문을 등록했습니다.");
+			} else {
+				console.log(data);
+			}
+		},
+		error: function(error) {
+			console.log(error)
+			alert("주문 등록에 실패했습니다.");
+		}
+	});
+});
 
 /* 주문등록 버튼 클릭 시 input 값들 다 읽어오기 */
 function readInputOrder(){
-	if($("#nonMemberCK")) {
-		// 비회원인 경우
-	} else {
-		$("#guestInput").val();
-	}
+	var guestId;
 	
+	if($("#nonMemberCK").is("checked")) {
+		guestId = "nonmember";
+	} else {
+		$("#guestInput").prop("disabled", false);
+		guestId = $("#guestInput").val();
+	}
+
+	/*
 	if(selectedBookingNo == 0) {
 		// 
 	} else {
 		// 불러온 예약건
 	}
+	*/
 	
+	var deNo = $("#designerSelector").val();
 	
-	$("#designerSelector").val();
+	// 상세주문 리스트
+	var odList = new Array();
+	var couponTargetNo = $("#couponTargetBox").val();
 	
-	var addedHairList = $("#addedHairList tr");
+	$("#addedHairList tr").each(function(i, item) {
+		var coupon = null;
+		if (couponTargetNo == $(item).attr("hairNo")) {
+			coupon = { couponId: $("#couponBox").val() };
+		}
+		var od = {
+				hair: {	hairNo: $(item).attr("hairNo") },
+				odQuantity: $(item).attr("quantity"),
+				coupon: coupon
+		};
+		
+		odList.push(od);
+	})
 	
-	$("#couponBox").val();
-	$("#couponTargetBox").val();
+	console.log("최종 odList");
+	console.log(odList);
 	
+	var order = {
+			guest: {
+				guestId: guestId
+			},
+			designer: {
+				deNo: deNo
+			},
+			odList: odList
+	};
+	
+	return order;
 }
-
-
-$(function(){
-	
-	
-});
