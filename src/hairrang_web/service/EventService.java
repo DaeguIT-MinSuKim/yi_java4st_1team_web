@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import hairrang_web.dao.EventDao;
 import hairrang_web.dao.impl.EventDaoImpl;
 import hairrang_web.dto.Event;
+import hairrang_web.utils.Paging;
 
 public class EventService {
 	EventDao dao = EventDaoImpl.getInstance();
@@ -21,5 +22,13 @@ public class EventService {
 		list.add(dao.selectEventDownSide(event));
 		list.add(dao.selectEventUpSide(event));
 		return list;
+	}
+	
+	public int countEvent() {
+		return dao.countEvent();
+	}
+	
+	public ArrayList<Event> PagingEventAll(Paging paging){
+		return dao.PagingEventAll(paging);
 	}
 }

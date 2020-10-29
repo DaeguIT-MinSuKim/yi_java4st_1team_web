@@ -3,6 +3,7 @@ package hairrang_web.dao;
 import java.util.ArrayList;
 
 import hairrang_web.dto.Event;
+import hairrang_web.utils.Paging;
 
 public interface EventDao {
 
@@ -21,5 +22,8 @@ public interface EventDao {
 	
 	Event selectEventUpSide(Event event);
 	
+	//admin paging
+	int countEvent();
+	ArrayList<Event> PagingEventAll(Paging paging);
 	
 }

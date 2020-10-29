@@ -64,12 +64,14 @@ CREATE TABLE EVENT (
 	event_end DATE, /* 종료일 */
 	event_pic varchar2(200), /* 사진 */
 	event_content VARCHAR2(1000), /* 내용 */
-	use_yn CHAR(1) DEFAULT 'y' /*사용유무*/
+	event_status CHAR(1) DEFAULT 'w' /*상태  => w:대기, s:시작, e:종료*/
 );
 
 ALTER TABLE EVENT
 ADD CONSTRAINT PK_EVENT PRIMARY KEY (event_no);
 
+--event_status로 변경
+ALTER TABLE event RENAME COLUMN use_yn TO event_status;
 
 /* 헤어분류 */
 CREATE TABLE HAIR_KIND (

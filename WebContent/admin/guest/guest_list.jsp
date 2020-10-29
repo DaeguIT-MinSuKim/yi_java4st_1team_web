@@ -291,7 +291,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 			<!-- tableRespnsible -->
 		</div>
 		<!-- cardBody-->
-<!-- 	</div>
-</div> -->
+	</div>
+
 </form>
 <%@ include file="../include/footer.jsp" %>   

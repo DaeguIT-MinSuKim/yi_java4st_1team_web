@@ -12,11 +12,10 @@ LEFT JOIN event e ON c.event_no = e.event_no WHERE c.GUEST_ID = 'chini91';
 
 --쿠폰 넣기
 INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, used_yn) 
-<<<<<<< HEAD
+
 SELECT 14, 'test', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
-=======
 SELECT 14, 'test4', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 1;
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git
+
 
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
 VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-10-21', 'YYYY-MM-DD'), to_date('2020-11-10', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사');
@@ -28,9 +27,6 @@ UPDATE event SET USE_YN = 'n' WHERE EVENT_NO = 5;
 
 SELECT * FROM COUPON WHERE GUEST_ID = 'chini91';
 
-SELECT guest_birthday -15, guest_birthday + 15  FROM GUEST WHERE GUEST_ID = 'chini91';
-
-SELECT guest_birthday, substr(GUEST_BIRTHDAY,4),   FROM GUEST WHERE GUEST_ID = 'chini91';
 
 SELECT to_char(sysdate,'yyyy-') || to_char(guest_birthday ,'MM-dd') AS today,
 to_date(to_char(sysdate,'yyyy-') || to_char(guest_birthday - 15 ,'MM-dd')) AS START_date,
@@ -62,25 +58,12 @@ as
 SELECT c.*, e.EVENT_NAME, e.EVENT_SALERATE
 FROM COUPON c LEFT OUTER JOIN Event e ON (c.EVENT_NO  = e.EVENT_NO );
 
-<<<<<<< HEAD
 
 SELECT * FROM coupon;
 SELECT * FROM EVENT;
 ---
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT, USE_YN)
 VALUES ('기간지난쿠폰', 0.2, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-15', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사', 'n');
-
-INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT, USE_YN)
-VALUES ('미사용쿠폰', 0.2, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-15', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사', 'y');
-
-INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT, USE_YN)
-VALUES ('사용쿠폰', 0.2, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-30', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사', 'y');
-
-INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT, USE_YN)
-VALUES ('사용가능쿠폰', 0.2, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-30', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사', 'y');
-
-INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT, USE_YN)
-VALUES ('사용만료확인22', 0.2, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-28-18-00-00', 'YYYY-MM-DD-HH24-MI-SS'), NULL, '오픈 기념 10% 할인 행사', 'y');
 
 UPDATE COUPON SET USED_YN = 'n';
 --
@@ -117,13 +100,13 @@ SELECT * FROM COUPON_VIEW WHERE USED_YN = 'n' AND EVENT_END >= sysdate;
 
 --생일 : 1992-10-15 => start 20200930 / end 20201030 생일 15일전후 
 SELECT 4, 'test', event_no, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(guest_birthday - 15, 'MM-DD')) AS START_date,
-   TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(guest _birthday + 15, 'MM-DD')) AS end_date FROM event, GUEST g
+   TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(guest_birthday + 15, 'MM-DD')) AS end_date FROM event, GUEST g
    WHERE event_no = 1 AND guest_id = 'test';
    
 
 SELECT EVENT_NO,EVENT_NAME,EVENT_SALERATE,EVENT_START,EVENT_END,EVENT_PIC,EVENT_CONTENT,USE_YN FROM event;
 SELECT COUPON_ID,GUEST_ID,EVENT_NO,EVENT_START,EVENT_END,USED_YN FROM coupon ORDER BY COUPON_ID;
-=======
+
 SELECT * FROM coupon_view;
 SELECT * FROM ORDER_DETAIL od;
 
@@ -132,8 +115,79 @@ SELECT * FROM ORDER_DETAIL od;
 INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end) 
 SELECT 3, 'abcd', event_no, event_start, event_end FROM event WHERE event_no = 6;
 
-SELECT * FROM event;
-SELECT * FROM coupon;
-SELECT * FROM guest;
 
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git
+----------------------------------------
+SELECT * FROM event ORDER BY EVENT_NO DESC;
+SELECT * FROM coupon;
+
+UPDATE event SET event_status = 'w';
+DELETE FROM COUPON;
+DELETE FROM event;
+
+SELECT event_end - 1 / (24*60*60) + 1 AS event_end FROM event;
+
+----------------------------------------------------------------------------------------------------------
+--
+SELECT COUNT(*) FROM event;
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM event ORDER BY event_no desc) a) 
+WHERE rn BETWEEN s AND 10 ORDER BY rn;
+--
+/* event_status
+ * 대기: w / 진행: s / 종료: e
+ * 1. 대기: event_start > sysdate
+ * 2. 진행 : event_start >= sysdate &  
+ * 			event_end - 1/(24*60*60) -> end날짜의 전날 23:59:59 인것.
+ * 3. 종료 : event_end < sysdate 
+ * */
+
+/* 조회 */
+--대기
+SELECT * FROM event WHERE event_start > sysdate;
+--진행
+SELECT * FROM event WHERE event_start <= sysdate AND event_end >= sysdate;
+--SELECT * FROM event WHERE event_start <= sysdate AND event_end - 1/(24*60*60) >= sysdate;
+--종료 
+SELECT * FROM event WHERE EVENT_END < sysdate;
+
+/* job */
+-- 대기 -> 진행중으로 변경 
+UPDATE event SET event_status = 's' WHERE event_start <= sysdate AND event_end >= sysdate;
+--UPDATE event SET event_status = 's' WHERE event_start <= sysdate AND event_end - 1/(24*60*60) >= sysdate;
+-- 이벤트 종료로 변경
+UPDATE event SET event_status = 'e' WHERE event_end < sysdate;
+-- 고객 쿠폰 기간만료로 변경
+UPDATE coupon SET USED_YN = 'e' WHERE EVENT_END < sysdate;
+
+
+/* insert할때
+ * end 2020-10-30이면 실제로 2020-10-29 23:59:59 까지인데 
+ * 인서트 자체를 20-10-30 23:59:59로 처리할것인가 다음날로 처리할것인가
+ * */
+--insert할때 현재날짜 + 23:59:59 추가하기 => 이렇게하면 배치랑 조회가 좀 더쉬움,,
+SELECT event_end - 1 / (24*60*60) + 1 AS event_end FROM event;
+
+
+--테스트 
+SELECT * FROM event ORDER BY EVENT_NO DESC;
+SELECT * FROM coupon;
+UPDATE event SET event_status = 'w';
+
+INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
+VALUES ('대기중', 0.2, to_date('2020-10-30', 'YYYY-MM-DD'), to_date('2020-11-20', 'YYYY-MM-DD') + - 1 / (24*60*60) + 1, NULL, '테스트');
+
+INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
+VALUES ('진행중', 0.2, to_date('2020-10-29', 'YYYY-MM-DD'), to_date('2020-11-20', 'YYYY-MM-DD') + - 1 / (24*60*60) + 1, NULL, '테스트');
+
+INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
+VALUES ('종료', 0.2, to_date('2020-10-20', 'YYYY-MM-DD'), to_date('2020-10-28', 'YYYY-MM-DD') + - 1 / (24*60*60) + 1, NULL, '테스트');
+
+INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
+VALUES ('생일', 0.2, NULL, NULL, NULL, '생일로부터 15일 전후 동안만 사용할 수 있습니다.');
+
+INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
+VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-10-29', 'YYYY-MM-DD'), to_date('2020-11-14', 'YYYY-MM-DD') + - 1 / (24*60*60) + 1 , NULL, '오픈 기념 10% 할인 행사');
+
+--모든회원에게 발행
+INSERT INTO coupon(guest_id, event_no, event_start, event_end, used_yn) 
+SELECT ? , event_no, event_start, event_end, 'n' FROM event WHERE event_no = ?;
+--해서 회원아이디 돌리기

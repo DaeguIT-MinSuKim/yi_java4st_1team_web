@@ -22,9 +22,15 @@ DROP
 CREATE OR REPLACE PROCEDURE UPDATE_JOB_EVENT
    IS
       BEGIN
-         -- 실행할 SQL 넣어주기
-         UPDATE event SET USE_YN = 'n' WHERE EVENT_END < sysdate; 
-         UPDATE COUPON SET USED_YN = 'e' WHERE EVENT_END < sysdate AND USED_YN = 'n'; --기간만료
+         -- 대기 -> 진행중으로 변경 
+		UPDATE event SET event_status = 's' WHERE event_start <= sysdate AND event_end >= sysdate;
+		--UPDATE event SET event_status = 's' WHERE event_start <= sysdate AND event_end - 1/(24*60*60) >= sysdate;
+		-- 이벤트 종료로 변경
+		UPDATE event SET event_status = 'e' WHERE event_end < sysdate;
+		-- 고객 쿠폰 기간만료로 변경
+		UPDATE coupon SET USED_YN = 'e' WHERE EVENT_END < sysdate; 
+		-- 생일자 쿠폰 삽입
+		
       END;
 
 -- job 생성
@@ -70,7 +76,7 @@ END
 
 -- 등록되어 있는 JOB 삭제
 BEGIN
-   DBMS_JOB.REMOVE(31);
+   DBMS_JOB.REMOVE(33);
    COMMIT;
 END;
 
