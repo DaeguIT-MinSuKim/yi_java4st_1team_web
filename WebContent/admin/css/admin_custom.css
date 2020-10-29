@@ -105,6 +105,16 @@
 .paging {text-align:center; margin:10px;}
 .onb-buttons {text-align:center;}
 
+/*addform*/
+#add-wrapper {width:600px; }
+.add-table {width:600px; margin:0 auto;}
+.add-table tr td input {width:250px;}
+.add-table tr {border-bottom:1px solid #e9e9e9;}
+.add-table td {padding:20px;}
+.add-table input {width:250px;}
+.add-buttons {}
+.info-buttons {text-align:center; margin:10px;}
+
 /*common*/
 .tcenter {text-align:center;}
 .tleft{text-align:left}

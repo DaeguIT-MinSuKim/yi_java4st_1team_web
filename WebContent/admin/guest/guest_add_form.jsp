@@ -50,19 +50,7 @@ $('#pwdCheck').keyup(function(){
 
 
 </script>
-<style>
-#add-wrapper {width:600px; }
-.add-table {width:600px; margin:0 auto;}
-.add-table tr td input {width:250px;}
-.add-table tr {border-bottom:1px solid #e9e9e9;}
-.add-table td {padding:20px;}
-.add-table input {width:250px;}
-.add-buttons {}
-input {}
 
-
-.info-buttons {text-align:center; margin:10px;}
-</style>
 <body>
 
 <!-- Page Heading -->
