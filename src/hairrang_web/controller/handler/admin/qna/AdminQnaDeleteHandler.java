@@ -11,6 +11,7 @@ import hairrang_web.dto.QnA;
 import hairrang_web.service.QnaService;
 
 public class AdminQnaDeleteHandler implements Command {
+
 	QnaService service = new QnaService();
 
 	@Override

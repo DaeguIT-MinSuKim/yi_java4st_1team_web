@@ -1,32 +1,104 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="../header.jsp"%>
+
+<style>
+p {
+	margin: 0 0 20px;
+	line-height: 1.5;
+}
+
+.about_main {
+	margin-top: 50px;
+	text-align: center;
+	background: #ffffff;
+}
+
+.content1, .content2 {
+	display: none;
+	padding: 20px 0 0;
+	border-top: 1px solid #ddd;
+}
+
+
+
+
+.content1-inner {
+	width: 800px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+.map {
+	width: 800px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+.text {
+	width: 500px;
+	text-align: left;
+}
+
+button {
+	width: 130px;
+	height: 50px;
+	color: black;
+	border: none;
+	font-size: 15px;
+	font-weight: bold;
+	float: right;
+	margin: 5px;
+	width: 200px;
+	background: white;
+	border: 1px solid #777;
+}
+
+.outer {
+	width: 800px;
+}
+
+.tr {
+	padding: 50px;
+	border-bottom: 1px solid black;
+}
+
+td {
+	padding: 20px;
+}
+
+.about-img {
+	margin-bottom: -6px;
+	opacity: .20;
+}
+</style>
+
+</head>
 <body>
-	<h1>공지 상세</h1>
-	<br>
-	<label>${notice.noticeTitle }</label>
-	<hr>
-	<br>
-	<input type="text" readonly value="${notice.noticeContent}">
-	<br>
 
-	<div style="display: block; text-align: center;">
-		<c:forEach items="${list }" var="side">
-			<ul>
-				<li><a href="noticeDetail.do?no=${notice.noticeNo }">
-						<div>
-							<p>
-								<span>${side.noticeTitle }</span>
-						</div>
-				</a></li>
-			</ul>
-		</c:forEach>
+
+
+	<div class="content1-inner" style="text-align: center;">
+		<p></p>
+		<br>
+		<table class="outer">
+
+			<tr class="tr">
+				<td>${notice.noticeTitle }</td>
+			</tr>
+			<tr class="tr">
+				<td>${notice.noticeContent }</td>
+			</tr>
+			<c:if test="${ notice.noticeFile != null}">
+				<tr class="tr">
+					<td><img alt="" src="notice/setload/${notice.noticeFile}"></td>
+				</tr>
+			</c:if>
+			
+		</table>
 	</div>
-
-
 	<input style="float: right;" type="button" value="홈으로"
 		onclick="location.href='noticeHome.do'">
+
 </body>
 <%@ include file="../footer.jsp"%>

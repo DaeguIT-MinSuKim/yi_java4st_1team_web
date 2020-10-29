@@ -1,6 +1,8 @@
 package hairrang_web.controller.handler.admin.qna;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -60,6 +62,9 @@ public class AdminQnaListHandler implements Command {
 		
 		// QnA페이징해서 해당페이지 qna를 list화해서 보내주는곳
 		request.setAttribute("viewAll", service.selectPagingQnA(paging));
+		
+		LocalDateTime time = LocalDateTime.now();
+
 		
 		return url;
 	}

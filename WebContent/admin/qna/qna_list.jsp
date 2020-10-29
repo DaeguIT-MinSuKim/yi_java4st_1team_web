@@ -2,13 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
-	document.title += ' - 고객 목록';
+	document.title += ' - 문의 목록';
 
 	function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
-		location.href = "guestList.do?nowPage=1&cntPerPage=" + sel;
+		location.href = "qnaList.do?nowPage=1&cntPerPage=" + sel;
 	};
 
 	function selectAll() {
@@ -64,6 +64,7 @@
 
 	$(document).on('click', '[id=btn_delete]', function() {
 		var no = $(this).attr('no');
+
 		if (confirm(no + '를 삭제처리 하시겠습니까?') == true) {
 			location.href = "qnaDelete.do?no=" + no;
 		} else {
@@ -74,7 +75,7 @@
 </script>
 
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800 font-weight">고객 목록 - 고객 관리</h1>
+<h1 class="h3 mb-2 text-gray-800 font-weight">문의 목록 - 문의 관리</h1>
 <p class="mb-4">
 	<a target="_blank" href="https://datatables.net"></a>
 </p>
@@ -86,8 +87,8 @@
 
 			<input type="button" value="공지 등록" class="btn btn-success btn-sm"
 				style="float: left; margin-right: 10px;"
-				onclick="location.href='qnaNoticeWrite.do'"> <input type="button"
-				value="삭제" name="delete" class="btn btn-danger btn-sm"
+				onclick="location.href='qnaNoticeWrite.do'"> <input
+				type="button" value="삭제" name="delete" class="btn btn-danger btn-sm"
 				style="float: left;">
 
 			<button type="button" onclick="selectAll()"
@@ -153,7 +154,7 @@
 							<th>제목</th>
 							<th>작성일</th>
 							<th>답변여부</th>
-							
+
 							<th>답변</th>
 							<th>처리</th>
 						</tr>
@@ -161,38 +162,40 @@
 					<tbody>
 						<c:forEach var="qna" items="${viewAll}" varStatus="status">
 							<tr>
-								<td><input type="checkbox" name="check" value="${qna.qnaNo}"></td>
+								<td><input type="checkbox" name="check"
+									value="${qna.qnaNo}"></td>
 								<td style="width: 20px;">${total - ((paging.nowPage-1) * cnt + status.index)}</td>
 								<td style="width: 80px;">${qna.guestId.guestId}</td>
-								<td style="width: 130px;"><a href="qnaDetail.do?no=${qna.qnaNo }">${qna.qnaTitle}</a></td>
+								<td style="width: 130px;"><a
+									href="qnaDetail.do?no=${qna.qnaNo }">${qna.qnaTitle}</a></td>
 								<td style="width: 150px;">${qna.qnaRegDate}</td>
 								<td style="width: 150px;">${qna.qnaResYn}</td>
-								
-								
+
+
 								<td style="width: 100px;">
-								<c:choose>
-									<c:when test="${qna.qnaResYn eq 'y'}">
-									<a href="#" class="btn bg-warning btn-sm bookingToOrderButton">
-									<span class="text-gray-800">답변완료</span>
-									</a>
-									</c:when>
-									<c:otherwise>
-									<a href="qnaResult.do?no=${qna.qnaNo }" class="btn bg-warning btn-sm bookingToOrderButton">
-									<span class="text-gray-800">답변하기</span>
-									</a>
-									</c:otherwise>
-								</c:choose>
+										<c:if test="${qna.qnaResYn eq 'y'}">
+											<a href="#"
+												class="btn bg-warning btn-sm bookingToOrderButton"> <span
+												class="text-gray-800">답변완료</span>
+											</a>
+										</c:if>
+										<c:if test="${qna.qnaResYn eq 'n' && qna.qnaNotice eq 'n'}">
+											<a href="qnaResult.do?no=${qna.qnaNo }"
+												class="btn bg-warning btn-sm bookingToOrderButton"> <span
+												class="text-gray-800">답변하기</span>
+											</a>
+										</c:if>
+										<c:if test="${qna.qnaNotice eq 'y'}">
+										</c:if>
 								</td>
-										
-								<td style="width: 100px;">
-								<c:if test="${qna.qnaResYn eq 'y' }">
-								<input type="button"
-									name="update" value="수정" class="btn btn-dark btn-sm"
-									onclick="location.href='guestInfo.do?id=${guest.guestId}'">
-								</c:if>
-									<input type="button" value="삭제" id="btn_delete"
-									no="${qna.qnaNo}" class="btn btn-danger btn-sm">
-								</td>
+
+								<td style="width: 100px;"><c:if
+										test="${qna.qnaResYn eq 'y' }">
+										<input type="button" name="update" value="수정"
+											class="btn btn-dark btn-sm"
+											onclick="location.href='qnaUpdate.do?no=${qna.qnaNo}'">
+									</c:if> <input type="button" value="삭제" id="btn_delete"
+									no="${qna.qnaNo}" class="btn btn-danger btn-sm"> </td>
 							</tr>
 						</c:forEach>
 					</tbody>
