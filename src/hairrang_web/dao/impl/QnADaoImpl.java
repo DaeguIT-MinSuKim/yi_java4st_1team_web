@@ -61,6 +61,7 @@ public class QnADaoImpl implements QnADao {
 		qna.setQnaResYn(rs.getString("RES_YN"));
 
 		qna.setQnaFile(rs.getString("QNA_FILE"));
+		qna.setQnaNotice(rs.getString("NOTICE_YN"));
 
 		return qna;
 	}
@@ -326,25 +327,13 @@ public class QnADaoImpl implements QnADao {
 	}
 
 	@Override
-	public int insertQnaRestult(QnA qna, String qnaNo) {
-		String sql = "INSERT INTO QNA(ADMIN_ID, QNA_TITLE, QNA_CONTENT, QNA_FILE, QNA_REFNO) VALUES(?,?,?,?,?)";
+	public int updateResult(QnA qna) {
+		String sql = "UPDATE QNA  set QNA_TITLE = ?, QNA_CONTENT = ?, QNA_FILE = ?  WHERE QNA_NO = ?";
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, qna.getAdminId().getAdminId());
-			pstmt.setString(2, qna.getQnaTitle());
-			pstmt.setString(3, qna.getQnaContent());
-			pstmt.setString(4, qna.getQnaFile());
-			pstmt.setString(5, qnaNo);
-			return pstmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@Override
-	public int updateQnaResultYn(String qnaNo) {
-		String sql = "UPDATE QNA  SET RES_YN = 'y' WHERE QNA_NO = ?";
-		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, qnaNo);
+			pstmt.setString(1, qna.getQnaTitle());
+			pstmt.setString(2, qna.getQnaContent());
+			pstmt.setString(3, qna.getQnaFile());
+			pstmt.setInt(4, qna.getQnaNo());
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

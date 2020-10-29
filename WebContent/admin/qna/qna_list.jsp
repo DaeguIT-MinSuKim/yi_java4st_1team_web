@@ -8,7 +8,7 @@
 
 	function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
-		location.href = "guestList.do?nowPage=1&cntPerPage=" + sel;
+		location.href = "qnaList.do?nowPage=1&cntPerPage=" + sel;
 	};
 
 	function selectAll() {
@@ -172,26 +172,28 @@
 								<td style="width: 150px;">${qna.qnaResYn}</td>
 
 
-								<td style="width: 100px;"><c:choose>
-										<c:when test="${qna.qnaResYn eq 'y'}">
+								<td style="width: 100px;">
+										<c:if test="${qna.qnaResYn eq 'y'}">
 											<a href="#"
 												class="btn bg-warning btn-sm bookingToOrderButton"> <span
 												class="text-gray-800">답변완료</span>
 											</a>
-										</c:when>
-										<c:otherwise>
+										</c:if>
+										<c:if test="${qna.qnaResYn eq 'n' && qna.qnaNotice eq 'n'}">
 											<a href="qnaResult.do?no=${qna.qnaNo }"
 												class="btn bg-warning btn-sm bookingToOrderButton"> <span
 												class="text-gray-800">답변하기</span>
 											</a>
-										</c:otherwise>
-									</c:choose></td>
+										</c:if>
+										<c:if test="${qna.qnaNotice eq 'y'}">
+										</c:if>
+								</td>
 
 								<td style="width: 100px;"><c:if
 										test="${qna.qnaResYn eq 'y' }">
 										<input type="button" name="update" value="수정"
 											class="btn btn-dark btn-sm"
-											onclick="location.href='guestInfo.do?id=${guest.guestId}'">
+											onclick="location.href='qnaUpdate.do?no=${qna.qnaNo}'">
 									</c:if> <input type="button" value="삭제" id="btn_delete"
 									no="${qna.qnaNo}" class="btn btn-danger btn-sm"> </td>
 							</tr>

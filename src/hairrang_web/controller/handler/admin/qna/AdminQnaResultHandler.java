@@ -37,8 +37,6 @@ public class AdminQnaResultHandler implements Command {
 		} else {
 			System.out.println("POST");
 
-			System.out.println("POST");
-
 			// 다운로드경로
 			String savePath = "notice/setload";
 
@@ -89,7 +87,7 @@ public class AdminQnaResultHandler implements Command {
 				String title = multi.getParameter("title");
 				String content = multi.getParameter("content");
 
-				QnA qna = new QnA(new Admin("testadmin"), title, content, FilegetPath);
+				QnA qna = new QnA(new Admin("testadmin"), title, content, realFileName);
 				
 
 				int res = service.insertQnaResult(qna, qnaNo);

@@ -64,7 +64,9 @@ public class NoticeDaoImpl implements NoticeDao {
 		String noticeTitle = rs.getString("notice_title");
 		String noticeContent = rs.getString("notice_content");
 		String noticeFile = rs.getString("notice_file");
-		return new Notice(noticeNo, noticeTitle, noticeContent,noticeFile);
+		String noticeDelYn = rs.getString("NOTICE_DELYN");
+		
+		return new Notice(noticeNo, noticeTitle, noticeContent, noticeDelYn, noticeFile);
 	}
 
 	@Override

@@ -5,7 +5,8 @@
 <form method="post" action="qnaResult.do" enctype="multipart/form-data">
 	
 	<div id="add-wrapper">
-			
+			${qna.qnaFile }
+			${qna.qnaNotice }
 			<table class="add-table">
 				
 				<tr>
@@ -22,17 +23,24 @@
 				
 				<tr>
 					<td>업로드 사진</td>
-					<td><img alt="" src="${qna.qnaFile }"></td>
+					<c:if test="${qna.qnaNotice eq 'y' }">
+						<td><img alt="" src="../notice/setload/${qna.qnaFile }"></td>
+					</c:if>
+					<c:if test="${qna.qnaNotice eq 'n' }">
+						<td><img alt="" src="../qna/upload/${qna.qnaFile }"></td>
+					</c:if>
+					
 				</tr>
 
 			</table>
 			<br>
 			
+			<c:if test="${qna.qnaResYn eq 'y' }">
 			<table class="add-table" >
 				
 				<tr>
 					<td>답변 제목</td>
-					<td><input type="text" name="title" readonly value="${qnaResult.qnaContent }" /> 
+					<td><input type="text" name="title" readonly value="${qnaResult.qnaTitle }" /> 
 				</tr>
 				
 				
@@ -44,10 +52,16 @@
 				
 				<tr>
 					<td>업로드 사진</td>
-					<td><img alt="" src="${qnaResult.qnaFile }"></td>
+					<c:if test="${qna.qnaNotice eq 'y' || qna.qnaRefNo != null }">
+						<td><img alt="" src="../notice/setload/${qnaResult.qnaFile }"></td>
+					</c:if>
+					<c:if test="${qna.qnaNotice eq 'n' }">
+						<td><img alt="" src="../qna/upload/${qnaResult.qnaFile }"></td>
+					</c:if>
 				</tr>
 
 			</table>
+			</c:if>
 			
 			
 			
