@@ -1,4 +1,4 @@
-package hairrang_web.controller.handler.admin.booking;
+package hairrang_web.controller.handler.admin.order;
 
 import java.io.IOException;
 import java.io.InputStreamReader;

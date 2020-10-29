@@ -32,7 +32,7 @@ $(function() {
 		$(this).addClass("active");
 		
 		$.ajax({
-			url: "bookingToOrder.do",
+			url: "orderForm.do",
 			type: "post",
 			dataType: "json",
 			data: {
@@ -212,7 +212,7 @@ $(document).on("click", "#guestSearchModalConfirm", function(){
 
 
 function setBookingData(){
-    var url = "bookingToOrder.do";
+    var url = "orderForm.do";
     $.ajax({
         type: "POST",
         url: url,
@@ -320,7 +320,7 @@ function setClear() {
 
 function loadCouponList(guestId) {
 	$.ajax({
-		url: "bookingToOrder.do",
+		url: "orderForm.do",
 		type: "post",
 		dataType: "json",
 		data: {
@@ -494,17 +494,22 @@ function changeDiscountAmount(target){
 
 $(document).on("click", "#orderRegBtn", function() {
 	var order = readInputOrder();
+	var info = {
+		bookNo: selectedBookingNo,
+		order: order
+	};
 	
 	alert(JSON.stringify(order));
 	$.ajax({
 		url: "orderRegister.do",
 		type: "post",
 		dataType: "text",
-		data: JSON.stringify(order),
+		data: JSON.stringify(info),
 		success: function(data) {
 			if(data != 0) {
-				console.log(data);
-				alert("주문을 등록했습니다.");
+				alert("주문이 등록되었습니다.");
+				location.href="orderList.do";
+//				location.href="orderDetail.do?no="+data;
 			} else {
 				console.log(data);
 			}
@@ -527,14 +532,6 @@ function readInputOrder(){
 		guestId = $("#guestInput").val();
 	}
 
-	/*
-	if(selectedBookingNo == 0) {
-		// 
-	} else {
-		// 불러온 예약건
-	}
-	*/
-	
 	var deNo = $("#designerSelector").val();
 	
 	// 상세주문 리스트
@@ -555,16 +552,9 @@ function readInputOrder(){
 		odList.push(od);
 	})
 	
-	console.log("최종 odList");
-	console.log(odList);
-	
 	var order = {
-			guest: {
-				guestId: guestId
-			},
-			designer: {
-				deNo: deNo
-			},
+			guest: { guestId: guestId },
+			designer: { deNo: deNo },
 			odList: odList
 	};
 	

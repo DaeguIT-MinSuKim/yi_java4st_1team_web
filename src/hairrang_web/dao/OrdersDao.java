@@ -22,6 +22,8 @@ public interface OrdersDao {
 	ArrayList<OrderDetail> selectOrderDetailsByOrdersNo(int ordersNo);
 	
 	int selectMaxOrdersNo();
+
+	int selectNextValOrdersNo();
 	
 	// int, update, delete는 트랜잭션 적용으로 service에서 구현.
 }

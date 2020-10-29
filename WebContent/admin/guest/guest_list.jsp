@@ -109,7 +109,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 							<label>
 							<select name="dataTable_length" id="cntPerPage" onchange="selChange()" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
 									<option value="5"
-						<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
+							<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
 							<option value="10"
 								<c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
 							<option value="15"
@@ -137,7 +137,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 				<!-- 테이블 상단 필터링 끝 -->
 
 				<!-- 테이블 시작 -->
-				<table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+				<table class="table table-bordered text-center" id="dataTable" cellspacing="0">
 					<thead>
 						<tr>
 							<th></th>
@@ -291,7 +291,6 @@ $(document).on('click', '[id=btn_delete]', function() {
 			<!-- tableRespnsible -->
 		</div>
 		<!-- cardBody-->
-<!-- 	</div>
-</div> -->
+	</div>
 </form>
 <%@ include file="../include/footer.jsp" %>   

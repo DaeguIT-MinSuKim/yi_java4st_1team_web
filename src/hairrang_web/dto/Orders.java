@@ -84,6 +84,7 @@ public class Orders {
 	public String getOrdersDateStr() {
 		return this.ordersDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 	}
+	
 	public void setOrdersDate(LocalDateTime ordersDate) {
 		this.ordersDate = ordersDate;
 	}
@@ -106,6 +107,22 @@ public class Orders {
 			.collect(Collectors.toCollection(ArrayList::new));
 		
 		return String.format("%s 외 %d 건", hairs.get(0).getHairName(), hairs.size() - 1);
+	}
+	
+	public String getUsedCoupon() {
+		String res = null;
+		if(odList != null) {
+			ArrayList<Coupon> list = odList.stream().map(OrderDetail::getCoupon).collect(Collectors.toCollection(ArrayList::new));
+			if (list.get(0) != null) {
+				res = list.get(0).getEvent().getEventName();
+			}
+		}
+		return res;
+	}
+	
+	public int getDiscountAmount() {
+		ArrayList<Integer> list = odList.stream().map(OrderDetail::getOdDiscount).collect(Collectors.toCollection(ArrayList::new));
+		return list==null? 0 : list.get(0);
 	}
 	
 	@Override

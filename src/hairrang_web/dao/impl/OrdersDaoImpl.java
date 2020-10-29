@@ -30,7 +30,7 @@ public class OrdersDaoImpl implements OrdersDao {
 
 	@Override
 	public ArrayList<Orders> selectOrdersAll() {
-		String sql = "SELECT * FROM ORDERS";
+		String sql = "SELECT * FROM ORDERS ORDER BY ORDERS_NO";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
@@ -101,7 +101,7 @@ public class OrdersDaoImpl implements OrdersDao {
 	// 단독으로 쓰일 일은 없고, select .. from orders 할 때 odList를 얻어올 때 쓰임.
 	@Override
 	public ArrayList<OrderDetail> selectOrderDetailsByOrdersNo(int ordersNo) {
-		String sql = "SELECT * FROM ORDER_DETAIL WHERE ORDERS_NO = ?";
+		String sql = "SELECT * FROM ORDER_DETAIL WHERE ORDERS_NO = ? ORDER BY ORDERS_NO, COUPON_ID, OD_NO";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -133,9 +133,27 @@ public class OrdersDaoImpl implements OrdersDao {
 		return new OrderDetail(odNo, hair, odPrice, odQuantity, coupon, odDiscount);
 	}
 
+	
 	@Override
 	public int selectMaxOrdersNo() {
-		String sql = "SELECT MAX(ORDERS_NO) FROM ORDERS";
+		String sql = "SELECT NVL(MAX(ORDERS_NO), 0) FROM ORDERS";
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+		
+		return 0;
+	}
+	
+	@Override
+	public int selectNextValOrdersNo() {
+		String sql = "SELECT ORDERS_NO_SEQ.NEXTVAL FROM DUAL";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);

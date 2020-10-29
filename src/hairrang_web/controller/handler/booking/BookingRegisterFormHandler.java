@@ -66,14 +66,16 @@ public class BookingRegisterFormHandler implements Command {
 			
 			String kindNo = null;
 			String bookDate = null;
+			String deNo = null;
 			
 			System.out.println("bookDate: " + request.getParameter("bookDate"));
 			
 			// 헤어 대분류를 선택했을 때 헤어 소분류값 ajax로 셀렉 박스 리스트 넘기기
-			if((bookDate = request.getParameter("bookDate")) != null) {
+			if((bookDate = request.getParameter("bookDate")) != null && (deNo = request.getParameter("deNo")) != null) {
 				System.out.println("bookDate 받아서 TimeTable 가져오기");
-				ArrayList<TimeTable> timeTableList = bService.getTimeTable(bookDate);
 				System.out.println("> bookDate : " + bookDate);
+				System.out.println("> deNo : " + deNo);
+				ArrayList<TimeTable> timeTableList = bService.getTimeTable(bookDate, Integer.parseInt(deNo));
 				timeTableList.stream().forEach(System.out::println);
 				
 				Gson gson = new Gson();

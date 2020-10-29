@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../include/header.jsp"%>
 <script>
 $(function() {
@@ -104,11 +105,14 @@ $(function() {
 							<td>${order.guest.guestName }</td>
 							<td>${order.designer.deName }</td>
 							<td>${order.howManyItems }</td>
-							<td></td>
-							<td></td>
-							<td>${order.ordersTotalPrice }</td>
+							<td>${order.usedCoupon}</td>
 							<td>
-								<a href="ordersDetail.do?no=${order.ordersNo}" class="btn bg-gray-200 btn-sm ordersViewButton"><span class="text-gray-800">상세보기</span></a>
+								<c:if test="${order.discountAmount eq 0}">-</c:if>
+								<c:if test="${order.discountAmount ne 0}"><fmt:formatNumber value="${order.discountAmount }" pattern="#,###" /></c:if>
+							</td>
+							<td><fmt:formatNumber value="${order.ordersTotalPrice }" pattern="#,###" /></td>
+							<td>
+								<a href="orderDetail.do?no=${order.ordersNo}" class="btn bg-gray-200 btn-sm ordersViewButton"><span class="text-gray-800">상세보기</span></a>
 								<!-- <a href="#" class="btn btn-info btn-sm modifyButton"><span class="text">수정</span></a> -->
 								<a href="#" class="btn btn-danger btn-sm deleteButton" bookNo="${order.ordersNo }"><span class="text">삭제</span> </a>
 							</td>

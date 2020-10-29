@@ -10,7 +10,6 @@ public class Coupon {
 	public Coupon() {}
 
 	public Coupon(int couponId) {
-		super();
 		this.couponId = couponId;
 	}
 

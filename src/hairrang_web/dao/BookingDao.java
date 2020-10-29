@@ -27,7 +27,7 @@ public interface BookingDao {
 
 	int selectMaxBookNo();
 
-	ArrayList<TimeTable> getTimeTables(String wantDate);
+	ArrayList<TimeTable> getTimeTables(String wantDate, int deNo);
 
 	int isAvailableTime(String wantDateTime);
 	

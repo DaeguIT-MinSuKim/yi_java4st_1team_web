@@ -23,8 +23,6 @@ $(function() {
 		document.getElementById('bookDate').min = minDateStr;
 		document.getElementById('bookDate').max = maxDateStr;
 		
-		setTimeTable($("#bookDate").val());
-	
 	
 		/* 헤어 대분류 불러오기 */
 		$.ajax({
@@ -35,6 +33,9 @@ $(function() {
 				console.log(data);
 				loadHairKindCombo($("#hairkindbox"), data);
 				$("#hairkindbox").val("");
+			},
+			complete: function(){
+				$("#designerBox").trigger("change");
 			}
 		});
 	
@@ -92,17 +93,19 @@ $(function() {
 		
 		/* 날짜 선택 시 타임테이블 불러오기 */
 		$("#bookDate").change(function() {
-			setTimeTable($("#bookDate").val());
+			setTimeTable($("#bookDate").val(), $("#designerBox").val());
 		});
 		
+		$("#designerBox").change(function() {
+			setTimeTable($("#bookDate").val(), $("#designerBox").val());
+		})
+		
 		// 매개변수 날짜값으로 타임테이블 불러오는 함수
-		function setTimeTable(bookDateVal) {
+		function setTimeTable(bookDateVal, deNoVal) {
 			$.ajax({
 				url: "booking.do",
 				type: "post",
-				data: {
-					bookDate: bookDateVal
-				},
+				data: "bookDate=" + bookDateVal + "&deNo=" + deNoVal,
 				dataType: "json",
 				success: function(data) {
 					console.log(data);
