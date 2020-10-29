@@ -26,6 +26,8 @@ public class AdminGuestBookingInfoHandler implements Command {
 			System.out.println("get");
 			
 			String id = request.getParameter("id");
+			//detail에서 주문전환할때 booking no
+			String no = request.getParameter("no");
 			
 //예약리스트////////////////////////////////////////////////////////////////////////////
 			
@@ -96,6 +98,7 @@ public class AdminGuestBookingInfoHandler implements Command {
 			request.setAttribute("total", total);
 			request.setAttribute("paging", paging);
 			request.setAttribute("booking", bookingList);
+			request.setAttribute("no", no);
 
 			
 		}else {

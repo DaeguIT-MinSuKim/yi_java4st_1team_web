@@ -45,4 +45,10 @@ public interface QnADao {
 	
 	//문의사항 공지사항 쓸때
 	int insertQnaNotice(QnA qna);
+	
+	//답변쓰기
+	int insertQnaRestult(QnA qna, String qnaNo);
+	
+	//답변 처리
+	int updateQnaResultYn(String  qnaNo);
 }

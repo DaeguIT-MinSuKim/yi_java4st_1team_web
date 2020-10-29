@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Booking;
+import hairrang_web.dto.BookingHairs;
 import hairrang_web.service.BookingService;
 
 public class AdminBookingDetailHandler implements Command {
@@ -29,6 +30,14 @@ public class AdminBookingDetailHandler implements Command {
 			int no = Integer.parseInt(request.getParameter("no"));
 			Booking booking = service.getBookingByBookingNo(new Booking(no));
 			request.setAttribute("booking", booking);
+			
+			//헤어리스트 가격 합계
+			int sum= 0;
+			for(BookingHairs hairs:booking.getHairList()) {
+				sum += hairs.getHair().getHairPrice() * hairs.getQuantity();
+			}
+			request.setAttribute("price", sum);
+			
 			
 		} else {
 			System.out.println(getClass().getSimpleName() + ">> POST");

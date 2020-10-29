@@ -10,30 +10,25 @@ import hairrang_web.controller.Command;
 import hairrang_web.dto.QnA;
 import hairrang_web.service.QnaService;
 
-public class AdminQnaDeleteHandler implements Command {
-
+public class AdminQnaDetailHandler implements Command {
 	QnaService service = new QnaService();
-
+	
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		String url = "qnaList.do";
+		String url = "qna/qna_Detail.jsp";
 		if(request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("GET");
 			int no = Integer.parseInt(request.getParameter("no"));
-			int res = service.deleteQna(new QnA(no));
-			System.out.println(res);
+			QnA qna = service.selectQnaByNo(no);
+			QnA qnaResult = service.selectResQnaByNo(new QnA(no));
 			
-			response.sendRedirect(url);
+			request.setAttribute("qna", qna);
+			request.setAttribute("qnaResult", qnaResult);
+			
+			return url;
 		}else {
 			System.out.println("POST");
-			String[] arr = request.getParameterValues("string[]");
-			
-			for(String no : arr) {
-				int qnaNo = Integer.parseInt(no);
-				service.deleteQna(new QnA(qnaNo));
-			}
-			response.sendRedirect(url);
 		}
 		return null;
 	}

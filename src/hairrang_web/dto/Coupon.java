@@ -9,6 +9,11 @@ public class Coupon {
 	
 	public Coupon() {}
 
+	public Coupon(int couponId) {
+		super();
+		this.couponId = couponId;
+	}
+
 	public Coupon(int couponId, Guest guest, Event event, String usedYn) {
 		this.couponId = couponId;
 		this.guest = guest;

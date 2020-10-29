@@ -1,5 +1,8 @@
 package hairrang_web.service;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,5 +74,42 @@ public class QnaService {
 	
 	public int insertQnaNotice(QnA qna) {
 		return dao.insertQnaNotice(qna);
+	}
+	
+	public int insertQnaResult(QnA qna, String qnaNo) {
+		int res = 0;
+		Connection con = null;
+		
+		String jdbcDriver = "jdbc:oracle:thin:@localhost:1521:orcl?useSSL=false";
+		String dbUser = "hairrang_web";
+		String dbpass = "rootroot";
+		
+		try {
+			con = DriverManager.getConnection(jdbcDriver, dbUser, dbpass);
+			con.setAutoCommit(false);
+			
+			res += dao.insertQnaRestult(qna, qnaNo);
+			res += dao.updateQnaResultYn(qnaNo);
+			
+			con.commit();
+			con.setAutoCommit(true);
+		}catch (Exception e) {
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				System.out.println("답변중 시스템오류가 발생하였습니다.");
+			}
+		}finally {
+			if(res != 2) {
+				try {
+					con.rollback();
+				} catch (SQLException e) {
+					System.out.println("답변중 Impl오류가 발생하였습니다.");
+				}
+			}
+		}
+		
+		
+		return res;
 	}
 }

@@ -198,50 +198,14 @@ $(document).on('click', '[id=btn_delete]', function() {
 				<!-- 테이블 끝 -->
 				
 				
-				
-				
-				<!-- 페이징 시작 -->
-			<div class="row">
-					<div class="col-sm-12 col-md-5">
-						<%-- <div class="dataTables_info" id="dataTable_info" role="status"
-							aria-live="polite">Total : ${total} </div> --%>
-					</div>
-				<%-- 	<div class="col-sm-12 col-md-7">
-						<div class="dataTables_paginate paging_simple_numbers"
-							id="dataTable_paginate">
-							<ul class="pagination">
-								<li class="paginate_button page-item previous disabled"
-									id="dataTable_previous">
-									<a href="guestList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}"
-									aria-controls="dataTable" data-dt-idx="0" tabindex="0"
-									class="page-link">이전</a></li>
 			
-								
-								<li class="paginate_button page-item active">
-								
-								<a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0"
-									class="page-link">1</a></li>
-								
-								<li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0"
-									class="page-link">2</a></li>
-								
-								<li class="paginate_button page-item "><a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" 
-									class="page-link">3</a></li>
-								
-								<li class="paginate_button page-item next" id="dataTable_next">
-									<a href="guestList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}" 
-									aria-controls="dataTable" data-dt-idx="4"
-									tabindex="0" class="page-link">다음</a>
-								</li>
-							</ul> --%>
-						</div>
-					</div> 
-					<!-- 페이징 -->
+	
+					<!-- 페이징 시작 -->
 
 					<div style="width:100%; text-align:center; display:inline-block; margin:0 auto;">
 					<p>Total : ${total}</p>
 					
-						
+						<!-- << -->
 						<c:if test="${paging.startPage != 1}">
 							<div class="paging-line">
 							<a href="guestList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
@@ -252,27 +216,26 @@ $(document).on('click', '[id=btn_delete]', function() {
 						<c:if test="${paging.startPage == 1}">
 							<div class="paging-line">
 								<i class="fas fa-angle-double-left"></i>
-							</a>
 							</div>
 						</c:if>
 						
 						
 						<!-- 이전페이지 -->
 						<c:choose>
-							<c:when test="${paging.nowPage != 0}">
+							<c:when test="${paging.nowPage != 1}">
 								<div class="paging-line">
 									<a href="guestList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
 								</div>
 							</c:when>
-							<c:when test="${paging.nowPage == 0}"> <!-- 이렇게밖에 처리못하는건가 몰러 더 생각해보겠삼,, -->
-								<script>
-									location.href="guestList.do?nowPage=1&cntPerPage=10";
-								</script>
+							<c:when test="${paging.nowPage == 1}">
+								<div class="paging-line">
+									<i class="fas fa-angle-left"></i>
+								</div>
 							</c:when>
 						
 						</c:choose>
 						
-						
+						<!-- 페이지 숫자 -->
 						
 						<c:forEach begin="${paging.startPage}" end="${paging.endPage }"
 							var="p">
@@ -291,14 +254,21 @@ $(document).on('click', '[id=btn_delete]', function() {
 						
 						
 						<!-- 다음페이지 -->
-						<div class="paging-line">
-							<a href="guestList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
-						</div>
-						<c:if test="${paging.nowPage > paging.endPage}">
-							<script>
-									location.href="guestList.do?nowPage=${paging.nowPage-1}&cntPerPage=10";
-							</script>
-						</c:if>
+						<c:choose>
+							<c:when test="${paging.nowPage != paging.lastPage}">
+								<div class="paging-line">
+									<a href="guestList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
+								</div>
+							</c:when>
+							<c:when test="${paging.nowPage == paging.lastPage}">
+								<div class="paging-line">
+									<i class="fas fa-angle-right"></i>
+								</div>	
+							</c:when>
+						
+						</c:choose>	
+						
+						<!-- >> -->
 						
 					
 						<c:if test="${paging.endPage != paging.lastPage }">
@@ -309,10 +279,11 @@ $(document).on('click', '[id=btn_delete]', function() {
 						</c:if>
 						<c:if test="${paging.endPage == paging.lastPage }">
 							<div class="paging-line">
-							<i class="fas fa-angle-double-right"></i></a>
+							<i class="fas fa-angle-double-right"></i>
 							</div>
 						</c:if>
-						
+					
+			
 					</div>
 				</div>
 				<!-- bootStrap table wrapper-->
