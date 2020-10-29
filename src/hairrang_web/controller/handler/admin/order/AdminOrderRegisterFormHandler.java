@@ -52,13 +52,16 @@ public class AdminOrderRegisterFormHandler implements Command {
 		if(request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println(getClass().getSimpleName() + ">> GET");
 			
-			int no = Integer.parseInt(request.getParameter("no"));
-			Booking booking = bService.getBookingByBookingNo(new Booking(no));
+			if(request.getParameter("no") != null) {
+				int no = Integer.parseInt(request.getParameter("no"));
+				Booking booking = bService.getBookingByBookingNo(new Booking(no));
+				request.setAttribute("booking", booking);
+			}
+			
 			ArrayList<Designer> deList = dService.getDesignerList();
 			ArrayList<HairKind> hairKindList = hService.getHairListAll();
 			ArrayList<Booking> todayBookingList = bService.getTodayBookingList();
 			
-			request.setAttribute("booking", booking);
 			request.setAttribute("deList", deList);
 			request.setAttribute("hairKindList", hairKindList);
 			request.setAttribute("todayBookingList", todayBookingList);

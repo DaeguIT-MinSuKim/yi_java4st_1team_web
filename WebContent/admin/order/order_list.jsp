@@ -25,8 +25,7 @@ $(function() {
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800 font-weight">목록 템플릿</h1>
 <p class="mb-4">
-	여기에 간단한 설명 추가해주세요. 이렇게 링크도 달아도 됩니다. <a target="_blank"
-		href="https://datatables.net">링크</a>
+	여기에 간단한 설명 추가해주세요. 이렇게 링크도 달아도 됩니다. <a target="_blank" href="https://datatables.net">링크</a>
 </p>
 
 <!-- DataTales Example -->
@@ -37,7 +36,7 @@ $(function() {
              	주문 내역 목록
             </div>
             <div class="float-right">
-				<a href="#" id="addNew" class="btn btn-success btn-sm" style="float: right;"><span class="text">등록</span></a>
+				<a href="orderForm.do" id="addNew" class="btn btn-success btn-sm" style="float: right;"><span class="text">등록</span></a>
 	            <a href="#" id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;"><span class="text">선택삭제</span></a>
 				<a href="#" id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">전체선택</span></a>
 				<a href="#" id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">선택해제</span></a>

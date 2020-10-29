@@ -188,3 +188,8 @@ VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-10-29', 'YYYY-MM-DD'), to_dat
 INSERT INTO coupon(guest_id, event_no, event_start, event_end, used_yn) 
 SELECT ? , event_no, event_start, event_end, 'n' FROM event WHERE event_no = ?;
 --해서 회원아이디 돌리기
+
+SELECT * FROM COUPON_VIEW ;
+
+SELECT c.*, TO_DATE(TO_CHAR(sysdate+12, 'YYYY-MM-DD'), 'YYYY-MM-DD') FROM coupon c WHERE guest_id = 'test' AND USED_YN = 'n' AND SYSDATE+11 BETWEEN EVENT_START AND EVENT_END;
+

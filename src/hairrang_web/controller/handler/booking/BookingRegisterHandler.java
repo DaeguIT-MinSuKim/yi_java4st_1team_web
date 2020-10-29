@@ -52,18 +52,17 @@ public class BookingRegisterHandler implements Command {
 			GsonBuilder builder = GsonLocalDateTime.getLocalDateTimeParsing("yyyy-MM-dd HH:mm");
 			Gson gson = builder.create();
 			
-			System.out.println();
 			Booking newBooking = gson.fromJson(new InputStreamReader(request.getInputStream(), "UTF-8"), Booking.class);
 			newBooking.setGuest((Guest) request.getSession().getAttribute("loginUser"));
-			System.out.println("json 변환 후 newBooking: " + newBooking);
 			
 			int bookNo = -1;
+			int deNo = newBooking.getDesigner().getDeNo();
 			
 			// 사용자가 html, script를 수정해 접근할 수도 있으므로 DB단에서 한번 더 검증
 			if (newBooking.getBookDate().toLocalDate().isAfter(LocalDate.now())) {
-				if (service.isAvailableTime(newBooking.getBookDateStr()) != 1) {
+				if (service.isAvailableTime(newBooking.getBookDateStr(), deNo) != 1) {
 					bookNo = service.insertBookingWithHairList(newBooking);
-					System.out.println("넣었음");
+					System.out.println("예약 완료" + newBooking);
 				}
 			}
 			

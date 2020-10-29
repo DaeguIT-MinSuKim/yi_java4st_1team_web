@@ -105,7 +105,7 @@ public class QnaWriteHandler implements Command {
 			qna.setGuestId(loginUser);
 			qna.setQnaTitle(title);
 			qna.setQnaContent(content);
-			qna.setQnaFile(FilegetPath);
+			qna.setQnaFile(realFileName);
 			qna.setQnaPassword(secretPwd);
 			qna.setQnaSecret(secretChecked);
 			System.out.println("insert 하기전");

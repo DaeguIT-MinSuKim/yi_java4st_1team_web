@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
-<script src="booking/admin_order.js"></script>
+<script src="order/admin_order.js"></script>
 <script>
 $(function(){
 	$(document).ready(function() {
@@ -119,8 +119,7 @@ $(function(){
 </div>
 
 		  <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800 font-weight">등록 페이지</h1>
-          <p class="mb-4">여기에 간단한 설명 추가해주세요. 이렇게 링크도 달아도 됩니다. <a target="_blank" href="https://datatables.net">링크</a></p>
+          <h1 class="h3 mb-2 text-gray-800 font-weight">주문 등록</h1>
 
           <!-- card -->
           <div class="card shadow mb-4" style="max-width: 800px;">
@@ -130,7 +129,7 @@ $(function(){
                		주문하기
                 </div>
                 <div class="float-right">
-                  <button class="btn btn-sm btn-secondary" name="clearBtn" onclick="setClear()">취소</button>
+                  <button class="btn btn-sm btn-secondary" name="clearBtn" onclick="setClear()">초기화</button>
                   <a href="orderList.do" class="btn btn-sm btn-primary" id="toList"><span class="text">목록</span></a>
                 </div>			
               </h6>
@@ -251,7 +250,7 @@ $(function(){
                 
                 <div class="form-group row">
                   <div class="col-sm" style="text-align: right;">
-                 	<button type="button" class="btn btn-secondary" name="clearBtn" onclick="setClear()">취소</button>
+                 	<button type="button" class="btn btn-secondary" name="clearBtn" onclick="setClear()">초기화</button>
                     <button type="button" class="btn btn-primary" id="orderRegBtn">등록</button>
                   </div>
                 </div>

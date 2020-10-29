@@ -49,6 +49,7 @@ public class OrdersDaoImpl implements OrdersDao {
 
 	private Orders getOrders(ResultSet rs) throws SQLException {
 		// orders_no, guest_id, de_no, orders_total_price, ORDERS_DATE
+		Orders order = null;
 		
 		int ordersNo = rs.getInt("ORDERS_NO");
 		Guest guest = GuestDaoImpl.getInstance().selectGuestById(new Guest(rs.getString("GUEST_ID")));
@@ -58,7 +59,11 @@ public class OrdersDaoImpl implements OrdersDao {
 		
 		ArrayList<OrderDetail> odList = selectOrderDetailsByOrdersNo(ordersNo);
 		
-		return new Orders(ordersNo, guest, designer, ordersTotalPrice, ordersDate, odList);
+		order = new Orders(ordersNo, guest, designer, ordersTotalPrice, ordersDate, odList);
+		System.out.println("getOrders 안");
+		System.out.println(order);
+		
+		return order;
 	}
 
 	@Override
@@ -85,12 +90,14 @@ public class OrdersDaoImpl implements OrdersDao {
 
 	@Override
 	public Orders selectOrdersByOrdersNo(int ordersNo) {
-		String sql = "SELECT * FROM ORDERS FROM ORDERS_NO = ";
+		String sql = "SELECT * FROM ORDERS WHERE ORDERS_NO = ?";
 		try(Connection con = JndiDs.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery()) {
-			if(rs.next()) {
-				return getOrders(rs);
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, ordersNo);
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					return getOrders(rs);
+				}
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException();
@@ -127,8 +134,13 @@ public class OrdersDaoImpl implements OrdersDao {
 		Hair hair = HairDaoImpl.getInstance().selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
 		int odPrice = rs.getInt("OD_PRICE");
 		int odQuantity = rs.getInt("OD_QUANTITY");
-		Coupon coupon = CouponDaoImpl.getInstance().selectCouponByCouponId(new Coupon(rs.getInt("COUPON_ID")));
-		int odDiscount = rs.getInt("OD_DISCOUNT");
+		Coupon coupon = null;
+		int odDiscount = 0;
+		try {
+			coupon = CouponDaoImpl.getInstance().selectCouponByCouponId(new Coupon(rs.getInt("COUPON_ID")));
+			odDiscount = rs.getInt("OD_DISCOUNT");
+		} catch(SQLException e) {
+		}
 		
 		return new OrderDetail(odNo, hair, odPrice, odQuantity, coupon, odDiscount);
 	}

@@ -76,7 +76,7 @@ public class AdminNoticeInsertHandler implements Command {
 				String content = multi.getParameter("content");
 
 				Notice notice = new Notice(title, content);
-				notice.setNoticeFile(FilegetPath);
+				notice.setNoticeFile(realFileName);
 
 				int res = service.insertNotice(notice);
 				
