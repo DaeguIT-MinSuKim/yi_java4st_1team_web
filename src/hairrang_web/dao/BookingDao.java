@@ -29,7 +29,7 @@ public interface BookingDao {
 
 	ArrayList<TimeTable> getTimeTables(String wantDate, int deNo);
 
-	int isAvailableTime(String wantDateTime);
+	int isAvailableTime(String wantDateTime, int deNo);
 	
 	ArrayList<BookingHairs> selectBookingHairsByBookingNo(int bookNo);
 	

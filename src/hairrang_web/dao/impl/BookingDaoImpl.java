@@ -298,13 +298,14 @@ public class BookingDaoImpl implements BookingDao {
 	}
 	
 	@Override
-	public int isAvailableTime(String wantDateTime) {
-		String sql = "SELECT 1 AS used FROM BOOKING WHERE TO_char(BOOK_TIME, 'YYYY-MM-DD hh24:mi') = ?";
+	public int isAvailableTime(String wantDateTime, int deNo) {
+		String sql = "SELECT 1 AS used FROM BOOKING WHERE TO_char(BOOK_TIME, 'YYYY-MM-DD hh24:mi') = ? AND DE_NO = ?";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			
 			pstmt.setString(1, wantDateTime);
+			pstmt.setInt(2, deNo);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
 					return rs.getInt(1); // 이미 사용중이면 1 반환

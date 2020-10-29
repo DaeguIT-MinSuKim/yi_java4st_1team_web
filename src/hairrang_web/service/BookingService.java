@@ -55,8 +55,8 @@ public class BookingService {
 		return dao.getTimeTables(wantDate, deNo);
 	}
 	
-	public int isAvailableTime(String wantDateTime) {
-		return dao.isAvailableTime(wantDateTime);
+	public int isAvailableTime(String wantDateTime, int deNo) {
+		return dao.isAvailableTime(wantDateTime, deNo);
 	}
 	
 	public int countBookingById(String id) {
