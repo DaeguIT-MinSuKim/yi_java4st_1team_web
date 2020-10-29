@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
-	document.title += ' - 고객 목록';
+	document.title += ' - 문의 목록';
 
 	function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
@@ -63,9 +63,10 @@
 	});
 
 	$(document).on('click', '[id=btn_delete]', function() {
-		var guest = $(this).attr('guestId');
-		if (confirm(guest + '님을 탈퇴처리 하시겠습니까?') == true) {
-			location.href = "guestDelete.do?id=" + guest;
+		var no = $(this).attr('no');
+		alert(no);
+		if (confirm( no+ '을 삭제처리 하시겠습니까?') == true) {
+			location.href = 'qnaDelete.do?no=' + no;
 		} else {
 			return;
 		}
@@ -74,7 +75,7 @@
 </script>
 
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800 font-weight">고객 목록 - 고객 관리</h1>
+<h1 class="h3 mb-2 text-gray-800 font-weight">문의 목록 - 문의 관리</h1>
 <p class="mb-4">
 	<a target="_blank" href="https://datatables.net"></a>
 </p>
@@ -161,7 +162,7 @@
 					<tbody>
 						<c:forEach var="qna" items="${viewAll}" varStatus="status">
 							<tr>
-								<td><input type="checkbox" name="check"value="${qna.qnaNo}"></td>
+								<td><input type="checkbox" name="check" value="${qna.qnaNo}"></td>
 								<td style="width: 20px;">${total - ((paging.nowPage-1) * cnt + status.index)}</td>
 								<td style="width: 80px;">${qna.guestId.guestId}</td>
 								<td style="width: 130px;">${qna.qnaTitle}</td>
@@ -188,7 +189,7 @@
 									name="update" value="수정" class="btn btn-dark btn-sm"
 									onclick="location.href='guestInfo.do?id=${guest.guestId}'">
 									<input type="button" value="삭제" id="btn_delete"
-									guestId="${guest.guestId}" class="btn btn-danger btn-sm">
+									 class="btn btn-danger btn-sm" no="${qna.qnaNo}">
 								</td>
 							</tr>
 						</c:forEach>

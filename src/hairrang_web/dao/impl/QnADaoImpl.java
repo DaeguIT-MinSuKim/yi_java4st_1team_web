@@ -126,7 +126,7 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public int deleteQnA(QnA qna) {
-		String sql = "DELETE FROM QNA WHERE QNA_NO = ?";
+		String sql = "UPDATE QNA SET DEL_YN ='y' WHERE QNA_NO=?";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setInt(1, qna.getQnaNo());
@@ -238,7 +238,7 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public List<QnA> selectPagingQnA(Paging paging) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE DEL_YN ='n' ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, paging.getStart());
