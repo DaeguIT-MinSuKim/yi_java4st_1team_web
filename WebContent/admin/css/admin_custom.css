@@ -12,10 +12,11 @@
  */
 
 /* 목록 뽑는 곳에서 */
+#dataTable td { padding: .35rem; }
 #dataTable td:first-child, td:nth-child(2){text-align: center;}
 #dataTable td:first-child { width: 58px; min-width: 58px; max-width: 58px; }
 #dataTable td:nth-child(2) { width: 100px; min-width: 100px; max-width: 100px; }
-#dataTable td:last-child{padding: 6px; width: 190px; min-width: 190px; max-width: 190px}
+/* #dataTable td:last-child{padding: 6px; width: 190px; min-width: 190px; max-width: 190px} */
 
 
 #addedHairList tr:first-child td:first-child {width: 40px;}

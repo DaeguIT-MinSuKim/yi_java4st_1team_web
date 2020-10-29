@@ -12,15 +12,42 @@ $(function() {
 		});
 		
 		$(document).on('click', '.deleteButton', function() {
+			event.preventDefault();
+			console.log($(this).attr('href'));
+		    var res = confirm("예약 취소 하시겠습니까?");
+			
+		    if (res == true)   { 
+		    	$.ajax({
+		    		url: $(this).attr('href'),
+		    		type: "get",
+		    		dataType: "text",
+		    		success: function(data) {
+		    			if(data == 1) {
+		    				alert("예약 취소되었습니다.");
+		    			} else {
+		    				alert("문제가 발생했습니다. 다시 시도해주세요.");
+		    			}
+		    			location.reload();
+		    		},
+		    		error: function(error) {
+		    			alert("에러 발생");
+		    			location.reload();
+		    		}
+		    	});
+		    }
 			/* console.log($(this).attr("bookNo")); */
-			var idx = $(this).parents('tr:first').children("td").eq(1).text();
-		    console.log(idx);
+			/* var idx = $(this).parents('tr:first').children("td").eq(1).text();
+		    console.log(idx); */
 		});
 
+		$('.delete').click(function(event) {
+		    
+
+		});
 
 	});
 	
-});z
+});
 </script>
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800 font-weight">목록 템플릿</h1>
@@ -97,8 +124,8 @@ $(function() {
 							<th>연락처</th>
 							<th>시술</th>
 							<th>예약상태</th>
-							<th>주문전환</th>
-							<th></th>
+							<th style="width: 100px; min-width:100px; max-width:100px;">상세보기</th>
+							<th style="width: 180px; min-width:180px; max-width:180px;"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -112,12 +139,13 @@ $(function() {
 							<td>${booking.howManyHairItems }</td>
 							<td>${booking.bookStatusStr }</td>
 							<td>
-								<a href="bookingToOrder.do?no=${booking.bookNo }" class="btn bg-warning btn-sm bookingToOrderButton"><span class="text-gray-800">주문하기</span></a>
+								<a href="bookingDetail.do?no=${booking.bookNo}" class="btn bg-gray-200 btn-sm detailViewButton"><span class="text-gray-800">상세보기</span></a>
 							</td>
 							<td>
-								<a href="bookingDetail.do?no=${booking.bookNo}" class="btn bg-gray-200 btn-sm detailViewButton"><span class="text-gray-800">상세보기</span></a>
-								<!-- <a href="#" class="btn btn-info btn-sm modifyButton"><span class="text">수정</span></a> -->
-								<a href="#" class="btn btn-danger btn-sm deleteButton" bookNo="${booking.bookNo }"><span class="text">삭제</span> </a>
+								<c:if test="${booking.bookStatus eq 1}">
+									<a href="orderForm.do?no=${booking.bookNo }" class="btn bg-warning btn-sm bookingToOrderButton"><span class="text-gray-800">주문하기</span></a>
+									<a href="bookingCancle.do?no=${booking.bookNo }" class="btn btn-danger btn-sm deleteButton" bookNo="${booking.bookNo }"><span class="text">예약 취소</span> </a>
+								</c:if>
 							</td>
 						</tr>
 						</c:forEach>

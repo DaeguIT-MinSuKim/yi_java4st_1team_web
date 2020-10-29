@@ -51,8 +51,8 @@ public class BookingService {
 		return dao.selectMaxBookNo() + 1;
 	}
 	
-	public ArrayList<TimeTable> getTimeTable(String wantDate) {
-		return dao.getTimeTables(wantDate);
+	public ArrayList<TimeTable> getTimeTable(String wantDate, int deNo) {
+		return dao.getTimeTables(wantDate, deNo);
 	}
 	
 	public int isAvailableTime(String wantDateTime) {

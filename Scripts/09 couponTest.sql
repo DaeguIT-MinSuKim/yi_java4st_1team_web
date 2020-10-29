@@ -58,14 +58,10 @@ AND SYSDATE BETWEEN EVENT_START AND event_end;
 SELECT * FROM EVENT;
 
 CREATE OR REPLACE VIEW coupon_view
-as
-SELECT c.*, e.EVENT_NAME, e.EVENT_SALERATE
+AS
+SELECT c.*, NVL(e.EVENT_NAME, '삭제된 이벤트') AS EVENT_NAME, e.EVENT_SALERATE
 FROM COUPON c LEFT OUTER JOIN Event e ON (c.EVENT_NO  = e.EVENT_NO );
 
-<<<<<<< HEAD
-
-SELECT * FROM coupon;
-SELECT * FROM EVENT;
 ---
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT, USE_YN)
 VALUES ('기간지난쿠폰', 0.2, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-15', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사', 'n');
@@ -136,4 +132,5 @@ SELECT * FROM event;
 SELECT * FROM coupon;
 SELECT * FROM guest;
 
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git
+
+SELECT * FROM COUPON_VIEW ;
