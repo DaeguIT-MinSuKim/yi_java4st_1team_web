@@ -267,19 +267,20 @@ public class BookingDaoImpl implements BookingDao {
 	}
 	
 	@Override
-	public ArrayList<TimeTable> getTimeTables(String wantDate) {
-		String sql = "SELECT TIMES, nvl(used, 0) AS USED " + 
+	public ArrayList<TimeTable> getTimeTables(String wantDate, int deNo) {
+		String sql = "SELECT times, nvl(used, 0) AS USED " + 
 				"FROM (SELECT TO_CHAR(TO_DATE('08:30', 'hh24:mi') + LEVEL/24/2, 'hh24:mi') AS times " + 
 				"	FROM DUAL CONNECT BY LEVEL <= 20) " + 
 				"LEFT OUTER JOIN " + 
 				"	(SELECT TO_CHAR(BOOK_TIME, 'hh24:mi') AS times, 1 AS used " + 
-				"	FROM BOOKING WHERE TO_char(book_time, 'YYYY-MM-DD') = ?) " + 
+				"	FROM BOOKING WHERE TO_char(book_time, 'YYYY-MM-DD') = ? AND DE_NO = ?) " + 
 				"USING (TIMES) ORDER BY TIMES";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			
 			pstmt.setString(1, wantDate);
+			pstmt.setInt(2, deNo);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
 					ArrayList<TimeTable> list = new ArrayList<>();

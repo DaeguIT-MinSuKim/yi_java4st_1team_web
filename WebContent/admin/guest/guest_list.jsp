@@ -283,7 +283,6 @@ $(document).on('click', '[id=btn_delete]', function() {
 							</div>
 						</c:if>
 					
-			
 					</div>
 				</div>
 				<!-- bootStrap table wrapper-->
@@ -292,6 +291,5 @@ $(document).on('click', '[id=btn_delete]', function() {
 		</div>
 		<!-- cardBody-->
 	</div>
-
 </form>
 <%@ include file="../include/footer.jsp" %>   

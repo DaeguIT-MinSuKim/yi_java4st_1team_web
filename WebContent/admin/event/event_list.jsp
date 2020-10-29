@@ -19,8 +19,7 @@
 	<div class="card-header py-2">
 		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
 			
-				<input type="button" value="등록" class="btn btn-info btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='guestAdd.do' ">
-				<input type="button"  value="삭제" name="delete" class="btn btn-secondary btn-sm" style="float: left;" >
+				<input type="button" value="이벤트 등록" class="btn btn-info btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='eventAdd.do' ">
 				
 				<button type="button" onclick="selectAll()" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">
 					전체선택
@@ -35,7 +34,7 @@
 		<div class="table-responsive">
 			<!-- bootStrap table wrapper-->
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-			※ 생일쿠폰 자동발급 할건지
+			※ 생일쿠폰은 생일 10일전 자동 발급<br>
 
 				<!-- 테이블 상단 필터링 시작 -->
 				<div class="row mb-2">
@@ -49,8 +48,7 @@
 				<table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th></th>
-							<th></th>
+							<th style="width:10px;"></th>
 							<th>이벤트명</th>
 							<th>할인율</th>
 							<th>시작일</th>
@@ -63,28 +61,28 @@
 					<tbody>
 						<c:forEach var="event" items="${list}" varStatus="status">
 						<tr>
-							<td><input type="checkbox" name="check" value="${guest.guestId}"></td>
+						<%--<td><input type="checkbox" name="check" value="${guest.guestId}"></td> --%>
 							<td style="width:20px;"> ${total - ((paging.nowPage-1) * cnt + status.index)}</td>
-							<td>${event.eventName}</td>
-							<td> <fmt:parseNumber value="${event.eventSaleRate * 100}" integerOnly="true"/>%</td>
-							<td>${event.eventStart}</td>
-							<td>${event.eventEnd}</td>
-							<td>${event.eventContent}</td>
-							<td>
+							<td style="width:100px;">${event.eventName}</td>
+							<td style="width:40px;"> <fmt:parseNumber value="${event.eventSaleRate * 100}" integerOnly="true"/>%</td>
+							<td style="width:50px;">${event.eventStart}</td>
+							<td style="width:50px;">${event.eventEnd}</td>
+							<td style="width:300px;">${event.eventContent}</td>
+							<td style="width:50px;">
 								<c:if test="${event.eventStatus == 's'}">
-									<div class="btn-danger btn-sm" style="width:80px; margin:0 auto">진행중</div>
+									<div class="btn-info btn-sm" style="width:80px; margin:0 auto">진행중</div>
 								</c:if>
 								<c:if test="${event.eventStatus == 'e'}">
 									<div class="btn-secondary btn-sm" style="width:80px; margin:0 auto">종료</div>
 								</c:if>
 								<c:if test="${event.eventStatus == 'w'}">
-									<div class="btn-info btn-sm" style="width:80px; margin:0 auto">대기중</div>
+									<div class="btn-warning btn-sm" style="width:80px; margin:0 auto">대기중</div>
 								</c:if>
 							</td>
 
 							<td  style="width:100px;">
 								<input type="button" name="update" value="수정" class="btn btn-primary btn-sm" onclick="location.href='guestInfo.do?id=${guest.guestId}'">
-								<input type="button" value="삭제" id="btn_delete" guestId="${guest.guestId}" class="btn btn-primary btn-sm">
+								<input type="button" value="삭제" id="btn_delete" guestId="${guest.guestId}" class="btn btn-danger btn-sm">
 							</td>
 						</tr>
 						</c:forEach>

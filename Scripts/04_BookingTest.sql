@@ -9,7 +9,6 @@
  */
 
 
-
 SELECT max(book_no) FROM booking;
 
 SELECT * FROM BOOKING WHERE BOOK_NO = 60 AND GUEST_ID = 'test';
@@ -24,6 +23,7 @@ SELECT * FROM TIME_TABLE;
 /*SELECT TO_CHAR(TO_DATE('08:30', 'hh24:mi') + LEVEL/24/2, 'hh24:mi') AS times,
 	case((SELECT TO_CHAR(BOOK_TIME, 'hh24:mi') AS booked_time FROM BOOKING) WHEN TIMES = BOOKED_TIME) FROM DUAL
 CONNECT BY LEVEL <= 20;*/
+SELECT * FROM booking;
 
 -- 예약 가능한 시간 테이블 조회(0: 예약가능, 1: 예약됨)
 SELECT times, nvl(used, 0) AS USED
@@ -31,10 +31,18 @@ FROM (SELECT TO_CHAR(TO_DATE('08:30', 'hh24:mi') + LEVEL/24/2, 'hh24:mi') AS tim
 	FROM DUAL CONNECT BY LEVEL <= 20) 
 LEFT OUTER JOIN
 	(SELECT TO_CHAR(BOOK_TIME, 'hh24:mi') AS times, 1 AS used
-	FROM BOOKING WHERE TO_char(book_time, 'YYYY-MM-DD') = '2020-10-15')
+	FROM BOOKING WHERE TO_char(book_time, 'YYYY-MM-DD') = '2020-10-31' AND DE_NO = 5)
 USING (TIMES) ORDER BY TIMES;
 
+SELECT times, nvl(used, 0) AS USED
+				FROM (SELECT TO_CHAR(TO_DATE('08:30', 'hh24:mi') + LEVEL/24/2, 'hh24:mi') AS times
+				FROM DUAL CONNECT BY LEVEL <= 20)
+				LEFT OUTER JOIN
+					(SELECT TO_CHAR(BOOK_TIME, 'hh24:mi') AS times, 1 AS used
+					FROM BOOKING WHERE TO_char(book_time, 'YYYY-MM-DD') = '?' AND DE_NO = ?)
+				USING (TIMES) ORDER BY TIMES
 
+	
 SELECT times, nvl2((SELECT TO_CHAR(BOOK_TIME, 'hh24:mi') FROM BOOKING WHERE TO_char(book_time, 'YYYY-MM-DD') = '2020-10-14'), 1, 0) AS used
 FROM (SELECT TO_CHAR(TO_DATE('08:30', 'hh24:mi') + LEVEL/24/2, 'hh24:mi') AS times
 	FROM DUAL CONNECT BY LEVEL <= 20);
@@ -70,3 +78,5 @@ SELECT * FROM BOOKING_HAIRS bh ;
 SELECT * FROM hair;
 
 SELECT * FROM HAIR_KIND ORDER BY KIND_NO;
+
+SELECT * FROM booking;
