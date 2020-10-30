@@ -11,65 +11,93 @@ $(function() {
 			console.log(trIdx);
 		});
 		
-		$(document).on('click', '.deleteButton', function() {
-			event.preventDefault();
-			console.log($(this).attr('href'));
-		    var res = confirm("예약 취소 하시겠습니까?");
-			
-		    if (res == true)   { 
-		    	$.ajax({
-		    		url: $(this).attr('href'),
-		    		type: "get",
-		    		dataType: "text",
-		    		success: function(data) {
-		    			if(data == 1) {
-		    				alert("예약 취소되었습니다.");
-		    			} else {
-		    				alert("문제가 발생했습니다. 다시 시도해주세요.");
-		    			}
-		    			location.reload();
-		    		},
-		    		error: function(error) {
-		    			alert("에러 발생");
-		    			location.reload();
-		    		}
-		    	});
-		    }
-			/* console.log($(this).attr("bookNo")); */
-			/* var idx = $(this).parents('tr:first').children("td").eq(1).text();
-		    console.log(idx); */
-		});
-
-		$('.delete').click(function(event) {
-		    
-
-		});
+		setFilteringPaging();
+	});
+	
+	$('.delete').click(function(event) {
+	    
 
 	});
 	
+	$(document).on('click', '.deleteButton', function() {
+		event.preventDefault();
+		console.log($(this).attr('href'));
+	    var res = confirm("예약 취소 하시겠습니까?");
+		
+	    if (res == true)   { 
+	    	$.ajax({
+	    		url: $(this).attr('href'),
+	    		type: "get",
+	    		dataType: "text",
+	    		success: function(data) {
+	    			if(data == 1) {
+	    				alert("예약 취소되었습니다.");
+	    			} else {
+	    				alert("문제가 발생했습니다. 다시 시도해주세요.");
+	    			}
+	    			location.reload();
+	    		},
+	    		error: function(error) {
+	    			alert("에러 발생");
+	    			location.reload();
+	    		}
+	    	});
+	    }
+	});
+
 	
 	$("#searchBtn").click(function() {
+		getFilteringPaging();
+	});
+	
+	$(document).on("change", "select[name=cntPerPage]", function(){
+		getFilteringPaging();	
+	});
+	
+	function setFilteringPaging() {
+		var thisUrlStr = window.location.href;
+		var thisUrl = new URL(thisUrlStr);
+
+		var condition = thisUrl.searchParams.get("condition");
+		var keyword = thisUrl.searchParams.get("keyword");
+		var cntPerPage = thisUrl.searchParams.get("cntPerPage");
 		
+		if(cntPerPage != null) {
+			$("select[name=cntPerPage]").val(cntPerPage);
+		}
+		$("select[name=condition]").val(condition);
+		$("input[name=keyword]").val(keyword);
+	}
+	
+	function getFilteringPaging() {
 		var params = "";
-		var cntPerPage = $("input[name=cntPerPage]").val();
+		var cntPerPage = $("select[name=cntPerPage]").val();
 		var condition = $("select[name=condition]").val();
 		var keyword = $("input[name=keyword]").val();
 		
+		console.log("1: " + params);
 		if(cntPerPage != undefined) {
-			params += "?cntPerPage" + cntPerPage;
+			if(params.length == 0) {
+				params += "?";
+			} else {
+				params += "&";
+			}
+			params += "cntPerPage=" + cntPerPage;
+			console.log("2: " + params);
 		}
 		
 		if(condition != null && condition.length != 0 && keyword != null && keyword.length) {
 			if(params.length == 0) {
 				params += "?";
-			} else if(params.length == 1) {
+			} else if(params.length >= 1) {
 				params += "&";
 			} 
 			params += "condition=" + condition + "&keyword=" + keyword;
+			console.log("3: " + params);
 		}
 		
 		location.href="bookingList.do" + params;
-	});
+	}
 });
 </script>
 <!-- Page Heading -->
@@ -87,10 +115,10 @@ $(function() {
              	예약 내역 목록
             </div>
             <div class="float-right">
-				<a href="#" id="addNew" class="btn btn-success btn-sm" style="float: right;"><span class="text">등록</span></a>
-	            <a href="#" id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;"><span class="text">선택삭제</span></a>
-				<a href="#" id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">전체선택</span></a>
-				<a href="#" id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">선택해제</span></a>
+				<button id="addNew" class="btn btn-success btn-sm" style="float: right;">등록</button>
+	           	<button id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;">선택삭제</button>
+				<button id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">전체선택</button>
+				<button id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;">선택해제</button>
             </div>			
 		</h6>
 		<!-- <h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
