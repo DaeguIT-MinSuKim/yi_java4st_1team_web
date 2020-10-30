@@ -96,3 +96,6 @@ SELECT rownum RN, a.* FROM (SELECT * FROM booking_guest_view WHERE de_no = 2 ORD
 SELECT * FROM (SELECT rownum, b.* FROM booking_guest_view b WHERE de_no = 2 ORDER BY book_no asc);
 
 SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking ORDER BY book_no desc) a) WHERE rn BETWEEN 1 AND 1 ORDER BY rn
+
+SELECT * FROM booking;
+SELECT * FROM USER_SEQUENCES ;

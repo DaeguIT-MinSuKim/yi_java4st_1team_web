@@ -174,6 +174,7 @@ function addHair(hairNo, hairName, hairPrice) {
 	$("#totalAmount").text(totalAmountStr);
 	
 	calTotalPrice();
+	loadCouponTargetBox($("#couponTargetBox"));
 }
 
 /* 추가된 시술 삭제 */
@@ -188,6 +189,7 @@ function delHairItem(itemNo) {
 	$("#totalAmount").text(totalAmountStr);
 	
 	calTotalPrice();
+	loadCouponTargetBox($("#couponTargetBox"));
 }
 
 function calTotalPrice() {

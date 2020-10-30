@@ -214,8 +214,7 @@ $(function() {
 				<!-- 페이징 시작 -->
 				<div class="row">
 					<div class="col-sm-12 col-md-5">
-						<div class="dataTables_info" id="dataTable_info" role="status"
-							aria-live="polite">전체 23개 중 1-10</div>
+						<div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">전체 ${total }개 중 ${cntPerPage*(nowPage-1) + 1} - ${nowPage > (total/cntPerPage) ? (nowPage-1)*cntPerPage + total%cntPerPage : nowPage*cntPerPage}</div>
 					</div>
 					<div class="col-sm-12 col-md-7">
 						<div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
