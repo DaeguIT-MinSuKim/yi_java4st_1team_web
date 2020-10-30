@@ -29,6 +29,7 @@
 #addedHairList td:nth-child(2) {text-align: left;}
 #addedHairList td:nth-child(4) {text-align: left;}
 
+.input-group-text {height: calc(1.5em + .5rem + 2px); padding: .25rem .75rem; font-size: inherit;}
 
 .divider {
     height: 0;

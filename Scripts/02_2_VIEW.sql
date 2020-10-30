@@ -88,3 +88,8 @@ CREATE OR REPLACE VIEW coupon_view
 AS
 SELECT c.*, NVL(e.EVENT_NAME, '삭제된 이벤트') AS EVENT_NAME, e.EVENT_SALERATE
 FROM COUPON c LEFT OUTER JOIN Event e ON (c.EVENT_NO  = e.EVENT_NO );
+
+
+CREATE OR REPLACE VIEW booking_guest_view
+AS
+SELECT b.*, guest_name, guest_phone FROM booking b LEFT OUTER JOIN guest g ON(b.GUEST_ID = g.GUEST_ID);

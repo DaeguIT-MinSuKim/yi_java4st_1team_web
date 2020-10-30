@@ -46,34 +46,46 @@ $(function() {
 	});
 
 	
-	$("#searchBtn").click(function() {
-		getFilteringPaging();
+	$("#searchBtn").click(function(e) {
+		if($("select[name=where]").val() == undefined || $("input[name=query]").val() == "") {
+			e.preventDefault();
+		}
+	});
+	 
+	$("select[name=cntPerPage]").change(function(){
+		document.searchForm.submit();
 	});
 	
-	$(document).on("change", "select[name=cntPerPage]", function(){
-		getFilteringPaging();	
+	$("select[name=sorter]").change(function(){
+		document.searchForm.submit();
 	});
 	
 	function setFilteringPaging() {
 		var thisUrlStr = window.location.href;
 		var thisUrl = new URL(thisUrlStr);
 
-		var condition = thisUrl.searchParams.get("condition");
-		var keyword = thisUrl.searchParams.get("keyword");
+		var where = thisUrl.searchParams.get("where");
+		var query = thisUrl.searchParams.get("query");
 		var cntPerPage = thisUrl.searchParams.get("cntPerPage");
+		var sorter = thisUrl.searchParams.get("sorter");
 		
 		if(cntPerPage != null) {
 			$("select[name=cntPerPage]").val(cntPerPage);
 		}
-		$("select[name=condition]").val(condition);
-		$("input[name=keyword]").val(keyword);
+		if(where.length != 0) {
+			$("select[name=where]").val(where);
+			$("input[name=query]").val(query);
+		}
+		if(sorter.length != 0) {
+			$("select[name=sorter]").val(sorter);
+		}
 	}
 	
 	function getFilteringPaging() {
 		var params = "";
 		var cntPerPage = $("select[name=cntPerPage]").val();
-		var condition = $("select[name=condition]").val();
-		var keyword = $("input[name=keyword]").val();
+		var where = $("select[name=where]").val();
+		var query = $("input[name=query]").val();
 		
 		console.log("1: " + params);
 		if(cntPerPage != undefined) {
@@ -86,13 +98,13 @@ $(function() {
 			console.log("2: " + params);
 		}
 		
-		if(condition != null && condition.length != 0 && keyword != null && keyword.length) {
+		if(where != null && where.length != 0 && query != null && query.length) {
 			if(params.length == 0) {
 				params += "?";
 			} else if(params.length >= 1) {
 				params += "&";
 			} 
-			params += "condition=" + condition + "&keyword=" + keyword;
+			params += "where=" + where + "&query=" + query;
 			console.log("3: " + params);
 		}
 		
@@ -135,38 +147,51 @@ $(function() {
 		<div class="table-responsive">
 			<!-- bootStrap table wrapper-->
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-
 				<!-- 테이블 상단 필터링 시작 -->
-				<div class="row mb-2">
-					<div class="col-sm-12 col-md-6">
-						<div class="dataTables_length" id="dataTable_length">
-							<label>
-								<select name="cntPerPage" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
+				<form action="bookingList.do" name="searchForm">
+						
+				<div class="row m-0 mb-2">
+					<div class="col-sm-12 col-md-6 p-0">
+						<div class="dataTables_length form-inline" id="dataTable_length">
+							<div class="input-group input-group-sm mr-3">
+								<select name="cntPerPage" aria-controls="dataTable" class="custom-select custom-select-sm">
 									<option value="10">10줄 보기</option>
 									<option value="25">25줄 보기</option>
 									<option value="50">50줄 보기</option>
 									<option value="100">100줄 보기</option>
 								</select>
-							</label>
+							</div>
+							<div class="input-group input-group-sm">
+								<div class="input-group-sm input-group-prepend">
+									<label class="input-group-text" for="sorter">구분</label>
+								</div>
+								<select name="sorter" aria-controls="dataTable" class="custom-select custom-select-sm">
+									<option selected value="">전체</option>
+									<option value="1">예약완료</option>
+									<option value="2">주문완료</option>
+									<option value="0">예약취소</option>
+									<option value="-1">미방문</option>
+								</select>
+							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-md-6">
+					<div class="col-sm-12 col-md-6 p-0">
 						<div id="dataTable_filter" class="dataTables_filter ">
-							<select class="custom-select custom-select-sm" name="condition" style="width: 80px;">
+							<select class="custom-select custom-select-sm" name="where" style="width: 80px;">
 								<option value="">기준</option>
 								<option value="guestId">아이디</option>
 								<option value="guestName">고객명</option>
 								<option value="guestPhone">연락처</option>
 							</select>
 							<label>
-								<input type="search" class="form-control form-control-sm" name="keyword" placeholder="" aria-controls="dataTable">
+								<input type="search" class="form-control form-control-sm" name="query" placeholder="" aria-controls="dataTable">
 							</label>
 							<input type="submit" class="btn btn-primary btn-sm" value="검색" id="searchBtn"></input>
 						</div>
 					</div>
 				</div>
+				</form>
 				<!-- 테이블 상단 필터링 끝 -->
-
 				<!-- 테이블 시작 -->
 				<table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
 					<thead>

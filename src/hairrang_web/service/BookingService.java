@@ -185,11 +185,11 @@ public class BookingService {
     }
     
     
-    public ArrayList<Booking> getBookingListByCondition(Paging paging, String condition, String keyword) {
-    	return dao.selectBookingByCondition(paging, condition, keyword);
+    public ArrayList<Booking> getBookingListBySearch(Paging paging, String where, String query, String sorter) {
+    	return dao.selectBookingByCondition(paging, where, query, sorter);
     }
     
-    public int getTotalCountByCondition(Paging paging, String condition, String keyword) {
-    	return dao.countBookingByConditionForPaging(paging, condition, keyword);
+    public int getTotalCountBySearch(Paging paging, String where, String query, String sorter) {
+    	return dao.countBookingByConditionForPaging(paging, where, query, sorter);
 	}
 }

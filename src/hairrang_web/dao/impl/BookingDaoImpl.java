@@ -685,20 +685,61 @@ public class BookingDaoImpl implements BookingDao {
 	
 	
 	@Override
-	public int countBookingByConditionForPaging(Paging paging, String condition, String keyword) {
-		String sql = "SELECT COUNT(*) FROM booking";
+	public int countBookingByConditionForPaging(Paging paging, String where, String query, String sorter) {
+		String sql = "SELECT COUNT(*) FROM booking_guest_view ";
+		int cnt = 0;
 		
-		if(condition != null) {
-			if(condition.equals("guestId")) {
-				condition = "guest_id";
-			} else if (condition.equals("guestName")) {
-				condition = "guest_name";
-			} else if (condition.equals("guestPhone")) {
-				condition = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
+		if(where == null) {
+		} else if(where.equals("")) {
+		} else {
+			if(where.trim().equals("guestId")) {
+				where = "guest_id";
+			} else if (where.equals("guestName")) {
+				where = "guest_name";
+			} else if (where.equals("guestPhone")) {
+				where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
 			}
-			sql += "_guest_view WHERE " + condition + " LIKE '%" + keyword + "%'";
+			sql += " WHERE " + where + " LIKE '%" + query + "%'";
+			cnt++;
 		}
 		
+		/*if(where != null) {
+			if(!where.equals("")) {
+				if(where.equals("guestId")) {
+					where = "guest_id";
+				} else if (where.equals("guestName")) {
+					where = "guest_name";
+				} else if (where.equals("guestPhone")) {
+					where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
+				}
+				sql += " WHERE " + where + " LIKE '%" + query + "%'";
+			}
+		}*/
+		
+		if(sorter == null) {
+		} else if (sorter.trim().equals("")) {
+		} else {
+			if(cnt == 1) {
+				sql += " AND BOOK_STATUS = " + sorter;
+			} else {
+				sql += " WHERE BOOK_STATUS = " + sorter;
+			}
+		}
+		/*
+		if(sorter != null) {
+			if(!sorter.equals("")) {
+				if(where != null) {
+					if(!where.equals("")) {
+						sql += " AND ";
+					}
+				} else {
+					sql += " WHERE ";
+				}
+				sql += " book_status = " + sorter;
+			}
+		}
+		*/
+		System.out.println("완성된 쿼리" + sql);
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
@@ -714,27 +755,68 @@ public class BookingDaoImpl implements BookingDao {
 	
 	
 	@Override
-	public ArrayList<Booking> selectBookingByCondition(Paging paging, String condition, String keyword) {
+	public ArrayList<Booking> selectBookingByCondition(Paging paging, String where, String query, String sorter) {
 		
-		String sql = null;
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_guest_view ";
+		int cnt = 0;
 		
-		if(condition != null) {
-			if(condition.equals("guestId")) {
-				condition = "guest_id";
-			} else if (condition.equals("guestName")) {
-				condition = "guest_name";
-			} else if (condition.equals("guestPhone")) {
-				condition = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
+		if(where == null) {
+			
+		} else if(where.equals("")) {
+			
+		} else {
+			if(where.trim().equals("guestId")) {
+				where = "guest_id";
+			} else if (where.equals("guestName")) {
+				where = "guest_name";
+			} else if (where.equals("guestPhone")) {
+				where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
+			}
+			sql += " WHERE " + where + " LIKE '%" + query + "%' ";
+			cnt++;
+		}
+		/*
+		if(where != null) {
+			sql += " WHERE LIKE '%";
+			if(where.equals("guestId")) {
+				where = "guest_id";
+			} else if (where.equals("guestName")) {
+				where = "guest_name";
+			} else if (where.equals("guestPhone")) {
+				where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
+			}
+			sql += "%' ";
+			
+			if(sorter != null) {
+				if(!sorter.equals("")) {
+					sql += " AND book_status = " + sorter;
+				}
 			}
 			
-			sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_guest_view WHERE "
-					+ condition + " LIKE '%" + keyword + "%' ORDER BY book_no desc) a) "
-					+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+			sql += " ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		}
+		*/
+		
+		if(sorter == null) {
+			sql += " ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		} else if (sorter.trim().equals("")) {
+		} else {
+			if(cnt == 1) {
+				sql += " AND BOOK_STATUS = " + sorter;
+			} else {
+				sql += " WHERE BOOK_STATUS = " + sorter;
+			}
+			sql += " ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
 		}
 		
-		if(condition == null || keyword == null) {
-			sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
-		}
+		/*if(where == null || query == null) {
+			if(sorter != null) {
+				if(!sorter.equals("")) {
+					sql += " WHERE book_status = " + sorter;
+				}
+			}
+			sql += " ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		}*/
 		
 		System.out.println("완성된 sql + " + sql);
 		try (Connection con = JndiDs.getConnection();
@@ -744,7 +826,6 @@ public class BookingDaoImpl implements BookingDao {
 			try(ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
 					ArrayList<Booking> list = new ArrayList<>();
-					System.out.println("여기서?");
 					do {
 						list.add(getBooking(rs));
 					}while(rs.next());
