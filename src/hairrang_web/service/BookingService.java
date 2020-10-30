@@ -51,12 +51,12 @@ public class BookingService {
 		return dao.selectMaxBookNo() + 1;
 	}
 	
-	public ArrayList<TimeTable> getTimeTable(String wantDate) {
-		return dao.getTimeTables(wantDate);
+	public ArrayList<TimeTable> getTimeTable(String wantDate, int deNo) {
+		return dao.getTimeTables(wantDate, deNo);
 	}
 	
-	public int isAvailableTime(String wantDateTime) {
-		return dao.isAvailableTime(wantDateTime);
+	public int isAvailableTime(String wantDateTime, int deNo) {
+		return dao.isAvailableTime(wantDateTime, deNo);
 	}
 	
 	public int countBookingById(String id) {
@@ -183,4 +183,13 @@ public class BookingService {
     public ArrayList<Booking> getTodayBookingList() {
     	return dao.selectBookingAllToday();
     }
+    
+    
+    public ArrayList<Booking> getBookingListByCondition(Paging paging, String condition, String keyword) {
+    	return dao.selectBookingByCondition(paging, condition, keyword);
+    }
+    
+    public int getTotalCountByCondition(Paging paging, String condition, String keyword) {
+    	return dao.countBookingByConditionForPaging(paging, condition, keyword);
+	}
 }

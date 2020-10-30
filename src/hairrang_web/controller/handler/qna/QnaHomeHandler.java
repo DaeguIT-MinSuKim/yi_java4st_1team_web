@@ -35,7 +35,7 @@ public class QnaHomeHandler implements Command {
 		System.out.println(cntPerPage);
 		
 		//만약 처음 접속했을때 초기세팅해주는 곳 
-		int total = service.coutnQna();
+		int total = service.countQna();
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "5";

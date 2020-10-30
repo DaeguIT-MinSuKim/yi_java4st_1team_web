@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../include/header.jsp"%>
 <script>
 $(function() {
@@ -24,8 +25,7 @@ $(function() {
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800 font-weight">목록 템플릿</h1>
 <p class="mb-4">
-	여기에 간단한 설명 추가해주세요. 이렇게 링크도 달아도 됩니다. <a target="_blank"
-		href="https://datatables.net">링크</a>
+	여기에 간단한 설명 추가해주세요. 이렇게 링크도 달아도 됩니다. <a target="_blank" href="https://datatables.net">링크</a>
 </p>
 
 <!-- DataTales Example -->
@@ -36,10 +36,10 @@ $(function() {
              	주문 내역 목록
             </div>
             <div class="float-right">
-				<a href="#" id="addNew" class="btn btn-success btn-sm" style="float: right;"><span class="text">등록</span></a>
-	            <a href="#" id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;"><span class="text">선택삭제</span></a>
-				<a href="#" id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">전체선택</span></a>
-				<a href="#" id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">선택해제</span></a>
+				<a href="orderForm.do" id="addNew" class="btn btn-success btn-sm" style="float: right;"><span class="text">등록</span></a>
+	           	<button id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;">선택삭제</button>
+				<button id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">전체선택</button>
+				<button id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;">선택해제</button>
             </div>			
 		</h6>
 	</div>
@@ -78,15 +78,14 @@ $(function() {
 				<!-- 테이블 상단 필터링 끝 -->
 
 				<!-- 테이블 시작 -->
-				<table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+				<table class="table table-bordered table-hover text-center" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
 							<th>선택</th>
 							<th>주문번호</th>
 							<th>주문일시</th>
-							<th>고객아이디</th>
 							<th>고객명</th>
-							<th>디자이너</th>
+							<th>담당 디자이너</th>
 							<th>시술</th>
 							<th>쿠폰사용</th>
 							<th>할인액</th>
@@ -100,15 +99,17 @@ $(function() {
 							<td><input type="checkbox" no="${order.ordersNo }"></td>
 							<td>${order.ordersNo }</td>
 							<td>${order.ordersDateStr }</td>
-							<td>${order.guest.guestId }</td>
-							<td>${order.guest.guestName }</td>
+							<td>${order.guest.guestName } (${order.guest.guestId })</td>
 							<td>${order.designer.deName }</td>
 							<td>${order.howManyItems }</td>
-							<td></td>
-							<td></td>
-							<td>${order.ordersTotalPrice }</td>
+							<td>${order.usedCoupon}</td>
 							<td>
-								<a href="ordersDetail.do?no=${order.ordersNo}" class="btn bg-gray-200 btn-sm ordersViewButton"><span class="text-gray-800">상세보기</span></a>
+								<c:if test="${order.discountAmount eq 0}">-</c:if>
+								<c:if test="${order.discountAmount ne 0}"><fmt:formatNumber value="${order.discountAmount }" pattern="#,###" /></c:if>
+							</td>
+							<td><fmt:formatNumber value="${order.ordersTotalPrice }" pattern="#,###" /></td>
+							<td>
+								<a href="orderDetail.do?no=${order.ordersNo}" class="btn bg-gray-200 btn-sm ordersViewButton"><span class="text-gray-800">상세보기</span></a>
 								<!-- <a href="#" class="btn btn-info btn-sm modifyButton"><span class="text">수정</span></a> -->
 								<a href="#" class="btn btn-danger btn-sm deleteButton" bookNo="${order.ordersNo }"><span class="text">삭제</span> </a>
 							</td>

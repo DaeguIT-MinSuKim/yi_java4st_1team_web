@@ -14,6 +14,15 @@ $(function() {
 	var thisUrl = new URL(thisUrlStr);
 	selectedBookingNo = thisUrl.searchParams.get("no");
 	setBookingData();
+	
+	var guestId = thisUrl.searchParams.get("guestId");
+	if(guestId != null) {
+		$("#guestInput").prop("readonly", true);
+		$("#nonMemberCK").prop("checked", false);
+		$("div[name=bookingDetail]").text("-");	
+		$("#guestInput").val(guestId);
+		loadCouponList(guestId);
+	}
 });
 
 // 2. 고객리스트에서
@@ -32,7 +41,7 @@ $(function() {
 		$(this).addClass("active");
 		
 		$.ajax({
-			url: "bookingToOrder.do",
+			url: "orderForm.do",
 			type: "post",
 			dataType: "json",
 			data: {
@@ -165,6 +174,7 @@ function addHair(hairNo, hairName, hairPrice) {
 	$("#totalAmount").text(totalAmountStr);
 	
 	calTotalPrice();
+	loadCouponTargetBox($("#couponTargetBox"));
 }
 
 /* 추가된 시술 삭제 */
@@ -179,6 +189,7 @@ function delHairItem(itemNo) {
 	$("#totalAmount").text(totalAmountStr);
 	
 	calTotalPrice();
+	loadCouponTargetBox($("#couponTargetBox"));
 }
 
 function calTotalPrice() {
@@ -204,7 +215,7 @@ $(document).on("click", "#guestSearchModalConfirm", function(){
 	var guestId = $("#guestSearchTable .table-primary td").eq(1).text();
 	$("#guestInput").prop("readonly", true);
 	$("#nonMemberCK").prop("checked", false);
-	$("div[name=bookingDetail]").text("예약 고객인 경우 검색창을 통해 해당 예약건을 선택해주세요.");	
+	$("div[name=bookingDetail]").text("-");	
 	$("#guestInput").val(guestId);
 	
 	loadCouponList(guestId);
@@ -212,7 +223,7 @@ $(document).on("click", "#guestSearchModalConfirm", function(){
 
 
 function setBookingData(){
-    var url = "bookingToOrder.do";
+    var url = "orderForm.do";
     $.ajax({
         type: "POST",
         url: url,
@@ -320,7 +331,7 @@ function setClear() {
 
 function loadCouponList(guestId) {
 	$.ajax({
-		url: "bookingToOrder.do",
+		url: "orderForm.do",
 		type: "post",
 		dataType: "json",
 		data: {
@@ -494,17 +505,31 @@ function changeDiscountAmount(target){
 
 $(document).on("click", "#orderRegBtn", function() {
 	var order = readInputOrder();
+	if(order == undefined) {
+		return;
+	}
 	
-	alert(JSON.stringify(order));
+	var info;
+	if(selectedBookingNo == null) {
+		selectedBookingNo = 0;
+	}
+	
+	info = {
+		bookNo: selectedBookingNo,
+		order: order
+	};
+	
+	alert(JSON.stringify(info));
 	$.ajax({
 		url: "orderRegister.do",
 		type: "post",
 		dataType: "text",
-		data: JSON.stringify(order),
+		data: JSON.stringify(info),
 		success: function(data) {
 			if(data != 0) {
-				console.log(data);
-				alert("주문을 등록했습니다.");
+				alert("주문이 등록되었습니다.");
+				location.href="orderList.do";
+//				location.href="orderDetail.do?no="+data;
 			} else {
 				console.log(data);
 			}
@@ -527,15 +552,21 @@ function readInputOrder(){
 		guestId = $("#guestInput").val();
 	}
 
-	/*
-	if(selectedBookingNo == 0) {
-		// 
-	} else {
-		// 불러온 예약건
+	if(guestId.length == 0) {
+		alert("고객을 선택해주세요.");
+		return;
 	}
-	*/
 	
 	var deNo = $("#designerSelector").val();
+	if(deNo.length == 0) {
+		alert("디자이너를 선택해주세요.");
+		return;
+	}
+	
+	if($("#addedHairList tr").length == 0) {
+		alert("시술을 선택해주세요.");
+		return;
+	}
 	
 	// 상세주문 리스트
 	var odList = new Array();
@@ -555,16 +586,11 @@ function readInputOrder(){
 		odList.push(od);
 	})
 	
-	console.log("최종 odList");
-	console.log(odList);
+	
 	
 	var order = {
-			guest: {
-				guestId: guestId
-			},
-			designer: {
-				deNo: deNo
-			},
+			guest: { guestId: guestId },
+			designer: { deNo: deNo },
 			odList: odList
 	};
 	

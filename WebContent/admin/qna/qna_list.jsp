@@ -2,23 +2,33 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
-	document.title += ' - 고객 목록';
+	document.title += ' - 문의 목록';
 
 	function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
-		location.href = "guestList.do?nowPage=1&cntPerPage=" + sel;
+		var sel2 = document.getElementById('selectPage').value;
+		location.href = "qnaList.do?nowPage=1&cntPerPage=" + sel+"&stay="+sel2;
 	};
+	function tableChange() {
+		var sel = document.getElementById('selectPage').value;
+		alert(sel);
+		location.href = "qnaList.do?nowPage=${paging.nowPage}&stay="
+				+ sel;
+	} 
 
+	/* 전체 선택 */
 	function selectAll() {
 		$('[name=check]').prop('checked', true);
 	};
 
+	/* 전체 해체 */
 	function deselectAll() {
 		$('[name=check]').prop('checked', false);
 	};
-
+	
+	/* 그룹삭제 */
 	$(document).on('click', '[name=delete]', function() {
 		/* $("#dataTable tr:nth-child(2)").css("background", "red"); */
 		var array = new Array();
@@ -28,15 +38,15 @@
 		console.log(array);
 
 		if (array == 0) {
-			alert('삭제할 회원을 선택하세요');
+			alert('삭제할 문의을 선택하세요');
 			return;
 		}
 
 		//셀렉트박스 선택한 사람 배열로 ajax로 넘기기
-		if (confirm(array + "님을 탈퇴처리 하시겠습니까?") == true) {
+		if (confirm(array + "을 삭제처리 하시겠습니까?") == true) {
 			$.ajax({
 				type : 'post',
-				url : 'guestDelete.do',
+				url : 'qnaDelete.do',
 				data : {
 					"string" : array
 				},
@@ -46,49 +56,124 @@
 					location.reload();
 				},
 				error : function() {
-					alert('삭제할 회원을 선택하세요');
+					alert('삭제할 문의을 선택하세요');
 				}
 			});
 		} else {
 			return;
 		}
 
-		//대현
-		/* var delArr = {};
-		for(var i=0; i < $("#dataTable input[name=check]:checked").length; i++ ){
-			delArr[i] += $("#dataTable input[name=check]:checked").eq(i).val();
-		}
-		
-		console.log(delArr);  */
 	});
 
 	$(document).on('click', '[id=btn_delete]', function() {
-		var guest = $(this).attr('guestId');
-		if (confirm(guest + '님을 탈퇴처리 하시겠습니까?') == true) {
-			location.href = "guestDelete.do?id=" + guest;
+		var no = $(this).attr('no');
+
+		if (confirm(no + '를 삭제처리 하시겠습니까?') == true) {
+			location.href = "qnaDelete.do?no=" + no;
 		} else {
 			return;
 		}
 
 	});
-</script>
+	
+	
+	//그룹 복원
+	$(document).on('click', '[name=Restore]', function() {
+		/* $("#dataTable tr:nth-child(2)").css("background", "red"); */
+		/*복원할 정보들을 담을 곳*/
+		var array = new Array();
 
+		/*dataTable의 input태그에 check가 checked되어 있는 거에 각각 배열에 no를 넣는다. */
+		$("#dataTable input[name=check]:checked").each(function() {
+			array.push(this.value);
+		});
+
+		console.log(array);
+
+		/* if(array==0){
+			alert('삭제할 회원을 선택하세요');
+			return;
+		}
+		 */
+
+		/* 확인창을 띄워서 확인한다. */
+		if (confirm(array + "님을 복원처리 하시겠습니까?") == true) {
+			$.ajax({
+				type : 'post',
+				url : 'qnaRestore.do',
+				data : {"string" : array},
+				async : false,
+				success : function(JSON) {
+					/* alert("성공"); */
+					location.reload();
+				},
+				error : function() {
+					alert('복원할 회원을 선택하세요');
+				}
+			});
+		} else {
+			return;
+		}
+	});
+	
+	
+	/* 단일복원 */
+	function buttonRestore(){
+		$('#dataTable tr').click(function(){
+			
+			var tr = $(this);
+			var td = tr.children();
+			var no = td.eq(1).text();
+			alert(no);
+			
+			if(confirm(no+"번 글을 복원 하시겠습니까?") == true){
+				$.ajax({
+					type : 'get',
+					url : 'qnaRestore.do',
+					data : {
+						no: no
+					},
+					dataTye: "text",
+					success : function(res){
+						location.href="qnaList.do";
+						alert("복원 완료되었습니다.");
+						location.reload();
+					},
+					error : function(res){
+						alert('복원 시도 중 오류가 발생했습니다.');
+					}
+				});
+			}
+		});		
+	}
+</script>
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800 font-weight">고객 목록 - 고객 관리</h1>
+<h1 class="h3 mb-2 text-gray-800 font-weight">문의 목록 - 문의 관리</h1>
 <p class="mb-4">
 	<a target="_blank" href="https://datatables.net"></a>
 </p>
 <form method="post" name="formm">
 	<!-- DataTales Example -->
+<div class="card shadow mb-4">
 	<div class="card-header py-2">
 		<h6 class="m-1 font-weight-bold text-primary"
 			style="line-height: 16px; font-size: 1.3em">
-
 			<input type="button" value="공지 등록" class="btn btn-success btn-sm"
 				style="float: left; margin-right: 10px;"
-				onclick="location.href='qnaNoticeWrite.do'"> <input type="button"
-				value="삭제" name="delete" class="btn btn-danger btn-sm"
-				style="float: left;">
+				onclick="location.href='qnaNoticeWrite.do'">
+				<c:choose>
+				<c:when test="${stay eq 'delq' || stay eq 'deln'}">
+						<input
+					type="button" value="복원" name="Restore" class="btn btn-danger btn-sm"
+					style="float: left;">
+				</c:when>
+				<c:otherwise>
+					<input
+					type="button" value="삭제" name="delete" class="btn btn-danger btn-sm"
+					style="float: left;">
+				</c:otherwise>
+				</c:choose>
+				
 
 			<button type="button" onclick="selectAll()"
 				class="btn btn-secondary btn-sm"
@@ -124,6 +209,27 @@
 										<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄
 										보기</option>
 							</select>
+							
+							<select name="dataTable_length" id="selectPage"
+								onchange="tableChange()" aria-controls="dataTable"
+								class="custom-select custom-select-sm form-control form-control-sm">
+									<option value="all"
+										<c:if test="${stay eq 'all'}">selected</c:if>>전체
+										보기</option>
+									<option value="resy"
+										<c:if test="${stay eq 'resy'}">selected</c:if>>답변된문의
+										보기</option>
+									<option value="resn"
+										<c:if test="${stay eq 'resn'}">selected</c:if>>미답변된공지
+										보기</option>
+									<option value="delq"
+										<c:if test="${stay eq 'delq'}">selected</c:if>>삭제된문의
+										보기</option>
+									<option value="deln"
+										<c:if test="${stay eq 'deln'}">selected</c:if>>삭제된공지
+										보기</option>
+							</select>
+							
 							</label>
 						</div>
 					</div>
@@ -153,42 +259,56 @@
 							<th>제목</th>
 							<th>작성일</th>
 							<th>답변여부</th>
-							
 							<th>답변</th>
-							<th></th>
+							<th>처리</th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="qna" items="${viewAll}" varStatus="status">
 							<tr>
-								<td><input type="checkbox" name="check"value="${qna.qnaNo}"></td>
-								<td style="width: 20px;">${total - ((paging.nowPage-1) * cnt + status.index)}</td>
+								<td><input type="checkbox" name="check"
+									value="${qna.qnaNo}"></td>
+								<td style="width: 20px;">${qna.qnaNo}</td>
 								<td style="width: 80px;">${qna.guestId.guestId}</td>
-								<td style="width: 130px;">${qna.qnaTitle}</td>
+								<td style="width: 130px;"><a
+									href="qnaDetail.do?no=${qna.qnaNo }">${qna.qnaTitle}</a></td>
 								<td style="width: 150px;">${qna.qnaRegDate}</td>
-								<td style="width: 150px;">${qna.qnaResYn}</td>
-								
+								<td style="width: 150px;"><c:if test="${qna.qnaNotice eq 'n' }">${qna.qnaResYn}</c:if></td>
+
+
+								<td style="width: 100px;">
+										<c:if test="${qna.qnaResYn eq 'y'}">
+											<a href="#"
+												class="btn bg-warning btn-sm bookingToOrderButton"> <span
+												class="text-gray-800">답변완료</span>
+											</a>
+										</c:if>
+										<c:if test="${qna.qnaResYn eq 'n' && qna.qnaNotice eq 'n'}">
+											<a href="qnaResult.do?no=${qna.qnaNo }"
+												class="btn bg-warning btn-sm bookingToOrderButton"> <span
+												class="text-gray-800">답변하기</span>
+											</a>
+										</c:if>
+										<c:if test="${qna.qnaNotice eq 'y'}">
+										</c:if>
+								</td>
 								
 								<td style="width: 100px;">
 								<c:choose>
-									<c:when test="${qna.qnaResYn eq 'y'}">
-									<a href="#" class="btn bg-warning btn-sm bookingToOrderButton">
-									<span class="text-gray-800">답변완료</span>
-									</a>
+									<c:when test="${stay eq 'delq' || stay eq 'deln'}">
+											<input type="button" name="update" value="복원"
+											class="btn btn-dark btn-sm"
+											onclick="buttonRestore()">
 									</c:when>
 									<c:otherwise>
-									<a href="#" class="btn bg-warning btn-sm bookingToOrderButton">
-									<span class="text-gray-800">답변하기</span>
-									</a>
+										<c:if test="${qna.qnaResYn eq 'y' || qna.qnaNotice eq 'y' }">
+												<input type="button" name="update" value="수정"
+													class="btn btn-dark btn-sm"
+													onclick="location.href='qnaUpdate.do?no=${qna.qnaNo}'">
+											</c:if> <input type="button" value="삭제" id="btn_delete"
+											no="${qna.qnaNo}" class="btn btn-danger btn-sm"> 
 									</c:otherwise>
 								</c:choose>
-								</td>
-										
-								<td style="width: 100px;"><input type="button"
-									name="update" value="수정" class="btn btn-dark btn-sm"
-									onclick="location.href='guestInfo.do?id=${guest.guestId}'">
-									<input type="button" value="삭제" id="btn_delete"
-									guestId="${guest.guestId}" class="btn btn-danger btn-sm">
 								</td>
 							</tr>
 						</c:forEach>
@@ -203,7 +323,7 @@
 
 					<c:if test="${paging.startPage != 1}">
 						<a
-							href="guestList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
+							href="qnaList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
 							<i class="xi-angle-left"></i>
 						</a>
 					</c:if>
@@ -216,7 +336,7 @@
 								</c:when>
 							<c:when test="${p != paging.nowPage }">
 								<a
-									href="guestList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><b
+									href="qnaList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><b
 									style="margin: 5px;">${p}</b></a>
 							</c:when>
 						</c:choose>
@@ -225,7 +345,7 @@
 					&nbsp;&nbsp;
 					<c:if test="${paging.endPage != paging.lastPage }">
 						<a
-							href="guestList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
+							href="qnaList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
 							<i class="xi-angle-right"></i>
 						</a>
 					</c:if>
@@ -240,5 +360,6 @@
 	<!-- cardBody-->
 	<!-- 	</div>
 </div> -->
+</div>
 </form>
 <%@ include file="../include/footer.jsp"%>

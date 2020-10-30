@@ -26,8 +26,7 @@ public class AdminQnaNoticeWriteHandler implements Command {
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		String url = "qna/qnaNoticeWrite.jsp";
-		System.out.println("=================================================");
+		String url = "qna/qna_NoticeWrite.jsp";
 
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("GET");
@@ -83,10 +82,7 @@ public class AdminQnaNoticeWriteHandler implements Command {
 				String title = multi.getParameter("title");
 				String content = multi.getParameter("content");
 
-				Notice notice = new Notice(title, content);
-				notice.setNoticeFile(FilegetPath);
-
-				QnA qna = new QnA(admin, title, content, FilegetPath);
+				QnA qna = new QnA(admin, title, content, realFileName);
 
 				int res = service.insertQnaNotice(qna);
 				System.out.println(res);

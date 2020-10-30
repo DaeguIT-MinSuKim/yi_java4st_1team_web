@@ -31,9 +31,28 @@ public interface QnADao {
 	
 	//총개시물
 	int countQnA();
-	
-	//페이징처리된 게시물
+	//페이징처리된  총게시물
 	List<QnA> selectPagingQnA(Paging paging);
+	
+	//답변한 문의
+	int countResYQnA();
+	//페이징처리된 답변 문의
+	List<QnA> selectPagingResYQnA(Paging paging);
+	
+	//미답변한 문의
+	int countResNQnA();
+	//페이징처리된 미답변한 문의
+	List<QnA> selectPagingResNQnA(Paging paging);
+	
+	//삭제된 문의
+	int countDelYQnA();
+	//페이징처리된 삭제된 문의
+	List<QnA> selectPagingDelYQnA(Paging paging);
+	
+	//삭제된 공지
+	int countDelYQnANotice();
+	//페이징 처리된 삭제된 공지
+	List<QnA> selectPagingDelYQnANotice(Paging paging);
 	
 	//답변 찾기
 	QnA selectResByNo(QnA qna);
@@ -45,4 +64,12 @@ public interface QnADao {
 	
 	//문의사항 공지사항 쓸때
 	int insertQnaNotice(QnA qna);
+	
+	//답변 수정
+	int updateResult(QnA qna);
+	
+	//복원
+	int updateRestoreQna(String no);
+	
+	
 }

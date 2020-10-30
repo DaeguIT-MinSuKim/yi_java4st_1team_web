@@ -27,9 +27,9 @@ public interface BookingDao {
 
 	int selectMaxBookNo();
 
-	ArrayList<TimeTable> getTimeTables(String wantDate);
+	ArrayList<TimeTable> getTimeTables(String wantDate, int deNo);
 
-	int isAvailableTime(String wantDateTime);
+	int isAvailableTime(String wantDateTime, int deNo);
 	
 	ArrayList<BookingHairs> selectBookingHairsByBookingNo(int bookNo);
 	
@@ -61,6 +61,11 @@ public interface BookingDao {
 	/* Admin */
 	
 	ArrayList<Booking> selectBookingAllToday();
+
+	
+	ArrayList<Booking> selectBookingByCondition(Paging paging, String condition, String keyword);
+
+	int countBookingByConditionForPaging(Paging paging, String condition, String keyword);
 
 
 }

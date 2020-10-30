@@ -111,9 +111,9 @@ public class Paging {
 
 	// db 쿼리에서 사용할 start, end 값 계산
 	public void calcStartEnd(int nowPage, int contPerPage) { //현재페이지, 페이지당 글갯수
-		setEnd(nowPage * cntPerPage); 
-		setStart(getEnd() - cntPerPage + 1); 
-		
+		setEnd(nowPage * cntPerPage);
+		setStart(getEnd() - cntPerPage + 1);
+
 	}
 
 	@Override
@@ -121,6 +121,11 @@ public class Paging {
 		return "Paging [nowPage=" + nowPage + ", startPage=" + startPage + ", endPage=" + endPage + ", total=" + total
 				+ ", cntPerPage=" + cntPerPage + ", lastPage=" + lastPage + ", start=" + start + ", end=" + end
 				+ ", cntPage=" + cntPage + "]";
+	}
+
+	public Paging() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 }

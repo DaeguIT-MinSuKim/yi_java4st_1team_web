@@ -19,6 +19,8 @@ public class AdminNoticeDetailHandler implements Command {
 		String url = "notice/notice_Detail.jsp";
 		int noticeNo = Integer.parseInt(request.getParameter("no"));
 		Notice notice = service.selectNoticeByNo(noticeNo);
+		System.out.println("공지사항 파일 : "+notice.getNoticeFile());
+		System.out.println("공지사항 : "+notice);
 		
 
 		request.setAttribute("notice", notice);

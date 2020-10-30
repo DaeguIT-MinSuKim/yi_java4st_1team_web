@@ -1,6 +1,7 @@
-package hairrang_web.controller.handler.admin.booking;
+package hairrang_web.controller.handler.admin.order;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import hairrang_web.controller.Command;
@@ -18,19 +21,23 @@ import hairrang_web.dto.Coupon;
 import hairrang_web.dto.Designer;
 import hairrang_web.dto.Hair;
 import hairrang_web.dto.HairKind;
+import hairrang_web.dto.Orders;
 import hairrang_web.service.BookingService;
 import hairrang_web.service.CouponService;
 import hairrang_web.service.DesignerService;
 import hairrang_web.service.HairService;
+import hairrang_web.service.OrdersService;
 
-public class AdminBookingToOrderHandler implements Command {
+public class AdminOrderRegisterFormHandler implements Command {
 
+	private OrdersService oService;
+		
 	private BookingService bService;
 	private DesignerService dService;
 	private HairService hService;
 	private CouponService cService;
 	
-	public AdminBookingToOrderHandler() {
+	public AdminOrderRegisterFormHandler() {
 		bService = new BookingService();
 		dService = new DesignerService();
 		hService = new HairService();
@@ -40,18 +47,26 @@ public class AdminBookingToOrderHandler implements Command {
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)	throws IOException, ServletException {
 		
-		String url = "/admin/booking/booking_to_order.jsp";
+		String url = "/admin/order/order_form.jsp";
 		
 		if(request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println(getClass().getSimpleName() + ">> GET");
 			
-			int no = Integer.parseInt(request.getParameter("no"));
-			Booking booking = bService.getBookingByBookingNo(new Booking(no));
+			if(request.getParameter("no") != null) {
+				int no = Integer.parseInt(request.getParameter("no"));
+				Booking booking = bService.getBookingByBookingNo(new Booking(no));
+				request.setAttribute("booking", booking);
+			}
+			
+			if(request.getParameter("guestId") != null) {
+				String guestId = request.getParameter("guestId");
+				request.setAttribute("guestId", guestId);
+			}
+			
 			ArrayList<Designer> deList = dService.getDesignerList();
 			ArrayList<HairKind> hairKindList = hService.getHairListAll();
 			ArrayList<Booking> todayBookingList = bService.getTodayBookingList();
 			
-			request.setAttribute("booking", booking);
 			request.setAttribute("deList", deList);
 			request.setAttribute("hairKindList", hairKindList);
 			request.setAttribute("todayBookingList", todayBookingList);
@@ -120,9 +135,7 @@ public class AdminBookingToOrderHandler implements Command {
 				return null;
 			}
 		}
-
+	
 		return url;
-		
 	}
-
 }

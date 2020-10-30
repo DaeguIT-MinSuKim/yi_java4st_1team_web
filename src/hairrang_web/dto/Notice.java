@@ -53,12 +53,13 @@ public class Notice {
 				+ ", noticeDelYn=" + noticeDelYn + ", noticeFile=" + noticeFile + "]";
 	}
 
-	public Notice(int noticeNo, String noticeTitle, String noticeContent, String noticeDelYn) {
+	public Notice(int noticeNo, String noticeTitle, String noticeContent, String noticeDelYn, String noticeFile) {
 		super();
 		this.noticeNo = noticeNo;
 		this.noticeTitle = noticeTitle;
 		this.noticeContent = noticeContent;
 		this.noticeDelYn = noticeDelYn;
+		this.noticeFile = noticeFile;
 	}
 
 	public Notice(int noticeNo, String noticeTitle, String noticeContent) {

@@ -9,9 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import hairrang_web.controller.Command;
-import hairrang_web.dto.Guest;
 import hairrang_web.dto.Orders;
 import hairrang_web.service.OrdersService;
 
@@ -35,24 +36,37 @@ public class AdminOrderRegisterHandler implements Command {
 		} else {
 			System.out.println(getClass().getSimpleName() + ">> POST");
 			
-			Gson gson = new Gson();
+			// 파라미터 값 확인
+//			for (Entry<String, String[]> map : request.getParameterMap().entrySet() ) {
+//					System.out.println(map.getKey() + " : " + map.getValue());
+//			}
 			
-			Orders newOrders = gson.fromJson(new InputStreamReader(request.getInputStream(), "UTF-8"), Orders.class);
-			System.out.println("<json 변환 후 newOrders>\n" + newOrders);
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(new InputStreamReader(request.getInputStream(), "UTF-8"));
+			
+			int bookNo = element.getAsJsonObject().get("bookNo").getAsInt();
+					
+			Gson gson = new Gson();
+			Orders newOrders = gson.fromJson(element.getAsJsonObject().get("order"), Orders.class);
+			
+			System.out.println("<<JSON 변환 후>>");
+			System.out.println("bookNo=" + bookNo);
+			System.out.println(newOrders);
+
 			
 			int ordersNo = -1;
-			
+			  
 			// 사용자가 html, script를 수정해 접근할 수도 있으므로 DB단에서 한번 더 검증
-			ordersNo = oService.insertOrders(newOrders);
+			ordersNo = oService.insertOrders(newOrders, bookNo);
 			System.out.println("넣었음");
-			
+			  
 			response.setCharacterEncoding("UTF-8");
 			response.setStatus(HttpServletResponse.SC_ACCEPTED);
-			
+				  
 			PrintWriter pw = response.getWriter();
 			pw.print(ordersNo); // db에러 0, 성공적으로 insert 됐으면 nextNo 반환
 			pw.flush();
-			
+			 
 		}
 		
 		return null;

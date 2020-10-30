@@ -12,10 +12,11 @@
  */
 
 /* 목록 뽑는 곳에서 */
+#dataTable td { padding: .35rem; }
 #dataTable td:first-child, td:nth-child(2){text-align: center;}
 #dataTable td:first-child { width: 58px; min-width: 58px; max-width: 58px; }
 #dataTable td:nth-child(2) { width: 100px; min-width: 100px; max-width: 100px; }
-#dataTable td:last-child{padding: 6px; width: 190px; min-width: 190px; max-width: 190px}
+/* #dataTable td:last-child{padding: 6px; width: 190px; min-width: 190px; max-width: 190px} */
 
 
 #addedHairList tr:first-child td:first-child {width: 40px;}
@@ -103,6 +104,16 @@
 .board .qna_title{width:600px;}
 .paging {text-align:center; margin:10px;}
 .onb-buttons {text-align:center;}
+
+/*addform*/
+#add-wrapper {width:100%}
+.add-table {width:600px; margin:0 auto;}
+.add-table tr td input {width:250px;}
+.add-table tr {border-bottom:1px solid #e9e9e9;}
+.add-table td {padding:20px;}
+.add-table input {width:250px;}
+.add-buttons {}
+.info-buttons {text-align:center; margin:10px;}
 
 /*common*/
 .tcenter {text-align:center;}

@@ -76,3 +76,8 @@ function go_order(){
 	location.href="bookingToOrder.do?no=${no}"
 }
 
+function event_add(){
+	alert('이벤트등록');
+	document.formm.action = "eventAdd.do";
+    document.formm.submit();
+}

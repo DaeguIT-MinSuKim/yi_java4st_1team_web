@@ -267,19 +267,20 @@ public class BookingDaoImpl implements BookingDao {
 	}
 	
 	@Override
-	public ArrayList<TimeTable> getTimeTables(String wantDate) {
-		String sql = "SELECT TIMES, nvl(used, 0) AS USED " + 
+	public ArrayList<TimeTable> getTimeTables(String wantDate, int deNo) {
+		String sql = "SELECT times, nvl(used, 0) AS USED " + 
 				"FROM (SELECT TO_CHAR(TO_DATE('08:30', 'hh24:mi') + LEVEL/24/2, 'hh24:mi') AS times " + 
 				"	FROM DUAL CONNECT BY LEVEL <= 20) " + 
 				"LEFT OUTER JOIN " + 
 				"	(SELECT TO_CHAR(BOOK_TIME, 'hh24:mi') AS times, 1 AS used " + 
-				"	FROM BOOKING WHERE TO_char(book_time, 'YYYY-MM-DD') = ?) " + 
+				"	FROM BOOKING WHERE TO_char(book_time, 'YYYY-MM-DD') = ? AND DE_NO = ?) " + 
 				"USING (TIMES) ORDER BY TIMES";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			
 			pstmt.setString(1, wantDate);
+			pstmt.setInt(2, deNo);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
 					ArrayList<TimeTable> list = new ArrayList<>();
@@ -297,13 +298,14 @@ public class BookingDaoImpl implements BookingDao {
 	}
 	
 	@Override
-	public int isAvailableTime(String wantDateTime) {
-		String sql = "SELECT 1 AS used FROM BOOKING WHERE TO_char(BOOK_TIME, 'YYYY-MM-DD hh24:mi') = ?";
+	public int isAvailableTime(String wantDateTime, int deNo) {
+		String sql = "SELECT 1 AS used FROM BOOKING WHERE TO_char(BOOK_TIME, 'YYYY-MM-DD hh24:mi') = ? AND DE_NO = ?";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			
 			pstmt.setString(1, wantDateTime);
+			pstmt.setInt(2, deNo);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
 					return rs.getInt(1); // 이미 사용중이면 1 반환
@@ -678,6 +680,81 @@ public class BookingDaoImpl implements BookingDao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+		return null;
+	}
+	
+	
+	@Override
+	public int countBookingByConditionForPaging(Paging paging, String condition, String keyword) {
+		String sql = "SELECT COUNT(*) FROM booking";
+		
+		if(condition != null) {
+			if(condition.equals("guestId")) {
+				condition = "guest_id";
+			} else if (condition.equals("guestName")) {
+				condition = "guest_name";
+			} else if (condition.equals("guestPhone")) {
+				condition = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
+			}
+			sql += "_guest_view WHERE " + condition + " LIKE '%" + keyword + "%'";
+		}
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return 0;
+	}
+	
+	
+	@Override
+	public ArrayList<Booking> selectBookingByCondition(Paging paging, String condition, String keyword) {
+		
+		String sql = null;
+		
+		if(condition != null) {
+			if(condition.equals("guestId")) {
+				condition = "guest_id";
+			} else if (condition.equals("guestName")) {
+				condition = "guest_name";
+			} else if (condition.equals("guestPhone")) {
+				condition = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
+			}
+			
+			sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_guest_view WHERE "
+					+ condition + " LIKE '%" + keyword + "%' ORDER BY book_no desc) a) "
+					+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		}
+		
+		if(condition == null || keyword == null) {
+			sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		}
+		
+		System.out.println("완성된 sql + " + sql);
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					ArrayList<Booking> list = new ArrayList<>();
+					System.out.println("여기서?");
+					do {
+						list.add(getBooking(rs));
+					}while(rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
 		return null;
 	}
 	

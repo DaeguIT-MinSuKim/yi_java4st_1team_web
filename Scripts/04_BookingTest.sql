@@ -9,7 +9,6 @@
  */
 
 
-
 SELECT max(book_no) FROM booking;
 
 SELECT * FROM BOOKING WHERE BOOK_NO = 60 AND GUEST_ID = 'test';
@@ -24,6 +23,7 @@ SELECT * FROM TIME_TABLE;
 /*SELECT TO_CHAR(TO_DATE('08:30', 'hh24:mi') + LEVEL/24/2, 'hh24:mi') AS times,
 	case((SELECT TO_CHAR(BOOK_TIME, 'hh24:mi') AS booked_time FROM BOOKING) WHEN TIMES = BOOKED_TIME) FROM DUAL
 CONNECT BY LEVEL <= 20;*/
+SELECT * FROM booking;
 
 -- 예약 가능한 시간 테이블 조회(0: 예약가능, 1: 예약됨)
 SELECT times, nvl(used, 0) AS USED
@@ -31,10 +31,18 @@ FROM (SELECT TO_CHAR(TO_DATE('08:30', 'hh24:mi') + LEVEL/24/2, 'hh24:mi') AS tim
 	FROM DUAL CONNECT BY LEVEL <= 20) 
 LEFT OUTER JOIN
 	(SELECT TO_CHAR(BOOK_TIME, 'hh24:mi') AS times, 1 AS used
-	FROM BOOKING WHERE TO_char(book_time, 'YYYY-MM-DD') = '2020-10-15')
+	FROM BOOKING WHERE TO_char(book_time, 'YYYY-MM-DD') = '2020-10-31' AND DE_NO = 5)
 USING (TIMES) ORDER BY TIMES;
 
+SELECT times, nvl(used, 0) AS USED
+				FROM (SELECT TO_CHAR(TO_DATE('08:30', 'hh24:mi') + LEVEL/24/2, 'hh24:mi') AS times
+				FROM DUAL CONNECT BY LEVEL <= 20)
+				LEFT OUTER JOIN
+					(SELECT TO_CHAR(BOOK_TIME, 'hh24:mi') AS times, 1 AS used
+					FROM BOOKING WHERE TO_char(book_time, 'YYYY-MM-DD') = '?' AND DE_NO = ?)
+				USING (TIMES) ORDER BY TIMES
 
+	
 SELECT times, nvl2((SELECT TO_CHAR(BOOK_TIME, 'hh24:mi') FROM BOOKING WHERE TO_char(book_time, 'YYYY-MM-DD') = '2020-10-14'), 1, 0) AS used
 FROM (SELECT TO_CHAR(TO_DATE('08:30', 'hh24:mi') + LEVEL/24/2, 'hh24:mi') AS times
 	FROM DUAL CONNECT BY LEVEL <= 20);
@@ -64,9 +72,30 @@ SELECT BOOK_NO, GUEST_ID, BOOK_TIME, h.HAIR_NO, h.hair_quantity, DE_NO, BOOK_REG
 FROM booking b LEFT OUTER JOIN booking_hairs h USING(book_no)
 ORDER BY book_no, hair_no;
 
+-- 시간별
+-- 디자이너별
+-- 예약상태별
 
-SELECT 1 FROM BOOKING WHERE BOOK_NO = 3 AND GUEST_ID = 'test';
-SELECT * FROM BOOKING_HAIRS bh ;
-SELECT * FROM hair;
+-- 고객이름
+-- 고객아이디
+-- 연락처
+UPDATE BOOKING 
+SET de_no = 2 WHERE de_no = 5;
 
-SELECT * FROM HAIR_KIND ORDER BY KIND_NO;
+
+CREATE OR REPLACE VIEW booking_guest_view
+AS
+SELECT b.*, guest_name, guest_phone FROM booking b LEFT OUTER JOIN guest g ON(b.GUEST_ID = g.GUEST_ID);
+
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking WHERE guest_id LIKE '%test%' ORDER BY book_no desc) a);
+
+SELECT * FROM booking;
+SELECT rownum RN, a.* FROM (SELECT * FROM booking_guest_view WHERE de_no = 2 ORDER BY book_no desc) a WHERE rownum  <= 2;
+
+
+SELECT * FROM (SELECT rownum, b.* FROM booking_guest_view b WHERE de_no = 2 ORDER BY book_no asc);
+
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking ORDER BY book_no desc) a) WHERE rn BETWEEN 1 AND 1 ORDER BY rn
+
+SELECT * FROM booking;
+SELECT * FROM USER_SEQUENCES ;

@@ -4,11 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
-
-<style>
-
-</style>
-
 <script>
 $(document).on("keyup", ".phone", function() { 
 	$(this).val( $(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/,"$1-$2-$3").replace("--", "-") ); });
@@ -50,19 +45,7 @@ $('#pwdCheck').keyup(function(){
 
 
 </script>
-<style>
-#add-wrapper {width:600px; }
-.add-table {width:600px; margin:0 auto;}
-.add-table tr td input {width:250px;}
-.add-table tr {border-bottom:1px solid #e9e9e9;}
-.add-table td {padding:20px;}
-.add-table input {width:250px;}
-.add-buttons {}
-input {}
 
-
-.info-buttons {text-align:center; margin:10px;}
-</style>
 <body>
 
 <!-- Page Heading -->
