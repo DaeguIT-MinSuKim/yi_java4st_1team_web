@@ -144,7 +144,6 @@ public class AdminNoticeListHandler implements Command {
 			}
 			//내용으로 검색
 			else if(opt.equals(1)) {
-				list
 			}
 			
 			
