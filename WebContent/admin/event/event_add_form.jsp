@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <script>
+//오늘날짜 셋
 $(document).ready( function() {
     var now = new Date();
     var month = (now.getMonth() + 1);               
@@ -18,15 +19,41 @@ $(document).ready( function() {
     $('#end').val(today);
 });
 
+//오늘날짜 전 선택불가 넣기
+
+
+
+//이미지 미리보기
+	$(function() {
+		$("#file").on('change', function() {
+			readURL(this);
+		});
+	});
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				$('#img').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	
+	
+function event_add(){
+		alert('이벤트가 등록되었습니다.');
+		document.formm.action = "eventAdd.do";
+	    document.formm.submit();
+}	
 
 </script>
 
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800 font-weight">이벤트 관리 - 이벤트 등록</h1>
 <p class="mb-4">
-	<a target="_blank" href="https://datatables.net"></a>
 </p>
-<form method="post" name="formm" enctype="multipart/form-data">
+<form method="post" name="formm" enctype="Multipart/form-data">
 <!-- DataTales Example -->
 <div class="card shadow mb-4" style="width:700px">
 	<div class="card-header py-2">
@@ -54,7 +81,7 @@ $(document).ready( function() {
 				</tr>
 				
 				<tr>
-					<td>할인율</td>
+					<td>할인율(%)</td>
 					<td><input type="text" name="saleRate"/></td>
 				</tr>
 				
@@ -65,14 +92,17 @@ $(document).ready( function() {
 				
 				<tr>
 					<td>이벤트 종료일</td>
-					<td> <input type='date' name="end" id="end"/></td>
+					<td> <input type='date' name="end" id="end"/>
+						<p style="padding-top:10px;">※ 선택한 날짜의 23시 59분 59초까지 적용</p>
+					</td>
 				
 				</tr>
-				
 				<tr>
 					<td>파일 선택</td>
-					<td><input type='file' name="file"/></td>
-					<td></td>
+					<td><input type='file' name="file" id="file"/></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align:center"><img id="img" src="/images/imready.png" alt="" width=30%/></td>
 				</tr>
 				
 			</table>
@@ -80,7 +110,7 @@ $(document).ready( function() {
 			<div class="clear"></div>
 			<br>
 			<div class="add-buttons" style="float:right">
-				<input type="submit" value="등록" class="btn btn-primary btn-sm">
+				<input type="button" value="등록" onclick="event_add()" class="btn btn-primary btn-sm">
 				<input type="reset" value="취소" class="btn btn-light btn-sm">
 				
 			</div>		

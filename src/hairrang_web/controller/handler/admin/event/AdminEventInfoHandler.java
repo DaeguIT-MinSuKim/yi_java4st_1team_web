@@ -1,6 +1,5 @@
 package hairrang_web.controller.handler.admin.event;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -17,20 +16,30 @@ import hairrang_web.controller.Command;
 import hairrang_web.dto.Event;
 import hairrang_web.service.EventService;
 
-public class AdminEventAddHandler implements Command {
+public class AdminEventInfoHandler implements Command {
 	private EventService service = new EventService();
-
+	
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("get");
-			return "event/event_add_form.jsp";
+			String no = request.getParameter("no");
+			Event e = service.selectEventByNo(new Event(Integer.parseInt(no)));
+			System.out.println(e);
+			
+			request.setAttribute("event", e);
+			request.setAttribute("no", no);
+			
+			return "event/event_info_form.jsp";
+			
 		} else {
 			System.out.println("post");
+			
 			HttpSession session = request.getSession();
-
+			
+			String no = request.getParameter("no");
+			System.out.println("no => " + no);
 			
 			//파일업로드
 			int sizeLimit = 5 * 1024 * 1024;
@@ -45,8 +54,7 @@ public class AdminEventAddHandler implements Command {
 					new DefaultFileRenamePolicy() // 5. 덮어쓰기를 방지 위한 부분
 			); // 이 시점을 기해 파일은 이미 저장이 되었다
 			
-			
-			
+			no = multi.getParameter("no");
 			String name = multi.getParameter("name");
 			String content = multi.getParameter("content");
 			String saleRate = multi.getParameter("saleRate");
@@ -55,14 +63,26 @@ public class AdminEventAddHandler implements Command {
 			String file = multi.getFilesystemName("file");
 		
 			String fileRename = "admin/event/images/" + file; 
-			Event e = new Event(name, Double.parseDouble(saleRate)/100, start, end, fileRename, content, null);
-			int res = service.insertEvent(e);
+			
+			
+			Event e = service.selectEventByNo(new Event(Integer.parseInt(no)));
+			System.out.println("수정할정보:" + e);
+			System.out.println("변경전" + e);
+			e.setEventName(name);
+			e.setEventContent(content);
+			e.setEventSaleRate(Double.parseDouble(saleRate)/100);
+			e.setEventStart(start);
+			e.setEventEnd(end);
+			e.setEventPic(fileRename);
+			int res = service.updateEvent(e);
+			
 			System.out.println(res);
+			System.out.println("변경후" + e);
 			
 			response.sendRedirect("eventList.do");
+			
 		}
 		return null;
-
+		
 	}
-
 }

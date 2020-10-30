@@ -11,8 +11,6 @@ public interface EventDao {
 	
 	Event selectEventByNo(Event event);
 	
-	int insertEvent(Event event);
-	
 	int updateEvent(Event event);
 	
 	int deleteEvent(Event event);
@@ -26,4 +24,9 @@ public interface EventDao {
 	int countEvent();
 	ArrayList<Event> PagingEventAll(Paging paging);
 	
+	//
+	int selectMaxEventNo();
+	
 }
+
+

@@ -34,7 +34,7 @@
 		<div class="table-responsive">
 			<!-- bootStrap table wrapper-->
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-			※ 생일쿠폰은 생일 10일전 자동 발급<br>
+			※ 생일쿠폰은 생일 10일전 자동 발급<br>이벤트 등록시 오늘포함해서 바로 시작할지 무조건 내일부터 시작하는걸로 할지
 
 				<!-- 테이블 상단 필터링 시작 -->
 				<div class="row mb-2">
@@ -49,6 +49,7 @@
 					<thead>
 						<tr>
 							<th style="width:10px;"></th>
+							<th>이벤트번호</th>
 							<th>이벤트명</th>
 							<th>할인율</th>
 							<th>시작일</th>
@@ -63,7 +64,9 @@
 						<tr>
 						<%--<td><input type="checkbox" name="check" value="${guest.guestId}"></td> --%>
 							<td style="width:20px;"> ${total - ((paging.nowPage-1) * cnt + status.index)}</td>
-							<td style="width:100px;">${event.eventName}</td>
+							<td>${event.eventNo}</td>
+							<td style="width:100px;">${event.eventName}
+							</td>
 							<td style="width:40px;"> <fmt:parseNumber value="${event.eventSaleRate * 100}" integerOnly="true"/>%</td>
 							<td style="width:50px;">${event.eventStart}</td>
 							<td style="width:50px;">${event.eventEnd}</td>
@@ -79,12 +82,13 @@
 									<div class="btn-warning btn-sm" style="width:80px; margin:0 auto">대기중</div>
 								</c:if>
 							</td>
-
+				
 							<td  style="width:100px;">
-								<input type="button" name="update" value="수정" class="btn btn-primary btn-sm" onclick="location.href='guestInfo.do?id=${guest.guestId}'">
+								<input type="button" name="update" value="수정" class="btn btn-primary btn-sm" onclick="location.href='eventInfo.do?no=${event.eventNo}'">
 								<input type="button" value="삭제" id="btn_delete" guestId="${guest.guestId}" class="btn btn-danger btn-sm">
 							</td>
 						</tr>
+						
 						</c:forEach>
 					</tbody>
 				</table>
@@ -99,7 +103,7 @@
 						<!-- << -->
 						<c:if test="${paging.startPage != 1}">
 							<div class="paging-line">
-							<a href="guestList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
+							<a href="eventList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
 								<i class="fas fa-angle-double-left"></i>
 							</a>
 							</div>
@@ -115,7 +119,7 @@
 						<c:choose>
 							<c:when test="${paging.nowPage != 1}">
 								<div class="paging-line">
-									<a href="guestList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
+									<a href="eventList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == 1}">
@@ -136,7 +140,7 @@
 								</c:when>
 								<c:when test="${p != paging.nowPage }">
 									<div class="paging-line">
-									<a href="guestList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+									<a href="eventList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
 									${p}</a></div>
 								</c:when>
 							</c:choose>
@@ -148,7 +152,7 @@
 						<c:choose>
 							<c:when test="${paging.nowPage != paging.lastPage}">
 								<div class="paging-line">
-									<a href="guestList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
+									<a href="eventList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == paging.lastPage}">
@@ -164,7 +168,7 @@
 					
 						<c:if test="${paging.endPage != paging.lastPage }">
 							<div class="paging-line">
-							<a href="guestList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
+							<a href="eventList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
 							<i class="fas fa-angle-double-right"></i></a>
 							</div>
 						</c:if>

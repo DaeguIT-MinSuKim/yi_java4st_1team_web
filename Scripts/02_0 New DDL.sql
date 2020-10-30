@@ -215,7 +215,7 @@ ADD CONSTRAINT PK_QNA PRIMARY KEY (qna_no);
 
 /* 보유쿠폰 */
 CREATE TABLE COUPON (
-	coupon_id VARCHAR2(2) NOT NULL, /* 쿠폰 아이디 */
+	coupon_id NUMBER(10) NOT NULL, /* 쿠폰 아이디 */
 	guest_id VARCHAR2(20) NOT NULL, /* 고객아이디 */
 	event_no NUMBER(10) NOT NULL, /* 이벤트번호 */
 	event_start DATE, /* 시작일 */

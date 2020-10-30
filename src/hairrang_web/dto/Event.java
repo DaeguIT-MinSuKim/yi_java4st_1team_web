@@ -20,6 +20,19 @@ public class Event {
 		this.eventNo = eventNo;
 	}
 	
+	
+	
+	public Event(String eventName, double eventSaleRate, LocalDate eventStart, LocalDate eventEnd, String eventPic,
+			String eventContent) {
+		super();
+		this.eventName = eventName;
+		this.eventSaleRate = eventSaleRate;
+		this.eventStart = eventStart;
+		this.eventEnd = eventEnd;
+		this.eventPic = eventPic;
+		this.eventContent = eventContent;
+	}
+
 	public Event(String eventName, double eventSaleRate, LocalDate eventStart, LocalDate eventEnd, String eventPic,
 			String eventContent, String eventStatus) {
 		this.eventName = eventName;

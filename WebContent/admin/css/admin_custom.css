@@ -106,7 +106,7 @@
 .onb-buttons {text-align:center;}
 
 /*addform*/
-#add-wrapper {width:600px; }
+#add-wrapper {width:100%}
 .add-table {width:600px; margin:0 auto;}
 .add-table tr td input {width:250px;}
 .add-table tr {border-bottom:1px solid #e9e9e9;}
