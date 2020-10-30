@@ -188,6 +188,7 @@ INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC,
 VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-10-29', 'YYYY-MM-DD'), to_date('2020-11-14', 'YYYY-MM-DD') + - 1 / (24*60*60) + 1 , NULL, '오픈 기념 10% 할인 행사');
 
 SELECT c.*, TO_DATE(TO_CHAR(sysdate+12, 'YYYY-MM-DD'), 'YYYY-MM-DD') FROM coupon c WHERE guest_id = 'test' AND USED_YN = 'n' AND SYSDATE+11 BETWEEN EVENT_START AND EVENT_END;
+<<<<<<< HEAD
 
 
 ------------------------
@@ -237,3 +238,44 @@ INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
 SELECT guest_id, 4/*쿠폰번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
 FROM (SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g) gb
 WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
+=======
+
+
+--
+INSERT INTO coupon(COUPON_ID, guest_id, event_no, event_start, event_end, used_yn)
+SELECT 18, 'test', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 7;
+--
+
+
+------------------------------------------------------------------------------------------------------------------
+
+-- 찐!! 가짜 조인을 이용해 쿠폰 삽입
+INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
+SELECT guest_id, EVENT_NO, EVENT_START, EVENT_END
+FROM
+(SELECT g.*, 1 AS fake FROM guest g) g JOIN (SELECT e.*, 1 AS fake FROM EVENT e WHERE event_no = 5) USING (FAKE);
+
+INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END);
+SELECT guest_id, EVENT_NO, EVENT_START, EVENT_END
+FROM
+(SELECT g.*, TO_CHAR(guest_birthday) AS guest_bd, 1 AS fake FROM guest g WHERE TO_CHAR(sysdate, 'YYYY-MM-DD') BETWEEN GUEST_BIRTHDAY - 10 AND GUEST_BIRTHDAY + 10) LEFT OUTER JOIN (SELECT e.*, 1 AS fake FROM EVENT e WHERE event_no = 1) USING (FAKE);
+
+-- 찐!! 가짜조인을 이용한 생일 쿠폰 삽입!!!
+INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
+SELECT guest_id, 1, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
+FROM (
+SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
+) gb
+WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
+
+/*
+생일 쿠폰 삽입 결과 확인용(조건 만족하는 사람 구하기)
+
+SELECT gb.*, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
+FROM (
+SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
+) gb
+WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
+ */
+
+

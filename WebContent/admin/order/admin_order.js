@@ -14,6 +14,15 @@ $(function() {
 	var thisUrl = new URL(thisUrlStr);
 	selectedBookingNo = thisUrl.searchParams.get("no");
 	setBookingData();
+	
+	var guestId = thisUrl.searchParams.get("guestId");
+	if(guestId != null) {
+		$("#guestInput").prop("readonly", true);
+		$("#nonMemberCK").prop("checked", false);
+		$("div[name=bookingDetail]").text("-");	
+		$("#guestInput").val(guestId);
+		loadCouponList(guestId);
+	}
 });
 
 // 2. 고객리스트에서
@@ -165,6 +174,7 @@ function addHair(hairNo, hairName, hairPrice) {
 	$("#totalAmount").text(totalAmountStr);
 	
 	calTotalPrice();
+	loadCouponTargetBox($("#couponTargetBox"));
 }
 
 /* 추가된 시술 삭제 */
@@ -179,6 +189,7 @@ function delHairItem(itemNo) {
 	$("#totalAmount").text(totalAmountStr);
 	
 	calTotalPrice();
+	loadCouponTargetBox($("#couponTargetBox"));
 }
 
 function calTotalPrice() {
@@ -204,7 +215,7 @@ $(document).on("click", "#guestSearchModalConfirm", function(){
 	var guestId = $("#guestSearchTable .table-primary td").eq(1).text();
 	$("#guestInput").prop("readonly", true);
 	$("#nonMemberCK").prop("checked", false);
-	$("div[name=bookingDetail]").text("예약 고객인 경우 검색창을 통해 해당 예약건을 선택해주세요.");	
+	$("div[name=bookingDetail]").text("-");	
 	$("#guestInput").val(guestId);
 	
 	loadCouponList(guestId);
@@ -494,12 +505,21 @@ function changeDiscountAmount(target){
 
 $(document).on("click", "#orderRegBtn", function() {
 	var order = readInputOrder();
-	var info = {
+	if(order == undefined) {
+		return;
+	}
+	
+	var info;
+	if(selectedBookingNo == null) {
+		selectedBookingNo = 0;
+	}
+	
+	info = {
 		bookNo: selectedBookingNo,
 		order: order
 	};
 	
-	alert(JSON.stringify(order));
+	alert(JSON.stringify(info));
 	$.ajax({
 		url: "orderRegister.do",
 		type: "post",
@@ -532,7 +552,21 @@ function readInputOrder(){
 		guestId = $("#guestInput").val();
 	}
 
+	if(guestId.length == 0) {
+		alert("고객을 선택해주세요.");
+		return;
+	}
+	
 	var deNo = $("#designerSelector").val();
+	if(deNo.length == 0) {
+		alert("디자이너를 선택해주세요.");
+		return;
+	}
+	
+	if($("#addedHairList tr").length == 0) {
+		alert("시술을 선택해주세요.");
+		return;
+	}
 	
 	// 상세주문 리스트
 	var odList = new Array();
@@ -551,6 +585,8 @@ function readInputOrder(){
 		
 		odList.push(od);
 	})
+	
+	
 	
 	var order = {
 			guest: { guestId: guestId },

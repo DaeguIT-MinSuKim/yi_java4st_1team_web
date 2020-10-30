@@ -44,6 +44,196 @@ public class QnADaoImpl implements QnADao {
 		return null;
 	}
 
+	//총 글 갯수
+	@Override
+	public int countQnA() {
+		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE DEL_YN = 'n' and ADMIN_ID is null or NOTICE_YN ='y'";
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt("count");
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
+
+	//총 글 페이징
+	@Override
+	public List<QnA> selectPagingQnA(Paging paging) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE DEL_YN ='n' and ADMIN_ID IS NULL or NOTICE_YN ='y'  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					List<QnA> list = new ArrayList<QnA>();
+					do {
+						list.add(getQnA(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
+	//답변한 문의 갯수
+	@Override
+	public int countResYQnA() {
+		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE RES_YN = 'y'";
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt("count");
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
+
+	//답변한 문의 페이징
+	@Override
+	public List<QnA> selectPagingResYQnA(Paging paging) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE RES_YN = 'y' AND NOTICE_YN ='n'  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					List<QnA> list = new ArrayList<QnA>();
+					do {
+						list.add(getQnA(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
+	//미답변 문의 갯수
+	@Override
+	public int countResNQnA() {
+		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE RES_YN = 'n' AND ADMIN_ID IS NULL OR NOTICE_YN ='n'";
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt("count");
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
+
+	//미답변 문의 페이징
+	@Override
+	public List<QnA> selectPagingResNQnA(Paging paging) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE RES_YN = 'n' AND NOTICE_YN ='n'  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					List<QnA> list = new ArrayList<QnA>();
+					do {
+						list.add(getQnA(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
+	//삭제된 문의 갯수
+	@Override
+	public int countDelYQnA() {
+		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE DEL_YN = 'y' AND ADMIN_ID IS NULL AND NOTICE_YN ='n'";
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt("count");
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
+
+	//삭제된 문의 페이징
+	@Override
+	public List<QnA> selectPagingDelYQnA(Paging paging) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE DEL_YN = 'y' AND NOTICE_YN ='n'  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					List<QnA> list = new ArrayList<QnA>();
+					do {
+						list.add(getQnA(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
+	//삭제된 문의공지 갯수
+	@Override
+	public int countDelYQnANotice() {
+		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE DEL_YN = 'y'AND NOTICE_YN ='y'";
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt("count");
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
+
+	//삭제된 문의공지 페이징
+	@Override
+	public List<QnA> selectPagingDelYQnANotice(Paging paging) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE DEL_YN = 'y' AND NOTICE_YN ='y'  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					List<QnA> list = new ArrayList<QnA>();
+					do {
+						list.add(getQnA(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
 	private QnA getQnA(ResultSet rs) throws SQLException {
 		//SELECT QNA_NO,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_REGDATE,RES_YN FROM QNA WHERE GUEST_ID = ? ORDER BY QNA_NO DESC";
 
@@ -214,43 +404,6 @@ public class QnADaoImpl implements QnADao {
 	}
 
 	@Override
-	public int countQnA() {
-		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE DEL_YN = 'n' and ADMIN_ID is null or NOTICE_YN ='y'";
-		try (Connection con = JndiDs.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery()) {
-			if (rs.next()) {
-				return rs.getInt("count");
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		return 0;
-	}
-
-	@Override
-	public List<QnA> selectPagingQnA(Paging paging) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE DEL_YN ='n' and ADMIN_ID IS NULL or NOTICE_YN ='y'  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
-		try(Connection con = JndiDs.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setInt(1, paging.getStart());
-			pstmt.setInt(2, paging.getEnd());
-			try(ResultSet rs = pstmt.executeQuery()){
-				if(rs.next()) {
-					List<QnA> list = new ArrayList<QnA>();
-					do {
-						list.add(getQnA(rs));
-					} while (rs.next());
-					return list;
-				}
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		return null;
-	}
-
-	@Override
 	public QnA selectResByNo(QnA qna) {
 		String sql = "SELECT * FROM qna WHERE QNA_REFNO = ?";
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -267,8 +420,6 @@ public class QnADaoImpl implements QnADao {
 		}
 		return null;
 	}
-
-	//////////////////////////////////////페이징/////////////////////////////////////////////////
 
 	@Override
 	public int countQnaById(String id) {
@@ -334,6 +485,17 @@ public class QnADaoImpl implements QnADao {
 			pstmt.setString(2, qna.getQnaContent());
 			pstmt.setString(3, qna.getQnaFile());
 			pstmt.setInt(4, qna.getQnaNo());
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public int updateRestoreQna(String no) {
+		String sql = "UPDATE QNA  set DEL_YN = 'n'  WHERE QNA_NO = ?";
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, no);
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);

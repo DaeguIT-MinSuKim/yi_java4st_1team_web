@@ -16,8 +16,16 @@ public class NoticeService {
 		return dao.countNoitce();
 	}
 	
+	public int countDelNotice() {
+		return dao.countDelNotice();
+	}
+	
 	public List<Notice> selectPagingNotice(Paging paging){
 		return dao.selectPagingNotice(paging);
+	}
+	
+	public List<Notice> selectPagingDelNotice(Paging paging){
+		return dao.selectPagingDelNotice(paging);
 	}
 	
 	public Notice selectNoticeByNo(int noticeNo){
@@ -47,4 +55,19 @@ public class NoticeService {
 	public int updateNotice(Notice notice) {
 		return dao.updateNotice(notice);
 	}
+	
+	public int RestoreNotice(String no) {
+		return dao.RestoreNotice(no);
+	}
+	
+	//공지 찾기 갯수
+	public int countPagingNoticeSearch(Paging paging, String condition, String keyword,String stay) {
+		return dao.countPagingNoticeSearch(paging, condition, keyword, stay);
+	}
+	
+	//공지 찾기 페이징
+	public List<Notice> selectPagingNoticeSearch(Paging paging, String condition, String keyword,String stay){
+		return dao.selectPagingNoticeSearch(paging, condition, keyword, stay);
+	}
+	
 }

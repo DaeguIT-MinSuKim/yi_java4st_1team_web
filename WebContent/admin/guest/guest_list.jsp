@@ -181,7 +181,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 							<td style="width:60px;">${guest.delYn}</td>
 							<%-- <td style="width:80px;">${guest.infoYn}</td> --%>
 							<td style="width:100px;">
-								<a href="#" class="btn bg-warning btn-sm bookingToOrderButton"><span class="text-gray-800">주문</span></a>
+								<a href="orderForm.do?guestId=${guest.guestId }" class="btn bg-warning btn-sm bookingToOrderButton"><span class="text-gray-800">주문</span></a>
 							</td>
 							<td  style="width:150px;">
 								<input type="button" name="booking" value="예약내역" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestBookingInfo.do?id=${guest.guestId}'">

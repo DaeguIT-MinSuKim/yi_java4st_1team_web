@@ -30,7 +30,7 @@ public class OrdersDaoImpl implements OrdersDao {
 
 	@Override
 	public ArrayList<Orders> selectOrdersAll() {
-		String sql = "SELECT * FROM ORDERS ORDER BY ORDERS_NO";
+		String sql = "SELECT * FROM ORDERS ORDER BY ORDERS_NO DESC";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
@@ -60,15 +60,13 @@ public class OrdersDaoImpl implements OrdersDao {
 		ArrayList<OrderDetail> odList = selectOrderDetailsByOrdersNo(ordersNo);
 		
 		order = new Orders(ordersNo, guest, designer, ordersTotalPrice, ordersDate, odList);
-		System.out.println("getOrders 안");
-		System.out.println(order);
 		
 		return order;
 	}
 
 	@Override
 	public ArrayList<Orders> selectOrdersByGuest(Guest guest) {
-		String sql = "SELECT * FROM ORDERS BY GUEST_ID = ?";
+		String sql = "SELECT * FROM ORDERS BY GUEST_ID = ? ORDER BY ORDERS_NO DESC";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -108,7 +106,7 @@ public class OrdersDaoImpl implements OrdersDao {
 	// 단독으로 쓰일 일은 없고, select .. from orders 할 때 odList를 얻어올 때 쓰임.
 	@Override
 	public ArrayList<OrderDetail> selectOrderDetailsByOrdersNo(int ordersNo) {
-		String sql = "SELECT * FROM ORDER_DETAIL WHERE ORDERS_NO = ? ORDER BY ORDERS_NO, COUPON_ID, OD_NO";
+		String sql = "SELECT * FROM ORDER_DETAIL WHERE ORDERS_NO = ? ORDER BY COUPON_ID, OD_NO";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {

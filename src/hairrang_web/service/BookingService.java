@@ -183,4 +183,13 @@ public class BookingService {
     public ArrayList<Booking> getTodayBookingList() {
     	return dao.selectBookingAllToday();
     }
+    
+    
+    public ArrayList<Booking> getBookingListByCondition(Paging paging, String condition, String keyword) {
+    	return dao.selectBookingByCondition(paging, condition, keyword);
+    }
+    
+    public int getTotalCountByCondition(Paging paging, String condition, String keyword) {
+    	return dao.countBookingByConditionForPaging(paging, condition, keyword);
+	}
 }

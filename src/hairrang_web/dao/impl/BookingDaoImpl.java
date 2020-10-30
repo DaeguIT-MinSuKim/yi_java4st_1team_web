@@ -683,4 +683,79 @@ public class BookingDaoImpl implements BookingDao {
 		return null;
 	}
 	
+	
+	@Override
+	public int countBookingByConditionForPaging(Paging paging, String condition, String keyword) {
+		String sql = "SELECT COUNT(*) FROM booking";
+		
+		if(condition != null) {
+			if(condition.equals("guestId")) {
+				condition = "guest_id";
+			} else if (condition.equals("guestName")) {
+				condition = "guest_name";
+			} else if (condition.equals("guestPhone")) {
+				condition = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
+			}
+			sql += "_guest_view WHERE " + condition + " LIKE '%" + keyword + "%'";
+		}
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return 0;
+	}
+	
+	
+	@Override
+	public ArrayList<Booking> selectBookingByCondition(Paging paging, String condition, String keyword) {
+		
+		String sql = null;
+		
+		if(condition != null) {
+			if(condition.equals("guestId")) {
+				condition = "guest_id";
+			} else if (condition.equals("guestName")) {
+				condition = "guest_name";
+			} else if (condition.equals("guestPhone")) {
+				condition = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
+			}
+			
+			sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_guest_view WHERE "
+					+ condition + " LIKE '%" + keyword + "%' ORDER BY book_no desc) a) "
+					+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		}
+		
+		if(condition == null || keyword == null) {
+			sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		}
+		
+		System.out.println("완성된 sql + " + sql);
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					ArrayList<Booking> list = new ArrayList<>();
+					System.out.println("여기서?");
+					do {
+						list.add(getBooking(rs));
+					}while(rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return null;
+	}
+	
 }

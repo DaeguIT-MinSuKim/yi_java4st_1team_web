@@ -58,6 +58,11 @@ public class AdminOrderRegisterFormHandler implements Command {
 				request.setAttribute("booking", booking);
 			}
 			
+			if(request.getParameter("guestId") != null) {
+				String guestId = request.getParameter("guestId");
+				request.setAttribute("guestId", guestId);
+			}
+			
 			ArrayList<Designer> deList = dService.getDesignerList();
 			ArrayList<HairKind> hairKindList = hService.getHairListAll();
 			ArrayList<Booking> todayBookingList = bService.getTodayBookingList();

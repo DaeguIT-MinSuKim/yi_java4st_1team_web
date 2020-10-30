@@ -37,9 +37,9 @@ $(function() {
             </div>
             <div class="float-right">
 				<a href="orderForm.do" id="addNew" class="btn btn-success btn-sm" style="float: right;"><span class="text">등록</span></a>
-	            <a href="#" id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;"><span class="text">선택삭제</span></a>
-				<a href="#" id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">전체선택</span></a>
-				<a href="#" id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">선택해제</span></a>
+	           	<button id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;">선택삭제</button>
+				<button id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">전체선택</button>
+				<button id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;">선택해제</button>
             </div>			
 		</h6>
 	</div>
@@ -78,15 +78,14 @@ $(function() {
 				<!-- 테이블 상단 필터링 끝 -->
 
 				<!-- 테이블 시작 -->
-				<table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+				<table class="table table-bordered table-hover text-center" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
 							<th>선택</th>
 							<th>주문번호</th>
 							<th>주문일시</th>
-							<th>고객아이디</th>
 							<th>고객명</th>
-							<th>디자이너</th>
+							<th>담당 디자이너</th>
 							<th>시술</th>
 							<th>쿠폰사용</th>
 							<th>할인액</th>
@@ -100,8 +99,7 @@ $(function() {
 							<td><input type="checkbox" no="${order.ordersNo }"></td>
 							<td>${order.ordersNo }</td>
 							<td>${order.ordersDateStr }</td>
-							<td>${order.guest.guestId }</td>
-							<td>${order.guest.guestName }</td>
+							<td>${order.guest.guestName } (${order.guest.guestId })</td>
 							<td>${order.designer.deName }</td>
 							<td>${order.howManyItems }</td>
 							<td>${order.usedCoupon}</td>

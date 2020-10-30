@@ -134,7 +134,8 @@ CREATE TABLE ORDERS (
 	orders_no NUMBER(10) NOT NULL, /* 주문번호 */
 	orders_date DATE DEFAULT SYSDATE, /* 주문일자 */
 	de_no NUMBER(10), /* 디자이너번호 */
-	guest_id VARCHAR2(20) /* 고객아이디 */
+	guest_id VARCHAR2(20), /* 고객아이디 */
+	orders_total_price number(7)
 );
 
 ALTER TABLE ORDERS
@@ -147,11 +148,17 @@ CREATE TABLE ORDER_DETAIL (
 	od_no NUMBER(10) NOT NULL, /* 주문상세번호 */
 	event_no NUMBER(10), /* 이벤트번호 */
 	hair_no NUMBER(10), /* 헤어번호 */
-	order_no NUMBER(10) /* 주문번호 */
+	order_no NUMBER(10), /* 주문번호 */
+	od_price number(6),
+	od_quantity number(2),
+	od_discount number(6)
 );
 
+
+/*
 ALTER TABLE ORDER_DETAIL
 ADD CONSTRAINT PK_ORDER_DETAIL PRIMARY KEY (od_no);
+*/
 
 
 
@@ -215,7 +222,7 @@ ADD CONSTRAINT PK_QNA PRIMARY KEY (qna_no);
 
 /* 보유쿠폰 */
 CREATE TABLE COUPON (
-	coupon_id NUMBER(10) NOT NULL, /* 쿠폰 아이디 */
+	coupon_id NUMBER NOT NULL, /* 쿠폰 아이디 */
 	guest_id VARCHAR2(20) NOT NULL, /* 고객아이디 */
 	event_no NUMBER(10) NOT NULL, /* 이벤트번호 */
 	event_start DATE, /* 시작일 */
