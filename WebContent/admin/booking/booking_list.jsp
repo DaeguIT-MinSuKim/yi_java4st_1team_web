@@ -47,6 +47,29 @@ $(function() {
 
 	});
 	
+	
+	$("#searchBtn").click(function() {
+		
+		var params = "";
+		var cntPerPage = $("input[name=cntPerPage]").val();
+		var condition = $("select[name=condition]").val();
+		var keyword = $("input[name=keyword]").val();
+		
+		if(cntPerPage != undefined) {
+			params += "?cntPerPage" + cntPerPage;
+		}
+		
+		if(condition != null && condition.length != 0 && keyword != null && keyword.length) {
+			if(params.length == 0) {
+				params += "?";
+			} else if(params.length == 1) {
+				params += "&";
+			} 
+			params += "condition=" + condition + "&keyword=" + keyword;
+		}
+		
+		location.href="bookingList.do" + params;
+	});
 });
 </script>
 <!-- Page Heading -->
@@ -90,7 +113,7 @@ $(function() {
 					<div class="col-sm-12 col-md-6">
 						<div class="dataTables_length" id="dataTable_length">
 							<label>
-								<select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
+								<select name="cntPerPage" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
 									<option value="10">10줄 보기</option>
 									<option value="25">25줄 보기</option>
 									<option value="50">50줄 보기</option>
@@ -101,13 +124,16 @@ $(function() {
 					</div>
 					<div class="col-sm-12 col-md-6">
 						<div id="dataTable_filter" class="dataTables_filter ">
-							<select class="custom-select custom-select-sm" name="searchCriteria" style="width: 80px;">
+							<select class="custom-select custom-select-sm" name="condition" style="width: 80px;">
 								<option value="">기준</option>
+								<option value="guestId">아이디</option>
+								<option value="guestName">고객명</option>
+								<option value="guestPhone">연락처</option>
 							</select>
 							<label>
-								<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
+								<input type="search" class="form-control form-control-sm" name="keyword" placeholder="" aria-controls="dataTable">
 							</label>
-							<a href="#" class="btn btn-primary btn-sm"><span class="text">검색</span>	</a>
+							<input type="submit" class="btn btn-primary btn-sm" value="검색" id="searchBtn"></input>
 						</div>
 					</div>
 				</div>
@@ -120,10 +146,12 @@ $(function() {
 							<th>선택</th>
 							<th>예약번호</th>
 							<th>예약일시</th>
+							<th>담당 디자이너</th>
 							<th>고객명</th>
 							<th>연락처</th>
 							<th>시술</th>
 							<th>예약상태</th>
+							<th>예약등록일</th>
 							<th style="width: 100px; min-width:100px; max-width:100px;">상세보기</th>
 							<th style="width: 180px; min-width:180px; max-width:180px;"></th>
 						</tr>
@@ -134,10 +162,12 @@ $(function() {
 							<td><input type="checkbox" no="${booking.bookNo }"></td>
 							<td>${booking.bookNo }</td>
 							<td>${booking.bookDateStr }</td>
-							<td>${booking.guest.guestName }</td>
+							<td>${booking.designer.deName }</td>
+							<td>${booking.guest.guestName } (${booking.guest.guestId })</td>
 							<td>${booking.guest.guestPhone }</td>
 							<td>${booking.howManyHairItems }</td>
 							<td>${booking.bookStatusStr }</td>
+							<td>${booking.bookRegDateStr }</td>
 							<td>
 								<a href="bookingDetail.do?no=${booking.bookNo}" class="btn bg-gray-200 btn-sm detailViewButton"><span class="text-gray-800">상세보기</span></a>
 							</td>
