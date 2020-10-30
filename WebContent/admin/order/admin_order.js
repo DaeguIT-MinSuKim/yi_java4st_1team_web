@@ -14,6 +14,15 @@ $(function() {
 	var thisUrl = new URL(thisUrlStr);
 	selectedBookingNo = thisUrl.searchParams.get("no");
 	setBookingData();
+	
+	var guestId = thisUrl.searchParams.get("guestId");
+	if(guestId != null) {
+		$("#guestInput").prop("readonly", true);
+		$("#nonMemberCK").prop("checked", false);
+		$("div[name=bookingDetail]").text("-");	
+		$("#guestInput").val(guestId);
+		loadCouponList(guestId);
+	}
 });
 
 // 2. 고객리스트에서
@@ -204,7 +213,7 @@ $(document).on("click", "#guestSearchModalConfirm", function(){
 	var guestId = $("#guestSearchTable .table-primary td").eq(1).text();
 	$("#guestInput").prop("readonly", true);
 	$("#nonMemberCK").prop("checked", false);
-	$("div[name=bookingDetail]").text("예약 고객인 경우 검색창을 통해 해당 예약건을 선택해주세요.");	
+	$("div[name=bookingDetail]").text("-");	
 	$("#guestInput").val(guestId);
 	
 	loadCouponList(guestId);

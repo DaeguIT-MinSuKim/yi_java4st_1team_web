@@ -1,7 +1,8 @@
 SELECT * FROM EVENT ORDER BY EVENT_NO asc;
 DELETE FROM EVENT;
 SELECT * FROM GUEST g2 ;
-
+ALTER TABLE EVENT
+RENAME COLUMN use_yn TO event_status;
 
 --이벤트test정보 insert
 INSERT INTO EVENT(EVENT_NAME,EVENT_START,EVENT_END,EVENT_PIC,EVENT_CONTENT) VALUES ('CGV',sysdate,sysdate,'event/images/movieCoupon.jpg','헤어랑샵과 cgv의 콜라보'); 

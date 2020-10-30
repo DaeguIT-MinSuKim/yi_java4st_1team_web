@@ -78,15 +78,14 @@ $(function() {
 				<!-- 테이블 상단 필터링 끝 -->
 
 				<!-- 테이블 시작 -->
-				<table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+				<table class="table table-bordered table-hover text-center" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
 							<th>선택</th>
 							<th>주문번호</th>
 							<th>주문일시</th>
-							<th>고객아이디</th>
 							<th>고객명</th>
-							<th>디자이너</th>
+							<th>담당 디자이너</th>
 							<th>시술</th>
 							<th>쿠폰사용</th>
 							<th>할인액</th>
@@ -100,8 +99,7 @@ $(function() {
 							<td><input type="checkbox" no="${order.ordersNo }"></td>
 							<td>${order.ordersNo }</td>
 							<td>${order.ordersDateStr }</td>
-							<td>${order.guest.guestId }</td>
-							<td>${order.guest.guestName }</td>
+							<td>${order.guest.guestName } (${order.guest.guestId })</td>
 							<td>${order.designer.deName }</td>
 							<td>${order.howManyItems }</td>
 							<td>${order.usedCoupon}</td>

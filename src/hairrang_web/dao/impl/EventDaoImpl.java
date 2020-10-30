@@ -57,7 +57,7 @@ public class EventDaoImpl implements EventDao {
 		LocalDate eventStart = null;
 		LocalDate eventEnd = null;
 		try {
-		eventStart = rs.getTimestamp("EVENT_START").toLocalDateTime().toLocalDate();
+			eventStart = rs.getTimestamp("EVENT_START").toLocalDateTime().toLocalDate();
 		} catch(Exception e) {
 		}
 		try {
