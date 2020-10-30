@@ -37,9 +37,9 @@ $(function() {
             </div>
             <div class="float-right">
 				<a href="orderForm.do" id="addNew" class="btn btn-success btn-sm" style="float: right;"><span class="text">등록</span></a>
-	            <a href="#" id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;"><span class="text">선택삭제</span></a>
-				<a href="#" id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">전체선택</span></a>
-				<a href="#" id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;"><span class="text">선택해제</span></a>
+	           	<button id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;">선택삭제</button>
+				<button id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">전체선택</button>
+				<button id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;">선택해제</button>
             </div>			
 		</h6>
 	</div>

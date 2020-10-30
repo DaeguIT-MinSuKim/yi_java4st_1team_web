@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Orders;
@@ -41,13 +42,16 @@ public class AdminOrderRegisterHandler implements Command {
 //					System.out.println(map.getKey() + " : " + map.getValue());
 //			}
 			
+			
+			int bookNo = 0;
+			Orders newOrders = null;
+			Gson gson = new Gson();
+			
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(new InputStreamReader(request.getInputStream(), "UTF-8"));
 			
-			int bookNo = element.getAsJsonObject().get("bookNo").getAsInt();
-					
-			Gson gson = new Gson();
-			Orders newOrders = gson.fromJson(element.getAsJsonObject().get("order"), Orders.class);
+			bookNo = element.getAsJsonObject().get("bookNo").getAsInt();
+			newOrders = gson.fromJson(element.getAsJsonObject().get("order"), Orders.class);
 			
 			System.out.println("<<JSON 변환 후>>");
 			System.out.println("bookNo=" + bookNo);

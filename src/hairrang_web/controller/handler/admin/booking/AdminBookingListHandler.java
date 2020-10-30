@@ -44,7 +44,8 @@ public class AdminBookingListHandler implements Command {
 			}
 			
 			int total = service.getTotalCountByCondition(paging, condition, keyword);
-
+			request.setAttribute("total", total);
+			
 			if(nowPage == null) {
 				nowPage = "1";
 			}
@@ -53,6 +54,8 @@ public class AdminBookingListHandler implements Command {
 			}
 			
 			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+			request.setAttribute("nowPage", Integer.parseInt(nowPage));
+			request.setAttribute("cntPerPage", Integer.parseInt(cntPerPage));
 			
 			System.out.println(nowPage);
 			System.out.println(cntPerPage);
