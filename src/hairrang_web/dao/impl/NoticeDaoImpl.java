@@ -37,6 +37,21 @@ public class NoticeDaoImpl implements NoticeDao {
 		}
 		return 0;
 	}
+	
+	@Override
+	public int countDelNotice() {
+		String sql = "SELECT COUNT(*) AS COUNT FROM NOTICE WHERE NOTICE_DELYN ='y'";
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt("COUNT");
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
 
 	@Override
 	public List<Notice> selectPagingNotice(Paging paging) {
@@ -58,6 +73,28 @@ public class NoticeDaoImpl implements NoticeDao {
 		}
 		return null;
 	}
+	
+	@Override
+	public List<Notice> selectPagingDelNotice(Paging paging) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM notice WHERE notice_delyn = 'y'  ORDER BY notice_no DESC) a) WHERE rn BETWEEN ? AND ?";
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					List<Notice> list = new ArrayList<Notice>();
+					do {
+						list.add(getNotice(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
 
 	private Notice getNotice(ResultSet rs) throws SQLException {
 		int noticeNo = rs.getInt("notice_no");
@@ -177,4 +214,42 @@ public class NoticeDaoImpl implements NoticeDao {
 			throw new RuntimeException(e);
 		}
 	}
+
+	@Override
+	public int RestoreNotice(String no) {
+		String sql = "UPDATE NOTICE SET NOTICE_DELYN ='n' WHERE NOTICE_NO =?";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, no);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	//삭제 안된 공지 제목으로 찾기
+	@Override
+	public List<Notice> selectPagingNoticeByTitle(Paging paging, String title) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM notice WHERE notice_delyn = 'n' AND  NOTICE_TITLE LIKE '%' || ? || '%' ORDER BY notice_no DESC) a) WHERE rn BETWEEN ? AND ?";
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setString(1, title);
+			pstmt.setInt(2, paging.getStart());
+			pstmt.setInt(3, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					List<Notice> list = new ArrayList<Notice>();
+					do {
+						list.add(getNotice(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
+
+
 }
