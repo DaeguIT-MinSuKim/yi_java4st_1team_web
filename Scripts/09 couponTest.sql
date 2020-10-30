@@ -62,7 +62,7 @@ as
 SELECT c.*, e.EVENT_NAME, e.EVENT_SALERATE
 FROM COUPON c LEFT OUTER JOIN Event e ON (c.EVENT_NO  = e.EVENT_NO );
 
-<<<<<<< HEAD
+---------------
 
 SELECT * FROM coupon;
 SELECT * FROM EVENT;
@@ -123,17 +123,16 @@ SELECT 4, 'test', event_no, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(guest_b
 
 SELECT EVENT_NO,EVENT_NAME,EVENT_SALERATE,EVENT_START,EVENT_END,EVENT_PIC,EVENT_CONTENT,USE_YN FROM event;
 SELECT COUPON_ID,GUEST_ID,EVENT_NO,EVENT_START,EVENT_END,USED_YN FROM coupon ORDER BY COUPON_ID;
-=======
+----------------------------------------
 SELECT * FROM coupon_view;
 SELECT * FROM ORDER_DETAIL od;
 
 
 -- 개인에게 6번 이벤트 쿠폰 발행
-INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end) 
-SELECT 3, 'abcd', event_no, event_start, event_end FROM event WHERE event_no = 6;
+INSERT INTO coupon(guest_id, event_no, event_start, event_end) 
+SELECT 'abcd', event_no, event_start, event_end FROM event WHERE event_no = 2;
 
 SELECT * FROM event;
 SELECT * FROM coupon;
 SELECT * FROM guest;
 
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git

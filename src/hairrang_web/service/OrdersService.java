@@ -42,8 +42,8 @@ public class OrdersService {
 	// int, update, delete는 트랜잭션 적용으로 service에서 구현.
 	public int insertOrders(Orders orders) {
 		String oSql = "INSERT INTO orders(guest_id, de_no) VALUES(?, ?)";
-		String odSql = "INSERT INTO ORDER_DETAIL(ORDERS_NO, HAIR_NO, OD_PRICE, OD_QUANTITY, COUPON_ID, OD_DISCOUNT) " + 
-				"SELECT ?, HAIR_NO, hair_price, ?, coupon_id, hair_price*event_salerate " + 
+		String odSql = "INSERT INTO ORDER_DETAIL(HAIR_NO, OD_PRICE, OD_QUANTITY, COUPON_ID, OD_DISCOUNT) " + 
+				"SELECT HAIR_NO, hair_price, ?, coupon_id, hair_price*event_salerate " + 
 				"FROM (SELECT HAIR_NO, hair_price, 0 AS fake FROM hair WHERE hair_no = ?) " + 
 				"LEFT OUTER JOIN (SELECT coupon_id, event_salerate, 0 AS fake FROM coupon_view WHERE coupon_id = ? AND GUEST_ID = ?) USING(fake)";
 		
@@ -68,15 +68,15 @@ public class OrdersService {
 			ordersNo = dao.selectMaxOrdersNo() + 1;
 			
 			for(OrderDetail od : orders.getOdList()) {
-				odPstmt.setInt(1, ordersNo);
-				odPstmt.setInt(2, od.getOdQuantity());
-				odPstmt.setInt(3, od.getHair().getHairNo());
+//				odPstmt.setInt(1, ordersNo);
+				odPstmt.setInt(1, od.getOdQuantity());
+				odPstmt.setInt(2, od.getHair().getHairNo());
 				if(od.getCoupon() != null) {
-					odPstmt.setInt(4, od.getCoupon().getCouponId());
+					odPstmt.setInt(3, od.getCoupon().getCouponId());
 				} else {
-					odPstmt.setString(4, null);
+					odPstmt.setString(3, null);
 				}
-				odPstmt.setString(5, guestId);
+				odPstmt.setString(4, guestId);
 				odPstmt.executeUpdate();
 			}
 			
