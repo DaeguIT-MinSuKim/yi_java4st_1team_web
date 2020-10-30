@@ -29,7 +29,7 @@ SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM notice WHERE notice_del
 --삭제 안된 공지 제목으로 찾기
 SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM notice WHERE notice_delyn = 'n' AND  NOTICE_TITLE LIKE '%공지%' ORDER BY notice_no DESC) a) WHERE rn BETWEEN 1 AND 5;
 
-
+SELECT COUNT(*) AS COUNT FROM NOTICE where NOTICE_DELYN ='n' and notice_title like '%대훈%';
 
 
 

@@ -8,13 +8,13 @@
 		var sel = document.getElementById('cntPerPage').value;
 		var sel2 = document.getElementById('selectPage').value;
 		location.href = "noticeList.do?nowPage=${paging.nowPage}&cntPerPage="
-				+ sel+"&status="+sel2;
+				+ sel+"&stay="+sel2;
 	}
 	
 	function tableChange() {
 		var sel = document.getElementById('selectPage').value;
 		alert(sel);
-		location.href = "noticeList.do?nowPage=${paging.nowPage}&status="
+		location.href = "noticeList.do?nowPage=${paging.nowPage}&stay="
 				+ sel;
 	} 
 	
@@ -174,7 +174,7 @@
 	<h1 class="h3 mb-0 text-gray-800">공지사항 관리 - 공지사항 목록</h1>
 </div>
 ${viewAll }
-<form method="post" name="formm">
+<form method="get" name="formm">
 	<div class="card shadow mb-4">
 		<div class="card-header py-2">
 			<h6 class="m-1 font-weight-bold text-primary"
@@ -184,13 +184,13 @@ ${viewAll }
 					style="float: left; margin-right: 10px;"
 					onclick="location.href='noticeInsert.do' ">
 
-				<c:if test="${status eq 'all' }">
+				<c:if test="${stay eq 'all' }">
 					<input type="button" value="삭제" name="delete"
 						class="btn btn-danger btn-sm" id="btn_delete" style="float: left;"
 						onclick="checkDelete()">
 				</c:if>
 
-				<c:if test="${status eq 'del' }">
+				<c:if test="${stay eq 'del' }">
 					<input type="button" value="복원" name="Restore"
 						class="btn btn-danger btn-sm" id="btn_delete" style="float: left;"
 						onclick="checkDelete()">
@@ -235,10 +235,10 @@ ${viewAll }
 									onchange="tableChange()" aria-controls="dataTable"
 									class="custom-select custom-select-sm form-control form-control-sm">
 										<option value="all"
-											<c:if test="${status eq 'all'}">selected</c:if>>전체
+											<c:if test="${stay eq 'all'}">selected</c:if>>전체
 											보기</option>
 										<option value="del"
-											<c:if test="${status eq 'del'}">selected</c:if>>삭제
+											<c:if test="${stay eq 'del'}">selected</c:if>>삭제
 											보기</option>
 								</select>
 								</label>
@@ -249,11 +249,12 @@ ${viewAll }
 
 						<div class="col-sm-12 col-md-6" style="float: right;">
 							<div id="dataTable_filter" class="dataTables_filter ">
-								<select class="custom-select custom-select-sm" name="opt"
+								<select class="custom-select custom-select-sm" name="condition"
 									style="width: 80px;">
-									<option value="1">제목</option>
-									<option value="0">내용</option>
-								</select> <label> <input type="text" name="value"
+									<option value=""></option>
+									<option value="noticeTitle">제목</option>
+									<option value="noticeContent">내용</option>
+								</select> <label> <input type="text" name="keyword"
 									class="form-control form-control-sm" placeholder=""
 									aria-controls="dataTable">
 								</label> <input type="submit" value="검색" class="btn btn-primary btn-sm">
@@ -280,13 +281,12 @@ ${viewAll }
 										<td style="width: 20px;">${notice.noticeNo}</td>
 										<td style="width: 100px;"><a
 											href="noticeDetail.do?no=${notice.noticeNo }">${notice.noticeTitle}</a></td>
-										<c:if test="${notice.noticeDelYn eq 'y' }">
+										<c:if test="${stay eq 'del' }">
 											<td><input type="button" name="info" value="복원"
 												class="btn bg-gray-200 btn-sm detailViewButton"
 												onclick="buttonRestore()"></td>
 										</c:if>
-
-										<c:if test="${notice.noticeDelYn eq 'n' }">
+										<c:if test="${stay eq 'all' }">
 											<td><input type="button" name="info" value="삭제"
 												class="btn bg-gray-200 btn-sm detailViewButton"
 												onclick="buttonDel()"> <input type="button"

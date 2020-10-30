@@ -60,9 +60,14 @@ public class NoticeService {
 		return dao.RestoreNotice(no);
 	}
 	
-	//삭제안된 공지 제목으로 찾기
-	public List<Notice> selectPagingNoticeByTitle(Paging paging, String title){
-		return dao.selectPagingNoticeByTitle(paging, title);
+	//공지 찾기 갯수
+	public int countPagingNoticeSearch(Paging paging, String condition, String keyword,String stay) {
+		return dao.countPagingNoticeSearch(paging, condition, keyword, stay);
+	}
+	
+	//공지 찾기 페이징
+	public List<Notice> selectPagingNoticeSearch(Paging paging, String condition, String keyword,String stay){
+		return dao.selectPagingNoticeSearch(paging, condition, keyword, stay);
 	}
 	
 }

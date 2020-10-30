@@ -11,13 +11,11 @@ public interface NoticeDao {
 	
 	//총게시물
 	int countNoitce();
-	
-	//삭제된 게시물
-	int countDelNotice();
-	
 	//페이징처리된 게시물
 	List<Notice> selectPagingNotice(Paging paging);
 	
+	//삭제된 게시물
+	int countDelNotice();
 	//페이징처리된 삭제된 게시물
 	List<Notice> selectPagingDelNotice(Paging paging);
 	
@@ -41,7 +39,10 @@ public interface NoticeDao {
 	//복원
 	int RestoreNotice(String no);
 	
-	//삭제안된 공지 제목찾기
-	List<Notice> selectPagingNoticeByTitle(Paging paging, String title);
+	// 공지찾기 갯수
+	int countPagingNoticeSearch(Paging paging, String condition, String keyword,String stay);
+	
+	// 공지찾기 페이징
+	List<Notice> selectPagingNoticeSearch(Paging paging, String condition, String keyword,String stay);
 	
 }
