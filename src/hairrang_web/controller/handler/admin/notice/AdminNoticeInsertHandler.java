@@ -47,6 +47,13 @@ public class AdminNoticeInsertHandler implements Command {
 			System.out.println("서버상으 실제 디렉토리 :");
 			System.out.println(uploadFilePath);
 
+			File isDir = new File(uploadFilePath);
+			if(!isDir.isDirectory()){
+			    //디렉토리 생성 메서드
+				isDir.mkdirs();
+			    System.out.println("created directory successfully!");
+			}
+			
 			try {
 				MultipartRequest multi = new MultipartRequest(request, // request 객체
 						uploadFilePath, // 서버상의 실제 디렉토리

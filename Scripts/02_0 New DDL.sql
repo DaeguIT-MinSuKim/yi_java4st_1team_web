@@ -1,8 +1,5 @@
 SELECT * FROM user_tables;
 
--- DDL에 잘못 추가 했었음 지워주세요.
-DROP TABLE SALES_DETAIL CASCADE CONSTRAINTS;
-
 /*--hairboard에 헤어no 지운다요
 ALTER TABLE HAIR_BOARD DROP COLUMN hair_no;*/
 
@@ -149,9 +146,9 @@ CREATE TABLE ORDER_DETAIL (
 	event_no NUMBER(10), /* 이벤트번호 */
 	hair_no NUMBER(10), /* 헤어번호 */
 	order_no NUMBER(10), /* 주문번호 */
-	od_price number(6),
+	od_price number(7),
 	od_quantity number(2),
-	od_discount number(6)
+	od_discount number(7)
 );
 
 
