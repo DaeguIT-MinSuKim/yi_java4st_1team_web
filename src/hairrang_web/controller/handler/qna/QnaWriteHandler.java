@@ -64,8 +64,15 @@ public class QnaWriteHandler implements Command {
 			ServletContext context = request.getServletContext();
 			System.out.println("context :"+context);
 			String uploadFilePath = context.getRealPath(savePath);
-			System.out.println("서버상으 실제 디렉토리 :");
+			System.out.println("서버상의 실제 디렉토리 :");
 			System.out.println(uploadFilePath);
+			
+			File isDir = new File(uploadFilePath);
+			if(!isDir.isDirectory()){
+			    //디렉토리 생성 메서드
+				isDir.mkdirs();
+			    System.out.println("created directory successfully!");
+			}
 			
 			try{MultipartRequest multi = new MultipartRequest(request, 		//request 객체
 															uploadFilePath, 		//서버상의 실제 디렉토리
@@ -79,8 +86,7 @@ public class QnaWriteHandler implements Command {
 			
 			//업로드된 파일 얻기
 			File findFile = new File(uploadFilePath+"/"+fileName);
-			
-			
+
 			String realFileName = nowDate+"-"+fileName; //현재시간과 확장자 합치기
 			System.out.println("realFileName : "+realFileName);
 			String FilegetPath = uploadFilePath+"/"+realFileName;
