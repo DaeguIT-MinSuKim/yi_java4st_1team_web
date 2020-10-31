@@ -221,4 +221,14 @@ public class QnaService {
 	public int updateRestoreQna(String no) {
 		return dao.updateRestoreQna(no);
 	}
+	
+	//페이징 찾기 카운터
+	public int countPagingQnaSearch(String condition, String keyword,String stay) {
+		return dao.countPagingQnaSearch(condition, keyword, stay);
+	}
+	
+	//페이징 찾기 
+	public List<QnA> selectPagingQnASearch(Paging paging, String condition, String keyword,String stay){
+		return dao.selectPagingQnASearch(paging, condition, keyword, stay);
+	}
 }

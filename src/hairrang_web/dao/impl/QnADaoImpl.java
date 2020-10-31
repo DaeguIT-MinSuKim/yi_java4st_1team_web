@@ -12,6 +12,7 @@ import hairrang_web.ds.JndiDs;
 import hairrang_web.dto.Admin;
 import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
+import hairrang_web.dto.Notice;
 import hairrang_web.dto.QnA;
 import hairrang_web.utils.Paging;
 
@@ -44,7 +45,7 @@ public class QnADaoImpl implements QnADao {
 		return null;
 	}
 
-	//총 글 갯수
+	// 총 글 갯수
 	@Override
 	public int countQnA() {
 		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE DEL_YN = 'n' and ADMIN_ID is null or NOTICE_YN ='y'";
@@ -60,7 +61,7 @@ public class QnADaoImpl implements QnADao {
 		return 0;
 	}
 
-	//총 글 페이징
+	// 총 글 페이징
 	@Override
 	public List<QnA> selectPagingQnA(Paging paging) {
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE DEL_YN ='n' and ADMIN_ID IS NULL or NOTICE_YN ='y'  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
@@ -82,7 +83,7 @@ public class QnADaoImpl implements QnADao {
 		return null;
 	}
 
-	//답변한 문의 갯수
+	// 답변한 문의 갯수
 	@Override
 	public int countResYQnA() {
 		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE RES_YN = 'y'";
@@ -98,7 +99,7 @@ public class QnADaoImpl implements QnADao {
 		return 0;
 	}
 
-	//답변한 문의 페이징
+	// 답변한 문의 페이징
 	@Override
 	public List<QnA> selectPagingResYQnA(Paging paging) {
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE RES_YN = 'y' AND NOTICE_YN ='n'  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
@@ -120,7 +121,7 @@ public class QnADaoImpl implements QnADao {
 		return null;
 	}
 
-	//미답변 문의 갯수
+	// 미답변 문의 갯수
 	@Override
 	public int countResNQnA() {
 		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE RES_YN = 'n' AND ADMIN_ID IS NULL OR NOTICE_YN ='n'";
@@ -136,7 +137,7 @@ public class QnADaoImpl implements QnADao {
 		return 0;
 	}
 
-	//미답변 문의 페이징
+	// 미답변 문의 페이징
 	@Override
 	public List<QnA> selectPagingResNQnA(Paging paging) {
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE RES_YN = 'n' AND NOTICE_YN ='n'  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
@@ -158,7 +159,7 @@ public class QnADaoImpl implements QnADao {
 		return null;
 	}
 
-	//삭제된 문의 갯수
+	// 삭제된 문의 갯수
 	@Override
 	public int countDelYQnA() {
 		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE DEL_YN = 'y' AND ADMIN_ID IS NULL AND NOTICE_YN ='n'";
@@ -174,7 +175,7 @@ public class QnADaoImpl implements QnADao {
 		return 0;
 	}
 
-	//삭제된 문의 페이징
+	// 삭제된 문의 페이징
 	@Override
 	public List<QnA> selectPagingDelYQnA(Paging paging) {
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE DEL_YN = 'y' AND NOTICE_YN ='n'  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
@@ -196,7 +197,7 @@ public class QnADaoImpl implements QnADao {
 		return null;
 	}
 
-	//삭제된 문의공지 갯수
+	// 삭제된 문의공지 갯수
 	@Override
 	public int countDelYQnANotice() {
 		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE DEL_YN = 'y'AND NOTICE_YN ='y'";
@@ -212,7 +213,7 @@ public class QnADaoImpl implements QnADao {
 		return 0;
 	}
 
-	//삭제된 문의공지 페이징
+	// 삭제된 문의공지 페이징
 	@Override
 	public List<QnA> selectPagingDelYQnANotice(Paging paging) {
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE DEL_YN = 'y' AND NOTICE_YN ='y'  ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE QNA_REFNO IS NULL AND rn BETWEEN ? AND ?";
@@ -235,7 +236,8 @@ public class QnADaoImpl implements QnADao {
 	}
 
 	private QnA getQnA(ResultSet rs) throws SQLException {
-		//SELECT QNA_NO,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_REGDATE,RES_YN FROM QNA WHERE GUEST_ID = ? ORDER BY QNA_NO DESC";
+		// SELECT QNA_NO,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_REGDATE,RES_YN FROM QNA
+		// WHERE GUEST_ID = ? ORDER BY QNA_NO DESC";
 
 		QnA qna = new QnA();
 		qna.setQnaNo(rs.getInt("QNA_NO"));
@@ -500,6 +502,103 @@ public class QnADaoImpl implements QnADao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public int countPagingQnaSearch(String condition, String keyword, String stay) {
+		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE ";
+		
+		System.out.println("sql에서 검색조건==>"+condition);
+		System.out.println("sql에서 검색어==>"+keyword);
+		
+
+		if (stay.equals("all")) {
+			sql += " DEL_YN = 'n' AND QNA_REFNO is null ";
+		} else if (stay.equals("resy")) {
+			sql += " DEL_YN = 'n' AND ADMIN_ID IS NULL and RES_YN ='y' ";
+		} else if (stay.equals("resn")) {
+			sql += " DEL_YN = 'n' AND ADMIN_ID IS NULL and RES_YN ='n' ";
+		} else if (stay.equals("delq")) {
+			sql += " DEL_YN = 'y' AND NOTICE_YN ='n' ";
+		} else if (stay.equals("deln")) {
+			sql += " DEL_YN = 'y' AND NOTICE_YN ='y' ";
+		}
+		
+
+		if (condition != null) {
+			sql += " and";
+			if (condition.equalsIgnoreCase("qnaTitle")) {
+				System.out.println("검색조건이 있음");
+				condition = " QNA_TITLE ";
+				sql += condition + " like '%" + keyword + "%'";
+			} else if (condition.equalsIgnoreCase("qnaContent")) {
+				condition = " QNA_CONTENT ";
+				sql += condition + " like '%" + keyword + "%'";
+			}
+		}
+
+		System.out.println("완성된 sql :" + sql);
+
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
+
+	@Override
+	public List<QnA> selectPagingQnASearch(Paging paging, String condition, String keyword, String stay) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA where ";
+
+		if (stay.equals("all")) {
+			sql += " DEL_YN = 'n' AND QNA_REFNO is null ";
+		} else if (stay.equals("resy")) {
+			sql += " DEL_YN = 'n' AND ADMIN_ID IS NULL and RES_YN ='y' ";
+		} else if (stay.equals("resn")) {
+			sql += " DEL_YN = 'n' AND ADMIN_ID IS NULL and RES_YN ='n' ";
+		} else if (stay.equals("delq")) {
+			sql += " DEL_YN = 'y' AND NOTICE_YN ='n' ";
+		} else if (stay.equals("deln")) {
+			sql += " DEL_YN = 'y' AND NOTICE_YN ='y' ";
+		}
+
+		
+		if (condition != null) {
+			sql += " and";
+			if (condition.equalsIgnoreCase("qnaTitle")) {
+				condition = " QNA_TITLE ";
+				sql += condition + " like '%" + keyword + "%'";
+			} else if (condition.equalsIgnoreCase("qnaContent")) {
+				condition = " QNA_CONTENT ";
+				sql += condition + " like '%" + keyword + "%'";
+			}
+		}
+
+		sql += " ORDER BY notice_yn DESC,QNA_NO DESC ) a) WHERE rn BETWEEN ? AND ? ";
+		System.out.println("완성된 sql :" + sql);
+
+		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					List<QnA> list = new ArrayList<QnA>();
+					do {
+						list.add(getQnA(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
 	}
 
 }

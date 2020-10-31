@@ -152,7 +152,7 @@
 <p class="mb-4">
 	<a target="_blank" href="https://datatables.net"></a>
 </p>
-<form method="post" name="formm">
+<form method="get" name="formm">
 	<!-- DataTales Example -->
 <div class="card shadow mb-4">
 	<div class="card-header py-2">
@@ -193,7 +193,7 @@
 				<div class="row mb-2">
 					<div class="col-sm-12 col-md-6">
 						<div class="dataTables_length" id="dataTable_length">
-							<label> <select name="dataTable_length" id="cntPerPage"
+							<label> <select name="cntPerPage" id="cntPerPage"
 								onchange="selChange()" aria-controls="dataTable"
 								class="custom-select custom-select-sm form-control form-control-sm">
 									<option value="5"
@@ -210,7 +210,7 @@
 										보기</option>
 							</select>
 							
-							<select name="dataTable_length" id="selectPage"
+							<select name="stay" id="selectPage"
 								onchange="tableChange()" aria-controls="dataTable"
 								class="custom-select custom-select-sm form-control form-control-sm">
 									<option value="all"
@@ -235,11 +235,11 @@
 					</div>
 					<div class="col-sm-12 col-md-6">
 						<div id="dataTable_filter" class="dataTables_filter ">
-							<select class="custom-select custom-select-sm" name="opt"
+							<select class="custom-select custom-select-sm" name="condition"
 								style="width: 80px;">
-								<option value="0">아이디</option>
-								<option value="1">제목</option>
-							</select> <label> <input type="text" name="value"
+								<option value="qnaTitle">제목</option>
+								<option value="qnaContent">내용</option>
+							</select> <label> <input type="search" name="keyword"
 								class="form-control form-control-sm" placeholder=""
 								aria-controls="dataTable">
 							</label> <input type="submit" value="검색" class="btn btn-primary btn-sm">

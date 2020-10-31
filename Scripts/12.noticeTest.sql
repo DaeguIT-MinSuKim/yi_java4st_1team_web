@@ -7,7 +7,7 @@ INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('2번째공지','2번째�
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('3번째공지','3번째공지내용');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('4번째공지','4번째공지내용');
 
-UPDATE NOTICE SET NOTICE_DELYN ='n';
+UPDATE NOTICE SET NOTICE_DELYN ='y' WHERE NOTICE_NO =2;
 
 DELETE FROM NOTICE WHERE NOTICE_NO >5;
 

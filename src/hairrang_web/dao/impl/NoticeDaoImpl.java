@@ -232,14 +232,14 @@ public class NoticeDaoImpl implements NoticeDao {
 			sql += " where NOTICE_DELYN ='y' ";
 		}
 
-		if (condition != null) {
+		if (condition != null ) {
 			sql += " and";
 			if (condition.equalsIgnoreCase("noticeTitle")) {
 				condition = " notice_title";
-				sql += condition + "like '%' ||" + keyword + " || '%'";
+				sql += condition + " like '%"+ keyword + "%'";
 			} else if (condition.equalsIgnoreCase("noticeContent")) {
 				condition = "notice_content";
-				sql += condition + "like '%' ||" + keyword + " || '%'";
+				sql += condition + " like '%" + keyword + "%'";
 			}
 		}
 
@@ -259,7 +259,6 @@ public class NoticeDaoImpl implements NoticeDao {
 
 	@Override
 	public List<Notice> selectPagingNoticeSearch(Paging paging, String condition, String keyword, String stay) {
-		//조건절  WHERE notice_delyn = 'y'  
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM notice";
 
 		if (stay.equals("all")) {
