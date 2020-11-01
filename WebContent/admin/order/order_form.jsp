@@ -105,7 +105,7 @@ $(function(){
 								<td>${todayB.guest.guestId }</td>
 								<td>${todayB.guest.guestName } </td>
 								<td>${todayB.howManyHairItems }</td>
-								<td>${todayB.designer.deNo }</td>
+								<td>${todayB.designer.deNickname } ${todayB.designer.deLevel }</td>
 								<td>${todayB.guest.guestPhone }</td>
 							</tr>
 						</c:forEach>

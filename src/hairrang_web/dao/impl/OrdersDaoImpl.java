@@ -12,6 +12,7 @@ import hairrang_web.ds.JndiDs;
 import hairrang_web.dto.Booking;
 import hairrang_web.dto.Coupon;
 import hairrang_web.dto.Designer;
+import hairrang_web.dto.Event;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.Hair;
 import hairrang_web.dto.OrderDetail;
@@ -108,7 +109,7 @@ public class OrdersDaoImpl implements OrdersDao {
 	// 단독으로 쓰일 일은 없고, select .. from orders 할 때 odList를 얻어올 때 쓰임.
 	@Override
 	public ArrayList<OrderDetail> selectOrderDetailsByOrdersNo(int ordersNo) {
-		String sql = "SELECT * FROM ORDER_DETAIL WHERE ORDERS_NO = ? ORDER BY COUPON_ID, OD_NO";
+		String sql = "SELECT * FROM OD_guest_HAIR_COUPON_view WHERE ORDERS_NO = ? ORDER BY COUPON_ID, OD_NO";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -129,15 +130,25 @@ public class OrdersDaoImpl implements OrdersDao {
 	}
 
 	private OrderDetail getOrderDetail(ResultSet rs) throws SQLException {
+		// OD_NO,COUPON_ID,HAIR_NO,ORDERS_NO,OD_PRICE,OD_QUANTITY,OD_DISCOUNT,HAIR_NAME,EVENT_NAME
 		// OD_NO, ORDER_NO, HAIR_NO, OD_PRICE, OD_QUANTITY, EVENT_NO, OD_DISCOUNT
 		int odNo = rs.getInt("OD_NO");
-		Hair hair = HairDaoImpl.getInstance().selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
+		
+		Hair hair = new Hair(rs.getInt("hair_NO"));
+		hair.setHairName(rs.getString("HAIR_NAME"));
+		
 		int odPrice = rs.getInt("OD_PRICE");
 		int odQuantity = rs.getInt("OD_QUANTITY");
+		
 		Coupon coupon = null;
+		Event event = null;
 		int odDiscount = 0;
+		
 		try {
-			coupon = CouponDaoImpl.getInstance().selectCouponByCouponId(new Coupon(rs.getInt("COUPON_ID")));
+			coupon = new Coupon(rs.getInt("COUPON_ID"));
+			event = new Event();
+			event.setEventName(rs.getString("EVENT_NAME"));
+			coupon.setEvent(event);
 			odDiscount = rs.getInt("OD_DISCOUNT");
 		} catch(SQLException e) {
 		}

@@ -8,6 +8,7 @@ $(document).on("keydown", "input:not(#guestSearchInput)", function(event) {
 	  };
 });
 
+
 /* 주문하기로 들어온 경우 */
 // 1. 예약리스트에서
 $(function() {
@@ -445,17 +446,26 @@ function loadGuestSearchTable(target, data) {
 	var paging = data.paging;
 	
 	var dataArr = "";
-	$.each(guestList, function(index, item) {
-		dataArr += "<tr role='button'><td></td><td>" + item.guestId + "</td><td>" + item.guestName + "</td><td>" + item.guestPhone + "</td></tr>";
-	});
-	target.append(dataArr);
+	console.log(data.guestList);
 	
-	$("#guestSearchTable tbody tr td:first-child()").each(function(index, item) {
-		$(item).text((paging.nowPage-1) * paging.cntPerPage + index + 1);
-	});
+	if(data.guestList == null) {
+		dataArr += "<tr><td colspan='4'>조건에 부합하는 검색 결과가 존재하지 않습니다.</td></tr>";
+		target.append(dataArr);
+	} else {
+		$.each(guestList, function(index, item) {
+			dataArr += "<tr role='button'><td></td><td>" + item.guestId + "</td><td>" + item.guestName + "</td><td>" + item.guestPhone + "</td></tr>";
+		});
+		target.append(dataArr);
+		
+		// 조회 결과 넘버링
+		$("#guestSearchTable tbody tr td:first-child()").each(function(index, item) {
+			$(item).text((paging.nowPage-1) * paging.cntPerPage + index + 1);
+		});
+	}
 	
+	// 조회 결과 페이징
 	var pageArr = "";
-	if(paging.endPage == 1) {
+	if(paging.endPage == 1 || paging.endPage == 0) {
 		// 시작 페이지가 0? 표시만 하기?
 		pageArr += "<li class='page-item previous disabled'><a href='#' class='page-link'><</a></li>";
 		pageArr += "<li class='page-item active'><a href='#' class='page-link' nowPage='" + paging.startPage + "'>" + paging.startPage + "</a></li>";
@@ -477,7 +487,7 @@ function loadGuestSearchTable(target, data) {
 			}
 		}
 		
-		if(paging.nowPage == paging.endPage) {
+		if(paging.nowPage >= paging.endPage) {
 			pageArr += "<li class='page-item next disabled'><a href='#' class='page-link'>></a></li>";
 		} else {
 			pageArr += "<li class='page-item next'><a href='#' class='page-link' nowPage='" + (paging.nowPage+1) + "'>></a></li>";

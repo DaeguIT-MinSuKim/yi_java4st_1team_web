@@ -2,66 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../include/header.jsp"%>
-<script>
-$(function() {
-	$(document).ready(function() {
-		document.title += ' - 주문 목록';
-		
-		$(".bookingToOrderButton").on("click", function() {
-			var trIdx = $(this).closest("tr").prevAll().length;
-			console.log(trIdx);
-		});
-		
-		$(document).on('click', '.deleteButton', function() {
-			var idx = $(this).parents('tr:first').children("td").eq(1).text();
-		    console.log(idx);
-		});
-
-		setFilteringPaging();
-	});
-	
-	function setFilteringPaging() {
-		var thisUrlStr = window.location.href;
-		var thisUrl = new URL(thisUrlStr);
-
-		var where = thisUrl.searchParams.get("where");
-		var query = thisUrl.searchParams.get("query");
-		var cntPerPage = thisUrl.searchParams.get("cntPerPage");
-		var designer = thisUrl.searchParams.get("designer");
-		
-		if(cntPerPage != null) {
-			$("select[name=cntPerPage]").val(cntPerPage);
-		}
-		if(where.length != 0) {
-			$("select[name=where]").val(where);
-			$("input[name=query]").val(query);
-		}
-		if(designer.length != 0) {
-			$("select[name=designer]").val(designer);
-		}
-	}
-	
-	$("#searchBtn").click(function(e) {
-		if($("select[name=where]").val() == undefined || $("input[name=query]").val() == "") {
-			e.preventDefault();
-		}
-	});
-	 
-	$("select[name=cntPerPage]").change(function(){
-		document.searchForm.submit();
-	});
-	
-	$("select[name=designer]").change(function(){
-		document.searchForm.submit();
-	});
-	
-});
-</script>
+<script src="order/admin_order_list.js"></script>
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800 font-weight">목록 템플릿</h1>
+<!-- <h1 class="h3 mb-2 text-gray-800 font-weight">목록 템플릿</h1>
 <p class="mb-4">
 	여기에 간단한 설명 추가해주세요. 이렇게 링크도 달아도 됩니다. <a target="_blank" href="https://datatables.net">링크</a>
-</p>
+</p> -->
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
@@ -72,9 +18,9 @@ $(function() {
             </div>
             <div class="float-right">
 				<a href="orderForm.do" id="addNew" class="btn btn-success btn-sm" style="float: right;"><span class="text">등록</span></a>
-	           	<button id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;">선택삭제</button>
+				<!-- <button id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;">선택해제</button>
 				<button id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">전체선택</button>
-				<button id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;">선택해제</button>
+	           	<button id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;">선택삭제</button> -->
             </div>			
 		</h6>
 	</div>
