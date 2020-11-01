@@ -104,11 +104,7 @@ SELECT 4, 'test', event_no, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(guest_b
 
 SELECT EVENT_NO,EVENT_NAME,EVENT_SALERATE,EVENT_START,EVENT_END,EVENT_PIC,EVENT_CONTENT,USE_YN FROM event;
 SELECT COUPON_ID,GUEST_ID,EVENT_NO,EVENT_START,EVENT_END,USED_YN FROM coupon ORDER BY COUPON_ID;
-<<<<<<< HEAD
-----------------------------------------
-=======
 
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web
 SELECT * FROM coupon_view;
 SELECT * FROM ORDER_DETAIL od;
 
@@ -195,7 +191,7 @@ INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC,
 VALUES ('종료', 0.2, to_date('2020-10-20', 'YYYY-MM-DD'), to_date('2020-10-28', 'YYYY-MM-DD') + - 1 / (24*60*60) + 1, NULL, '테스트');
 
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
-VALUES ('생일', 0.2, NULL, NULL, NULL, '생일로부터 15일 전후 동안만 사용할 수 있습니다.');
+VALUES ('생일', 0.2, NULL, NULL, NULL, '생일로부터 10일 전후 동안만 사용할 수 있습니다.');
 
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
 VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-10-29', 'YYYY-MM-DD'), to_date('2020-11-14', 'YYYY-MM-DD') + - 1 / (24*60*60) + 1 , NULL, '오픈 기념 10% 할인 행사');
@@ -267,14 +263,14 @@ SELECT guest_id, EVENT_NO, EVENT_START, EVENT_END
 FROM
 (SELECT g.*, 1 AS fake FROM guest g) g JOIN (SELECT e.*, 1 AS fake FROM EVENT e WHERE event_no = 5) USING (FAKE);
 
-INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END);
+INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END, USED_YN);
 SELECT guest_id, EVENT_NO, EVENT_START, EVENT_END
 FROM
 (SELECT g.*, TO_CHAR(guest_birthday) AS guest_bd, 1 AS fake FROM guest g WHERE TO_CHAR(sysdate, 'YYYY-MM-DD') BETWEEN GUEST_BIRTHDAY - 10 AND GUEST_BIRTHDAY + 10) LEFT OUTER JOIN (SELECT e.*, 1 AS fake FROM EVENT e WHERE event_no = 1) USING (FAKE);
 
 -- 찐!! 가짜조인을 이용한 생일 쿠폰 삽입!!!
-INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END, USED_YN)
-SELECT guest_id, 23, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
+INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
+SELECT guest_id, 7, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
 FROM (
 SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
 ) gb
@@ -297,11 +293,6 @@ SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon_view WHERE EVENT
 SELECT count(*) FROM COUPON;
 ---
 
-<<<<<<< HEAD
-UPDATE COUPON SET event_start = to_date('2020-10-10','yyyy-MM-dd'), event_end = to_date('2020-10-30','yyyy-MM-dd') WHERE coupon_id = 771;
-UPDATE coupon SET used_yn = 'y' WHERE COUPON_ID = 772;
-
-delete coupon where event_no = 28;
 
 INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
 SELECT guest_id, 23, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
@@ -315,9 +306,8 @@ UPDATE event SET event_status = 's' WHERE event_no = 's';
 --쿠폰view의 생일쿠폰만 보기
 SELECT * FROM (SELECT a.* FROM (SELECT * FROM COUPON_VIEW ORDER BY COUPON_ID desc) a) WHERE event_no = 23;
 
-UPDATE event SET event_status = 's' WHERE event_no = 23;
 ------
-SELECT * FROM COUPON;
+SELECT * FROM COUPON ORDER BY COUPON_ID desc;
 SELECT * FROM guest;
 SELECT * FROM COUPON_view WHERE event_no = 32 ORDER BY COUPON_ID desc;
 SELECT * FROM event;
@@ -329,6 +319,15 @@ SELECT 'abcd', event_no, event_start, event_end FROM event WHERE event_no = 2;
 UPDATE COUPON SET EVENT_START = EVENT_START, EVENT_END = EVENT_END WHERE EVENT_NO = 23;
 
 SELECT COUNT(*) FROM coupon where event_no = 20;
-=======
+DELETE coupon WHERE COUPON_id = 10;
 
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git
+
+INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
+		SELECT guest_id, 7/*이벤트번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
+		FROM (
+		SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
+		) gb WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
+	
+UPDATE COUPON SET USED_YN = 'y' WHERE COUPON_ID = 27;
+
+UPDATE COUPON SET USED_YN = 'n' WHERE event_start <= sysdate AND event_end >= sysdate AND USED_YN IN ('n', 'w') ;

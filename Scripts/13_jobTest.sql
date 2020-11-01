@@ -21,10 +21,11 @@ CREATE OR REPLACE PROCEDURE UPDATE_JOB_EVENT
 		-- 이벤트 종료로 변경
 		UPDATE event SET event_status = 'e' WHERE event_end < sysdate;
 		-- 고객 쿠폰 기간만료로 변경
-		UPDATE coupon SET USED_YN = 'e' WHERE EVENT_END < sysdate; 
-		-- 
-		UPDATE COUPON SET USED_YN = 'n' WHERE event_start <= sysdate AND event_end >= sysdate;
-		
+		UPDATE coupon SET USED_YN = 'e' WHERE EVENT_END < sysdate AND USED_YN IN ('n', 'w', 'e');
+		-- 대기
+		UPDATE COUPON SET USED_YN = 'w' WHERE event_start > sysdate  AND USED_YN IN ('n', 'w', 'e');
+		--수정했을때 기간중이면 n로,, 사용완료 (y) 제외
+		UPDATE COUPON SET USED_YN = 'n' WHERE event_start <= sysdate AND event_end >= sysdate AND USED_YN IN ('n', 'w', 'e');
       END;
 
 -- job 생성
@@ -84,7 +85,7 @@ END;
 
 
 
---생일 쿠폰 => 매일체크
+--생일 쿠폰 => 매일체크, 지금 3초간격이니까 테스트하고 remove하삼
 SELECT * FROM user_jobs; 
 
 -- 배치(스케줄러)
@@ -93,13 +94,13 @@ CREATE OR REPLACE PROCEDURE UPDATE_JOB_BIRTHDAY_COUPON
    IS
       BEGIN
 	   --생일쿠폰 삽입
-	   INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
-		SELECT guest_id, 23/*이벤트번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
-		FROM (SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g) gb
-		WHERE TO_CHAR(sysdate, 'YYYY-MM-DD') = TO_CHAR("thisyear_bd" - 10, 'YYYY-MM-DD');
-		--생일쿠폰 삽입 후 쿠폰 상태 n으로 변경
-		UPDATE COUPON SET USED_YN = 'n' 
+	  INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
+		SELECT guest_id, 7/*이벤트번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
+		FROM (
+		SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
+		) gb WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
       END;
+     
 
 -- job 생성
 DECLARE
@@ -108,10 +109,9 @@ BEGIN
    SYS.DBMS_JOB.SUBMIT
    (
    JOB => X
-   , WHAT => ' UPDATE_JOB_BIRTHDAY_COUPON;' -- 등록할 프로시저 명 넣어주기 (마지막에 꼭 ; 넣어주기. job 실행하면서 에러 날 수 있음)
-   , NEXT_DATE => SYSDATE --매일체크
-   --, INTERVAL => sysdate + 1--매일
-   , INTERVAL => 'SYSDATE + 1/24/60/20' --3초
+   , WHAT => 'UPDATE_JOB_BIRTHDAY_COUPON;' -- 등록할 프로시저 명 넣어주기 (마지막에 꼭 ; 넣어주기. job 실행하면서 에러 날 수 있음)
+   , NEXT_DATE => SYSDATE -- 현재시각부터 바로 시작
+   , INTERVAL => 'SYSDATE + 1/24/60/20' -- 3초 간격으로 실행
    , NO_PARSE => TRUE
    );
 END;
@@ -145,7 +145,7 @@ END;
 
 -- 등록되어 있는 JOB 삭제
 BEGIN
-   DBMS_JOB.REMOVE(68);
+   DBMS_JOB.REMOVE(27);
    COMMIT;
 END;
 

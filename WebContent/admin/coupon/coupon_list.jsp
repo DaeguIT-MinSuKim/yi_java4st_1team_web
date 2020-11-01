@@ -82,7 +82,7 @@ $(function() {
 							<td style="width:50px;">${c.event.eventEnd}</td>
 							<td style="width:80px;">
 								<c:choose>
-									<c:when test="${c.event.eventStatus == 'w'}">
+									<c:when test="${c.usedYn == 'w'}">
 										<div class="btn-warning btn-sm" style="width:80px; margin:0 auto">대기중</div>
 									</c:when>
 									<c:when test="${c.usedYn == 'n'}">
