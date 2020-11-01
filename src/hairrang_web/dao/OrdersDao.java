@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.OrderDetail;
 import hairrang_web.dto.Orders;
+import hairrang_web.utils.Paging;
 
 public interface OrdersDao {
 
@@ -24,6 +25,10 @@ public interface OrdersDao {
 	int selectMaxOrdersNo();
 
 	int selectNextValOrdersNo();
+
+	// 페이징
+	int countOrdersByConditionForPaging(Paging paging, String where, String query, String sorter);
+	ArrayList<Orders> selectOrdersByCondition(Paging paging, String where, String query, String sorter);
 	
 	// int, update, delete는 트랜잭션 적용으로 service에서 구현.
 }

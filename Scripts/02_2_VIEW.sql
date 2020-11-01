@@ -90,6 +90,13 @@ SELECT c.*, NVL(e.EVENT_NAME, '삭제된 이벤트') AS EVENT_NAME, e.EVENT_SALE
 FROM COUPON c LEFT OUTER JOIN Event e ON (c.EVENT_NO  = e.EVENT_NO );
 
 
+/* 페이징용 booking */
 CREATE OR REPLACE VIEW booking_guest_view
 AS
 SELECT b.*, guest_name, guest_phone FROM booking b LEFT OUTER JOIN guest g ON(b.GUEST_ID = g.GUEST_ID);
+
+/* 페이징용 orders */
+CREATE OR REPLACE VIEW orders_guest_view
+as
+SELECT o.*, g.GUEST_NAME, g.GUEST_PHONE 
+FROM orders o LEFT OUTER JOIN GUEST g ON (o.GUEST_ID = g.GUEST_ID ) ;
