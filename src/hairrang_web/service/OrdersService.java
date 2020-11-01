@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import hairrang_web.dao.OrdersDao;
 import hairrang_web.dao.impl.OrdersDaoImpl;
 import hairrang_web.ds.JndiDs;
+import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.OrderDetail;
 import hairrang_web.dto.Orders;
+import hairrang_web.utils.Paging;
 
 public class OrdersService {
 
@@ -147,4 +149,12 @@ public class OrdersService {
         }
     }
 	
+    
+    public ArrayList<Orders> getOrdersListBySearch(Paging paging, String where, String query, String designer) {
+    	return dao.selectOrdersByCondition(paging, where, query, designer);
+    }
+    
+    public int getTotalCountBySearch(Paging paging, String where, String query, String designer) {
+    	return dao.countOrdersByConditionForPaging(paging, where, query, designer);
+	}
 }

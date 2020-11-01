@@ -81,7 +81,7 @@ $(function() {
 		}
 	}
 	
-	function getFilteringPaging() {
+	/* function getFilteringPaging() {
 		var params = "";
 		var cntPerPage = $("select[name=cntPerPage]").val();
 		var where = $("select[name=where]").val();
@@ -109,7 +109,7 @@ $(function() {
 		}
 		
 		location.href="bookingList.do" + params;
-	}
+	} */
 });
 </script>
 <!-- Page Heading -->
@@ -127,8 +127,8 @@ $(function() {
              	예약 내역 목록
             </div>
             <div class="float-right">
-				<button id="addNew" class="btn btn-success btn-sm" style="float: right;">등록</button>
-	           	<button id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;">선택삭제</button>
+				<!-- <button id="addNew" class="btn btn-success btn-sm" style="float: right;">등록</button> -->
+	           	<button id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;">예약 취소</button>
 				<button id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">전체선택</button>
 				<button id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;">선택해제</button>
             </div>			
@@ -212,10 +212,14 @@ $(function() {
 					<tbody>
 						<c:forEach var="booking" items="${list }">
 						<tr>
-							<td><input type="checkbox" no="${booking.bookNo }"></td>
+							<td>
+								<c:if test="${booking.bookStatus eq 1}">
+									<input type="checkbox" no="${booking.bookNo }">
+								</c:if>
+							</td>
 							<td>${booking.bookNo }</td>
 							<td>${booking.bookDateStr }</td>
-							<td>${booking.designer.deName }</td>
+							<td>${booking.designer.deNickname } ${booking.designer.deLevel }</td>
 							<td>${booking.guest.guestName } (${booking.guest.guestId })</td>
 							<td>${booking.guest.guestPhone }</td>
 							<td>${booking.howManyHairItems }</td>
@@ -238,15 +242,12 @@ $(function() {
 				
 				<!-- 페이징 시작 -->
 				<div class="row">
-					<div class="col-sm-12 col-md-5">
-						<div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">전체 ${total }개 중 ${cntPerPage*(nowPage-1) + 1} - ${nowPage > (total/cntPerPage) ? (nowPage-1)*cntPerPage + total%cntPerPage : nowPage*cntPerPage}</div>
-					</div>
-					<div class="col-sm-12 col-md-7">
+					<div class="col-sm-12 col-md-12" style="text-align: center;">
 						<div class="dataTables_info paging-line">
 							<!-- << -->
 							<div class="paging-line">
 								<c:if test="${paging.startPage > 1}">
-									<a href="bookingList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
+									<a href="bookingList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&query=${query}">
 										<i class="fas fa-angle-double-left"></i>
 									</a>
 								</c:if>
@@ -259,7 +260,7 @@ $(function() {
 							<c:choose>
 								<c:when test="${paging.nowPage > 1}">
 									<div class="paging-line">
-										<a href="bookingList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
+										<a href="bookingList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&query=${query}"><i class="fas fa-angle-left"></i></a>
 									</div>
 								</c:when>
 								<c:when test="${paging.nowPage == 1}">
@@ -271,16 +272,16 @@ $(function() {
 							
 							<!-- 페이지 숫자 -->
 							<c:if test="${paging.total eq 0 }">
-								<div class="paging-line" style="font-weight:bold">1</div>
+								<div class="paging-line font-weight-bold">1</div>
 							</c:if>
 							<c:forEach begin="${paging.startPage}" end="${paging.endPage }" var="p">
 								<c:choose>
 									<c:when test="${p == paging.nowPage }">
-										<div class="paging-line" style="font-weight:bold">${p}</div>
+										<div class="paging-line font-weight-bold">${p}</div>
 									</c:when>
-									<c:when test="${p > paging.nowPage }">
-										<div class="paging-line">
-										<a href="bookingList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p}</a></div>
+									<c:when test="${p != paging.nowPage }">
+										<div class="paging-line font-weight-bold">
+										<a href="bookingList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&query=${query}">${p}</a></div>
 									</c:when>
 								</c:choose>
 							</c:forEach>
@@ -291,7 +292,7 @@ $(function() {
 							<c:choose>
 								<c:when test="${paging.nowPage < paging.lastPage}">
 									<div class="paging-line">
-										<a href="bookingList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
+										<a href="bookingList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&query=${query}"><i class="fas fa-angle-right"></i></a>
 									</div>
 								</c:when>
 								<c:when test="${paging.nowPage >= paging.lastPage}">
@@ -304,7 +305,7 @@ $(function() {
 							<!-- >> -->
 							<c:if test="${paging.endPage < paging.lastPage }">
 								<div class="paging-line">
-								<a href="bookingList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
+								<a href="bookingList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&query=${query}">
 									<i class="fas fa-angle-double-right"></i></a>
 								</div>
 							</c:if>
@@ -325,7 +326,7 @@ $(function() {
 	</div>
 	<!-- cardBody-->
 	<div class="card-footer">
-			ㅎㅇㅎㅇ
+		<div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">전체 ${total }개 중 ${cntPerPage*(nowPage-1) + 1} - ${nowPage > (total/cntPerPage) ? (nowPage-1)*cntPerPage + total%cntPerPage : nowPage*cntPerPage}</div>
 	</div>
 </div>
 

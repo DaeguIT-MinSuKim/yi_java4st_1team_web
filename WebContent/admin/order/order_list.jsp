@@ -17,10 +17,45 @@ $(function() {
 		    console.log(idx);
 		});
 
-
+		setFilteringPaging();
 	});
 	
-});z
+	function setFilteringPaging() {
+		var thisUrlStr = window.location.href;
+		var thisUrl = new URL(thisUrlStr);
+
+		var where = thisUrl.searchParams.get("where");
+		var query = thisUrl.searchParams.get("query");
+		var cntPerPage = thisUrl.searchParams.get("cntPerPage");
+		var designer = thisUrl.searchParams.get("designer");
+		
+		if(cntPerPage != null) {
+			$("select[name=cntPerPage]").val(cntPerPage);
+		}
+		if(where.length != 0) {
+			$("select[name=where]").val(where);
+			$("input[name=query]").val(query);
+		}
+		if(designer.length != 0) {
+			$("select[name=designer]").val(designer);
+		}
+	}
+	
+	$("#searchBtn").click(function(e) {
+		if($("select[name=where]").val() == undefined || $("input[name=query]").val() == "") {
+			e.preventDefault();
+		}
+	});
+	 
+	$("select[name=cntPerPage]").change(function(){
+		document.searchForm.submit();
+	});
+	
+	$("select[name=designer]").change(function(){
+		document.searchForm.submit();
+	});
+	
+});
 </script>
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800 font-weight">목록 템플릿</h1>
@@ -50,31 +85,49 @@ $(function() {
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
 				<!-- 테이블 상단 필터링 시작 -->
-				<div class="row mb-2">
-					<div class="col-sm-12 col-md-6">
-						<div class="dataTables_length" id="dataTable_length">
-							<label>
-								<select name="dataTable_length" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
+				<form action="orderList.do" name="searchForm">
+				
+				<div class="row m-0 mb-2">
+					<div class="col-sm-12 col-md-6 p-0">
+						<div class="dataTables_length form-inline" id="dataTable_length">
+							<div class="input-group input-group-sm mr-3">
+								<select name="cntPerPage" aria-controls="dataTable" class="custom-select custom-select-sm">
 									<option value="10">10줄 보기</option>
 									<option value="25">25줄 보기</option>
 									<option value="50">50줄 보기</option>
 									<option value="100">100줄 보기</option>
 								</select>
-							</label>
+							</div>
+							<div class="input-group input-group-sm">
+								<div class="input-group-sm input-group-prepend">
+									<label class="input-group-text" for="sorter">담당 디자이너</label>
+								</div>
+								<select name="designer" aria-controls="dataTable" class="custom-select custom-select-sm">
+									<option selected value="">전체</option>
+									<c:forEach var="de" items="${ dList}">
+										<option value="${de.deNo }">${de.deNickname } ${de.deLevel } (${de.deName }) </option>
+									</c:forEach>
+								</select>
+							</div>
 						</div>
 					</div>
-					<div class="col-sm-12 col-md-6">
+					<div class="col-sm-12 col-md-6 p-0">
 						<div id="dataTable_filter" class="dataTables_filter ">
-							<select class="custom-select custom-select-sm" name="searchCriteria" style="width: 80px;">
+							<select class="custom-select custom-select-sm" name="where" style="width: 80px;">
 								<option value="">기준</option>
+								<option value="guestId">아이디</option>
+								<option value="guestName">고객명</option>
+								<option value="guestPhone">연락처</option>
 							</select>
 							<label>
-								<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
+								<input type="search" class="form-control form-control-sm" name="query" placeholder="" aria-controls="dataTable">
 							</label>
-							<a href="#" class="btn btn-primary btn-sm"><span class="text">검색</span>	</a>
+							<input type="submit" class="btn btn-primary btn-sm" value="검색" id="searchBtn"></input>
 						</div>
 					</div>
 				</div>
+				
+				</form>
 				<!-- 테이블 상단 필터링 끝 -->
 
 				<!-- 테이블 시작 -->
@@ -84,8 +137,8 @@ $(function() {
 							<th>선택</th>
 							<th>주문번호</th>
 							<th>주문일시</th>
-							<th>고객명</th>
 							<th>담당 디자이너</th>
+							<th>고객명</th>
 							<th>시술</th>
 							<th>쿠폰사용</th>
 							<th>할인액</th>
@@ -99,8 +152,8 @@ $(function() {
 							<td><input type="checkbox" no="${order.ordersNo }"></td>
 							<td>${order.ordersNo }</td>
 							<td>${order.ordersDateStr }</td>
+							<td>${order.designer.deNickname } ${order.designer.deLevel }</td>
 							<td>${order.guest.guestName } (${order.guest.guestId })</td>
-							<td>${order.designer.deName }</td>
 							<td>${order.howManyItems }</td>
 							<td>${order.usedCoupon}</td>
 							<td>
@@ -111,7 +164,7 @@ $(function() {
 							<td>
 								<a href="orderDetail.do?no=${order.ordersNo}" class="btn bg-gray-200 btn-sm ordersViewButton"><span class="text-gray-800">상세보기</span></a>
 								<!-- <a href="#" class="btn btn-info btn-sm modifyButton"><span class="text">수정</span></a> -->
-								<a href="#" class="btn btn-danger btn-sm deleteButton" bookNo="${order.ordersNo }"><span class="text">삭제</span> </a>
+								<%-- <a href="#" class="btn btn-danger btn-sm deleteButton" bookNo="${order.ordersNo }"><span class="text">삭제</span> </a> --%>
 							</td>
 						</tr>
 						</c:forEach>
@@ -121,25 +174,79 @@ $(function() {
 				
 				<!-- 페이징 시작 -->
 				<div class="row">
-					<div class="col-sm-12 col-md-5">
-						<div class="dataTables_info" id="dataTable_info" role="status"
-							aria-live="polite">전체 23개 중 1-10</div>
-					</div>
-					<div class="col-sm-12 col-md-7">
-						<div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-							<ul class="pagination">
-								<li class="paginate_button page-item previous disabled" id="dataTable_previous">
-									<a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">이전</a></li>
-								<li class="paginate_button page-item active">
-									<a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-								<li class="paginate_button page-item ">
-									<a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-								<li class="paginate_button page-item ">
-									<a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-								<li class="paginate_button page-item next" id="dataTable_next">
-									<a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">다음</a>
-								</li>
-							</ul>
+					<div class="col-sm-12 col-md-12" style="text-align: center;">
+						<div class="dataTables_info paging-line">
+							<!-- << -->
+							<div class="paging-line">
+								<c:if test="${paging.startPage > 1}">
+									<a href="bookingList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&designer=${designer}&where=${where }&query=${query}">
+										<i class="fas fa-angle-double-left"></i>
+									</a>
+								</c:if>
+								<c:if test="${paging.startPage == 1}">
+									<i class="fas fa-angle-double-left"></i>
+								</c:if>
+							</div>
+							
+							<!-- 이전페이지 -->
+							<c:choose>
+								<c:when test="${paging.nowPage > 1}">
+									<div class="paging-line">
+										<a href="bookingList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&designer=${designer}&where=${where }&query=${query}"><i class="fas fa-angle-left"></i></a>
+									</div>
+								</c:when>
+								<c:when test="${paging.nowPage == 1}">
+									<div class="paging-line">
+										<i class="fas fa-angle-left"></i>
+									</div>
+								</c:when>
+							</c:choose>
+							
+							<!-- 페이지 숫자 -->
+							<c:if test="${paging.total eq 0 }">
+								<div class="paging-line font-weight-bold">1</div>
+							</c:if>
+							<c:forEach begin="${paging.startPage}" end="${paging.endPage }" var="p">
+								<c:choose>
+									<c:when test="${p == paging.nowPage }">
+										<div class="paging-line font-weight-bold">${p}</div>
+									</c:when>
+									<c:when test="${p != paging.nowPage }">
+										<div class="paging-line font-weight-bold">
+										<a href="bookingList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&designer=${designer}&where=${where }&query=${query}">${p}</a></div>
+									</c:when>
+								</c:choose>
+							</c:forEach>
+							
+							
+							
+							<!-- 다음페이지 -->
+							<c:choose>
+								<c:when test="${paging.nowPage < paging.lastPage}">
+									<div class="paging-line">
+										<a href="bookingList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&designer=${designer}&where=${where }&query=${query}"><i class="fas fa-angle-right"></i></a>
+									</div>
+								</c:when>
+								<c:when test="${paging.nowPage >= paging.lastPage}">
+									<div class="paging-line">
+										<i class="fas fa-angle-right"></i>
+									</div>	
+								</c:when>
+							</c:choose>	
+							
+							<!-- >> -->
+							<c:if test="${paging.endPage < paging.lastPage }">
+								<div class="paging-line">
+								<a href="bookingList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&designer=${designer}&where=${where }&query=${query}">
+									<i class="fas fa-angle-double-right"></i></a>
+								</div>
+							</c:if>
+							<c:if test="${paging.endPage == paging.lastPage }">
+								<div class="paging-line">
+									<i class="fas fa-angle-double-right"></i>
+								</div>
+							</c:if>
+						
 						</div>
 					</div>
 				</div>
@@ -151,7 +258,7 @@ $(function() {
 	</div>
 	<!-- cardBody-->
 	<div class="card-footer">
-			ㅎㅇㅎㅇ
+		<div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">전체 ${total }개 중 ${cntPerPage*(nowPage-1) + 1} - ${nowPage > (total/cntPerPage) ? (nowPage-1)*cntPerPage + total%cntPerPage : nowPage*cntPerPage}</div>
 	</div>
 </div>
 

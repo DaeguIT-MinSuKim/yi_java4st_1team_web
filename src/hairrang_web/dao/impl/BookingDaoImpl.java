@@ -408,7 +408,6 @@ public class BookingDaoImpl implements BookingDao {
 			pstmt.setInt(3, paging.getEnd());
 			try(ResultSet rs = pstmt.executeQuery()){
 				if(rs.next()) {
-					int cnt = 1;
 					ArrayList<Booking> list = new ArrayList<Booking>();
 					//BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, HAIR_QUANTITY, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE
 					do {
@@ -430,7 +429,6 @@ public class BookingDaoImpl implements BookingDao {
 						booking.setHairList(hairList);
 						
 						list.add(booking);
-						System.out.println("짐 몇번째라노? " + cnt++);
 					} while (rs.next());
 					return list;
 				}
