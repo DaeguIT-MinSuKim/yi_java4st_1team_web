@@ -20,9 +20,6 @@ p {
 	border-top: 1px solid #ddd;
 }
 
-
-
-
 .content1-inner {
 	width: 800px;
 	margin: 0 auto;
@@ -73,32 +70,32 @@ td {
 }
 </style>
 
-</head>
-<body>
 
 
 
-	<div class="content1-inner" style="text-align: center;">
-		<p></p>
-		<br>
-		<table class="outer">
+<div class="content1-inner" style="text-align: center;">
+	<p></p>
+	<br>
+	<table class="outer">
 
+		<tr class="tr">
+			<td>${notice.noticeTitle }</td>
+		</tr>
+		<tr class="tr">
+			<td>${notice.noticeContent }</td>
+		</tr>
+		<c:if test="${ notice.noticeFile != null}">
 			<tr class="tr">
-				<td>${notice.noticeTitle }</td>
+				<td><img alt="" src="notice/setload/${notice.noticeFile}"></td>
 			</tr>
-			<tr class="tr">
-				<td>${notice.noticeContent }</td>
-			</tr>
-			<c:if test="${ notice.noticeFile != null}">
-				<tr class="tr">
-					<td><img alt="" src="notice/setload/${notice.noticeFile}"></td>
-				</tr>
-			</c:if>
-			
-		</table>
-	</div>
-	<input style="float: right;" type="button" value="홈으로"
-		onclick="location.href='noticeHome.do'">
+		</c:if>
 
-</body>
+	</table>
+</div>
+<input style="float: right;" type="button" value="홈으로"
+	onclick="location.href='noticeHome.do'">
+
+
+
+
 <%@ include file="../footer.jsp"%>
