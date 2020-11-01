@@ -98,4 +98,8 @@ SELECT * FROM (SELECT rownum, b.* FROM booking_guest_view b WHERE de_no = 2 ORDE
 SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking ORDER BY book_no desc) a) WHERE rn BETWEEN 1 AND 1 ORDER BY rn
 
 SELECT * FROM booking;
+
+UPDATE booking SET BOOK_TIME = TO_DATE('2020-11-01 12:00:00', 'YYYY-MM-DD hh24:mi:ss') WHERE book_no IN (11, 12, 13);
 SELECT * FROM USER_SEQUENCES ;
+
+SELECT * FROM booking WHERE TO_CHAR(book_time, 'YYYY-MM-DD') = '2020-10-31';

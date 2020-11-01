@@ -1,3 +1,4 @@
+var selectedGuestId;
 var selectedBookingNo = 0; // 선택된 예약번호
 var selBooking; // 선택된 예약 정보
 
@@ -212,13 +213,13 @@ $(document).on("click", "#bookingSearchModalConfirm", function(){
 $(document).on("click", "#guestSearchModalConfirm", function(){
 	setOrderViewClear();
 	
-	var guestId = $("#guestSearchTable .table-primary td").eq(1).text();
+	selectedGuestId = $("#guestSearchTable .table-primary td").eq(1).text();
 	$("#guestInput").prop("readonly", true);
 	$("#nonMemberCK").prop("checked", false);
 	$("div[name=bookingDetail]").text("-");	
-	$("#guestInput").val(guestId);
+	$("#guestInput").val(selectedGuestId);
 	
-	loadCouponList(guestId);
+	loadCouponList(selectedGuestId);
 });
 
 
@@ -411,6 +412,21 @@ $(document).on("click", "#guestSearchBtn", function() {
 	searchGuest(1, opt, input);
 });
 
+
+$(document).on("click", "#guestSerachModalOpenBtn", function() {
+	if(!selectedGuestId) {
+		$("#guestSearchTable .table-primary").removeClass("table-primary");
+	}
+});
+
+$(document).on("click", "#bookingSerchModalOpenBtn", function() {
+	console.log(selectedBookingNo);
+	if(!selectedBookingNo) {
+		$("#todayBookingTable .table-primary").removeClass("table-primary");
+	}
+});
+
+
 $(document).on("keydown", "#guestSearchInput", function(event) {
 	if (event.keyCode === 13) {
 		event.preventDefault();
@@ -445,10 +461,14 @@ function loadGuestSearchTable(target, data) {
 		pageArr += "<li class='page-item active'><a href='#' class='page-link' nowPage='" + paging.startPage + "'>" + paging.startPage + "</a></li>";
 		pageArr += "<li class='page-item next disabled'><a href='#' class='page-link'>></a></li>";
 	}  else {
-		pageArr += "<li class='page-item previous'><a href='#' class='page-link'><</a></li>";
+		if(paging.nowPage == 1) {
+			pageArr += "<li class='page-item previous disabled'><a href='#' class='page-link'><</a></li>";
+		} else {
+			pageArr += "<li class='page-item previous'><a href='#' class='page-link' nowPage='" + (paging.nowPage-1) + "'><</a></li>";
+		}
 		
-		for(var i = paging.startPage; i < paging.endPaging; i++) {
-			if(i == paging.nowPaging) {
+		for(var i = paging.startPage; i <= paging.endPage; i++) {
+			if(i == paging.nowPage) {
 				// i // 현재 페이지 표시만
 				pageArr += "<li class='page-item active'><a href='#' class='page-link' nowPage='" + i + "'>" + i + "</a></li>";
 			} else {
@@ -457,7 +477,11 @@ function loadGuestSearchTable(target, data) {
 			}
 		}
 		
-		pageArr += "<li class='page-item next'><a href='#' class='page-link'>></a></li>";
+		if(paging.nowPage == paging.endPage) {
+			pageArr += "<li class='page-item next disabled'><a href='#' class='page-link'>></a></li>";
+		} else {
+			pageArr += "<li class='page-item next'><a href='#' class='page-link' nowPage='" + (paging.nowPage+1) + "'>></a></li>";
+		}
 	}
 	
 	if(paging.endPage != paging.lastPage) {
@@ -469,6 +493,13 @@ function loadGuestSearchTable(target, data) {
 	$("#guestSearchTable_paginate ul").append(pageArr);
 }
 
+
+$(document).on("click", ".page-item:not('.disabled')", function(){
+	var nowPage = $(this).children().attr("nowPage");
+	var opt = $("#guestSearchOpt").val();
+	var input = $("#guestSearchInput").val();
+	searchGuest(nowPage, opt, input);
+});
 
 
 /* 쿠폰 또는 쿠폰 적용 대상 시술 변경시 할인 금액 변화 */

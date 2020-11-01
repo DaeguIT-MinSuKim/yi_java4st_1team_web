@@ -661,11 +661,10 @@ public class BookingDaoImpl implements BookingDao {
 	
 	@Override
 	public ArrayList<Booking> selectBookingAllToday() {
-		String sql = "SELECT * FROM booking WHERE TO_CHAR(SYSDATE, 'YYYY-MM-DD') = ?";
+		String sql = "SELECT * FROM booking WHERE TO_CHAR(book_time, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, LocalDate.now().toString());
 			try(ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
 					ArrayList<Booking> list = new ArrayList<>();
