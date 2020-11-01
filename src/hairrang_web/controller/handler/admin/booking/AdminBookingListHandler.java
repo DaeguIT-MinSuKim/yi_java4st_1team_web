@@ -37,12 +37,6 @@ public class AdminBookingListHandler implements Command {
 			String query = request.getParameter("query");
 			String sorter = request.getParameter("sorter");
 			
-			System.out.println(nowPage);
-			System.out.println(cntPerPage);
-			System.out.println(query);
-			System.out.println(where);
-			System.out.println(sorter);
-			
 			if (where != null && query != null) {
 				if(!where.trim().equals("") && !query.trim().equals("") ) {
 					request.setAttribute("where", where);
@@ -75,7 +69,8 @@ public class AdminBookingListHandler implements Command {
 			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
 			request.setAttribute("nowPage", Integer.parseInt(nowPage));
 			request.setAttribute("cntPerPage", Integer.parseInt(cntPerPage));
-			
+			request.setAttribute("paging", paging);
+			System.out.println(paging);
 			
 			ArrayList<Booking> list = service.getBookingListBySearch(paging, where, query, sorter);
 			request.setAttribute("list", list);
