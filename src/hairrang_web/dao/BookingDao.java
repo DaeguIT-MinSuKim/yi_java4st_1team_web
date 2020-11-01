@@ -63,9 +63,11 @@ public interface BookingDao {
 	ArrayList<Booking> selectBookingAllToday();
 
 	
-	ArrayList<Booking> selectBookingByCondition(Paging paging, String where, String query, String sorter);
+	ArrayList<Booking> selectBookingByCondition(Paging paging, String where, String query, String sorter, String designer);
 
-	int countBookingByConditionForPaging(Paging paging, String where, String query, String sorter);
+	int countBookingByConditionForPaging(Paging paging, String where, String query, String sorter, String designer);
+
+
 
 
 }

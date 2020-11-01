@@ -1,3 +1,4 @@
+var selectedGuestId;
 var selectedBookingNo = 0; // 선택된 예약번호
 var selBooking; // 선택된 예약 정보
 
@@ -6,6 +7,7 @@ $(document).on("keydown", "input:not(#guestSearchInput)", function(event) {
 	    event.preventDefault();
 	  };
 });
+
 
 /* 주문하기로 들어온 경우 */
 // 1. 예약리스트에서
@@ -212,13 +214,13 @@ $(document).on("click", "#bookingSearchModalConfirm", function(){
 $(document).on("click", "#guestSearchModalConfirm", function(){
 	setOrderViewClear();
 	
-	var guestId = $("#guestSearchTable .table-primary td").eq(1).text();
+	selectedGuestId = $("#guestSearchTable .table-primary td").eq(1).text();
 	$("#guestInput").prop("readonly", true);
 	$("#nonMemberCK").prop("checked", false);
 	$("div[name=bookingDetail]").text("-");	
-	$("#guestInput").val(guestId);
+	$("#guestInput").val(selectedGuestId);
 	
-	loadCouponList(guestId);
+	loadCouponList(selectedGuestId);
 });
 
 
@@ -411,6 +413,21 @@ $(document).on("click", "#guestSearchBtn", function() {
 	searchGuest(1, opt, input);
 });
 
+
+$(document).on("click", "#guestSerachModalOpenBtn", function() {
+	if(!selectedGuestId) {
+		$("#guestSearchTable .table-primary").removeClass("table-primary");
+	}
+});
+
+$(document).on("click", "#bookingSerchModalOpenBtn", function() {
+	console.log(selectedBookingNo);
+	if(!selectedBookingNo) {
+		$("#todayBookingTable .table-primary").removeClass("table-primary");
+	}
+});
+
+
 $(document).on("keydown", "#guestSearchInput", function(event) {
 	if (event.keyCode === 13) {
 		event.preventDefault();
@@ -429,26 +446,39 @@ function loadGuestSearchTable(target, data) {
 	var paging = data.paging;
 	
 	var dataArr = "";
-	$.each(guestList, function(index, item) {
-		dataArr += "<tr role='button'><td></td><td>" + item.guestId + "</td><td>" + item.guestName + "</td><td>" + item.guestPhone + "</td></tr>";
-	});
-	target.append(dataArr);
+	console.log(data.guestList);
 	
-	$("#guestSearchTable tbody tr td:first-child()").each(function(index, item) {
-		$(item).text((paging.nowPage-1) * paging.cntPerPage + index + 1);
-	});
+	if(data.guestList == null) {
+		dataArr += "<tr><td colspan='4'>조건에 부합하는 검색 결과가 존재하지 않습니다.</td></tr>";
+		target.append(dataArr);
+	} else {
+		$.each(guestList, function(index, item) {
+			dataArr += "<tr role='button'><td></td><td>" + item.guestId + "</td><td>" + item.guestName + "</td><td>" + item.guestPhone + "</td></tr>";
+		});
+		target.append(dataArr);
+		
+		// 조회 결과 넘버링
+		$("#guestSearchTable tbody tr td:first-child()").each(function(index, item) {
+			$(item).text((paging.nowPage-1) * paging.cntPerPage + index + 1);
+		});
+	}
 	
+	// 조회 결과 페이징
 	var pageArr = "";
-	if(paging.endPage == 1) {
+	if(paging.endPage == 1 || paging.endPage == 0) {
 		// 시작 페이지가 0? 표시만 하기?
 		pageArr += "<li class='page-item previous disabled'><a href='#' class='page-link'><</a></li>";
 		pageArr += "<li class='page-item active'><a href='#' class='page-link' nowPage='" + paging.startPage + "'>" + paging.startPage + "</a></li>";
 		pageArr += "<li class='page-item next disabled'><a href='#' class='page-link'>></a></li>";
 	}  else {
-		pageArr += "<li class='page-item previous'><a href='#' class='page-link'><</a></li>";
+		if(paging.nowPage == 1) {
+			pageArr += "<li class='page-item previous disabled'><a href='#' class='page-link'><</a></li>";
+		} else {
+			pageArr += "<li class='page-item previous'><a href='#' class='page-link' nowPage='" + (paging.nowPage-1) + "'><</a></li>";
+		}
 		
-		for(var i = paging.startPage; i < paging.endPaging; i++) {
-			if(i == paging.nowPaging) {
+		for(var i = paging.startPage; i <= paging.endPage; i++) {
+			if(i == paging.nowPage) {
 				// i // 현재 페이지 표시만
 				pageArr += "<li class='page-item active'><a href='#' class='page-link' nowPage='" + i + "'>" + i + "</a></li>";
 			} else {
@@ -457,7 +487,11 @@ function loadGuestSearchTable(target, data) {
 			}
 		}
 		
-		pageArr += "<li class='page-item next'><a href='#' class='page-link'>></a></li>";
+		if(paging.nowPage >= paging.endPage) {
+			pageArr += "<li class='page-item next disabled'><a href='#' class='page-link'>></a></li>";
+		} else {
+			pageArr += "<li class='page-item next'><a href='#' class='page-link' nowPage='" + (paging.nowPage+1) + "'>></a></li>";
+		}
 	}
 	
 	if(paging.endPage != paging.lastPage) {
@@ -469,6 +503,13 @@ function loadGuestSearchTable(target, data) {
 	$("#guestSearchTable_paginate ul").append(pageArr);
 }
 
+
+$(document).on("click", ".page-item:not('.disabled')", function(){
+	var nowPage = $(this).children().attr("nowPage");
+	var opt = $("#guestSearchOpt").val();
+	var input = $("#guestSearchInput").val();
+	searchGuest(nowPage, opt, input);
+});
 
 
 /* 쿠폰 또는 쿠폰 적용 대상 시술 변경시 할인 금액 변화 */

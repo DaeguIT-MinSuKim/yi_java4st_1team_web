@@ -297,6 +297,7 @@ SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon_view WHERE EVENT
 SELECT count(*) FROM COUPON;
 ---
 
+<<<<<<< HEAD
 UPDATE COUPON SET event_start = to_date('2020-10-10','yyyy-MM-dd'), event_end = to_date('2020-10-30','yyyy-MM-dd') WHERE coupon_id = 771;
 UPDATE coupon SET used_yn = 'y' WHERE COUPON_ID = 772;
 
@@ -328,3 +329,6 @@ SELECT 'abcd', event_no, event_start, event_end FROM event WHERE event_no = 2;
 UPDATE COUPON SET EVENT_START = EVENT_START, EVENT_END = EVENT_END WHERE EVENT_NO = 23;
 
 SELECT COUNT(*) FROM coupon where event_no = 20;
+=======
+
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git

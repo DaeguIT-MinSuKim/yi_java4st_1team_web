@@ -9,12 +9,15 @@ import java.util.ArrayList;
 
 import hairrang_web.dao.OrdersDao;
 import hairrang_web.ds.JndiDs;
+import hairrang_web.dto.Booking;
 import hairrang_web.dto.Coupon;
 import hairrang_web.dto.Designer;
+import hairrang_web.dto.Event;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.Hair;
 import hairrang_web.dto.OrderDetail;
 import hairrang_web.dto.Orders;
+import hairrang_web.utils.Paging;
 
 public class OrdersDaoImpl implements OrdersDao {
 
@@ -106,7 +109,7 @@ public class OrdersDaoImpl implements OrdersDao {
 	// 단독으로 쓰일 일은 없고, select .. from orders 할 때 odList를 얻어올 때 쓰임.
 	@Override
 	public ArrayList<OrderDetail> selectOrderDetailsByOrdersNo(int ordersNo) {
-		String sql = "SELECT * FROM ORDER_DETAIL WHERE ORDERS_NO = ? ORDER BY COUPON_ID, OD_NO";
+		String sql = "SELECT * FROM OD_guest_HAIR_COUPON_view WHERE ORDERS_NO = ? ORDER BY COUPON_ID, OD_NO";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -127,15 +130,25 @@ public class OrdersDaoImpl implements OrdersDao {
 	}
 
 	private OrderDetail getOrderDetail(ResultSet rs) throws SQLException {
+		// OD_NO,COUPON_ID,HAIR_NO,ORDERS_NO,OD_PRICE,OD_QUANTITY,OD_DISCOUNT,HAIR_NAME,EVENT_NAME
 		// OD_NO, ORDER_NO, HAIR_NO, OD_PRICE, OD_QUANTITY, EVENT_NO, OD_DISCOUNT
 		int odNo = rs.getInt("OD_NO");
-		Hair hair = HairDaoImpl.getInstance().selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
+		
+		Hair hair = new Hair(rs.getInt("hair_NO"));
+		hair.setHairName(rs.getString("HAIR_NAME"));
+		
 		int odPrice = rs.getInt("OD_PRICE");
 		int odQuantity = rs.getInt("OD_QUANTITY");
+		
 		Coupon coupon = null;
+		Event event = null;
 		int odDiscount = 0;
+		
 		try {
-			coupon = CouponDaoImpl.getInstance().selectCouponByCouponId(new Coupon(rs.getInt("COUPON_ID")));
+			coupon = new Coupon(rs.getInt("COUPON_ID"));
+			event = new Event();
+			event.setEventName(rs.getString("EVENT_NAME"));
+			coupon.setEvent(event);
 			odDiscount = rs.getInt("OD_DISCOUNT");
 		} catch(SQLException e) {
 		}
@@ -178,4 +191,104 @@ public class OrdersDaoImpl implements OrdersDao {
 		return 0;
 	}
 
+	
+	@Override
+	public int countOrdersByConditionForPaging(Paging paging, String where, String query, String designer) {
+		String sql = "SELECT COUNT(*) FROM orders ";
+		int cnt = 0;
+		
+		if(where == null) {
+		} else if(where.equals("")) {
+		} else {
+			if(where.trim().equals("guestId")) {
+				where = "guest_id";
+			} else if (where.equals("guestName")) {
+				where = "guest_name";
+			} else if (where.equals("guestPhone")) {
+				where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
+			}
+			sql += " WHERE " + where + " LIKE '%" + query + "%'";
+			cnt++;
+		}
+		
+		if(designer == null) {
+		} else if (designer.trim().equals("")) {
+		} else {
+			if(cnt == 1) {
+				sql += " AND DE_NO = " + designer;
+			} else {
+				sql += " WHERE DE_NO = " + designer;
+			}
+		}
+		
+		System.out.println("완성된 쿼리" + sql);
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return 0;
+	}
+	
+	
+	@Override
+	public ArrayList<Orders> selectOrdersByCondition(Paging paging, String where, String query, String designer) {
+		
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM orders_guest_view ";
+		int cnt = 0;
+		
+		if(where == null) {
+			
+		} else if(where.equals("")) {
+			
+		} else {
+			if(where.trim().equals("guestId")) {
+				where = "guest_id";
+			} else if (where.equals("guestName")) {
+				where = "guest_name";
+			} else if (where.equals("guestPhone")) {
+				where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
+			}
+			sql += " WHERE " + where + " LIKE '%" + query + "%' ";
+			cnt++;
+		}
+		
+		if(designer == null) {
+			sql += " ORDER BY orders_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		} else if (designer.trim().equals("")) {
+		} else {
+			if(cnt == 1) {
+				sql += " AND DE_NO = " + designer;
+			} else {
+				sql += " WHERE DE_NO = " + designer;
+			}
+			sql += " ORDER BY orders_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		}
+		
+		System.out.println("완성된 sql + " + sql);
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					ArrayList<Orders> list = new ArrayList<>();
+					do {
+						list.add(getOrders(rs));
+					}while(rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return null;
+	}
+	
 }

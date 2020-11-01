@@ -9,14 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Booking;
+import hairrang_web.dto.Designer;
 import hairrang_web.service.BookingService;
+import hairrang_web.service.DesignerService;
 import hairrang_web.utils.Paging;
 
 public class AdminBookingListHandler implements Command {
-	BookingService service;
+	private BookingService bService;
+	private DesignerService dService;
 	
 	public AdminBookingListHandler() {
-		service = new BookingService();
+		bService = new BookingService();
+		dService = new DesignerService();
 	}
 	
 	@Override
@@ -36,12 +40,7 @@ public class AdminBookingListHandler implements Command {
 			String where = request.getParameter("where");
 			String query = request.getParameter("query");
 			String sorter = request.getParameter("sorter");
-			
-			System.out.println(nowPage);
-			System.out.println(cntPerPage);
-			System.out.println(query);
-			System.out.println(where);
-			System.out.println(sorter);
+			String designer = request.getParameter("designer");
 			
 			if (where != null && query != null) {
 				if(!where.trim().equals("") && !query.trim().equals("") ) {
@@ -69,17 +68,21 @@ public class AdminBookingListHandler implements Command {
 			paging.setNowPage(Integer.parseInt(nowPage));
 			paging.setCntPerPage(Integer.parseInt(cntPerPage));
 			
-			int total = service.getTotalCountBySearch(paging, where, query, sorter);
+			int total = bService.getTotalCountBySearch(paging, where, query, sorter, designer);
 			request.setAttribute("total", total);
 			
 			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
 			request.setAttribute("nowPage", Integer.parseInt(nowPage));
 			request.setAttribute("cntPerPage", Integer.parseInt(cntPerPage));
+			request.setAttribute("paging", paging);
+			System.out.println(paging);
 			
-			
-			ArrayList<Booking> list = service.getBookingListBySearch(paging, where, query, sorter);
+			ArrayList<Booking> list = bService.getBookingListBySearch(paging, where, query, sorter, designer);
 			request.setAttribute("list", list);
 			request.setAttribute("sorter", sorter);
+			
+			ArrayList<Designer> dList = dService.getDesignerList();
+			request.setAttribute("dList", dList);
 			
 		} else {
 			System.out.println(getClass().getSimpleName() + ">> POST");

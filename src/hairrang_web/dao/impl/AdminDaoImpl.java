@@ -23,7 +23,7 @@ public class AdminDaoImpl implements AdminDao {
 
 	@Override
 	public ArrayList<Admin> selectAdminAll() {
-		String sql = "SELECT * FROM ADMIN_ALL_VIEW";
+		String sql = "SELECT * FROM ADMIN_VIEW";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -56,7 +56,7 @@ public class AdminDaoImpl implements AdminDao {
 	
 	@Override
 	public Admin selectAdminById(Admin admin) {
-		String sql = "SELECT * FROM ADMIN_ALL_VIEW WHERE ADMIN_ID = ?";
+		String sql = "SELECT * FROM ADMIN_VIEW WHERE ADMIN_ID = ?";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -138,7 +138,7 @@ public class AdminDaoImpl implements AdminDao {
 	
 	@Override
 	public int checkPwd(String id, String pwd) {
-		String sql = "SELECT 1 FROM ADMIN WHERE ADMIN_ID = ?, ADMIN_PWD = ?";
+		String sql = "SELECT 1 FROM ADMIN WHERE ADMIN_ID = ? and ADMIN_PWD = ?";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {

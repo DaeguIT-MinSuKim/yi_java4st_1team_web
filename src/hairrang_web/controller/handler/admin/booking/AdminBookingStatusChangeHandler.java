@@ -2,6 +2,7 @@ package hairrang_web.controller.handler.admin.booking;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +42,18 @@ public class AdminBookingStatusChangeHandler implements Command {
 			
 		} else {
 			System.out.println(getClass().getSimpleName() + ">> POST");
+			
+			String[] list = request.getParameterValues("list[]");
+			System.out.println(Arrays.toString(list));
+			
+			int res = bService.updateBookingStatus(list);
+			
+			response.setCharacterEncoding("UTF-8");
+			response.setStatus(HttpServletResponse.SC_ACCEPTED);
+				  
+			PrintWriter pw = response.getWriter();
+			pw.print(res); // 수정 실패 0, 성공 1
+			pw.flush();
 			
 		}
 		return null;

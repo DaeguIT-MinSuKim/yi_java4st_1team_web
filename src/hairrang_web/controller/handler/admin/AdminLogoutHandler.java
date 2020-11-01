@@ -1,4 +1,4 @@
-package hairrang_web.controller.handler.guest;
+package hairrang_web.controller.handler.admin;
 
 import java.io.IOException;
 
@@ -9,19 +9,19 @@ import javax.servlet.http.HttpSession;
 
 import hairrang_web.controller.Command;
 
-public class LogoutHandler implements Command {
+public class AdminLogoutHandler implements Command {
 
 	@Override
-	public String process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public String process(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+
 		HttpSession session = request.getSession(false);
 		
 		if(session!=null) {
-			session.removeAttribute("redirectURI");
 			session.invalidate();
 		}
 	
-		response.sendRedirect("index.do");
+		response.sendRedirect("login.do");
 		
 		return null;
 	}

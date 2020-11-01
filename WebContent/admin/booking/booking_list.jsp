@@ -1,123 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../include/header.jsp"%>
-<script>
-$(function() {
-	$(document).ready(function() {
-		document.title += ' - 예약 목록';
-		
-		$(".bookingToOrderButton").on("click", function() {
-			var trIdx = $(this).closest("tr").prevAll().length;
-			console.log(trIdx);
-		});
-		
-		setFilteringPaging();
-	});
-	
-	$('.delete').click(function(event) {
-	    
-
-	});
-	
-	$(document).on('click', '.deleteButton', function() {
-		event.preventDefault();
-		console.log($(this).attr('href'));
-	    var res = confirm("예약 취소 하시겠습니까?");
-		
-	    if (res == true)   { 
-	    	$.ajax({
-	    		url: $(this).attr('href'),
-	    		type: "get",
-	    		dataType: "text",
-	    		success: function(data) {
-	    			if(data == 1) {
-	    				alert("예약 취소되었습니다.");
-	    			} else {
-	    				alert("문제가 발생했습니다. 다시 시도해주세요.");
-	    			}
-	    			location.reload();
-	    		},
-	    		error: function(error) {
-	    			alert("에러 발생");
-	    			location.reload();
-	    		}
-	    	});
-	    }
-	});
-
-	
-	$("#searchBtn").click(function(e) {
-		if($("select[name=where]").val() == undefined || $("input[name=query]").val() == "") {
-			e.preventDefault();
-		}
-	});
-	 
-	$("select[name=cntPerPage]").change(function(){
-		document.searchForm.submit();
-	});
-	
-	$("select[name=sorter]").change(function(){
-		document.searchForm.submit();
-	});
-	
-	function setFilteringPaging() {
-		var thisUrlStr = window.location.href;
-		var thisUrl = new URL(thisUrlStr);
-
-		var where = thisUrl.searchParams.get("where");
-		var query = thisUrl.searchParams.get("query");
-		var cntPerPage = thisUrl.searchParams.get("cntPerPage");
-		var sorter = thisUrl.searchParams.get("sorter");
-		
-		if(cntPerPage != null) {
-			$("select[name=cntPerPage]").val(cntPerPage);
-		}
-		if(where.length != 0) {
-			$("select[name=where]").val(where);
-			$("input[name=query]").val(query);
-		}
-		if(sorter.length != 0) {
-			$("select[name=sorter]").val(sorter);
-		}
-	}
-	
-	function getFilteringPaging() {
-		var params = "";
-		var cntPerPage = $("select[name=cntPerPage]").val();
-		var where = $("select[name=where]").val();
-		var query = $("input[name=query]").val();
-		
-		console.log("1: " + params);
-		if(cntPerPage != undefined) {
-			if(params.length == 0) {
-				params += "?";
-			} else {
-				params += "&";
-			}
-			params += "cntPerPage=" + cntPerPage;
-			console.log("2: " + params);
-		}
-		
-		if(where != null && where.length != 0 && query != null && query.length) {
-			if(params.length == 0) {
-				params += "?";
-			} else if(params.length >= 1) {
-				params += "&";
-			} 
-			params += "where=" + where + "&query=" + query;
-			console.log("3: " + params);
-		}
-		
-		location.href="bookingList.do" + params;
-	}
-});
-</script>
+<script src="booking/admin_booking_list.js"></script>
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800 font-weight">목록 템플릿</h1>
+<!--<h1 class="h3 mb-2 text-gray-800 font-weight">목록 템플릿</h1>
 <p class="mb-4">
-	여기에 간단한 설명 추가해주세요. 이렇게 링크도 달아도 됩니다. <a target="_blank"
-		href="https://datatables.net">링크</a>
-</p>
+	여기에 간단한 설명 추가해주세요. 이렇게 링크도 달아도 됩니다.
+	<a target="_blank" href="https://datatables.net">링크</a>
+</p> -->
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
@@ -127,10 +17,10 @@ $(function() {
              	예약 내역 목록
             </div>
             <div class="float-right">
-				<button id="addNew" class="btn btn-success btn-sm" style="float: right;">등록</button>
-	           	<button id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;">선택삭제</button>
+				<!-- <button id="addNew" class="btn btn-success btn-sm" style="float: right;">등록</button> -->
+				<button id="deselectAll" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;">선택해제</button>
 				<button id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">전체선택</button>
-				<button id="deselect" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;">선택해제</button>
+	           	<button id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;">예약 취소</button>
             </div>			
 		</h6>
 		<!-- <h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
@@ -161,9 +51,9 @@ $(function() {
 									<option value="100">100줄 보기</option>
 								</select>
 							</div>
-							<div class="input-group input-group-sm">
+							<div class="input-group input-group-sm mr-3">
 								<div class="input-group-sm input-group-prepend">
-									<label class="input-group-text" for="sorter">구분</label>
+									<label class="input-group-text" for="sorter">예약상태</label>
 								</div>
 								<select name="sorter" aria-controls="dataTable" class="custom-select custom-select-sm">
 									<option selected value="">전체</option>
@@ -171,6 +61,17 @@ $(function() {
 									<option value="2">주문완료</option>
 									<option value="0">예약취소</option>
 									<option value="-1">미방문</option>
+								</select>
+							</div>
+							<div class="input-group input-group-sm">
+								<div class="input-group-sm input-group-prepend">
+									<label class="input-group-text" for="designer">담당 디자이너</label>
+								</div>
+								<select name="designer" aria-controls="dataTable" class="custom-select custom-select-sm">
+									<option selected value="">전체</option>
+									<c:forEach var="de" items="${ dList}">
+										<option value="${de.deNo }">${de.deNickname } ${de.deLevel }</option>
+									</c:forEach>
 								</select>
 							</div>
 						</div>
@@ -210,12 +111,19 @@ $(function() {
 						</tr>
 					</thead>
 					<tbody>
+						<c:if test="${list eq null }">
+							<td colspan="11" style="height: 80px;">해당 조건에 부합하는 예약건이 없습니다.</td>
+						</c:if>
 						<c:forEach var="booking" items="${list }">
 						<tr>
-							<td><input type="checkbox" no="${booking.bookNo }"></td>
+							<td>
+								<c:if test="${booking.bookStatus eq 1}">
+									<input type="checkbox" value="${booking.bookNo }">
+								</c:if>
+							</td>
 							<td>${booking.bookNo }</td>
 							<td>${booking.bookDateStr }</td>
-							<td>${booking.designer.deName }</td>
+							<td>${booking.designer.deNickname } ${booking.designer.deLevel }</td>
 							<td>${booking.guest.guestName } (${booking.guest.guestId })</td>
 							<td>${booking.guest.guestPhone }</td>
 							<td>${booking.howManyHairItems }</td>
@@ -238,24 +146,79 @@ $(function() {
 				
 				<!-- 페이징 시작 -->
 				<div class="row">
-					<div class="col-sm-12 col-md-5">
-						<div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">전체 ${total }개 중 ${cntPerPage*(nowPage-1) + 1} - ${nowPage > (total/cntPerPage) ? (nowPage-1)*cntPerPage + total%cntPerPage : nowPage*cntPerPage}</div>
-					</div>
-					<div class="col-sm-12 col-md-7">
-						<div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-							<ul class="pagination">
-								<li class="paginate_button page-item previous disabled" id="dataTable_previous">
-									<a href="#" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">이전</a></li>
-								<li class="paginate_button page-item active">
-									<a href="#" aria-controls="dataTable" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-								<li class="paginate_button page-item ">
-									<a href="#" aria-controls="dataTable" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-								<li class="paginate_button page-item ">
-									<a href="#" aria-controls="dataTable" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-								<li class="paginate_button page-item next" id="dataTable_next">
-									<a href="#" aria-controls="dataTable" data-dt-idx="4" tabindex="0" class="page-link">다음</a>
-								</li>
-							</ul>
+					<div class="col-sm-12 col-md-12" style="text-align: center;">
+						<div class="dataTables_info paging-line">
+							<!-- << -->
+							<div class="paging-line">
+								<c:if test="${paging.startPage > 1}">
+									<a href="bookingList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&designer=${designer }&where=${where }&query=${query}">
+										<i class="fas fa-angle-double-left"></i>
+									</a>
+								</c:if>
+								<c:if test="${paging.startPage == 1}">
+									<i class="fas fa-angle-double-left"></i>
+								</c:if>
+							</div>
+							
+							<!-- 이전페이지 -->
+							<c:choose>
+								<c:when test="${paging.nowPage > 1}">
+									<div class="paging-line">
+										<a href="bookingList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}"><i class="fas fa-angle-left"></i></a>
+									</div>
+								</c:when>
+								<c:when test="${paging.nowPage == 1}">
+									<div class="paging-line">
+										<i class="fas fa-angle-left"></i>
+									</div>
+								</c:when>
+							</c:choose>
+							
+							<!-- 페이지 숫자 -->
+							<c:if test="${paging.total eq 0 }">
+								<div class="paging-line font-weight-bold">1</div>
+							</c:if>
+							<c:forEach begin="${paging.startPage}" end="${paging.endPage }" var="p">
+								<c:choose>
+									<c:when test="${p == paging.nowPage }">
+										<div class="paging-line font-weight-bold">${p}</div>
+									</c:when>
+									<c:when test="${p != paging.nowPage }">
+										<div class="paging-line font-weight-bold">
+										<a href="bookingList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}">${p}</a></div>
+									</c:when>
+								</c:choose>
+							</c:forEach>
+							
+							
+							
+							<!-- 다음페이지 -->
+							<c:choose>
+								<c:when test="${paging.nowPage < paging.lastPage}">
+									<div class="paging-line">
+										<a href="bookingList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&query=${query}"><i class="fas fa-angle-right"></i></a>
+									</div>
+								</c:when>
+								<c:when test="${paging.nowPage >= paging.lastPage}">
+									<div class="paging-line">
+										<i class="fas fa-angle-right"></i>
+									</div>	
+								</c:when>
+							</c:choose>	
+							
+							<!-- >> -->
+							<c:if test="${paging.endPage < paging.lastPage }">
+								<div class="paging-line">
+								<a href="bookingList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}">
+									<i class="fas fa-angle-double-right"></i></a>
+								</div>
+							</c:if>
+							<c:if test="${paging.endPage == paging.lastPage }">
+								<div class="paging-line">
+									<i class="fas fa-angle-double-right"></i>
+								</div>
+							</c:if>
+						
 						</div>
 					</div>
 				</div>
@@ -267,7 +230,9 @@ $(function() {
 	</div>
 	<!-- cardBody-->
 	<div class="card-footer">
-			ㅎㅇㅎㅇ
+		<div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
+			전체 ${total }개 중 ${cntPerPage*(nowPage-1) + 1} - ${nowPage > (total/cntPerPage) ? (nowPage-1)*cntPerPage + total%cntPerPage : nowPage*cntPerPage}
+		</div>
 	</div>
 </div>
 

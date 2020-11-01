@@ -30,7 +30,7 @@ SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test' AND book_statu
 CREATE OR REPLACE VIEW ADMIN_VIEW
 AS
 SELECT
-	ADMIN_ID, ADMIN_PWD, ADMIN_NAME 
+	ADMIN_ID, ADMIN_NAME 
 	FROM ADMIN;
 
 /*QnA_VIEW*/
@@ -67,6 +67,7 @@ ORDER BY book_no, hair_no;
 
 SELECT * FROM booking_view;
 
+
 /* 생성은 했지만 VIEW 안 쓰고 BOOKING, BOOKING_HAIRS로부터 따로 조회하는 게 좋음 */
 CREATE OR REPLACE VIEW booking_hairs_view
 AS
@@ -91,7 +92,24 @@ FROM COUPON c LEFT OUTER JOIN Event e ON (c.EVENT_NO  = e.EVENT_NO );
 
 
 
+/* 페이징용 booking */
+CREATE OR REPLACE VIEW booking_guest_view AS
+SELECT b.*, DE_NICKNAME, DE_NAME, DE_LEVEL, guest_name, guest_phone
+FROM booking b
+	LEFT OUTER JOIN designer d ON(b.DE_NO = d.DE_NO)
+	LEFT OUTER JOIN guest g ON(b.GUEST_ID = g.GUEST_ID);
 
-CREATE OR REPLACE VIEW booking_guest_view
+
+/* 페이징용 orders */
+CREATE OR REPLACE VIEW orders_guest_view
+as
+SELECT o.*, g.GUEST_NAME, g.GUEST_PHONE 
+FROM orders o LEFT OUTER JOIN GUEST g ON (o.GUEST_ID = g.GUEST_ID ) ;
+
+CREATE OR REPLACE VIEW OD_guest_HAIR_COUPON_view
 AS
-SELECT b.*, guest_name, guest_phone FROM booking b LEFT OUTER JOIN guest g ON(b.GUEST_ID = g.GUEST_ID);
+SELECT od.*, h.HAIR_NAME, c.EVENT_NAME FROM ORDER_DETAIL od
+LEFT OUTER JOIN HAIR h ON (od.HAIR_NO = h.HAIR_NO )
+LEFT OUTER JOIN COUPON_VIEW c ON(od.COUPON_ID  = c.COUPON_ID );
+
+SELECT * FROM od_guest_hair_coupon_view;

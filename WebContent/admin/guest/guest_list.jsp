@@ -184,7 +184,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 							</td>
 							<td  style="width:150px;">
 								<input type="button" name="booking" value="예약내역" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestBookingInfo.do?id=${guest.guestId}'">
-								<input type="button" name="order" value="주문내역" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestOrderInfo.do?id=${guest.guestId}'">
+								<input type="button" name="order" value="주문내역" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='bookingList.do?where=guestId&query=${guest.guestId}'">
 							</td>
 							<td  style="width:100px;">
 								<input type="button" name="update" value="수정" class="btn btn-primary btn-sm" onclick="location.href='guestInfo.do?id=${guest.guestId}'">
