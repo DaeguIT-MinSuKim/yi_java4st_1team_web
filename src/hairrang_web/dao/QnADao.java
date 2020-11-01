@@ -3,7 +3,6 @@ package hairrang_web.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.QnA;
 import hairrang_web.utils.Paging;
@@ -71,5 +70,10 @@ public interface QnADao {
 	//복원
 	int updateRestoreQna(String no);
 	
+	//공지 찾기 갯수
+	int countPagingQnaSearch(String condition, String keyword,String stay);
+	
+	//공지 찾기 페이징
+	List<QnA> selectPagingQnASearch(Paging paging, String condition, String keyword,String stay);
 	
 }
