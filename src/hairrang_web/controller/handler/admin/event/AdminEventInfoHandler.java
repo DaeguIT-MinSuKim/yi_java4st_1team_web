@@ -38,9 +38,6 @@ public class AdminEventInfoHandler implements Command {
 			
 			HttpSession session = request.getSession();
 			
-			String no = request.getParameter("no");
-			System.out.println("no => " + no);
-			
 			//파일업로드
 			int sizeLimit = 5 * 1024 * 1024;
 			String savePath = "event/images";
@@ -54,12 +51,14 @@ public class AdminEventInfoHandler implements Command {
 					new DefaultFileRenamePolicy() // 5. 덮어쓰기를 방지 위한 부분
 			); // 이 시점을 기해 파일은 이미 저장이 되었다
 			
-			no = multi.getParameter("no");
+			String no = multi.getParameter("no");
+			System.out.println("no => " + no);
 			String name = multi.getParameter("name");
 			String content = multi.getParameter("content");
 			String saleRate = multi.getParameter("saleRate");
 			LocalDate start = LocalDate.parse(multi.getParameter("start"));
 			LocalDate end = LocalDate.parse(multi.getParameter("end"));
+			System.out.println(end);
 			String file = multi.getFilesystemName("file");
 		
 			String fileRename = "admin/event/images/" + file; 

@@ -24,7 +24,7 @@ public class AdminGuestDeleteHandler implements Command {
 			String id = request.getParameter("id");
 			Guest guest = service.selectGuestById(new Guest(id));
 			int res = service.updateDelYn(guest);
-			System.out.println("삭제결과 ->" + res);
+			//System.out.println("삭제결과 ->" + res);
 			
 			request.setAttribute("guest",guest.getGuestId());
 			response.sendRedirect("guestList.do");

@@ -108,8 +108,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 						<div class="dataTables_length" id="dataTable_length">
 							<label>
 							<select name="dataTable_length" id="cntPerPage" onchange="selChange()" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
-									<option value="5"
-						<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
+									<option value="5" <c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
 							<option value="10"
 								<c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
 							<option value="15"

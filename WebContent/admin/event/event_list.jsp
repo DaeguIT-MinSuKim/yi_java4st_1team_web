@@ -3,7 +3,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../include/header.jsp" %>
 <script>
+
 	document.title += ' - 이벤트 목록'
+
+$(document).on('click', '[id=btn_delete]', function() {
+	var event = $(this).attr('eventNo');
+	if (confirm(event + '번 이벤트를 삭제하시겠습니까?') == true) {
+		location.href = "eventDelete.do?no=" + event;
+	} else {
+		return;
+	}
+
+});
 </script>
 <!-- Page Heading -->
 
@@ -21,12 +32,7 @@
 			
 				<input type="button" value="이벤트 등록" class="btn btn-info btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='eventAdd.do' ">
 				
-				<button type="button" onclick="selectAll()" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">
-					전체선택
-				</button>
-				<button type="button" onclick="deselectAll()" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;">
-					선택해제
-				</button>
+				
 		</h6>
 	</div>
 	<!-- card-body -->
@@ -34,7 +40,7 @@
 		<div class="table-responsive">
 			<!-- bootStrap table wrapper-->
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-			※ 생일쿠폰은 생일 10일전 자동 발급<br>이벤트 등록시 오늘포함해서 바로 시작할지 무조건 내일부터 시작하는걸로 할지
+			※ 생일쿠폰은 생일 10일전 자동 발급<br>
 
 				<!-- 테이블 상단 필터링 시작 -->
 				<div class="row mb-2">
@@ -84,8 +90,19 @@
 							</td>
 				
 							<td  style="width:100px;">
-								<input type="button" name="update" value="수정" class="btn btn-primary btn-sm" onclick="location.href='eventInfo.do?no=${event.eventNo}'">
-								<input type="button" value="삭제" id="btn_delete" guestId="${guest.guestId}" class="btn btn-danger btn-sm">
+								<!-- 이벤트 대기중인거만 수정가능 -->
+								<%-- <c:if test="${event.eventStatus == 's'}">
+									<input type="button" name="update" value="수정" class="btn btn-secondary btn-sm" disabled>
+									<input type="button" value="삭제" class="btn btn-secondary btn-sm" disabled>
+								</c:if>
+								<c:if test="${event.eventStatus == 'e'}">
+									<input type="button" name="update" value="수정" class="btn btn-secondary btn-sm" disabled>
+									<input type="button" value="삭제" class="btn btn-secondary btn-sm" disabled>
+								</c:if>
+								<c:if test="${event.eventStatus == 'w'}"> --%>
+									<input type="button" name="update" value="수정" class="btn btn-primary btn-sm" onclick="location.href='eventInfo.do?no=${event.eventNo}'">
+									<input type="button" value="삭제" id="btn_delete" eventNo="${event.eventNo}" class="btn btn-danger btn-sm">
+								<%-- </c:if> --%>
 							</td>
 						</tr>
 						

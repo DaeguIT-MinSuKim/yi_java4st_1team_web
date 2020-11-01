@@ -7,6 +7,13 @@ import hairrang_web.utils.Paging;
 
 public interface CouponDao {
 	
+	//총 쿠폰
+	ArrayList<Coupon> pagingCouponByAll(Paging paging);
+	int countCoupon();
+	//이벤트번호별 리스트
+	ArrayList<Coupon> pagingCouponByEventNo(Paging paging, int eventNo);
+	int countCoupon(int eventNo);
+	
 	// 쿠폰 id를 통해 해당 쿠폰 1개의 정보 조회
 	// orderDetail에서 사용된 쿠폰 정보 조회하려고.
 	Coupon selectCouponByCouponId(Coupon coupon);
@@ -22,4 +29,5 @@ public interface CouponDao {
 
 	// 오늘 기준 해당 회원이 사용할 수 있는 쿠폰 리스트 조회
 	ArrayList<Coupon> selectAvailableCouponToday(String id);
+
 }	

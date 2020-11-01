@@ -10,6 +10,22 @@ import hairrang_web.utils.Paging;
 public class CouponService {
 	private CouponDao dao = CouponDaoImpl.getInstance();
 	
+	public ArrayList<Coupon> pagingCouponByAll(Paging paging){
+		return dao.pagingCouponByAll(paging);
+	}
+	
+	public int countCoupon() {
+		return dao.countCoupon();
+	}
+	
+	public ArrayList<Coupon> pagingCouponByEventNo(Paging paging, int eventNo){
+		return dao.pagingCouponByEventNo(paging, eventNo);
+	}
+	
+	public int countCoupon(int eventNo) {
+		return dao.countCoupon(eventNo);
+	}
+	
 	public ArrayList<Coupon> selectCouponById(String id){
 		return dao.selectCouponById(id);
 	}
@@ -25,4 +41,8 @@ public class CouponService {
 	public int countCouponById(String id) {
 		return dao.countCouponById(id);
 	}
+	
+	
+	
+
 }

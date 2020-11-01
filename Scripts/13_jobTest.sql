@@ -14,16 +14,17 @@
 CREATE OR REPLACE PROCEDURE UPDATE_JOB_EVENT
    IS
       BEGIN
-       /* -- 진행중 -> 대기
-	  	UPDATE event SET event_status = 'w' WHERE event_start > sysdate;*/
+       -- 진행중 -> 대기
+	  	UPDATE event SET event_status = 'w' WHERE event_start > sysdate;
        	-- 대기 -> 진행중으로 변경 
 		UPDATE event SET event_status = 's' WHERE event_start <= sysdate AND event_end >= sysdate;
-		--UPDATE event SET event_status = 's' WHERE event_start <= sysdate AND event_end - 1/(24*60*60) >= sysdate;
 		-- 이벤트 종료로 변경
 		UPDATE event SET event_status = 'e' WHERE event_end < sysdate;
 		-- 고객 쿠폰 기간만료로 변경
 		UPDATE coupon SET USED_YN = 'e' WHERE EVENT_END < sysdate; 
-		-- 생일자 쿠폰 삽입  => 1회만 실행
+		-- 
+		UPDATE COUPON SET USED_YN = 'n' WHERE event_start <= sysdate AND event_end >= sysdate;
+		
       END;
 
 -- job 생성
@@ -87,18 +88,17 @@ END;
 SELECT * FROM user_jobs; 
 
 -- 배치(스케줄러)
-
 -- 프로시저 생성
--- 이벤트 기간 지남 : 개인쿠폰 미사용인것 -> 만료(e), 이벤트는 n 처리
 CREATE OR REPLACE PROCEDURE UPDATE_JOB_BIRTHDAY_COUPON
    IS
       BEGIN
-	      
+	   --생일쿠폰 삽입
 	   INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
-		SELECT guest_id, 4/*쿠폰번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
+		SELECT guest_id, 23/*이벤트번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
 		FROM (SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g) gb
 		WHERE TO_CHAR(sysdate, 'YYYY-MM-DD') = TO_CHAR("thisyear_bd" - 10, 'YYYY-MM-DD');
-		--
+		--생일쿠폰 삽입 후 쿠폰 상태 n으로 변경
+		UPDATE COUPON SET USED_YN = 'n' 
       END;
 
 -- job 생성
@@ -110,7 +110,8 @@ BEGIN
    JOB => X
    , WHAT => ' UPDATE_JOB_BIRTHDAY_COUPON;' -- 등록할 프로시저 명 넣어주기 (마지막에 꼭 ; 넣어주기. job 실행하면서 에러 날 수 있음)
    , NEXT_DATE => SYSDATE --매일체크
-   , INTERVAL => sysdate + 1--매일
+   --, INTERVAL => sysdate + 1--매일
+   , INTERVAL => 'SYSDATE + 1/24/60/20' --3초
    , NO_PARSE => TRUE
    );
 END;
@@ -144,13 +145,13 @@ END;
 
 -- 등록되어 있는 JOB 삭제
 BEGIN
-   DBMS_JOB.REMOVE(33);
+   DBMS_JOB.REMOVE(68);
    COMMIT;
 END;
 
 -- 작업 비활성화 
 BEGIN
-   DBMS_JOB.BROKEN(30, false);
+   DBMS_JOB.BROKEN(70, TRUE);
    COMMIT;
 END;
 

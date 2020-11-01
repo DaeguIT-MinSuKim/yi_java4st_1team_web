@@ -31,7 +31,7 @@
 	
 function event_info(){
 		alert('이벤트가 수정되었습니다.');
-		document.formm.action = "eventInfo.do";
+		document.formm.action = "eventInfo.do?no=" + ${event.eventNo};
 	    document.formm.submit();
 }	
 
@@ -61,7 +61,7 @@ function event_info(){
 			<table class="add-table">
 				<tr>
 					<td>번호</td>
-					<td>${event.eventNo}<input type="hidden" name="no" value="${event.eventNo }"></td>
+					<td>${event.eventNo}<input type="hidden" name="no" value="${event.eventNo}"></td>
 				</tr>
 				<tr>
 					<td>이벤트명</td>
@@ -96,7 +96,12 @@ function event_info(){
 
 				</tr>
 				<tr>
-				<c:if test="${event.eventStatus == 's' || event.eventStatus == 'e'}">
+				<td>이벤트 시작일</td>
+					<td> <input type='date' name="start" id="start" value="${event.eventStart}"/></td>
+				<tr>
+				<td>이벤트 종료일</td>
+					<td><input type='date' name="end" id="end" value="${event.eventEnd}" /></td>
+				<%-- <c:if test="${event.eventStatus == 's' || event.eventStatus == 'e'}">
 					<td>이벤트 시작일</td>
 					<td> <input type='date' name="start" id="start" value="${event.eventStart}" disabled /></td>
 				</c:if>
@@ -109,12 +114,12 @@ function event_info(){
 				<tr>
 				<c:if test="${event.eventStatus == 's' || event.eventStatus == 'e'}">
 					<td>이벤트 종료일</td>
-					<td> <input type='date' name="start" id="start" value="${event.eventEnd}" disabled /></td>
+					<td> <input type='date' name="end" id="end" value="${event.eventEnd}" disabled /></td>
 				</c:if>
 				<c:if test="${event.eventStatus == 'w'}">
 					<td>이벤트 종료일</td>
-					<td> <input type='date' name="start" id="start" value="${event.eventEnd}" /></td>
-				</c:if>
+					<td> <input type='date' name="end" id="end" value="${event.eventEnd}" /></td>
+				</c:if> --%>
 				</tr>
 				<tr>
 					<td>파일 선택</td>
