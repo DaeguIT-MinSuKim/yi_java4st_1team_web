@@ -5,21 +5,39 @@
 $(function() {
 	$(document).ready(function() {
 		document.title += ' - 쿠폰 목록';
-		
-		$("select[name=sorter]").change(function(){
-			var no = this.value;
-			location.href="couponList.do?nowPage=${paging.nowPage}&cntPerPage=${paging.cntPerPage}&no="+no;
-		});	
 	})
-});
 	
+	var no = getParameter("no");
+	console.log(no)
+	$("#selectPage").val(no).attr("selected", "true");
+	if(no == 0){
+		$("#selectPage").val(0).attr("selected", "true");
+	}
+	
+});
+
+
+function getParameter(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function tableChange(){
+	var sel = document.getElementById('selectPage').value;
+	location.href = "couponList.do?nowPage=1&no="+ sel;
+	if(sel == 0){
+		location.href = "couponList.do";
+	}
+}
+
 </script>
 <!-- Page Heading -->
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">쿠폰 목록</h1>
 </div>
-
 <!-- Content Row -->
 
 <form method="post" name="formm">
@@ -29,25 +47,37 @@ $(function() {
 		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
 				<input type="button" value="쿠폰 등록" class="btn btn-info btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='couponAdd.do' ">
 		</h6>
-	</div>
+			
+		</div>
 	<!-- card-body -->
 	<div class="card-body">
 		<div class="table-responsive">
 			<!-- bootStrap table wrapper-->
-			
+			<!-- " onchange="location.href='couponList.do?nowPage=${paging.nowPage}&cntPerPage=${paging.cntPerPage}&no='+this.value " -->
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 						<label>
-						<select name="sorter" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
-							<option selected value="">전체보기</option>
+						<select name="sorter" id="selectPage" onchange="tableChange()" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
+							<option value="0" selected>전체보기</option>
 							<c:forEach var="event" items="${eventList}">
 								<option value="${event.eventNo}">${event.eventName}</option>
 							</c:forEach>
 						</select>
 						</label>
+			
+						<div style="float:right; padding:10px;">
+				<ul>
+					<li class="btn-info btn-sm" style="width: 80px; display: inline;">사용가능</li>
+					<li class="btn-warning btn-sm" style="width: 80px; display: inline;">대기중</li>
+					<li class="btn-secondary btn-sm" style="width: 80px; display: inline;">사용완료</li>
+					<li class="btn-dark btn-sm" style="width: 80px; display: inline;">기간만료</li>
+				</ul>
+
+			</div>
 				<!-- 테이블 상단 필터링 시작 -->
 				<div class="row mb-2">
 					<div class="col-sm-12 col-md-6">
-						<div class="dataTables_length" id="dataTable_length">
+						<div class="dataTables_length" id="dataTable_length" style="float:right">
+						
 						</div>
 					</div>
 				</div>
@@ -109,16 +139,104 @@ $(function() {
 
 	
 					<!-- 페이징 시작 -->
-
+					<c:choose>
+					<c:when test="${no == 0}">
+						<div style="width:100%; text-align:center; display:inline-block; margin:0 auto;">
+					<p>Total : ${total}</p>
+					
+						<!-- << -->
+						<c:if test="${paging.startPage != 1}">
+							<div class="paging-line">
+								<a href="couponList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
+									<i class="fas fa-angle-double-left"></i>
+								</a>
+							</div>
+						</c:if>
+						<c:if test="${paging.startPage == 1}">
+							<div class="paging-line">
+								<i class="fas fa-angle-double-left"></i>
+							</div>
+						</c:if>
+						
+						
+						<!-- 이전페이지 -->
+						<c:choose>
+							<c:when test="${paging.nowPage != 1}">
+								<div class="paging-line">
+									<a href="couponList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
+								</div>
+							</c:when>
+							<c:when test="${paging.nowPage == 1}">
+								<div class="paging-line">
+									<i class="fas fa-angle-left"></i>
+								</div>
+							</c:when>
+						
+						</c:choose>
+						
+						<!-- 페이지 숫자 -->
+						
+						<c:forEach begin="${paging.startPage}" end="${paging.endPage }"
+							var="p">
+							<c:choose>
+								<c:when test="${p == paging.nowPage }">
+									<div class="paging-line" style="font-weight:bold">${p}</div>
+								</c:when>
+								<c:when test="${p != paging.nowPage }">
+									<div class="paging-line">
+									<a href="couponList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+									${p}</a></div>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						
+						
+						
+						<!-- 다음페이지 -->
+						<c:choose>
+							<c:when test="${paging.nowPage != paging.lastPage}">
+								<div class="paging-line">
+									<a href="couponList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
+								</div>
+							</c:when>
+							<c:when test="${paging.nowPage == paging.lastPage}">
+								<div class="paging-line">
+									<i class="fas fa-angle-right"></i>
+								</div>	
+							</c:when>
+						
+						</c:choose>	
+						
+						<!-- >> -->
+						
+					
+						<c:if test="${paging.endPage != paging.lastPage }">
+							<div class="paging-line">
+							<a href="couponList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
+							<i class="fas fa-angle-double-right"></i></a>
+							</div>
+						</c:if>
+						<c:if test="${paging.endPage == paging.lastPage }">
+							<div class="paging-line">
+							<i class="fas fa-angle-double-right"></i>
+							</div>
+						</c:if>
+					
+			
+					</div>
+					</c:when>
+					
+					
+					<c:when test ="${no != 0}">
 					<div style="width:100%; text-align:center; display:inline-block; margin:0 auto;">
 					<p>Total : ${total}</p>
 					
 						<!-- << -->
 						<c:if test="${paging.startPage != 1}">
 							<div class="paging-line">
-							<a href="couponList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&no=${no}">
-								<i class="fas fa-angle-double-left"></i>
-							</a>
+								<a href="couponList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&no=${no}">
+									<i class="fas fa-angle-double-left"></i>
+								</a>
 							</div>
 						</c:if>
 						<c:if test="${paging.startPage == 1}">
@@ -193,6 +311,8 @@ $(function() {
 					
 			
 					</div>
+					</c:when>
+					</c:choose>
 				</div>
 				<!-- bootStrap table wrapper-->
 			</div>
