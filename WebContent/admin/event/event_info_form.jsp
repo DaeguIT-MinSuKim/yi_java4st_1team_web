@@ -5,14 +5,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <script>
+//start날짜보다 큰 end날짜 선택
 
-
-//오늘날짜 전 선택불가 넣기
-
+function date_check(){
+	var start = $("#startDate").val();
+	var end = $("#endDate").val();
+	$("#endDate").attr("min", start)
+}
 
 
 //이미지 미리보기
-	$(function() {
+$(function() {
 		$("#file").on('change', function() {
 			readURL(this);
 		});
@@ -31,7 +34,7 @@
 	
 function event_info(){
 		alert('이벤트가 수정되었습니다.');
-		document.formm.action = "eventInfo.do";
+		document.formm.action = "eventInfo.do?no=" + ${event.eventNo};
 	    document.formm.submit();
 }	
 
@@ -61,7 +64,7 @@ function event_info(){
 			<table class="add-table">
 				<tr>
 					<td>번호</td>
-					<td>${event.eventNo}<input type="hidden" name="no" value="${event.eventNo }"></td>
+					<td>${event.eventNo}<input type="hidden" name="no" value="${event.eventNo}"></td>
 				</tr>
 				<tr>
 					<td>이벤트명</td>
@@ -96,40 +99,27 @@ function event_info(){
 
 				</tr>
 				<tr>
-				<c:if test="${event.eventStatus == 's' || event.eventStatus == 'e'}">
-					<td>이벤트 시작일</td>
-					<td> <input type='date' name="start" id="start" value="${event.eventStart}" disabled /></td>
-				</c:if>
-				<c:if test="${event.eventStatus == 'w'}">
-					<td>이벤트 시작일</td>
-					<td> <input type='date' name="start" id="start" value="${event.eventStart}" /></td>
-				</c:if>
-				</tr>
-				
+				<td>이벤트 시작일</td>
+					<td> <input type='date' name="start" max="9999-12-31" id="startDate" onchange="date_check()" value="${event.eventStart}"/></td>
 				<tr>
-				<c:if test="${event.eventStatus == 's' || event.eventStatus == 'e'}">
-					<td>이벤트 종료일</td>
-					<td> <input type='date' name="start" id="start" value="${event.eventEnd}" disabled /></td>
-				</c:if>
-				<c:if test="${event.eventStatus == 'w'}">
-					<td>이벤트 종료일</td>
-					<td> <input type='date' name="start" id="start" value="${event.eventEnd}" /></td>
-				</c:if>
+				<td>이벤트 종료일</td>
+					<td><input type='date' name="end" max="9999-12-31" id="endDate" onchange="date_check()" value="${event.eventEnd}" /></td>
 				</tr>
 				<tr>
 					<td>파일 선택</td>
 					<td><input type='file' name="file" id="file"/></td>
 				</tr>
-				<tr>
-					<td>미리보기</td>
-					<td style="text-align:center"><img id="img" src="/images/imready.png" alt="" width=30%/></td>
-				</tr>
 				
 			</table>
+			<div style="text-align:center">
+				<p style="padding:10px;">미리보기 </p>
+				<img id="img" src="../event/images/${event.eventPic}" alt="" width=30%/>
+			</div>
 			<br><br>
 			<div class="clear"></div>
 			<br>
 			<div class="add-buttons" style="float:right">
+			${event.eventPic}
 				<input type="button" value="수정" onclick="event_info()" class="btn btn-primary btn-sm">
 				<input type="reset" value="취소" class="btn btn-light btn-sm" onclick="location.href='eventList.do'">
 				

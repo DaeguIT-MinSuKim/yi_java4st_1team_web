@@ -43,20 +43,25 @@ public class CouponDaoImpl implements CouponDao{
 	
 	private Coupon getCoupon(ResultSet rs) throws SQLException {
 		//COUPON_ID,GUEST_ID,EVENT_NO,EVENT_START,EVENT_END,USED_YN
-		EventDao eDao = EventDaoImpl.getInstance();
+		//EventDao eDao = EventDaoImpl.getInstance();
+		//COUPON_ID,GUEST_ID,EVENT_NO,EVENT_START,EVENT_END,USED_YN,EVENT_NAME,EVENT_SALERATE
 		
 		Coupon coupon = new Coupon();
 		Guest guest = new Guest();
-		Event event = eDao.selectEventByNo(new Event(rs.getInt("EVENT_NO")));
+		Event event = new Event();
+		//Event event = eDao.selectEventByNo(new Event(rs.getInt("EVENT_NO")));
 		coupon.setGuest(guest);
 		coupon.setEvent(event);
-		coupon.setCouponId(rs.getInt("COUPON_ID"));
 		
+		coupon.setCouponId(rs.getInt("COUPON_ID"));
 		guest.setGuestId(rs.getString("GUEST_ID"));
 		event.setEventNo(rs.getInt("EVENT_NO"));
+		event.setEventName(rs.getString("EVENT_NAME"));
+		event.setEventSaleRate(rs.getDouble("EVENT_SALERATE"));
 		event.setEventStart(rs.getTimestamp("EVENT_START").toLocalDateTime().toLocalDate());
 		event.setEventEnd(rs.getTimestamp("EVENT_END").toLocalDateTime().toLocalDate());
 		coupon.setUsedYn(rs.getString("USED_YN"));
+		event.setEventStatus(rs.getString("EVENT_STATUS"));
 		
 		return coupon;
 	}
@@ -108,6 +113,90 @@ public class CouponDaoImpl implements CouponDao{
 	}
 	
 //////////////////////////////////////페이징/////////////////////////////////////////////////
+	
+	@Override
+	public ArrayList<Coupon> pagingCouponByAll(Paging paging) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon_view ORDER BY COUPON_ID desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		//"SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM GUEST ORDER BY GUEST_JOIN_DATE desc) a) "
+		//"WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		try (Connection con = JndiDs.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					ArrayList<Coupon> list = new ArrayList<>();
+					do {
+						list.add(getCoupon(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+	
+	@Override
+	public int countCoupon() {
+		String sql = "SELECT COUNT(*) FROM coupon";
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
+	
+	
+
+	@Override
+	public ArrayList<Coupon> pagingCouponByEventNo(Paging paging, int eventNo) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon_view where event_no = ? ORDER BY COUPON_ID desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		try (Connection con = JndiDs.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, eventNo);
+			pstmt.setInt(2, paging.getStart());
+			pstmt.setInt(3, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					ArrayList<Coupon> list = new ArrayList<>();
+					do {
+						list.add(getCoupon(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+	
+	
+	@Override
+	public int countCoupon(int eventNo) {
+		String sql = "SELECT COUNT(*) FROM coupon where event_no = ?";
+		try (Connection con = JndiDs.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+				pstmt.setInt(1, eventNo);
+				try (ResultSet rs = pstmt.executeQuery()) {
+					if (rs.next()) {
+						return rs.getInt(1);
+					}
+				}
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+		}
+			return 0;
+	}
+
+	
 	
 	
 	@Override

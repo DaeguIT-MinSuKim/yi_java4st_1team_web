@@ -11,9 +11,6 @@ public interface EventDao {
 	
 	Event selectEventByNo(Event event);
 	
-	int updateEvent(Event event);
-	
-	int deleteEvent(Event event);
 	
 	//eventDetail밑에 이전글 다음글 정보 불러오기
 	Event selectEventDownSide(Event event);

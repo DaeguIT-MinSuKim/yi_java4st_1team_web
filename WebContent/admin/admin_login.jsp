@@ -38,22 +38,22 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Hairrang 관리자 로그인</h1>
                   </div>
-                  <form class="user">
+                  <form class="user" method="post">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      <input type="text" class="form-control form-control-user" name="adminId" id="inputAdminId" aria-describedby="emailHelp" placeholder="관리자 아이디">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input type="password" class="form-control form-control-user" name="adminPwd" id="inputAdminPwd" placeholder="비밀번호">
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                       <div class="custom-control custom-checkbox small">
                         <input type="checkbox" class="custom-control-input" id="customCheck">
                         <label class="custom-control-label" for="customCheck">Remember Me</label>
                       </div>
-                    </div>
-                    <a href="index.html" class="btn btn-primary btn-user btn-block">
-                      Login
-                    </a>
+                    </div> -->
+                    <button type="submit" href="login.do" class="btn btn-primary btn-user btn-block">
+                      로그인
+                    </button>
                   </form>
                   <hr>
                   <div class="text-center">
@@ -64,11 +64,8 @@
             </div>
           </div>
         </div>
-
       </div>
-
     </div>
-
   </div>
 
   <!-- Bootstrap core JavaScript-->

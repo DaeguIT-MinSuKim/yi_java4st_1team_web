@@ -3,6 +3,7 @@ package hairrang_web.controller.handler.admin.guest;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.management.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,107 +26,59 @@ public class AdminGuestListHandler implements Command {
 		if(request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println(getClass().getSimpleName() + ">> GET");
 			
-			//현재페이지랑 한페이지당 제한 문의 갯수 넘겨주는 곳
+			Paging paging = new Paging();
+			
 			String nowPage = request.getParameter("nowPage");
 			String cntPerPage = request.getParameter("cntPerPage");
+			String del = request.getParameter("del");
+			String where = request.getParameter("where");
+			String query = request.getParameter("query");
+			System.out.println("where" + where);
+			System.out.println("q" + query);
 			
+			if (where != null && query != null) {
+				if(!where.trim().equals("") && !query.trim().equals("") ) {
+					
+					request.setAttribute("where", where);
+					request.setAttribute("query", query);
+				}
+			} else {
+				where = null;
+				query = null;
+			}
 			
-			//현재페이지랑 한페이지당 제한 문의 갯수 확인용
-			System.out.println(nowPage);
-			System.out.println(cntPerPage);
+			if(del != null) {
+				if(del.equals("")) {
+					del = null;
+				}
+			}
 			
-			//만약 처음 접속했을때 초기세팅해주는 곳 
-			int total = service.countGuest();
-			if(nowPage == null && cntPerPage == null) {
+			if(nowPage == null) {
 				nowPage = "1";
-				cntPerPage = "10";
-			}else if(nowPage == null) {
-				nowPage = "1";
-			}else if(cntPerPage == null) {
+			}
+			if(cntPerPage == null) {
 				cntPerPage ="10";
 			}
-			System.out.println("지금현채 페이지 ===>"+nowPage);
-			System.out.println("한 페이지당 나오는 게시물수 ===>"+cntPerPage);
-			System.out.println("총게시물 갯수 ===>"+total);
 			
+			paging.setNowPage(Integer.parseInt(nowPage));
+			paging.setCntPerPage(Integer.parseInt(cntPerPage));
 			
-			//이후 페이지 클래스로 정리하는곳
-			Paging paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-			ArrayList<Guest> list = service.pagingGuestByAll(paging);
-			///////////
-			
-			String id = request.getParameter("id");
-			request.setAttribute("id", id);
-			
-			request.setAttribute("list", list);
-			request.setAttribute("paging", paging);
+			int total = service.countBookingByConditionForPaging(paging, del, where, query);
 			request.setAttribute("total", total);
-			request.setAttribute("cnt", cntPerPage);
-			request.setAttribute("getEndPage", paging.getEndPage());
-		
+			
+			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+			request.setAttribute("nowPage", Integer.parseInt(nowPage));
+			request.setAttribute("cntPerPage", Integer.parseInt(cntPerPage));
+			request.setAttribute("paging", paging);
+			System.out.println(paging);
+			
+			ArrayList<Guest> list = service.selectGuestByCondition(paging, del, where, query);
+			request.setAttribute("list", list);
+			request.setAttribute("del", del);
+			
 			
 		} else {
-			
 			System.out.println(getClass().getSimpleName() + ">> POST");
-			
-			//현재페이지랑 한페이지당 제한 문의 갯수 넘겨주는 곳
-			String nowPage = request.getParameter("nowPage");
-			String cntPerPage = request.getParameter("cntPerPage");
-			
-			//현재페이지랑 한페이지당 제한 문의 갯수 확인용
-			System.out.println(nowPage);
-			System.out.println(cntPerPage);
-			
-			//만약 처음 접속했을때 초기세팅해주는 곳 
-			int total = service.countGuest();
-			if(nowPage == null && cntPerPage == null) {
-				nowPage = "1";
-				cntPerPage = "10";
-			}else if(nowPage == null) {
-				nowPage = "1";
-			}else if(cntPerPage == null) {
-				cntPerPage ="10";
-			}
-			
-			System.out.println("지금현채 페이지 ===>"+nowPage);
-			System.out.println("한 페이지당 나오는 게시물수 ===>"+cntPerPage);
-			System.out.println("총게시물 갯수 ===>"+total);
-			
-			
-			//이후 페이지 클래스로 정리하는곳
-			String opt = request.getParameter("opt"); //0 아이디, 1이름, 2폰번호
-			String value = request.getParameter("value");
-						
-			if(opt.equals("0")) { //아이디로검색
-				total = service.countIdSearch(value);
-				Paging paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-				
-				ArrayList<Guest> idSearchlist = service.searchGuestById(paging, value);
-				request.setAttribute("list", idSearchlist);
-				request.setAttribute("cnt", cntPerPage);
-				request.setAttribute("total", total);
-				request.setAttribute("paging", paging);
-				
-			}else if(opt.equals("1")){//이름으로 검색
-				total = service.countNameSearch(value);
-				Paging paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-				ArrayList<Guest> nameSearchList = service.searchGuestByName(paging, value);
-				
-				request.setAttribute("list", nameSearchList);
-				request.setAttribute("cnt", cntPerPage);
-				request.setAttribute("total", total);
-				request.setAttribute("paging", paging);
-			}else { //폰번호검색
-				total = service.countPhoneSearch(value);
-				Paging paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-				ArrayList<Guest> phoneSearch = service.searchGuestByPhone(paging, value);
-				
-				request.setAttribute("list", phoneSearch);
-				request.setAttribute("cnt", cntPerPage);
-				request.setAttribute("total", total);
-				request.setAttribute("paging", paging);
-			}
-			
 		
 		}
 		

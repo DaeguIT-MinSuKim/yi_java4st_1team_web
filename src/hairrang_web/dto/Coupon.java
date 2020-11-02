@@ -3,7 +3,7 @@ package hairrang_web.dto;
 public class Coupon {
 	private int couponId;
 	private Guest guest;
-	private Event event; // eventNo, eventStart, eventEnd, 
+	private Event event; // eventNo, eventStart, eventEnd
 	private String usedYn;
 	
 	

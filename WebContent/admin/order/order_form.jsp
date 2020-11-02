@@ -19,7 +19,7 @@ $(function(){
 	<div class="modal-dialog modal-dialog-scrollable">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="guestSearchModalLabel">고객 검색</h5>
+				<h5 class="modal-title font-weight-bold" id="guestSearchModalLabel">고객 검색</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -76,13 +76,13 @@ $(function(){
 	<div class="modal-dialog modal-lg modal-dialog-scrollable">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="bookingSearchModalLabel">금일 예약건 선택</h5>
+				<h5 class="modal-title font-weight-bold" id="bookingSearchModalLabel">금일 예약건 선택</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<table class="table table-bordered table-hover text-center" id="todayBookingTable">
+				<table class="table table-bordered table-hover text-center mt-3" id="todayBookingTable">
 					<thead>
 						<tr>
 							<td>예약번호</td>
@@ -95,6 +95,9 @@ $(function(){
 						</tr>
 					</thead>
 					<tbody>
+						<c:if test="${todayBookingList eq null }">
+							<td colspan="7">오늘 방문 예정인 예약건이 없습니다.</td>
+						</c:if>
 						<c:forEach var="todayB" items="${todayBookingList }">
 							<tr role="button">
 								<td>${todayB.bookNo }</td>
@@ -102,13 +105,12 @@ $(function(){
 								<td>${todayB.guest.guestId }</td>
 								<td>${todayB.guest.guestName } </td>
 								<td>${todayB.howManyHairItems }</td>
-								<td>${todayB.designer.deNo }</td>
+								<td>${todayB.designer.deNickname } ${todayB.designer.deLevel }</td>
 								<td>${todayB.guest.guestPhone }</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
-				<div class="spacing"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">취소</button>
@@ -149,7 +151,7 @@ $(function(){
                     </div>
                   </div>
                   <div class="col-auto">
-                    <button type="button" class="btn btn-primary btn-sm" name="guestSearchBtn" data-toggle="modal" data-target="#guestSearchModal">검색</button>
+                    <button type="button" class="btn btn-primary btn-sm" name="guestSearchBtn" id="guestSerachModalOpenBtn" data-toggle="modal" data-target="#guestSearchModal">검색</button>
                     
                   </div>
                 </div>
@@ -160,7 +162,7 @@ $(function(){
 						예약 고객인 경우 검색창을 통해 해당 예약건을 선택해주세요.
                   </div>
                   <div class="col-auto">
-                    <button type="button" class="btn btn-primary btn-sm" name="bookingSearchBtn" data-toggle="modal" data-target="#bookingSearchModal">검색</button>
+                    <button type="button" class="btn btn-primary btn-sm" name="bookingSearchBtn" id="bookingSerchModalOpenBtn" data-toggle="modal" data-target="#bookingSearchModal">검색</button>
                   </div>
                 </div>
 

@@ -55,7 +55,7 @@ public class BookingDaoImpl implements BookingDao {
 	
 	@Override
 	public ArrayList<BookingHairs> selectBookingHairsByBookingNo(int bookNo) {
-		String sql = "SELECT * FROM BOOKING_HAIRS WHERE BOOK_NO = ? ORDER BY BOOK_NO, HAIR_NO";
+		String sql = "SELECT * FROM BOOKING_HAIRS_VIEW WHERE BOOK_NO = ? ORDER BY BOOK_NO, HAIR_NO";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -64,7 +64,7 @@ public class BookingDaoImpl implements BookingDao {
 				if(rs.next()) {
 					ArrayList<BookingHairs> list = new ArrayList<>();
 					do {
-						list.add(getBookingHairs(rs));
+						list.add(getSimpleBookingHairs(rs));
 					} while(rs.next());
 					return list;
 				}
@@ -75,6 +75,15 @@ public class BookingDaoImpl implements BookingDao {
 		return null;
 	}
 	
+	private BookingHairs getSimpleBookingHairs(ResultSet rs) throws SQLException {
+		// BOOK_NO,HAIR_NO,HAIR_NAME,HAIR_PRICE,KIND_NO,HAIR_QUANTITY
+		Hair hair = new Hair(rs.getInt("BOOK_NO"));
+		hair.setHairName(rs.getString("HAIR_NAME"));
+		hair.setHairPrice(rs.getInt("hair_price"));
+		int quantity = rs.getInt("HAIR_QUANTITY");
+		return new BookingHairs(hair, quantity);
+	}
+
 	private BookingHairs getBookingHairs(ResultSet rs) throws SQLException {
 		// BOOK_NO, HAIR_NO, HAIR_QUANTITY
 		
@@ -91,6 +100,36 @@ public class BookingDaoImpl implements BookingDao {
 		return new BookingHairs(hair, quantity);
 	}
 
+	private Booking getSimpleBooking(ResultSet rs) throws SQLException {
+		int bookNo = rs.getInt("BOOK_NO");
+		
+		Guest guest = new Guest(rs.getString("GUEST_ID"));
+		guest.setGuestName(rs.getString("GUEST_NAME"));
+		guest.setGuestPhone(rs.getString("GUEST_PHONE"));
+		
+		LocalDateTime bookTime = rs.getTimestamp("BOOK_TIME").toLocalDateTime();
+		ArrayList<BookingHairs> hairList = selectBookingHairsByBookingNo(bookNo);
+		
+		//System.out.println("getBooking 안 : " + hairList);
+		//Hair hair = hDao.selectHairByNo(new Hair(rs.getInt("HAIR_NO")));
+
+		Designer designer = new Designer(rs.getInt("DE_NO"));
+		designer.setDeName(rs.getString("DE_NAME"));
+		designer.setDeNickname(rs.getString("DE_NICKNAME"));
+		designer.setDeLevel(rs.getString("DE_LEVEL"));
+		
+		LocalDateTime bookRegDate = rs.getTimestamp("BOOK_REGDATE").toLocalDateTime();
+		int bookStatus = rs.getInt("BOOK_STATUS");
+		
+		String bookNote = null;
+		try {
+			bookNote = rs.getString("BOOK_NOTE");
+		} catch (SQLException e) {
+		}
+		
+		return new Booking(bookNo, guest, bookTime, designer, bookRegDate, bookStatus, bookNote, hairList);
+	}
+	
 	private Booking getBooking(ResultSet rs) throws SQLException {
 		// BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE
 		// BOOK_NO, GUEST_ID, BOOK_TIME, HAIR_NO, HAIR_QUANTITY, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE
@@ -331,6 +370,7 @@ public class BookingDaoImpl implements BookingDao {
 		}
 		
 	}
+	
 	
 	
 //////////////////////////////////////페이징/////////////////////////////////////////////////
@@ -661,11 +701,10 @@ public class BookingDaoImpl implements BookingDao {
 	
 	@Override
 	public ArrayList<Booking> selectBookingAllToday() {
-		String sql = "SELECT * FROM booking WHERE TO_CHAR(SYSDATE, 'YYYY-MM-DD') = ?";
+		String sql = "SELECT * FROM booking WHERE TO_CHAR(book_time, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, LocalDate.now().toString());
 			try(ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
 					ArrayList<Booking> list = new ArrayList<>();
@@ -683,7 +722,7 @@ public class BookingDaoImpl implements BookingDao {
 	
 	
 	@Override
-	public int countBookingByConditionForPaging(Paging paging, String where, String query, String sorter) {
+	public int countBookingByConditionForPaging(Paging paging, String where, String query, String sorter, String designer) {
 		String sql = "SELECT COUNT(*) FROM booking_guest_view ";
 		int cnt = 0;
 		
@@ -701,42 +740,27 @@ public class BookingDaoImpl implements BookingDao {
 			cnt++;
 		}
 		
-		/*if(where != null) {
-			if(!where.equals("")) {
-				if(where.equals("guestId")) {
-					where = "guest_id";
-				} else if (where.equals("guestName")) {
-					where = "guest_name";
-				} else if (where.equals("guestPhone")) {
-					where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
-				}
-				sql += " WHERE " + where + " LIKE '%" + query + "%'";
-			}
-		}*/
-		
 		if(sorter == null) {
 		} else if (sorter.trim().equals("")) {
 		} else {
 			if(cnt == 1) {
 				sql += " AND BOOK_STATUS = " + sorter;
+				cnt++;
 			} else {
 				sql += " WHERE BOOK_STATUS = " + sorter;
 			}
 		}
-		/*
-		if(sorter != null) {
-			if(!sorter.equals("")) {
-				if(where != null) {
-					if(!where.equals("")) {
-						sql += " AND ";
-					}
-				} else {
-					sql += " WHERE ";
-				}
-				sql += " book_status = " + sorter;
+		
+		if(designer == null) {
+		} else if (designer.trim().equals("")) {
+		} else {
+			if(cnt >= 1) {
+				sql += " AND DE_NO = " + designer;
+			} else {
+				sql += " WHERE DE_NO = " + designer;
 			}
 		}
-		*/
+		
 		System.out.println("완성된 쿼리" + sql);
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -753,7 +777,7 @@ public class BookingDaoImpl implements BookingDao {
 	
 	
 	@Override
-	public ArrayList<Booking> selectBookingByCondition(Paging paging, String where, String query, String sorter) {
+	public ArrayList<Booking> selectBookingByCondition(Paging paging, String where, String query, String sorter, String designer) {
 		
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_guest_view ";
 		int cnt = 0;
@@ -773,30 +797,8 @@ public class BookingDaoImpl implements BookingDao {
 			sql += " WHERE " + where + " LIKE '%" + query + "%' ";
 			cnt++;
 		}
-		/*
-		if(where != null) {
-			sql += " WHERE LIKE '%";
-			if(where.equals("guestId")) {
-				where = "guest_id";
-			} else if (where.equals("guestName")) {
-				where = "guest_name";
-			} else if (where.equals("guestPhone")) {
-				where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
-			}
-			sql += "%' ";
-			
-			if(sorter != null) {
-				if(!sorter.equals("")) {
-					sql += " AND book_status = " + sorter;
-				}
-			}
-			
-			sql += " ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
-		}
-		*/
 		
 		if(sorter == null) {
-			sql += " ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
 		} else if (sorter.trim().equals("")) {
 		} else {
 			if(cnt == 1) {
@@ -804,17 +806,19 @@ public class BookingDaoImpl implements BookingDao {
 			} else {
 				sql += " WHERE BOOK_STATUS = " + sorter;
 			}
-			sql += " ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+			
 		}
 		
-		/*if(where == null || query == null) {
-			if(sorter != null) {
-				if(!sorter.equals("")) {
-					sql += " WHERE book_status = " + sorter;
-				}
+		if(designer == null) {
+		} else if (designer.trim().equals("")) {
+		} else {
+			if(cnt >= 1) {
+				sql += " AND DE_NO = " + designer;
+			} else {
+				sql += " WHERE DE_NO = " + designer;
 			}
-			sql += " ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
-		}*/
+		}
+		sql += " ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
 		
 		System.out.println("완성된 sql + " + sql);
 		try (Connection con = JndiDs.getConnection();
@@ -825,7 +829,7 @@ public class BookingDaoImpl implements BookingDao {
 				if(rs.next()) {
 					ArrayList<Booking> list = new ArrayList<>();
 					do {
-						list.add(getBooking(rs));
+						list.add(getSimpleBooking(rs));
 					}while(rs.next());
 					return list;
 				}

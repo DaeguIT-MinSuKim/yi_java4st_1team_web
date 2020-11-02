@@ -6,7 +6,7 @@ document.title += ' - 고객 목록';
 	
 function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
-		location.href="guestList.do?nowPage=1&cntPerPage="+sel;
+		location.href="guestList.do?nowPage=1&cntPerPage="+sel+"&del=${del}&where=${where}&query=${query}";
 };
 
 function selectAll(){
@@ -66,34 +66,43 @@ $(document).on('click', '[id=btn_delete]', function() {
 	}else {
 		return;
 	}
-	
+
 });
 
 
+
+
+$("#searchBtn").click(function(e) {
+	if($("select[name=where]").val() == undefined || $("input[name=query]").val() == "") {
+		e.preventDefault();
+	}
+});
+
+console.log($("select[name=where]").val());	
+
+$("#where").change(function(){
+	$("select[name=where]").val()
+})
+	
 </script>
 
-
-
 <!-- Page Heading -->
-<h1 class="h3 mb-2 text-gray-800 font-weight">고객 목록 - 고객 관리</h1>
-<p class="mb-4">
-	<a target="_blank" href="https://datatables.net"></a>
-</p>
-<form method="post" name="formm">
+<form name="formm">
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
 	<div class="card-header py-2">
-		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
+			<div class="mt-1 float-left">
+				<h6 class="m-1 font-weight-bold text-primary" style="font-size: 1.3em">고객 관리</h6>
+			</div>
 			
-				<input type="button" value="등록" class="btn btn-info btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='guestAdd.do' ">
-				<input type="button"  value="삭제" name="delete" class="btn btn-secondary btn-sm" style="float: left;" >
-				
-				<button type="button" onclick="selectAll()" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">
-					전체선택
-				</button>
+	
 				<button type="button" onclick="deselectAll()" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;">
 					선택해제
 				</button>
+				<button type="button" onclick="selectAll()" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">
+					전체선택
+				</button>
+				<input type="button"  value="선택삭제" name="delete" class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;" >
 		</h6>
 	</div>
 	<!-- card-body -->
@@ -105,11 +114,10 @@ $(document).on('click', '[id=btn_delete]', function() {
 				<!-- 테이블 상단 필터링 시작 -->
 				<div class="row mb-2">
 					<div class="col-sm-12 col-md-6">
-						<div class="dataTables_length" id="dataTable_length">
+						<div class="dataTables_length" id="dataTable_length" style="float:left">
 							<label>
 							<select name="dataTable_length" id="cntPerPage" onchange="selChange()" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
-									<option value="5"
-						<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
+									<option value="5" <c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
 							<option value="10"
 								<c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
 							<option value="15"
@@ -118,19 +126,22 @@ $(document).on('click', '[id=btn_delete]', function() {
 								<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄 보기</option>
 							</select>
 							</label>
+							
+						
 						</div>
 					</div>
 					<div class="col-sm-12 col-md-6">
 						<div id="dataTable_filter" class="dataTables_filter ">
-							<select class="custom-select custom-select-sm" name="opt" style="width: 80px;">
-								<option value="0">아이디</option>
-								<option value="1">고객명</option>
-								<option value="2">폰번호</option>
+							<select class="custom-select custom-select-sm" name="where" style="width: 80px;">
+								<option value="">기준</option>
+								<option value="guestId">아이디</option>
+								<option value="guestName">고객명</option>
+								<option value="guestPhone">폰번호</option>
 							</select>
 							<label>
-								<input type="text" name="value" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
+								<input type="search" name="query" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
 							</label>
-							<input type="submit" value="검색" class="btn btn-primary btn-sm">
+							<input type="submit" value="검색" class="btn btn-primary btn-sm" id="searchBtn"></input>
 						</div>
 					</div>
 				</div>
@@ -148,10 +159,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 							<th>연락처</th>
 							<th>이메일</th>
 							<th>성별</th>
-							<!-- <th>가입일</th>
-							<th>비고</th> -->
-							<th>탈퇴</th>
-							<!-- <th>정보동의</th> -->
+							
 							<th>주문 전환</th>
 							<th>상세보기</th>
 							<th>고객 정보</th>
@@ -172,20 +180,14 @@ $(document).on('click', '[id=btn_delete]', function() {
 							<c:if test="${guest.guestGender == 0}">여</c:if>
 							<c:if test="${guest.guestGender == 1}">남</c:if>
 							</td>
-							<%-- <td style="width:180px;">
-								<fmt:parseDate value="${guest.guestJoinDate}" pattern="yyyy-MM-dd'T'HH:mm" var="join" type="both" />
-								<fmt:formatDate value="${join}" pattern="yyyy-MM-dd HH:mm" />
-								
-								</td> --%>
-							<%-- <td style="width:200px;">${guest.guestNote}</td> --%>
-							<td style="width:60px;">${guest.delYn}</td>
-							<%-- <td style="width:80px;">${guest.infoYn}</td> --%>
+							
 							<td style="width:100px;">
 								<a href="orderForm.do?guestId=${guest.guestId }" class="btn bg-warning btn-sm bookingToOrderButton"><span class="text-gray-800">주문</span></a>
 							</td>
-							<td  style="width:150px;">
+							<td  style="width:200px;">
 								<input type="button" name="booking" value="예약내역" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestBookingInfo.do?id=${guest.guestId}'">
-								<input type="button" name="order" value="주문내역" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestOrderInfo.do?id=${guest.guestId}'">
+								<input type="button" name="order" value="주문내역" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='bookingList.do?where=guestId&query=${guest.guestId}'">
+								<input type="button" name="guest" value="회원정보" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestData.do?id=${guest.guestId}' ">
 							</td>
 							<td  style="width:100px;">
 								<input type="button" name="update" value="수정" class="btn btn-primary btn-sm" onclick="location.href='guestInfo.do?id=${guest.guestId}'">
@@ -196,8 +198,10 @@ $(document).on('click', '[id=btn_delete]', function() {
 					</tbody>
 				</table>
 				<!-- 테이블 끝 -->
+				<input type="button" value="등록" class="btn btn-info btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='guestAdd.do' ">
+				<input type="button"  value="선택삭제" name="delete" class="btn btn-secondary btn-sm" style="float: left; margin-right: 10px;" >
 				
-				
+				<input type="button" value="탈퇴고객" name="delGuest" class="btn btn-dark btn-sm" onclick="location.href='guestList.do?nowPage=1&cntPerPage=10&del=y'" style="float:right; margin-left: 20px;">
 			
 	
 					<!-- 페이징 시작 -->
@@ -208,7 +212,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 						<!-- << -->
 						<c:if test="${paging.startPage != 1}">
 							<div class="paging-line">
-							<a href="guestList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
+							<a href="guestList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&del=${del}&where=${where}&query=${query}">
 								<i class="fas fa-angle-double-left"></i>
 							</a>
 							</div>
@@ -224,7 +228,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 						<c:choose>
 							<c:when test="${paging.nowPage != 1}">
 								<div class="paging-line">
-									<a href="guestList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
+									<a href="guestList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&del=${del}&where=${where}&query=${query}"><i class="fas fa-angle-left"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == 1}">
@@ -245,7 +249,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 								</c:when>
 								<c:when test="${p != paging.nowPage }">
 									<div class="paging-line">
-									<a href="guestList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+									<a href="guestList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&del=${del}&where=${where}&query=${query}">
 									${p}</a></div>
 								</c:when>
 							</c:choose>
@@ -257,7 +261,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 						<c:choose>
 							<c:when test="${paging.nowPage != paging.lastPage}">
 								<div class="paging-line">
-									<a href="guestList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
+									<a href="guestList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&del=${del}&where=${where}&query=${query}"><i class="fas fa-angle-right"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == paging.lastPage}">
@@ -273,11 +277,11 @@ $(document).on('click', '[id=btn_delete]', function() {
 					
 						<c:if test="${paging.endPage != paging.lastPage }">
 							<div class="paging-line">
-							<a href="guestList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
+							<a href="guestList.do?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}&del=${del}&where=${where}&query=${query}">
 							<i class="fas fa-angle-double-right"></i></a>
 							</div>
 						</c:if>
-						<c:if test="${paging.endPage == paging.lastPage }">
+						<c:if test="${paging.endPage == paging.lastPage}">
 							<div class="paging-line">
 							<i class="fas fa-angle-double-right"></i>
 							</div>

@@ -44,5 +44,4 @@ public interface NoticeDao {
 	
 	// 공지찾기 페이징
 	List<Notice> selectPagingNoticeSearch(Paging paging, String condition, String keyword,String stay);
-	
 }

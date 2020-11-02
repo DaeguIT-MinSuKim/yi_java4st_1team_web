@@ -38,6 +38,18 @@ public class Booking {
 		this.designer = designer;
 		this.bookNote = bookNote;
 	}
+	
+	public Booking(int bookNo, Guest guest, LocalDateTime bookDate, Designer designer, LocalDateTime bookRegDate,
+			int bookStatus, String bookNote, List<BookingHairs> hairList) {
+		this.bookNo = bookNo;
+		this.guest = guest;
+		this.bookDate = bookDate;
+		this.designer = designer;
+		this.bookRegDate = bookRegDate;
+		this.bookStatus = bookStatus;
+		this.bookNote = bookNote;
+		this.hairList = hairList;
+	}
 
 	public Booking(int rowNum, int bookNo, Guest guest, LocalDateTime bookDate, Hair hair, Designer designer,
 			LocalDateTime bookRegDate, int bookStatus, String bookNote) {

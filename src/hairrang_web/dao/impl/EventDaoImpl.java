@@ -94,13 +94,13 @@ public class EventDaoImpl implements EventDao {
 	}
 
 
-	@Override
+	/*@Override
 	public int updateEvent(Event event) {
 		String sql = "UPDATE EVENT SET EVENT_NAME = ?, EVENT_SALERATE = ?, EVENT_START = ?, "
 				+ "EVENT_END = ?, EVENT_PIC = ?, EVENT_CONTENT = ? WHERE EVENT_NO = ?";
-
+	
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-
+	
 			pstmt.setString(1, event.getEventName());
 			pstmt.setDouble(2, event.getEventSaleRate());
 			pstmt.setDate(3, Date.valueOf(event.getEventStart()));
@@ -112,21 +112,9 @@ public class EventDaoImpl implements EventDao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-	}
+	}*/
 
-	@Override
-	public int deleteEvent(Event event) {
-		String sql = "DELETE EVENT WHERE EVENT_NO = ?";
-
-		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-
-			pstmt.setInt(1, event.getEventNo());
-			return pstmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
+	
 	@Override
 	public Event selectEventDownSide(Event event) {
 		String sql = "SELECT * FROM (SELECT * FROM EVENT WHERE EVENT_NO <? ORDER BY EVENT_NO DESC ) WHERE rownum = 1";

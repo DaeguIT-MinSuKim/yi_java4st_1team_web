@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import hairrang_web.dao.GuestDao;
 import hairrang_web.ds.JndiDs;
+import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
 import hairrang_web.utils.Paging;
 
@@ -81,7 +82,6 @@ public class GuestDaoImpl implements GuestDao {
 	@Override
 	public Guest selectGuestById(Guest guest) {
 		String sql = "SELECT * FROM GUEST WHERE GUEST_ID = ?";
-
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, guest.getGuestId());
 			try (ResultSet rs = pstmt.executeQuery()) {
@@ -270,33 +270,235 @@ public class GuestDaoImpl implements GuestDao {
 
 	///////페이징///////////////////////////////////////////////////////////////////////////////
 
-	@Override
-	public ArrayList<Guest> pagingGuestByAll(Paging paging) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM GUEST ORDER BY GUEST_JOIN_DATE desc) a) "
-				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
-		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setInt(1, paging.getStart());
-			pstmt.setInt(2, paging.getEnd());
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					ArrayList<Guest> list = new ArrayList<Guest>();
-					do {
-						list.add(getGuest(rs));
-					} while (rs.next());
+//	@Override
+//	public ArrayList<Guest> pagingGuestByAll(Paging paging) {
+//		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM GUEST WHERE del_yn = 'n'  ORDER BY GUEST_JOIN_DATE desc) a) "
+//				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+//		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+//			pstmt.setInt(1, paging.getStart());
+//			pstmt.setInt(2, paging.getEnd());
+//			try (ResultSet rs = pstmt.executeQuery()) {
+//				if (rs.next()) {
+//					ArrayList<Guest> list = new ArrayList<Guest>();
+//					do {
+//						list.add(getGuest(rs));
+//					} while (rs.next());
+//
+//					return list;
+//				}
+//			}
+//		} catch (SQLException e) {
+//			throw new RuntimeException(e);
+//		}
+//		return null;
+//	}
+//
+//	@Override
+//	public int countGuest() {
+//		String sql = "SELECT COUNT(*) FROM guest where del_yn = 'n'";
+//		try (Connection con = JndiDs.getConnection();
+//				PreparedStatement pstmt = con.prepareStatement(sql);
+//				ResultSet rs = pstmt.executeQuery()) {
+//			if (rs.next()) {
+//				return rs.getInt(1);
+//			}
+//		} catch (SQLException e) {
+//			throw new RuntimeException(e);
+//		}
+//		return 0;
+//	}
+//
+//	/////검색//////////////////////////////////////////////////////////////////////////
+//
+//	@Override
+//	public ArrayList<Guest> searchGuestById(Paging paging, String id) {
+//		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM "
+//				+ "(SELECT * FROM GUEST_VIEW WHERE DEL_YN = 'n' AND GUEST_ID LIKE '%' || ? || '%' ORDER BY GUEST_JOIN_DATE desc) a) "
+//				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+//		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+//			pstmt.setString(1, id);
+//			pstmt.setInt(2, paging.getStart());
+//			pstmt.setInt(3, paging.getEnd());
+//			try (ResultSet rs = pstmt.executeQuery()) {
+//				if (rs.next()) {
+//					ArrayList<Guest> list = new ArrayList<Guest>();
+//					do {
+//						list.add(getGuest(rs));
+//					} while (rs.next());
+//					return list;
+//				}
+//			}
+//
+//		} catch (SQLException e) {
+//			throw new RuntimeException();
+//		}
+//		return null;
+//	}
+//
+//	@Override
+//	public ArrayList<Guest> searchGuestByName(Paging paging, String name) {
+//		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM "
+//				+ "(SELECT * FROM GUEST_VIEW WHERE DEL_YN = 'n' AND GUEST_NAME LIKE '%' || ? || '%' ORDER BY GUEST_JOIN_DATE desc) a) "
+//				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+//
+//		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+//			pstmt.setString(1, name);
+//			pstmt.setInt(2, paging.getStart());
+//			pstmt.setInt(3, paging.getEnd());
+//			try (ResultSet rs = pstmt.executeQuery()) {
+//				if (rs.next()) {
+//					ArrayList<Guest> list = new ArrayList<Guest>();
+//					do {
+//						list.add(getGuest(rs));
+//					} while (rs.next());
+//					return list;
+//				}
+//			}
+//
+//		} catch (SQLException e) {
+//			throw new RuntimeException();
+//		}
+//		return null;
+//	}
+//	
+//	@Override
+//	public ArrayList<Guest> searchGuestByPhone(Paging paging, String phone) {
+//		//FROM guest_view WHERE REGEXP_REPLACE(guest_phone, '[^0-9]+') LIKE '%' || ? || '%'";
+//		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM "
+//				+ "(SELECT * FROM GUEST WHERE DEL_YN = 'n' AND REGEXP_REPLACE(guest_phone, '[^0-9]+') LIKE '%' || ? || '%') a) "
+//				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+//		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+//			pstmt.setString(1, phone);
+//			pstmt.setInt(2, paging.getStart());
+//			pstmt.setInt(3, paging.getEnd());
+//			try (ResultSet rs = pstmt.executeQuery()) {
+//				if (rs.next()) {
+//					ArrayList<Guest> list = new ArrayList<>();
+//					do {
+//						list.add(getGuest(rs));
+//					} while (rs.next());
+//					return list;
+//				}
+//			}
+//		} catch (SQLException e) {
+//			throw new RuntimeException(e);
+//		}
+//		return null;
+//	}
+//
+//	@Override
+//	public int countIdSearch(String id) {
+//		String sql = "SELECT COUNT(*) FROM guest WHERE DEL_YN = 'n' AND GUEST_ID LIKE '%' || ? || '%'";
+//		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+//			pstmt.setString(1, id);
+//			try (ResultSet rs = pstmt.executeQuery()) {
+//				if (rs.next()) {
+//					return rs.getInt(1);
+//				}
+//			}
+//		} catch (SQLException e) {
+//			throw new RuntimeException(e);
+//		}
+//		return 0;
+//	}
+//
+//	@Override
+//	public int countNameSearch(String name) {
+//		String sql = "SELECT COUNT(*) FROM guest WHERE DEL_YN = 'n' AND GUEST_NAME LIKE '%' || ? || '%'";
+//		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+//			pstmt.setString(1, name);
+//			try (ResultSet rs = pstmt.executeQuery()) {
+//				if (rs.next()) {
+//					return rs.getInt(1);
+//				}
+//			}
+//		} catch (SQLException e) {
+//			throw new RuntimeException(e);
+//		}
+//		return 0;
+//	}
+//
+//
+//	@Override
+//	public int countPhoneSearch(String phone) {
+//		String sql = "SELECT COUNT(*) FROM guest WHERE DEL_YN = 'n' AND REGEXP_REPLACE(guest_phone, '[^0-9]+') LIKE '%' || ? || '%'";
+//		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+//			pstmt.setString(1, phone);
+//			try (ResultSet rs = pstmt.executeQuery()) {
+//				if (rs.next()) {
+//					return rs.getInt(1);
+//				}
+//			}
+//		} catch (SQLException e) {
+//			throw new RuntimeException(e);
+//		}
+//		return 0;
+//	}
+//
+//	@Override
+//	public ArrayList<Guest> selectGuestByDel(Paging paging) {
+//		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM GUEST WHERE del_yn = 'y'  ORDER BY GUEST_JOIN_DATE desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+//		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
+//			pstmt.setInt(1, paging.getStart());
+//			pstmt.setInt(2, paging.getEnd());
+//			try (ResultSet rs = pstmt.executeQuery()) {
+//				if (rs.next()) {
+//					ArrayList<Guest> list = new ArrayList<Guest>();
+//					do {
+//						list.add(getGuest(rs));
+//					} while (rs.next());
+//
+//					return list;
+//				}
+//			}
+//		} catch (SQLException e) {
+//			throw new RuntimeException(e);
+//		}
+//		return null;
+//	}
+//
+//	@Override
+//	public int countGuestByDel() {
+//		String sql = "SELECT COUNT(*) FROM guest WHERE DEL_YN = 'y'";
+//		try (Connection con = JndiDs.getConnection();
+//				PreparedStatement pstmt = con.prepareStatement(sql);
+//				ResultSet rs = pstmt.executeQuery()) {
+//			if (rs.next()) {
+//				return rs.getInt(1);
+//			}
+//		} catch (SQLException e) {
+//			throw new RuntimeException(e);
+//		}
+//		return 0;
+//	}
 
-					return list;
-				}
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
+	////del_yn = 'y', 검색 3가지, cntPerPage 
+	@Override
+	public int countBookingByConditionForPaging(Paging paging, String del, String where, String query) {
+		String sql = "SELECT count(*) FROM GUEST_VIEW";
+		
+		if(del == null || del.equals("")) {
+			sql += " where del_yn = 'n'";
+		} else {
+			sql += " where del_yn = '" + del + "'"; 
 		}
-		return null;
-	}
-
-	@Override
-	public int countGuest() {
-		String sql = "SELECT COUNT(*) FROM guest";
-		try (Connection con = JndiDs.getConnection();
+		
+		if(where == null) {
+		} else if(where.equals("")) {
+		} else {
+			if(where.trim().equals("guestId")) {
+				where = "guest_id";
+			} else if (where.equals("guestName")) {
+				where = "guest_name";
+			} else if (where.equals("guestPhone")) {
+				where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
+			}
+			sql += " and " + where + " LIKE '%" + query + "%'";		
+		}
+		
+		System.out.println("count 쿼리: " + sql);
+		
+		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
 			if (rs.next()) {
@@ -305,133 +507,58 @@ public class GuestDaoImpl implements GuestDao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+		
 		return 0;
 	}
 
-	/////검색//////////////////////////////////////////////////////////////////////////
-
 	@Override
-	public ArrayList<Guest> searchGuestById(Paging paging, String id) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM "
-				+ "(SELECT * FROM GUEST_VIEW WHERE GUEST_ID LIKE '%' || ? || '%' ORDER BY GUEST_JOIN_DATE desc) a) "
-				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
-		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, id);
-			pstmt.setInt(2, paging.getStart());
-			pstmt.setInt(3, paging.getEnd());
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					ArrayList<Guest> list = new ArrayList<Guest>();
-					do {
-						list.add(getGuest(rs));
-					} while (rs.next());
-					return list;
-				}
+	public ArrayList<Guest> selectGuestByCondition(Paging paging, String del, String where, String query) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM guest_view ";
+		int cnt = 0;
+		
+		if(where == null || where.equals("") ) {		
+		} else {
+			if(where.trim().equals("guestId")) {
+				where = "guest_id";
+			} else if (where.equals("guestName")) {
+				where = "guest_name";
+			} else if (where.equals("guestPhone")) {
+				where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
 			}
-
-		} catch (SQLException e) {
-			throw new RuntimeException();
+			
+			sql += " where " + where + " LIKE '%" + query + "%'";	
+			cnt++;
 		}
-		return null;
-	}
-
-	@Override
-	public ArrayList<Guest> searchGuestByName(Paging paging, String name) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM "
-				+ "(SELECT * FROM GUEST_VIEW WHERE GUEST_NAME LIKE '%' || ? || '%' ORDER BY GUEST_JOIN_DATE desc) a) "
-				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
-
-		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, name);
-			pstmt.setInt(2, paging.getStart());
-			pstmt.setInt(3, paging.getEnd());
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					ArrayList<Guest> list = new ArrayList<Guest>();
-					do {
-						list.add(getGuest(rs));
-					} while (rs.next());
-					return list;
-				}
+		
+		if(del == null || del.equals("")) {
+			if(cnt>=1) {
+				sql += " and del_yn = 'n'";
 			}
-
-		} catch (SQLException e) {
-			throw new RuntimeException();
+		} else {
+			sql += " where del_yn = '" + del + "'"; 
+			
 		}
-		return null;
-	}
-	
-	@Override
-	public ArrayList<Guest> searchGuestByPhone(Paging paging, String phone) {
-		//FROM guest_view WHERE REGEXP_REPLACE(guest_phone, '[^0-9]+') LIKE '%' || ? || '%'";
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM "
-				+ "(SELECT * FROM GUEST WHERE REGEXP_REPLACE(guest_phone, '[^0-9]+') LIKE '%' || ? || '%') a) "
-				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
-		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, phone);
-			pstmt.setInt(2, paging.getStart());
-			pstmt.setInt(3, paging.getEnd());
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
+		
+		sql += ") a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		System.out.println("list 쿼리: " + sql);
+		
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
 					ArrayList<Guest> list = new ArrayList<>();
 					do {
 						list.add(getGuest(rs));
-					} while (rs.next());
+					}while(rs.next());
 					return list;
 				}
 			}
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+		
 		return null;
-	}
-
-	@Override
-	public int countIdSearch(String id) {
-		String sql = "SELECT COUNT(*) FROM guest WHERE GUEST_ID LIKE '%' || ? || '%'";
-		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, id);
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					return rs.getInt(1);
-				}
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		return 0;
-	}
-
-	@Override
-	public int countNameSearch(String name) {
-		String sql = "SELECT COUNT(*) FROM guest WHERE GUEST_NAME LIKE '%' || ? || '%'";
-		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, name);
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					return rs.getInt(1);
-				}
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		return 0;
-	}
-
-
-	@Override
-	public int countPhoneSearch(String phone) {
-		String sql = "SELECT COUNT(*) FROM guest WHERE REGEXP_REPLACE(guest_phone, '[^0-9]+') LIKE '%' || ? || '%'";
-		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setString(1, phone);
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					return rs.getInt(1);
-				}
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		return 0;
 	}
 }

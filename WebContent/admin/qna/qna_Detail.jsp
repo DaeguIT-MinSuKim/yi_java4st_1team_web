@@ -29,7 +29,7 @@
 
 					<div id="add-wrapper">
 
-						<table class="add-table">
+						<table class="add-table" style="width: 50%">
 
 							<tr>
 								<td>문의 제목</td>
@@ -58,7 +58,7 @@
 						<br>
 
 						<c:if test="${qna.qnaResYn eq 'y' }">
-							<table class="add-table">
+							<table class="add-table" style="width: 50%">
 
 								<tr>
 									<td>답변 제목</td>

@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import javax.mail.MessagingException;
+
+import hairrang_web.controller.mail.SendMail;
 import hairrang_web.dao.BookingDao;
 import hairrang_web.dao.impl.BookingDaoImpl;
 import hairrang_web.ds.JndiDs;
@@ -91,6 +94,7 @@ public class BookingService {
 		return dao.updateBookingStaus(booking);
 	}
 	
+	
 	public Booking selectBookStatus1(Paging paging, String id, int no) {
 		return dao.selectBookStatus1(paging, id, no);
 	}
@@ -109,6 +113,53 @@ public class BookingService {
 	
 	public ArrayList<Integer> selectNoStatus1 (String id){
 		return dao.selectNoStatus1(id);
+	}
+	
+	public int updateBookingStatus(String[] list) {
+		String sql = "UPDATE booking SET BOOK_STATUS = 0 WHERE book_no = ?";
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int res = 0;
+		
+		try {
+			con = JndiDs.getConnection();
+			con.setAutoCommit(false);
+			
+			pstmt = con.prepareStatement(sql);
+			
+			for(String bookNo : list) {
+				pstmt.setInt(1, Integer.parseInt(bookNo));
+				pstmt.addBatch();
+			}
+			
+			pstmt.executeBatch();
+			
+			try {
+				for(String bookNo : list ) {
+					Booking booking = dao.selectBookingByBookingNo(new Booking(Integer.parseInt(bookNo)));
+					Guest guest = booking.getGuest();
+					
+					BookingCancelSendEmail emailThr = new BookingCancelSendEmail();
+					emailThr.setGuest(guest);
+					emailThr.setBooking(booking);
+					
+					Thread t = new Thread(emailThr);
+					t.start();
+				}
+			}catch(Exception e) {
+				throw new RuntimeException();
+			}
+			
+			res = 1;
+		} catch (SQLException e) {
+			System.out.println("예약 취소 중 에러!");
+			rollbackUtil(con, e);
+		} finally {
+			closeUtil(con, pstmt);
+		}
+		
+		return res;
 	}
 	
 	public int insertBookingWithHairList(Booking booking) {
@@ -163,14 +214,13 @@ public class BookingService {
         }
     }
 
-    private void closeUtil(Connection con, PreparedStatement dPstmt, PreparedStatement tPstmt) {
+    private void closeUtil(Connection con, PreparedStatement...pstmt) {
         try {
-            if (dPstmt != null) {
-                dPstmt.close();
-            }
-            if (tPstmt != null) {
-                tPstmt.close();
-            }
+        	for(PreparedStatement p:pstmt) {
+        		if(p != null) {
+        			p.close();
+        		}
+        	}
             if (con != null) {
                 con.setAutoCommit(true);
                 con.close();
@@ -185,11 +235,12 @@ public class BookingService {
     }
     
     
-    public ArrayList<Booking> getBookingListBySearch(Paging paging, String where, String query, String sorter) {
-    	return dao.selectBookingByCondition(paging, where, query, sorter);
+    public ArrayList<Booking> getBookingListBySearch(Paging paging, String where, String query, String sorter, String designer) {
+    	return dao.selectBookingByCondition(paging, where, query, sorter, designer);
     }
     
-    public int getTotalCountBySearch(Paging paging, String where, String query, String sorter) {
-    	return dao.countBookingByConditionForPaging(paging, where, query, sorter);
+    public int getTotalCountBySearch(Paging paging, String where, String query, String sorter, String designer) {
+    	return dao.countBookingByConditionForPaging(paging, where, query, sorter, designer);
 	}
+	
 }

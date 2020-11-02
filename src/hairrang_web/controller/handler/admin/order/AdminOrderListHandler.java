@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Designer;
 import hairrang_web.dto.Orders;
+import hairrang_web.service.BookingService;
 import hairrang_web.service.DesignerService;
 import hairrang_web.service.OrdersService;
 import hairrang_web.utils.Paging;
@@ -78,12 +79,12 @@ public class AdminOrderListHandler implements Command {
 			request.setAttribute("paging", paging);
 			System.out.println(paging);
 			
-			ArrayList<Designer> dList = dService.getDesignerList();
-			request.setAttribute("dList", dList);
-			
 			ArrayList<Orders> list = oService.getOrdersListBySearch(paging, where, query, designer);
 			request.setAttribute("list", list);
 			request.setAttribute("sorter", designer);
+			
+			ArrayList<Designer> dList = dService.getDesignerList();
+			request.setAttribute("dList", dList);
 			
 		} else {
 			System.out.println(getClass().getSimpleName() + ">> POST");
