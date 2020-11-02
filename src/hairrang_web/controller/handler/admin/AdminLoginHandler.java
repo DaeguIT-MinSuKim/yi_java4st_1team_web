@@ -40,17 +40,11 @@ public class AdminLoginHandler implements Command {
 				HttpSession session = request.getSession();
 				session.setAttribute("loginAdmin", loginAdmin);
 				
-				response.setCharacterEncoding("UTF-8");
-				response.setStatus(HttpServletResponse.SC_ACCEPTED);
-				
+				System.out.println("4-1");
 				response.sendRedirect("main.do");
 			} else {
-				response.setCharacterEncoding("UTF-8");
-				response.setStatus(HttpServletResponse.SC_ACCEPTED);
 				
-				PrintWriter pw = response.getWriter();
-				pw.println("<script>alert('잘못된 로그인 정보입니다.');</script>");
-				pw.flush();
+				System.out.println("4-2");
 				response.sendRedirect("login.do");
 			}
 			return null;

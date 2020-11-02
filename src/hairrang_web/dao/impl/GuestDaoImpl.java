@@ -81,7 +81,6 @@ public class GuestDaoImpl implements GuestDao {
 	@Override
 	public Guest selectGuestById(Guest guest) {
 		String sql = "SELECT * FROM GUEST WHERE GUEST_ID = ?";
-		System.out.println(guest);
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, guest.getGuestId());
 			try (ResultSet rs = pstmt.executeQuery()) {
