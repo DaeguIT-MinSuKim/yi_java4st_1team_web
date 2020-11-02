@@ -68,7 +68,7 @@ ALTER TABLE EVENT
 ADD CONSTRAINT PK_EVENT PRIMARY KEY (event_no);
 
 --event_status로 변경
-ALTER TABLE event RENAME COLUMN use_yn TO event_status;
+--ALTER TABLE event RENAME COLUMN use_yn TO event_status;
 
 /* 헤어분류 */
 CREATE TABLE HAIR_KIND (

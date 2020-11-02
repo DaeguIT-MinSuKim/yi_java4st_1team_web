@@ -51,9 +51,11 @@ SELECT * FROM hair;
 
 /* event */
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
-VALUES ('생일', 0.2, NULL, NULL, NULL, '생일로부터 15일 전후 동안만 사용할 수 있습니다.');
+VALUES ('생일', 0.2, NULL, NULL, NULL, '생일로부터 10일 전후 동안만 사용할 수 있습니다.');
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
-VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-09-28', 'YYYY-MM-DD'), to_date('2020-10-15', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사');
+VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-11-01', 'YYYY-MM-DD'), to_date('2020-12-01', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사');
+INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
+VALUES ('테스트', 0.2, to_date('2020-11-15', 'YYYY-MM-DD'), to_date('2020-11-20', 'YYYY-MM-DD') + - 1 / (24*60*60) + 1, NULL, '테스트');
 
 
 /* designer */

@@ -19,7 +19,7 @@ SELECT 14, 'test4', event_no, event_start, event_end, 'n' FROM event WHERE event
 
 
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
-VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-10-21', 'YYYY-MM-DD'), to_date('2020-11-10', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사');
+VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-11-01', 'YYYY-MM-DD'), to_date('2020-11-30', 'YYYY-MM-DD'), NULL, '오픈 기념 20% 할인 행사');
 
 
 UPDATE event SET USE_YN = 'n' WHERE EVENT_NO = 5;
@@ -194,7 +194,7 @@ INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC,
 VALUES ('생일', 0.2, NULL, NULL, NULL, '생일로부터 10일 전후 동안만 사용할 수 있습니다.');
 
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
-VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-10-29', 'YYYY-MM-DD'), to_date('2020-11-14', 'YYYY-MM-DD') + - 1 / (24*60*60) + 1 , NULL, '오픈 기념 10% 할인 행사');
+VALUES ('오픈 기념 쿠폰', 0.2, to_date('2020-10-29', 'YYYY-MM-DD'), to_date('2020-11-14', 'YYYY-MM-DD') + - 1 / (24*60*60) + 1 , NULL, '오픈 기념 20% 할인 행사');
 
 SELECT c.*, TO_DATE(TO_CHAR(sysdate+12, 'YYYY-MM-DD'), 'YYYY-MM-DD') FROM coupon c WHERE guest_id = 'test' AND USED_YN = 'n' AND SYSDATE+11 BETWEEN EVENT_START AND EVENT_END;
 
