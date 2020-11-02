@@ -44,6 +44,7 @@ div.content {}
 
 .de_wrapper {width:1200px;}
 .de_sub_wrapper { width:1200px; margin:0 auto; }
+
 </style>
 <body>
 <div class="de_wrapper">
@@ -53,9 +54,9 @@ div.content {}
 <c:forEach var="list" items="${list}" varStatus="status">
 <div class="responsive"> <!-- 사진 하나 -->
   <div class="gallery">
-    <%-- <a target="_blank" href="${list.dePic}"> --%>
+   <%--  <a target="_blank" href="${list.dePic}"> --%>
       <img src="${list.dePic}" alt="" width="350" height="640">
-    <!-- </a> -->
+  <!--  </a> -->
     <div class="content">
     <span style="font-weight:bold; text-align:left" class="tleft">${list.deNickname}</span><br>
     <span style="font-size:15px;"> ${list.deLevel}</span><br>
