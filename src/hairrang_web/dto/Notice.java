@@ -1,11 +1,22 @@
 package hairrang_web.dto;
 
+import java.time.LocalDateTime;
+
 public class Notice {
 	private int noticeNo;
 	private String noticeTitle;
 	private String noticeContent;
 	private String noticeDelYn;
 	private String noticeFile;
+	private LocalDateTime noticeRegDate;
+
+	public LocalDateTime getNoticeRegDate() {
+		return noticeRegDate;
+	}
+
+	public void setNoticeRegDate(LocalDateTime noticeRegDate) {
+		this.noticeRegDate = noticeRegDate;
+	}
 
 	public String getNoticeFile() {
 		return noticeFile;
@@ -47,10 +58,22 @@ public class Notice {
 		this.noticeNo = noticeNo;
 	}
 
+	public Notice(int noticeNo, String noticeTitle, String noticeContent, String noticeDelYn, String noticeFile,
+			LocalDateTime noticeRegDate) {
+		super();
+		this.noticeNo = noticeNo;
+		this.noticeTitle = noticeTitle;
+		this.noticeContent = noticeContent;
+		this.noticeDelYn = noticeDelYn;
+		this.noticeFile = noticeFile;
+		this.noticeRegDate = noticeRegDate;
+	}
+
 	@Override
 	public String toString() {
 		return "Notice [noticeNo=" + noticeNo + ", noticeTitle=" + noticeTitle + ", noticeContent=" + noticeContent
-				+ ", noticeDelYn=" + noticeDelYn + ", noticeFile=" + noticeFile + "]";
+				+ ", noticeDelYn=" + noticeDelYn + ", noticeFile=" + noticeFile + ", noticeRegDate=" + noticeRegDate
+				+ "]";
 	}
 
 	public Notice(int noticeNo, String noticeTitle, String noticeContent, String noticeDelYn, String noticeFile) {
