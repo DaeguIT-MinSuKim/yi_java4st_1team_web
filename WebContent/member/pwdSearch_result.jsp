@@ -10,6 +10,12 @@
 	          history.go(-1);
 	    </script>
 	</c:when>
+	<c:when test="${error ne null}">
+	 	<script>
+	          alert(${error});
+	          history.go(-1);
+	    </script>
+	</c:when>
 	<c:otherwise>
 		${name}님의 메일주소로 임시 비밀번호를 전송하였습니다.<br> 로그인 후 비밀번호를 변경하세요.
 	</c:otherwise>
