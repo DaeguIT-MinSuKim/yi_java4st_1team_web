@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,8 +101,9 @@ public class NoticeDaoImpl implements NoticeDao {
 		String noticeContent = rs.getString("notice_content");
 		String noticeFile = rs.getString("notice_file");
 		String noticeDelYn = rs.getString("NOTICE_DELYN");
+		LocalDateTime noticeRegDate = rs.getTimestamp("NOTICE_REGDATE").toLocalDateTime();
 
-		return new Notice(noticeNo, noticeTitle, noticeContent, noticeDelYn, noticeFile);
+		return new Notice(noticeNo, noticeTitle, noticeContent, noticeDelYn, noticeFile, noticeRegDate);
 	}
 
 	@Override

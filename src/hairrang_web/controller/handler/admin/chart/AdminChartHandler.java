@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 
 import hairrang_web.controller.Command;
+import hairrang_web.service.ChartService;
 import hairrang_web.service.QnaService;
 
 public class AdminChartHandler implements Command {
-	private QnaService service = new QnaService();
+	private ChartService service = new ChartService();
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
