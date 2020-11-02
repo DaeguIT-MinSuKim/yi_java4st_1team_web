@@ -54,7 +54,7 @@ public class AdminEventAddHandler implements Command {
 			LocalDate end = LocalDate.parse(multi.getParameter("end"));
 			String file = multi.getFilesystemName("file");
 		
-			String fileRename = "admin/event/images/" + file; 
+			String fileRename = file; 
 			Event e = new Event(name, Double.parseDouble(saleRate)/100, start, end, fileRename, content, null);
 			int res = service.insertEvent(e);
 			System.out.println(res);

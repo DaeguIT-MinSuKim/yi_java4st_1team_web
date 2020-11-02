@@ -75,7 +75,6 @@ public class AdminCouponListHandler implements Command {
 			ArrayList<Event> eventList = eService.selectEventAll();
 			
 			
-			
 			request.setAttribute("no", no);
 			request.setAttribute("eventList", eventList);
 			//request.setAttribute("id", id);

@@ -32,19 +32,28 @@ public interface GuestDao {
 	Guest findPwd(String id, String name, String email);
 	
 	//admin 페이징
-	ArrayList<Guest> pagingGuestByAll(Paging paging);
-	int countGuest();
+//	ArrayList<Guest> pagingGuestByAll(Paging paging);
+//	int countGuest();
+//	
+//	//admin 검색 
+//	//이거왜다만드럿나,,,,,,,,,,,,,,,,,,,,
+//	ArrayList<Guest> searchGuestById(Paging paging, String id);
+//	int countIdSearch(String id);
+//
+//	ArrayList<Guest> searchGuestByName(Paging paging, String name);
+//	int countNameSearch(String name);
+//	
+//	ArrayList<Guest> searchGuestByPhone(Paging paging, String phone);
+//	int countPhoneSearch(String phone); 
+//	
+//	ArrayList<Guest> selectGuestByDel(Paging paging);
+//	int countGuestByDel();
 	
-	//admin 검색 
-	
-	ArrayList<Guest> searchGuestById(Paging paging, String id);
-	int countIdSearch(String id);
+	//del_yn = 'y', 검색 3가지, cntPerPage 
 
-	ArrayList<Guest> searchGuestByName(Paging paging, String name);
-	int countNameSearch(String name);
-	
-	ArrayList<Guest> searchGuestByPhone(Paging paging, String phone);
-	int countPhoneSearch(String phone); 
+	ArrayList<Guest> selectGuestByCondition(Paging paging, String del, String where, String search);
+
+	int countBookingByConditionForPaging(Paging paging, String del, String where, String search);
 	
 	
 
