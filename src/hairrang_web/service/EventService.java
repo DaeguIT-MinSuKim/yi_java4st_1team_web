@@ -39,10 +39,10 @@ public class EventService {
 	}
 	
 	public int updateEvent(Event event) {
-		String eSql = "UPDATE EVENT SET EVENT_NAME = ?, EVENT_SALERATE = ?, EVENT_START = ?,EVENT_END = ?, "
+		String eSql = "UPDATE EVENT SET EVENT_NAME = ?, EVENT_SALERATE = ?, EVENT_START = ?,EVENT_END = ? + - 1 / (24*60*60) + 1, "
 				+ "EVENT_PIC = ?, EVENT_CONTENT = ? WHERE EVENT_NO = ?";
 		//COUPON_ID,GUEST_ID,EVENT_NO,EVENT_START,EVENT_END,USED_YN
-		String cSql = "UPDATE COUPON SET EVENT_START = ?, EVENT_END = ? WHERE EVENT_NO = ? ";
+		String cSql = "UPDATE COUPON SET EVENT_START = ?, EVENT_END = ? + - 1 / (24*60*60) + 1 WHERE EVENT_NO = ? ";
 		
 		Connection con = null;
         PreparedStatement ePstmt = null;
@@ -82,8 +82,8 @@ public class EventService {
 	
 	public int deleteEvent(Event event) {
 		//대기중 이벤트 삭제와 동시에 발급된 회원쿠폰 삭제
-		String eSql = "DELETE EVENT WHERE EVENT_NO = ?";
 		String cSql = "delete coupon where event_no = ?";
+		String eSql = "DELETE EVENT WHERE EVENT_NO = ?";
 		
 		Connection con = null;
         PreparedStatement ePstmt = null;
@@ -93,16 +93,17 @@ public class EventService {
 		try {
 			con = JndiDs.getConnection();
 			con.setAutoCommit(false);
-
-			ePstmt = con.prepareStatement(eSql);
-			ePstmt.setInt(1, event.getEventNo());
-			
-			ePstmt.executeUpdate();
 			
 			cPstmt = con.prepareStatement(cSql);
 			cPstmt.setInt(1, event.getEventNo());
 			
 			cPstmt.executeUpdate();
+			
+
+			ePstmt = con.prepareStatement(eSql);
+			ePstmt.setInt(1, event.getEventNo());
+			
+			ePstmt.executeUpdate();
 			
 			con.commit();
 		

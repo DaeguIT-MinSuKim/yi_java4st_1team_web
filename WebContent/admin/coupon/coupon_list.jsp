@@ -33,20 +33,17 @@ function tableChange(){
 }
 
 </script>
-<!-- Page Heading -->
 
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">쿠폰 목록</h1>
-</div>
-<!-- Content Row -->
 
 <form method="post" name="formm">
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
 	<div class="card-header py-2">
-		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
-				<input type="button" value="쿠폰 등록" class="btn btn-info btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='couponAdd.do' ">
-		</h6>
+		
+			<div class="mt-1 float-left">
+				<h6 class="m-1 font-weight-bold text-primary" style="font-size: 1.3em">쿠폰 발급 내역</h6>
+			</div>
+		
 			
 		</div>
 	<!-- card-body -->
@@ -55,16 +52,19 @@ function tableChange(){
 			<!-- bootStrap table wrapper-->
 			<!-- " onchange="location.href='couponList.do?nowPage=${paging.nowPage}&cntPerPage=${paging.cntPerPage}&no='+this.value " -->
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-						<label>
-						<select name="sorter" id="selectPage" onchange="tableChange()" aria-controls="dataTable" class="custom-select custom-select-sm form-control form-control-sm">
+					<div class="input-group input-group-sm mr-3" style="width:250px; float:left; padding:5px; ">	
+						<div class="input-group-sm input-group-prepend">
+							<label class="input-group-text" for="sorter">이벤트종류</label>
+						</div>
+						<select name="sorter" id="selectPage" onchange="tableChange()" aria-controls="dataTable" class="custom-select custom-select-sm">
 							<option value="0" selected>전체보기</option>
 							<c:forEach var="event" items="${eventList}">
 								<option value="${event.eventNo}">${event.eventName}</option>
 							</c:forEach>
 						</select>
-						</label>
-			
-						<div style="float:right; padding:10px;">
+						
+				</div>
+				<div style="float:right; padding:5px;">
 				<ul>
 					<li class="btn-info btn-sm" style="width: 80px; display: inline;">사용가능</li>
 					<li class="btn-warning btn-sm" style="width: 80px; display: inline;">대기중</li>
@@ -99,6 +99,7 @@ function tableChange(){
 						</tr>
 					</thead>
 					<tbody>
+						
 						<c:forEach var="c" items="${list}" varStatus="status">
 						<tr>
 						<%--<td><input type="checkbox" name="check" value="${guest.guestId}"></td> --%>
@@ -136,9 +137,10 @@ function tableChange(){
 					</tbody>
 				</table>
 				<!-- 테이블 끝 -->
-
+			<input type="button" value="쿠폰 등록" class="btn btn-info btn-sm" style="float:left;" onclick="location.href='couponAdd.do' ">
 	
 					<!-- 페이징 시작 -->
+					
 					<c:choose>
 					<c:when test="${no == 0}">
 						<div style="width:100%; text-align:center; display:inline-block; margin:0 auto;">
@@ -313,6 +315,7 @@ function tableChange(){
 					</div>
 					</c:when>
 					</c:choose>
+					
 				</div>
 				<!-- bootStrap table wrapper-->
 			</div>

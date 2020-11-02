@@ -16,32 +16,32 @@ $(document).on('click', '[id=btn_delete]', function() {
 
 });
 </script>
-<!-- Page Heading -->
-
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">이벤트 관리 - 이벤트 목록</h1>
-</div>
-
-<!-- Content Row -->
 
 <form method="post" name="formm">
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
 	<div class="card-header py-2">
-		<h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
-			
-				<input type="button" value="이벤트 등록" class="btn btn-info btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='eventAdd.do' ">
-				
-				
-		</h6>
+			<div class="mt-1 float-left">
+				<h6 class="m-1 font-weight-bold text-primary" style="font-size: 1.3em">이벤트 관리</h6>
+			</div>
 	</div>
 	<!-- card-body -->
 	<div class="card-body">
+	
 		<div class="table-responsive">
 			<!-- bootStrap table wrapper-->
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-			※ 생일쿠폰은 생일 10일전 자동 발급<br>
+				<input type="button" value="이벤트 등록" class="btn btn-info btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='eventAdd.do' ">
+				<div style="float:left; margin-top:5px;">※ 생일쿠폰은 생일 10일전 자동 발급</div>
+				<div style="float:right; padding:5px; ">
+				<ul>
+					<li class="btn-info btn-sm" style="width:80px; display: inline;">진행중</li>
+					<li class="btn-secondary btn-sm" style="width:80px; display: inline;">종료</li>
+					<li class="btn-warning btn-sm" style="width:80px;  display: inline;">대기중</li>
+					
+				</ul>
 
+			</div>
 				<!-- 테이블 상단 필터링 시작 -->
 				<div class="row mb-2">
 					<div class="col-sm-12 col-md-6">
@@ -90,19 +90,8 @@ $(document).on('click', '[id=btn_delete]', function() {
 							</td>
 				
 							<td  style="width:100px;">
-								<!-- 이벤트 대기중인거만 수정가능 -->
-								<%-- <c:if test="${event.eventStatus == 's'}">
-									<input type="button" name="update" value="수정" class="btn btn-secondary btn-sm" disabled>
-									<input type="button" value="삭제" class="btn btn-secondary btn-sm" disabled>
-								</c:if>
-								<c:if test="${event.eventStatus == 'e'}">
-									<input type="button" name="update" value="수정" class="btn btn-secondary btn-sm" disabled>
-									<input type="button" value="삭제" class="btn btn-secondary btn-sm" disabled>
-								</c:if>
-								<c:if test="${event.eventStatus == 'w'}"> --%>
 									<input type="button" name="update" value="수정" class="btn btn-primary btn-sm" onclick="location.href='eventInfo.do?no=${event.eventNo}'">
 									<input type="button" value="삭제" id="btn_delete" eventNo="${event.eventNo}" class="btn btn-danger btn-sm">
-								<%-- </c:if> --%>
 							</td>
 						</tr>
 						

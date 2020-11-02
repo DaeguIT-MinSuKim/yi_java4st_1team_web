@@ -95,7 +95,7 @@ CREATE OR REPLACE PROCEDURE UPDATE_JOB_BIRTHDAY_COUPON
       BEGIN
 	   --생일쿠폰 삽입
 	  INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
-		SELECT guest_id, 7/*이벤트번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
+		SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
 		FROM (
 		SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
 		) gb WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
@@ -145,13 +145,13 @@ END;
 
 -- 등록되어 있는 JOB 삭제
 BEGIN
-   DBMS_JOB.REMOVE(27);
+   DBMS_JOB.REMOVE(74);
    COMMIT;
 END;
 
 -- 작업 비활성화 
 BEGIN
-   DBMS_JOB.BROKEN(70, TRUE);
+   DBMS_JOB.BROKEN(, TRUE);
    COMMIT;
 END;
 

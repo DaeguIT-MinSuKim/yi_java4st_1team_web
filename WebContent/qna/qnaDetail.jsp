@@ -42,6 +42,7 @@
 		<br> <label>제목</label><br> <input type="text" readonly
 			value="${qna.qnaTitle }" name="title"> <br> <label>내용</label><br>
 		<input type="text" readonly value="${qna.qnaContent}" name="content">
+		<img alt="" src="qna/upload/${qna.qnaFile }">
 		<%-- <textarea readonly value="">${qna.qnaContent}</textarea> --%>
 		<br>
 
