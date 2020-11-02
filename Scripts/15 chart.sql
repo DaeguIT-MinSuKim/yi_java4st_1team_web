@@ -160,3 +160,5 @@ FROM
 	) a
 GROUP BY orders_date, HAIR_NAME 
 ORDER BY ORDERS_DATE;
+
+SELECT * FROM guest;

@@ -42,9 +42,9 @@ public class SearchPwdHandler implements Command {
 				System.out.println(to);
 				String cc = ""; // 참조
 				String subject = "[hairrang] 임시 비밀번호 발급 안내";// 제목
-				String content = "안녕하세요. \n";
-				content += "고객님의 임시 비밀번호는 \n";
-				content += key + " 입니다. \n";
+				String content = "안녕하세요.<br>";
+				content += "고객님의 임시 비밀번호는<br>";
+				content += key + " 입니다.<br>";
 				content += "로그인 후 비밀번호를 변경하세요.";
 
 				if (from.trim().equals("")) {
