@@ -42,11 +42,15 @@
 					<div id="add-wrapper">
 
 						<div style="text-align: center;">
+							<div>
 							<label>${notice.noticeTitle}</label><br>
 							<hr>
-							<label>${notice.noticeContent }</label> <br> <img alt=""
-								src="../notice/setload/${notice.noticeFile }">
-
+							<label>${notice.noticeContent }</label> <br> 
+							</div>
+							<div>
+							<img alt=""
+								src="../notice/setload/${notice.noticeFile }" >
+								</div>
 						</div>
 					</div>
 				</div>

@@ -5,14 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.json.JSONArray;
 
 import hairrang_web.dao.QnADao;
 import hairrang_web.ds.JndiDs;
 import hairrang_web.dto.Admin;
-import hairrang_web.dto.Booking;
 import hairrang_web.dto.Guest;
-import hairrang_web.dto.Notice;
 import hairrang_web.dto.QnA;
 import hairrang_web.utils.Paging;
 
@@ -507,10 +509,9 @@ public class QnADaoImpl implements QnADao {
 	@Override
 	public int countPagingQnaSearch(String condition, String keyword, String stay) {
 		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE ";
-		
-		System.out.println("sql에서 검색조건==>"+condition);
-		System.out.println("sql에서 검색어==>"+keyword);
-		
+
+		System.out.println("sql에서 검색조건==>" + condition);
+		System.out.println("sql에서 검색어==>" + keyword);
 
 		if (stay.equals("all")) {
 			sql += " DEL_YN = 'n' AND QNA_REFNO is null ";
@@ -523,7 +524,6 @@ public class QnADaoImpl implements QnADao {
 		} else if (stay.equals("deln")) {
 			sql += " DEL_YN = 'y' AND NOTICE_YN ='y' ";
 		}
-		
 
 		if (condition != null) {
 			sql += " and";
@@ -567,7 +567,6 @@ public class QnADaoImpl implements QnADao {
 			sql += " DEL_YN = 'y' AND NOTICE_YN ='y' ";
 		}
 
-		
 		if (condition != null) {
 			sql += " and";
 			if (condition.equalsIgnoreCase("qnaTitle")) {
@@ -601,4 +600,33 @@ public class QnADaoImpl implements QnADao {
 		return null;
 	}
 
+
+	@Override
+	public JSONArray selectOnlyQnA() {
+		String sql = "SELECT TO_CHAR(QNA_REGDATE,'yyyy-mm-dd')AS day ,COUNT(*)AS count FROM qna WHERE ADMIN_ID IS NULL GROUP BY TO_CHAR(QNA_REGDATE,'yyyy-mm-dd') ORDER BY TO_CHAR(QNA_REGDATE,'yyyy-mm-dd')";
+
+		JSONArray jsonArray = new JSONArray();
+
+		JSONArray colNameArray = new JSONArray();
+		colNameArray.put("Day");
+		colNameArray.put("문의 갯수");
+		jsonArray.put(colNameArray);
+
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+
+				do {
+					JSONArray rowArray = new JSONArray();
+					rowArray.put(rs.getString("day"));
+					rowArray.put(rs.getInt("count"));
+					jsonArray.put(rowArray);
+				} while (rs.next());
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return jsonArray;
+	}
 }
