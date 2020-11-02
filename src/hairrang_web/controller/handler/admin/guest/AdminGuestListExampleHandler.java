@@ -50,24 +50,24 @@ public class AdminGuestListExampleHandler implements Command {
 			value = value.trim();
 		}
 
-		if (value == null || value == "" || opt.equals("0") || opt == null) {
-			// 검색 조건이 없는 경우 -> all list
-			total = service.countGuest();
-			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-			list = service.pagingGuestByAll(paging);
-		} else if (opt.equals("1")) { // 아이디로 검색
-			total = service.countIdSearch(value);
-			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-			list = service.searchGuestById(paging, value);
-		} else if (opt.equals("2")) {// 이름으로 검색
-			total = service.countNameSearch(value);
-			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-			list = service.searchGuestByName(paging, value);
-		} else if (opt.equals("3")) { // 폰번호 검색
-			total = service.countPhoneSearch(value);
-			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-			list = service.searchGuestByPhone(paging, value);
-		}
+//		if (value == null || value == "" || opt.equals("0") || opt == null) {
+//			// 검색 조건이 없는 경우 -> all list
+//			total = service.countGuest();
+//			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+//			list = service.pagingGuestByAll(paging);
+//		} else if (opt.equals("1")) { // 아이디로 검색
+//			total = service.countIdSearch(value);
+//			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+//			list = service.searchGuestById(paging, value);
+//		} else if (opt.equals("2")) {// 이름으로 검색
+//			total = service.countNameSearch(value);
+//			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+//			list = service.searchGuestByName(paging, value);
+//		} else if (opt.equals("3")) { // 폰번호 검색
+//			total = service.countPhoneSearch(value);
+//			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+//			list = service.searchGuestByPhone(paging, value);
+//		}
 
 
 		System.out.println("현재 페이지 =>" + nowPage);

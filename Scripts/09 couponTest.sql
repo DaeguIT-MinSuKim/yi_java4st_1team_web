@@ -331,3 +331,6 @@ INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
 UPDATE COUPON SET USED_YN = 'y' WHERE COUPON_ID = 27;
 
 UPDATE COUPON SET USED_YN = 'n' WHERE event_start <= sysdate AND event_end >= sysdate AND USED_YN IN ('n', 'w') ;
+
+SELECT * FROM event;
+UPDATE event SET event_status = 's' WHERE event_start <= sysdate AND event_end >= sysdate;

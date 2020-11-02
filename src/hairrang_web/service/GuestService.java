@@ -49,36 +49,53 @@ public class GuestService{
 	public int updateDelYn(Guest guest) {
 		return dao.updateGuestDelYn(guest);
 	}
-	public ArrayList<Guest> pagingGuestByAll(Paging paging){
-		return dao.pagingGuestByAll(paging);
-	}
 	
-	public int countGuest() {
-		return dao.countGuest();
-	}
+//	public ArrayList<Guest> pagingGuestByAll(Paging paging){
+//		return dao.pagingGuestByAll(paging);
+//	}
+//	
+//	public int countGuest() {
+//		return dao.countGuest();
+//	}
+//	
+//	public ArrayList<Guest> searchGuestByName(Paging paging, String name){
+//		return dao.searchGuestByName(paging, name);
+//	}
+//	
+//	public ArrayList<Guest> searchGuestById(Paging paging,String id){
+//		return dao.searchGuestById(paging, id);
+//	}
+//	
+//	public ArrayList<Guest> searchGuestByPhone(Paging paging, String phone){
+//		return dao.searchGuestByPhone(paging, phone);
+//	}
+//	
+//	public int countIdSearch(String id) {
+//		return dao.countIdSearch(id);
+//	}
+//	
+//	public int countNameSearch(String name) {
+//		return dao.countNameSearch(name);
+//	}
+//	
+//	public int countPhoneSearch(String phone) {
+//		return dao.countPhoneSearch(phone);
+//	}
+//	
+//	public ArrayList<Guest> selectGuestByDel(Paging paging){
+//		return dao.selectGuestByDel(paging);
+//	}
+//	
+//	public int countGuestByDel() {
+//		return dao.countGuestByDel();
+//	}
 	
-	public ArrayList<Guest> searchGuestByName(Paging paging, String name){
-		return dao.searchGuestByName(paging, name);
+	public int countBookingByConditionForPaging(Paging paging, String del, String where, String search) {
+		return dao.countBookingByConditionForPaging(paging, del, where, search);
 	}
-	
-	public ArrayList<Guest> searchGuestById(Paging paging,String id){
-		return dao.searchGuestById(paging, id);
-	}
-	
-	public ArrayList<Guest> searchGuestByPhone(Paging paging, String phone){
-		return dao.searchGuestByPhone(paging, phone);
-	}
-	
-	public int countIdSearch(String id) {
-		return dao.countIdSearch(id);
-	}
-	
-	public int countNameSearch(String name) {
-		return dao.countNameSearch(name);
-	}
-	
-	public int countPhoneSearch(String phone) {
-		return dao.countPhoneSearch(phone);
+	public ArrayList<Guest> selectGuestByCondition(Paging paging, String del, String where, String search){
+		return dao.selectGuestByCondition(paging, del, where, search);
 	}
 }	
+	
 

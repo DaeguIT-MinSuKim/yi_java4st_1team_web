@@ -61,7 +61,7 @@ public class AdminEventInfoHandler implements Command {
 			System.out.println(end);
 			String file = multi.getFilesystemName("file");
 		
-			String fileRename = "admin/event/images/" + file; 
+			String fileRename = file; 
 			
 			
 			Event e = service.selectEventByNo(new Event(Integer.parseInt(no)));

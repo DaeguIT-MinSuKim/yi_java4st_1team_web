@@ -7,16 +7,16 @@
 	function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
 		var sel2 = document.getElementById('selectPage').value;
-		location.href = "noticeList.do?nowPage=${paging.nowPage}&cntPerPage="+sel+"&stay="+sel2
+		location.href = "noticeList.do?nowPage=${paging.nowPage}&cntPerPage="
+				+ sel + "&stay=" + sel2
 	}
-	
+
 	function tableChange() {
 		var sel = document.getElementById('selectPage').value;
 		alert(sel);
-		location.href = "noticeList.do?nowPage=${paging.nowPage}&stay="
-				+ sel;
-	} 
-	
+		location.href = "noticeList.do?nowPage=${paging.nowPage}&stay=" + sel;
+	}
+
 	//전체선택
 	function selectAll() {
 		$('[name=check]').prop('checked', true);
@@ -51,7 +51,9 @@
 			$.ajax({
 				type : 'post',
 				url : 'noticeDelete.do',
-				data : {"string" : array},
+				data : {
+					"string" : array
+				},
 				async : false,
 				success : function(JSON) {
 					/* alert("성공"); */
@@ -65,7 +67,7 @@
 			return;
 		}
 	});
-	
+
 	//그룹복원
 	$(document).on('click', '[name=Restore]', function() {
 		/* $("#dataTable tr:nth-child(2)").css("background", "red"); */
@@ -90,7 +92,9 @@
 			$.ajax({
 				type : 'post',
 				url : 'noticeRestore.do',
-				data : {"string" : array},
+				data : {
+					"string" : array
+				},
 				async : false,
 				success : function(JSON) {
 					/* alert("성공"); */
@@ -104,63 +108,63 @@
 			return;
 		}
 	});
-	
-	function buttonDel(){
-		$('#dataTable tr').click(function(){
-			
+
+	function buttonDel() {
+		$('#dataTable tr').click(function() {
+
 			var tr = $(this);
 			var td = tr.children();
 			var no = td.eq(1).text();
 			alert(no);
-			
-			if(confirm(no+"번 글을 삭제 처리하시겠습니까?") == true){
+
+			if (confirm(no + "번 글을 삭제 처리하시겠습니까?") == true) {
 				$.ajax({
 					type : 'get',
 					url : 'noticeDelete.do',
 					data : {
-						no: no
+						no : no
 					},
-					dataTye: "text",
-					success : function(res){
-						location.href="noticeList.do";
+					dataTye : "text",
+					success : function(res) {
+						location.href = "noticeList.do";
 						alert("삭제 완료되었습니다.");
 						location.reload();
 					},
-					error : function(res){
+					error : function(res) {
 						alert('삭제 시도 중 오류가 발생했습니다.');
 					}
 				});
 			}
-		});		
+		});
 	}
-	
-	function buttonRestore(){
-		$('#dataTable tr').click(function(){
-			
+
+	function buttonRestore() {
+		$('#dataTable tr').click(function() {
+
 			var tr = $(this);
 			var td = tr.children();
 			var no = td.eq(1).text();
 			alert(no);
-			
-			if(confirm(no+"번 글을 복원 하시겠습니까?") == true){
+
+			if (confirm(no + "번 글을 복원 하시겠습니까?") == true) {
 				$.ajax({
 					type : 'get',
 					url : 'noticeRestore.do',
 					data : {
-						no: no
+						no : no
 					},
-					dataTye: "text",
-					success : function(res){
-						location.href="noticeList.do";
+					dataTye : "text",
+					success : function(res) {
+						location.href = "noticeList.do";
 						alert("복원 완료되었습니다.");
 						location.reload();
 					},
-					error : function(res){
+					error : function(res) {
 						alert('복원 시도 중 오류가 발생했습니다.');
 					}
 				});
 			}
-		});		
+		});
 	}
 </script>
 
@@ -212,7 +216,7 @@
 							<div class="dataTables_length" id="dataTable_length">
 								<label> <select name="cntPerPage" id="cntPerPage"
 									onchange="selChange()" aria-controls="dataTable"
-									class="custom-select custom-select-sm form-control form-control-sm" >
+									class="custom-select custom-select-sm form-control form-control-sm">
 										<option value="5"
 											<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄
 											보기</option>
@@ -225,15 +229,14 @@
 										<option value="20"
 											<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄
 											보기</option>
-								</select> <select name="stay" id="selectPage"
-									onchange="tableChange()" aria-controls="dataTable"
-									class="custom-select custom-select-sm form-control form-control-sm" name="stay">
+								</select> <select name="stay" id="selectPage" onchange="tableChange()"
+									aria-controls="dataTable"
+									class="custom-select custom-select-sm form-control form-control-sm"
+									name="stay">
 										<option value="all"
-											<c:if test="${stay eq 'all'}">selected</c:if>>전체
-											보기</option>
+											<c:if test="${stay eq 'all'}">selected</c:if>>전체 보기</option>
 										<option value="del"
-											<c:if test="${stay eq 'del'}">selected</c:if>>삭제
-											보기</option>
+											<c:if test="${stay eq 'del'}">selected</c:if>>삭제 보기</option>
 								</select>
 								</label>
 							</div>
@@ -256,14 +259,13 @@
 						<!-- 테이블 상단 필터링 끝 -->
 
 						<!-- 테이블 시작 -->
-						<table class="table table-bordered text-center" id="dataTable"
-							width="100%" cellspacing="0">
+						<table class="table table-bordered text-center" id="dataTable" cellspacing="0">
 							<thead>
 								<tr>
 									<th></th>
 									<th>번호</th>
 									<th>제목</th>
-									<th></th>
+									<th style="width: 180px; min-width:180px; max-width:180px;"></th>
 								</tr>
 							</thead>
 							<tbody>

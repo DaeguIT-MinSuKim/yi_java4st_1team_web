@@ -12,8 +12,9 @@ INSERT INTO ADMIN VALUES ('testadmin','1234','testadmin');
 SELECT * FROM QNA;
 DELETE FROM QNA q2 WHERE QNA_NO =10;
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn,qna_secret,qna_password) VALUES ('nottest','nottesttest','n','n','y','123');
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn) VALUES ('test','testTitl2123123','n',0);
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn) VALUES ('test','testTitl4','n',0);
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN) VALUES ('test','testTitl2123123','n');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN) VALUES ('test','testTitl4','n');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,QNA_REGDATE) VALUES ('test','123123','n','2020-10-22');
 INSERT INTO QNA (ADMIN_ID,QNA_TITLE,DEL_YN, notice_yn) VALUES ('testadmin','admintestolenfoej','n', 'y');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,RES_YN,) VALUES ('test2','what','what?','n');
 DELETE qna;
@@ -85,26 +86,10 @@ SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE DEL_YN = 'y' 
 
 UPDATE QNA  set DEL_YN ='y' WHERE QNA_NO = 14;
 
-SELECT * FROM qna;
+SELECT * FROM qna WHERE ADMIN_ID IS null;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+--날짜별 문의통계
+SELECT TO_CHAR(QNA_REGDATE,'yyyy-mm-dd')AS day ,COUNT(*)AS count FROM qna WHERE ADMIN_ID IS NULL GROUP BY TO_CHAR(QNA_REGDATE,'yyyy-mm-dd') ORDER BY TO_CHAR(QNA_REGDATE,'yyyy-mm-dd');
 
 
 

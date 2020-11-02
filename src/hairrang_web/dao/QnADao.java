@@ -2,6 +2,9 @@ package hairrang_web.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import org.json.JSONArray;
 
 import hairrang_web.dto.Guest;
 import hairrang_web.dto.QnA;
@@ -76,4 +79,6 @@ public interface QnADao {
 	//공지 찾기 페이징
 	List<QnA> selectPagingQnASearch(Paging paging, String condition, String keyword,String stay);
 	
+	//날짜 문의 갯수(공지x)
+	JSONArray selectOnlyQnA();
 }

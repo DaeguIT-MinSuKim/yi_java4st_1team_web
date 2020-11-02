@@ -108,7 +108,9 @@ $(function() {
 	});
 	
 	function setFilteringPaging() {
+		
 		var thisUrlStr = window.location.href;
+		
 		var thisUrl = new URL(thisUrlStr);
 
 		var where = thisUrl.searchParams.get("where");

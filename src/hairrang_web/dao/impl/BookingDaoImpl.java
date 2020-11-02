@@ -745,6 +745,7 @@ public class BookingDaoImpl implements BookingDao {
 		} else {
 			if(cnt == 1) {
 				sql += " AND BOOK_STATUS = " + sorter;
+				cnt++;
 			} else {
 				sql += " WHERE BOOK_STATUS = " + sorter;
 			}
