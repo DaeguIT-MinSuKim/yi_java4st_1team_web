@@ -9,7 +9,8 @@
 	      $("#wrapper").css({margin:'96px auto'});    
 	   }
    })
-
+   
+  
 </script>
 <script src="../package/swiper-bundle.min.js"></script>
 <style>
@@ -18,14 +19,51 @@
 	.more {margin:0 auto; border:2px solid gray; width: 90px;}
 	.more a { text-align:center;text-decoration:none; color:gray; font-size:20px; font-weight:bold;}
 
+/* Banner */
+
+	#banner {
+		padding: 18em 0 10em 0;
+		background-image: url('images/main.jpg');
+		background-size: contain;
+		background-position: top;
+		background-attachment: fixed;
+		background-repeat: no-repeat;
+		text-align: center;
+		border-top: 0.5em solid #5385c1;
+		
+	}
+
+	#banner h1 {
+			font-size: 2em;
+			font-weight: 100;
+			color: #fff;
+			line-height: 1em;
+			margin: 0 0 0.5em 0;
+			padding: 0;
+		}
+
+	#banner p {
+			font-size: 1em;
+			color: rgba(255, 255, 255, 0.55);
+			margin-bottom: 1.75em;
+		}
+
 </style>
 
 <div class="main">
 
 <section class="slider">
 <%-- <%@ include file="/slider.jsp" %>   --%>
-<%@ include file="/slider2.jsp" %>
+<%-- <%@ include file="/slider2.jsp" %> --%>
+<!-- <img src="images/main.jpg" width="100%"> -->
+</section>
 
+<section id="banner">
+		<h1>Find your self,</h1>
+		<p>with Rang hair designers group.</p>
+		<div style="border:2px solid white; width:150px; padding:10px; margin:0 auto; border-radius:10px; color:white; font-weight:bold;cursor:pointer" onclick="location.href='booking.do'" ">
+			RESERVATION
+		</div>
 </section>
 <br>
 <br>
