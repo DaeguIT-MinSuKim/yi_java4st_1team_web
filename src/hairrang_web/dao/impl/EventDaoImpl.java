@@ -30,7 +30,7 @@ public class EventDaoImpl implements EventDao {
 
 	@Override
 	public ArrayList<Event> selectEventAll() {
-		String sql = "SELECT * FROM EVENT ORDER BY EVENT_NO asc";
+		String sql = "SELECT * FROM EVENT where not event_no = 1 AND EVENT_STATUS = 's' ORDER BY EVENT_NO DESC";
 
 		try (Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
@@ -75,7 +75,7 @@ public class EventDaoImpl implements EventDao {
 
 	@Override
 	public Event selectEventByNo(Event event) {
-		String sql = "SELECT * FROM EVENT WHERE EVENT_NO = ?";
+		String sql = "SELECT * FROM EVENT where EVENT_STATUS = 's' ";
 
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 
@@ -117,7 +117,7 @@ public class EventDaoImpl implements EventDao {
 	
 	@Override
 	public Event selectEventDownSide(Event event) {
-		String sql = "SELECT * FROM (SELECT * FROM EVENT WHERE EVENT_NO <? ORDER BY EVENT_NO DESC ) WHERE rownum = 1";
+		String sql = "SELECT * FROM (SELECT * FROM EVENT WHERE not event_no = 1 AND EVENT_STATUS = 's' and EVENT_NO <? ORDER BY EVENT_NO DESC ) WHERE rownum = 1";
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, event.getEventNo());
 			try (ResultSet rs = pstmt.executeQuery()) {
@@ -133,7 +133,7 @@ public class EventDaoImpl implements EventDao {
 
 	@Override
 	public Event selectEventUpSide(Event event) {
-		String sql = "SELECT * FROM (SELECT * FROM EVENT WHERE EVENT_NO > ? ) WHERE rownum = 1";
+		String sql = "SELECT * FROM (SELECT * FROM EVENT WHERE not event_no = 1 AND EVENT_STATUS = 's' and EVENT_NO > ? ) WHERE rownum = 1";
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, event.getEventNo());
 			try (ResultSet rs = pstmt.executeQuery()) {

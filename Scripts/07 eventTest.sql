@@ -64,3 +64,6 @@ SELECT guest_id,
 		END AS "2019-10-20기준 해당함?"
 FROM event, GUEST g
 WHERE event_no = 1;
+
+
+SELECT * FROM EVENT where not event_no = 1 AND EVENT_STATUS = 's' ORDER BY EVENT_NO DESC;

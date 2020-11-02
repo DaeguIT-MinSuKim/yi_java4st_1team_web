@@ -46,36 +46,19 @@ div.content {float:right; border:1px solid black;}
 </style>
 <body>
 <div class="de_wrapper">
+<h3 style="text-align:center; padding:20px; margin-bottom:50px;">EVENT</h3>
 <div class="de_sub_wrapper">
 <div style=" width:900px; margin:0 auto;">
 
 <table>
 <c:forEach var="event" items="${list}" varStatus="status">
 <tr>
-	<td><a href="eventDetail.do?eno=${event.eventNo }"><img src="event/images/${event.eventPic}" alt="" width=50%></a></td>
+	<td><a href="eventDetail.do?eno=${event.eventNo }"><img src="event/images/${event.eventPic}" alt="" width=80%></a></td>
 	<td style="text-align:center; vertical-align:top; padding:20px;">
-   		<div style="font-size:20px">${event.eventContent}</div>
-   		<div>${event.eventStart} ~ ${event.eventEnd}</div>
-   		
-   		<div>
-   			${event.eventStatus == 's'}
-   		</div>
+   		<div style="font-size:22px; padding:10px;">${event.eventName}</div>
+   		<div><img src="images/cal-b.png" width=4% style="margin-bottom:-3px;"> ${event.eventStart} ~ ${event.eventEnd}</div>
 	</td>
 </tr>
-
-<%-- 
-<div class="responsive"> <!-- 사진 하나 -->
-  <div class="gallery">
-      <img src="event/images/${event.eventPic}" alt="" width=30%>
-  </div>
-  <div class="content" >
-    <a href="eventDetail.do?eno=${event.eventNo }">${event.eventNo}</a>
-   	${event.eventContent }
-   	${event.eventStart}
-   	${event.eventEnd}
-   	${event.eventStatus }
-    </div>
-</div> --%>
 </c:forEach> 
 </table>
 
