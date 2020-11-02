@@ -176,15 +176,15 @@
 							
 							<!-- 페이지 숫자 -->
 							<c:if test="${paging.total eq 0 }">
-								<div class="paging-line font-weight-bold">1</div>
+								<div class="paging-line text-primary" style="font-weight: 1000;">1</div>
 							</c:if>
 							<c:forEach begin="${paging.startPage}" end="${paging.endPage }" var="p">
 								<c:choose>
 									<c:when test="${p == paging.nowPage }">
-										<div class="paging-line font-weight-bold">${p}</div>
+										<div class="paging-line text-primary" style="font-weight: 1000;">${p}</div>
 									</c:when>
 									<c:when test="${p != paging.nowPage }">
-										<div class="paging-line font-weight-bold">
+										<div class="paging-line" style="font-weight: 600;">
 										<a href="bookingList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}">${p}</a></div>
 									</c:when>
 								</c:choose>

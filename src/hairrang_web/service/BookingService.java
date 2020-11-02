@@ -6,6 +6,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import javax.mail.MessagingException;
+
+import hairrang_web.controller.mail.SendMail;
 import hairrang_web.dao.BookingDao;
 import hairrang_web.dao.impl.BookingDaoImpl;
 import hairrang_web.ds.JndiDs;
@@ -131,6 +134,23 @@ public class BookingService {
 			}
 			
 			pstmt.executeBatch();
+			
+			try {
+				for(String bookNo : list ) {
+					Booking booking = dao.selectBookingByBookingNo(new Booking(Integer.parseInt(bookNo)));
+					Guest guest = booking.getGuest();
+					
+					BookingCancelSendEmail emailThr = new BookingCancelSendEmail();
+					emailThr.setGuest(guest);
+					emailThr.setBooking(booking);
+					
+					Thread t = new Thread(emailThr);
+					t.start();
+				}
+			}catch(Exception e) {
+				throw new RuntimeException();
+			}
+			
 			res = 1;
 		} catch (SQLException e) {
 			System.out.println("예약 취소 중 에러!");

@@ -43,19 +43,20 @@ public class SendMail {
 			  Session mailSession = Session.getDefaultInstance(props, auth);
 			  
 			  // create a message
-			  Message msg = new MimeMessage(mailSession);
+			  MimeMessage msg = new MimeMessage(mailSession);
+//			  Message msg = new MimeMessage(mailSession);
 			  
 			  // set the from and to address
-			  msg.setFrom(new InternetAddress(from));//보내는 사람 설정
-			  msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));//받는 사람설정
+			  msg.setFrom(new InternetAddress(from)); //보내는 사람 설정
+			  msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false)); //받는 사람설정
 			  
 			  if(!cc.trim().equals("")) {
-			   msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(cc, false));
+				  msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(cc, false));
 			  }
 			  
 			  // Setting the Subject and Content Type
 			  msg.setSubject(subject); // 제목 설정
-			  msg.setText(content);  // 내용 설정
+			  msg.setText(content, "UTF-8", "html");  // 내용 설정
 			  msg.setSentDate(new Date());// 보내는 날짜 설정
 			  
 			  Transport.send(msg);  // 메일 보내기

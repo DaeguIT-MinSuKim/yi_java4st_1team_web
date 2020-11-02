@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Booking;
+import hairrang_web.dto.Guest;
+import hairrang_web.service.BookingCancelSendEmail;
 import hairrang_web.service.BookingService;
 
 public class AdminBookingStatusChangeHandler implements Command {
@@ -31,6 +33,19 @@ public class AdminBookingStatusChangeHandler implements Command {
 			if (no != null) {
 				res = bService.updateBookingStatus(new Booking(Integer.parseInt(no)));
 				
+				Booking upBooking = bService.getBookingByBookingNo(new Booking(Integer.parseInt(no)));
+				Guest guest = upBooking.getGuest();
+				
+				try {
+					BookingCancelSendEmail emailThr = new BookingCancelSendEmail();
+					emailThr.setGuest(guest);
+					emailThr.setBooking(upBooking);
+					
+					Thread t = new Thread(emailThr);
+					t.start();
+				} catch (Exception e) {
+					throw new RuntimeException();
+				}
 			}
 			
 			response.setCharacterEncoding("UTF-8");
