@@ -57,6 +57,7 @@ public class GuestBookHandler implements Command {
 			
 			//리스트없을때
 			if(bookingList == null) {
+				request.setAttribute("nowPage", nowPage);
 				request.setAttribute("paging", paging);
 				request.setAttribute("cnt", cntPerPage);
 				request.setAttribute("total", total);
