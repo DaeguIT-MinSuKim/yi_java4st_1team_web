@@ -83,6 +83,7 @@ tr td:nth-child(2) {
 <script>
 	function go_delQna(no) {
 		var no = document.getElementById('no').value;
+		
 		if (confirm("정말 삭제하시겠습니까?")) {
 			$.ajax({
 				type : 'get',
@@ -102,17 +103,28 @@ tr td:nth-child(2) {
 			return;
 		}
 	}
-	function go_UpQna(no) {
+	/* function go_UpQna(no) {
 		if (confirm("정말 수정하시겠습니까?")) {
-			//var no = document.getElementById("no").value;
-			//alert(no);
-			document.formm.action = 'qnaUpdate.do?no='+no;
-			document.formm.submit();
-			return true;
+			$.ajax({
+				type : 'get',
+				url : 'qnaUpdate.do',
+				data : {
+					no : no
+				},
+				async : false,
+				success : function(qna){
+					location.href='qnaUpdate.jsp?qna='+qna;
+					},
+				error : function() {
+					alert('수정할 문의을 선택하세요');
+				}
+			});
 		} else {
 			return false;
 		}
-	}
+		
+		
+	} */
 </script>
 <h3 style="text-align: center;">Q & A</h3>
 <form name="formm">
@@ -175,8 +187,9 @@ tr td:nth-child(2) {
 	</div>
 	<div id="buttons" style="float: right">
 		<c:if test="${loginUser.guestId eq qna.guestId.guestId}">
-			<input type="button" value="수정하기" id="updateButton" class="button"
-				onclick="return go_UpQna(${qna.qnaNo })">
+			<c:if test="${qna.qnaResYn eq 'n' }">
+				<input type="button" value="수정하기" id="updateButton" class="button" onclick="qnaUpdate.do?no=${qna.qnaNo}" >
+			</c:if>
 			<input type="button" value=delete id="delete" class="button"
 				onclick="go_delQna(${qna.qnaNo })">
 		</c:if>

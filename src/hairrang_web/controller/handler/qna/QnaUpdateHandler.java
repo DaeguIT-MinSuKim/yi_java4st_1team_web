@@ -1,6 +1,7 @@
 package hairrang_web.controller.handler.qna;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,16 @@ public class QnaUpdateHandler implements Command {
 		if (request.getMethod().equals("GET")) {
 			QnA qna = service.selectQnaByNo(qnaNo);
 			request.setAttribute("qna", qna);
-			return "qna/qnaUpdate.jsp";
+			
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html; charset=utf-8");
+			response.setStatus(HttpServletResponse.SC_ACCEPTED);
+
+			PrintWriter pw = response.getWriter();
+			pw.print(qna);
+			pw.flush();
+			
+			return null;
 			
 		} else {
 			//post방식으로는 작성한 내용을 가져와서 다시 업데이트를 하는곳입니다 그리고 바로 sendRedirect방식으로 주소를 옮겨줍니다 
