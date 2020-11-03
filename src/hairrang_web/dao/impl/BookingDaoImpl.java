@@ -292,6 +292,7 @@ public class BookingDaoImpl implements BookingDao {
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
 			if(rs.next()) {
+				System.out.println("조회가 없어?");
 				return rs.getInt(1);
 			}
 		} catch (SQLException e) {

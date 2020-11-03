@@ -163,8 +163,8 @@ public class BookingService {
 	}
 	
 	public int insertBookingWithHairList(Booking booking) {
-		String bookingSql = "INSERT INTO BOOKING(BOOK_NO, GUEST_ID, BOOK_TIME, DE_NO, BOOK_NOTE) VALUES(?, ?, ?, ?)";
-		String hairsSql = "INSERT INTO BOOKING_HAIRS(BOOK_NO, HAIR_NO, HAIR_QUANTITY) VALUES(?, ?)";
+		String bookingSql = "INSERT INTO BOOKING(BOOK_NO, GUEST_ID, BOOK_TIME, DE_NO, BOOK_NOTE) VALUES(?, ?, ?, ?, ?)";
+		String hairsSql = "INSERT INTO BOOKING_HAIRS(BOOK_NO, HAIR_NO, HAIR_QUANTITY) VALUES(?, ?, ?)";
 		
 		Connection con = null;
 		PreparedStatement bookingPstmt = null;
@@ -177,8 +177,8 @@ public class BookingService {
 			
 			bookingPstmt = con.prepareStatement(bookingSql);
 			
-			bookingNo = dao.selectNextValBookNo(); // 커밋되기 전이어서 +1 해줘야 함
-					
+			bookingNo = dao.selectNextValBookNo();
+			
 			bookingPstmt.setInt(1, bookingNo);
 			bookingPstmt.setString(2, booking.getGuest().getGuestId());
 			bookingPstmt.setTimestamp(3, Timestamp.valueOf(booking.getBookDate()));
@@ -186,6 +186,8 @@ public class BookingService {
 			bookingPstmt.setString(5, booking.getBookNote());
 			
 			bookingPstmt.executeUpdate();
+			
+			System.out.println("booking 삽입?");
 			
 			hairsPstmt = con.prepareStatement(hairsSql);
 			
