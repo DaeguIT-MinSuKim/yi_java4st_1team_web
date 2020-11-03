@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ include file="../include/header.jsp"%>
 <script src="order/admin_order_list.js"></script>
 <!-- Page Heading -->
@@ -32,7 +33,7 @@
 
 				<!-- 테이블 상단 필터링 시작 -->
 				<form  autocomplete="off" action="orderList.do" name="searchForm">
-				<div class="row m-0 mb-2 mb-3">
+				<div class="row m-0 mb-2">
 					<div class="col-sm-12 col-md-12 p-0">
 						<div class="form-inline justify-content-center">
 							<i class="far fa-calendar-alt mr-3" style="font-size: 22px;"></i>

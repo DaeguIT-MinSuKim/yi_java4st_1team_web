@@ -35,10 +35,10 @@ DROP CONSTRAINT FK_ORDER_TO_ORDER_DETAIL;
 
 
 -- 가짜 조인 이용해서 INSERT
-INSERT INTO ORDER_DETAIL(HAIR_NO, OD_PRICE, OD_QUANTITY, COUPON_ID, OD_DISCOUNT);
-SELECT HAIR_NO, hair_price, 1, coupon_id, hair_price*event_salerate
-FROM (SELECT HAIR_NO, hair_price, 0 AS fake FROM hair WHERE hair_no = 6)
-LEFT OUTER JOIN (SELECT coupon_id, event_salerate, 0 AS fake FROM coupon_view WHERE coupon_id = null AND GUEST_ID = 'test1212') USING(fake);
+INSERT INTO ORDER_DETAIL(ORDERS_NO, HAIR_NO, OD_PRICE, OD_QUANTITY, COUPON_ID, OD_DISCOUNT);
+SELECT 20, HAIR_NO, hair_price, 2, coupon_id, hair_price*event_salerate
+FROM (SELECT HAIR_NO, hair_price, 0 AS fake FROM hair WHERE hair_no = 2)
+LEFT OUTER JOIN (SELECT coupon_id, event_salerate, 0 AS fake FROM coupon_view WHERE coupon_id = null AND GUEST_ID = 'test') USING(fake);
 
 
 INSERT INTO ORDER_DETAIL(ORDERS_NO, HAIR_NO, OD_PRICE, OD_QUANTITY, COUPON_ID, OD_DISCOUNT)
@@ -63,3 +63,6 @@ CREATE OR REPLACE VIEW orders_guest_view
 as
 SELECT o.*, g.GUEST_NAME, g.GUEST_PHONE 
 FROM orders o LEFT OUTER JOIN GUEST g ON (o.GUEST_ID = g.GUEST_ID );
+
+
+SELECT * FROM ORDERS LEFT OUTER JOIN ORDER_DETAIL USING(ORDERS_NO) ORDER BY ORDERS_NO desc;

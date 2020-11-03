@@ -98,7 +98,9 @@ public class Orders {
 	}
 
 	public String getHowManyItems() {
-		if (this.odList.size() == 1) {
+		if(this.odList.size() == 0) {
+			return "-";
+		} else if (this.odList.size() == 1) {
 			return String.format("%s", odList.get(0).getHair().getHairName());
 		}
 		

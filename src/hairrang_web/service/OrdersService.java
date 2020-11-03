@@ -47,7 +47,7 @@ public class OrdersService {
 		String odSql = "INSERT INTO ORDER_DETAIL(ORDERS_NO, HAIR_NO, OD_PRICE, OD_QUANTITY, COUPON_ID, OD_DISCOUNT) " + 
 				"SELECT ?, HAIR_NO, hair_price, ?, coupon_id, hair_price*event_salerate " + 
 				"FROM (SELECT HAIR_NO, hair_price, 0 AS fake FROM hair WHERE hair_no = ?) " + 
-				"LEFT OUTER JOIN (SELECT coupon_id, event_salerate, 0 AS fake FROM coupon_view WHERE coupon_id = ? AND GUEST_ID = ?) USING(fake)";
+				"LEFT OUTER JOIN (SELECT coupon_id, event_salerate, 0 AS fake FROM coupon_view WHERE coupon_id = ? AND GUEST_ID = ?) USING(fake)"; 
 		String bSql = "UPDATE BOOKING SET BOOK_STATUS = 2 WHERE BOOK_NO = ? ";
 		String tpSql = "UPDATE orders SET orders_total_price = (SELECT SUM(OD_PRICE*OD_QUANTITY-NVL(OD_DISCOUNT, 0)) FROM ORDER_DETAIL od WHERE orders_no = ?) WHERE orders_no = ?";
 		
@@ -58,11 +58,12 @@ public class OrdersService {
 		PreparedStatement tpPstmt = null;
 		
 		int ordersNo = 0;
+		System.out.println("orderService insert");
+		System.out.println(orders);
 		
 		try {
 			con = JndiDs.getConnection();
 			con.setAutoCommit(false);
-			
 			
 			oPstmt = con.prepareStatement(oSql);
 					
@@ -76,11 +77,11 @@ public class OrdersService {
 			oPstmt.executeUpdate();
 			
 			odPstmt = con.prepareStatement(odSql);
-			
 			for(OrderDetail od : orders.getOdList()) {
 				odPstmt.setInt(1, ordersNo);
 				odPstmt.setInt(2, od.getOdQuantity());
 				odPstmt.setInt(3, od.getHair().getHairNo());
+				System.out.println("쿠폰 있니? " + od.getCoupon());
 				if(od.getCoupon() != null) {
 					if(od.getCoupon().getCouponId() == 0) {
 						odPstmt.setInt(4, od.getCoupon().getCouponId());
@@ -92,6 +93,8 @@ public class OrdersService {
 				odPstmt.setString(5, guestId);
 				odPstmt.executeUpdate();
 			}
+			
+			System.out.println("어디서 롤백?");
 			
 			if(bookNo > 0) {
 				bPstmt = con.prepareStatement(bSql);
