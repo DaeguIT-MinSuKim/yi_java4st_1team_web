@@ -1,6 +1,7 @@
 package hairrang_web.controller.handler.admin.notice;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,14 @@ public class AdminNoticeUpdateHandler implements Command {
 			
 			Notice notice = new Notice(noticeNo, noticeTitle, noticeContent);
 			int res = service.updateNotice(notice);
+			
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html; charset=utf-8");
+			response.setStatus(HttpServletResponse.SC_ACCEPTED);
+
+			PrintWriter pw = response.getWriter();
+			pw.print(res);
+			pw.flush();
 			
 			//안돼
 //			response.sendRedirect("noticeList.do");

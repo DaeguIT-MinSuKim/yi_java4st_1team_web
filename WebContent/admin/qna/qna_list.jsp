@@ -215,19 +215,19 @@
 								class="custom-select custom-select-sm form-control form-control-sm">
 									<option value="all"
 										<c:if test="${stay eq 'all'}">selected</c:if>>전체
-										보기</option>
+										</option>
 									<option value="resy"
 										<c:if test="${stay eq 'resy'}">selected</c:if>>답변된문의
-										보기</option>
+										</option>
 									<option value="resn"
 										<c:if test="${stay eq 'resn'}">selected</c:if>>미답변된공지
-										보기</option>
+										</option>
 									<option value="delq"
 										<c:if test="${stay eq 'delq'}">selected</c:if>>삭제된문의
-										보기</option>
+										</option>
 									<option value="deln"
 										<c:if test="${stay eq 'deln'}">selected</c:if>>삭제된공지
-										보기</option>
+										</option>
 							</select>
 							
 							</label>
@@ -272,7 +272,10 @@
 								<td style="width: 80px;">${qna.guestId.guestId}</td>
 								<td style="width: 130px;"><a
 									href="qnaDetail.do?no=${qna.qnaNo }">${qna.qnaTitle}</a></td>
-								<td style="width: 150px;">${qna.qnaRegDate}</td>
+								<td style="width: 150px;"><fmt:parseDate
+												value="${qna.qnaRegDate}" pattern="yyyy-MM-dd'T'HH:mm"
+												var="regDate" type="both" /> <fmt:formatDate
+												value="${regDate}" pattern="yyyy-MM-dd" /></td>
 								<td style="width: 150px;"><c:if test="${qna.qnaNotice eq 'n' }">${qna.qnaResYn}</c:if></td>
 
 
@@ -303,7 +306,7 @@
 									<c:otherwise>
 										<c:if test="${qna.qnaResYn eq 'y' || qna.qnaNotice eq 'y' }">
 												<input type="button" name="update" value="수정"
-													class="btn btn-dark btn-sm"
+													class="btn btn-primary btn-sm"
 													onclick="location.href='qnaUpdate.do?no=${qna.qnaNo}'">
 											</c:if> <input type="button" value="삭제" id="btn_delete"
 											no="${qna.qnaNo}" class="btn btn-danger btn-sm"> 

@@ -78,7 +78,4 @@ public interface QnADao {
 	
 	//공지 찾기 페이징
 	List<QnA> selectPagingQnASearch(Paging paging, String condition, String keyword,String stay);
-	
-	//날짜 문의 갯수(공지x)
-	JSONArray selectOnlyQnA();
 }

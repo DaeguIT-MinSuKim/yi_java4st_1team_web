@@ -253,7 +253,7 @@ public class QnADaoImpl implements QnADao {
 		} catch (SQLException e) {
 		}
 		qna.setQnaResYn(rs.getString("RES_YN"));
-
+		qna.setQnaDelYn(rs.getString("DEL_YN"));
 		qna.setQnaFile(rs.getString("QNA_FILE"));
 		qna.setQnaNotice(rs.getString("NOTICE_YN"));
 
@@ -553,7 +553,7 @@ public class QnADaoImpl implements QnADao {
 
 	@Override
 	public List<QnA> selectPagingQnASearch(Paging paging, String condition, String keyword, String stay) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA where ";
+		String sql = "SELECT * FROM (SELECT rownum RN, a.QNA_NO,GUEST_ID,GUEST_NAME,ADMIN_ID,QNA_TITLE,QNA_CONTENT,QNA_FILE, QNA_REGDATE,RES_YN,QNA_REFNO,NOTICE_YN,DEL_YN,QNA_SECRET,QNA_PASSWORD FROM (SELECT * FROM QNA where ";
 
 		if (stay.equals("all")) {
 			sql += " DEL_YN = 'n' AND QNA_REFNO is null ";
@@ -598,35 +598,5 @@ public class QnADaoImpl implements QnADao {
 			throw new RuntimeException(e);
 		}
 		return null;
-	}
-
-
-	@Override
-	public JSONArray selectOnlyQnA() {
-		String sql = "SELECT TO_CHAR(QNA_REGDATE,'yyyy-mm-dd')AS day ,COUNT(*)AS count FROM qna WHERE ADMIN_ID IS NULL GROUP BY TO_CHAR(QNA_REGDATE,'yyyy-mm-dd') ORDER BY TO_CHAR(QNA_REGDATE,'yyyy-mm-dd')";
-
-		JSONArray jsonArray = new JSONArray();
-
-		JSONArray colNameArray = new JSONArray();
-		colNameArray.put("Day");
-		colNameArray.put("문의 갯수");
-		jsonArray.put(colNameArray);
-
-		try (Connection con = JndiDs.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery()) {
-			if (rs.next()) {
-
-				do {
-					JSONArray rowArray = new JSONArray();
-					rowArray.put(rs.getString("day"));
-					rowArray.put(rs.getInt("count"));
-					jsonArray.put(rowArray);
-				} while (rs.next());
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		return jsonArray;
 	}
 }

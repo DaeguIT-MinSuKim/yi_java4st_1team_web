@@ -1,5 +1,6 @@
 package hairrang_web.dto;
 
+import java.text.DateFormat;
 import java.time.LocalDateTime;
 
 public class Notice {
@@ -9,6 +10,11 @@ public class Notice {
 	private String noticeDelYn;
 	private String noticeFile;
 	private LocalDateTime noticeRegDate;
+	
+//		public String getDate() {
+//			DateFormat format = DateFormat.getDateInstance(DateFormat.FULL);
+//			this.noticeRegDate = format.format(noticeRegDate);
+//		}
 
 	public LocalDateTime getNoticeRegDate() {
 		return noticeRegDate;

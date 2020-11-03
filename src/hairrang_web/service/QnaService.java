@@ -2,18 +2,11 @@ package hairrang_web.service;
 
 import java.io.File;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-
-import org.json.JSONArray;
 
 import hairrang_web.dao.QnADao;
 import hairrang_web.dao.impl.QnADaoImpl;
@@ -234,10 +227,5 @@ public class QnaService {
 	//페이징 찾기 
 	public List<QnA> selectPagingQnASearch(Paging paging, String condition, String keyword,String stay){
 		return dao.selectPagingQnASearch(paging, condition, keyword, stay);
-	}
-	
-	//전체 qna(noticeX)
-	public JSONArray selectOnlyQnA(){
-		return dao.selectOnlyQnA();
 	}
 }

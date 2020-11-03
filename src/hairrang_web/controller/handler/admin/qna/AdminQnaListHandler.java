@@ -80,6 +80,7 @@ public class AdminQnaListHandler implements Command {
 			System.out.println("총게시물 갯수 ===>" + total);
 			
 			list = service.selectPagingQnASearch(paging, condition, keyword, stay);
+			
 
 			request.setAttribute("cnt", cntPerPage);
 			request.setAttribute("total", total);

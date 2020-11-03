@@ -8,7 +8,6 @@
 		<tr>
 			<th>번호</th>
 			<th>제목</th>
-			<!-- <th>등록일</th> -->
 			<th>답변 여부</th>
 		</tr>
 		<c:forEach items="${qnaList}" var="qna">

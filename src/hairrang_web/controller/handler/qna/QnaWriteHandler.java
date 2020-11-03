@@ -40,87 +40,89 @@ public class QnaWriteHandler implements Command {
 
 			ServletContext context = request.getServletContext();
 			System.out.println(context);
-			
+
 			/*
 			// 만약 로그인이 되어있지 안하면 url에 qnaWrite.do의 경로를 저장한채로 login.do로 넘기기
 			if (loginUser == null) {
 				return "login.do?url='qnaWrite.do'";
 			}
 			*/
-			
+
 			return url;
 		} else {
 			// 방식이 post방식일 경우 제목과 내용을 가지고와서 isnert하는 곳
 			System.out.println("POST");
 			PrintWriter out = response.getWriter();
-			
+
 			//다운로드경로
 			String savePath = "qna/upload";
-			
+
 			//최대 업로드 파일 크기 5MB로 지정
-			int uploadFileSizeLimit = 5*1024*1024;
+			int uploadFileSizeLimit = 5 * 1024 * 1024;
 			String entype = "UTF-8";
-			
+
 			ServletContext context = request.getServletContext();
-			System.out.println("context :"+context);
+			System.out.println("context :" + context);
 			String uploadFilePath = context.getRealPath(savePath);
 			System.out.println("서버상의 실제 디렉토리 :");
 			System.out.println(uploadFilePath);
-			
-			File isDir = new File(uploadFilePath);
-			if(!isDir.isDirectory()){
-			    //디렉토리 생성 메서드
-				isDir.mkdirs();
-			    System.out.println("created directory successfully!");
-			}
-			
-			try{MultipartRequest multi = new MultipartRequest(request, 		//request 객체
-															uploadFilePath, 		//서버상의 실제 디렉토리
-															uploadFileSizeLimit, 	//최대 업로드 파일 크기
-															entype, 			//인코딩방법
-															new DefaultFileRenamePolicy());	//동일한 이름이 존재하면 새로운 이름이 부여됨
-			
-			//업로드된 파일의 이름 얻기
-			String fileName = multi.getFilesystemName("upload");
-			String nowDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date()); //현재시간
-			
-			//업로드된 파일 얻기
-			File findFile = new File(uploadFilePath+"/"+fileName);
 
-			String realFileName = nowDate+"-"+fileName; //현재시간과 확장자 합치기
-			System.out.println("realFileName : "+realFileName);
-			String FilegetPath = uploadFilePath+"/"+realFileName;
-			File newFile = new File(FilegetPath);
-			
-			findFile.renameTo(newFile);//파일명 변경
-			
-			//제목 내용 파일경로 db에 insert하는곳
-			String title = multi.getParameter("title");
-			String content = multi.getParameter("content");
-			String secretPwd= multi.getParameter("secretPwd");
-			String secretChecked = multi.getParameter("secret");
-			System.out.println("비밀번호 체크: " + secretChecked);
-			if(secretChecked !=null) {
-				secretChecked = "y";
-			}else {
-				secretChecked = "n";
+			File isDir = new File(uploadFilePath);
+			if (!isDir.isDirectory()) {
+				//디렉토리 생성 메서드
+				isDir.mkdirs();
+				System.out.println("created directory successfully!");
 			}
-			
-			System.out.println("loginUser"+loginUser);
-			System.out.println("secretPwd"+secretPwd);
-			qna.setGuestId(loginUser);
-			qna.setQnaTitle(title);
-			qna.setQnaContent(content);
-			qna.setQnaFile(realFileName);
-			qna.setQnaPassword(secretPwd);
-			qna.setQnaSecret(secretChecked);
-			System.out.println("insert 하기전");
-			service.insertQna(qna);
-			
-			
-			}catch (Exception e) {
+
+			try {
+				MultipartRequest multi = new MultipartRequest(request, //request 객체
+						uploadFilePath, //서버상의 실제 디렉토리
+						uploadFileSizeLimit, //최대 업로드 파일 크기
+						entype, //인코딩방법
+						new DefaultFileRenamePolicy()); //동일한 이름이 존재하면 새로운 이름이 부여됨
+
+				//업로드된 파일의 이름 얻기
+				String fileName = multi.getFilesystemName("upload");
+				String nowDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date()); //현재시간
+
+				//업로드된 파일 얻기
+				File findFile = new File(uploadFilePath + "/" + fileName);
+
+				String realFileName = nowDate + "-" + fileName; //현재시간과 확장자 합치기
+				System.out.println("realFileName : " + realFileName);
+				String FilegetPath = uploadFilePath + "/" + realFileName;
+				File newFile = new File(FilegetPath);
+
+				findFile.renameTo(newFile);//파일명 변경
+
+				//제목 내용 파일경로 db에 insert하는곳
+				String title = multi.getParameter("title");
+				String content = multi.getParameter("content");
+				String secretPwd = multi.getParameter("secretPwd");
+				String secretChecked = multi.getParameter("secret");
+				System.out.println("비밀번호 체크: " + secretChecked);
+				if (secretChecked != null) {
+					secretChecked = "y";
+				} else {
+					secretChecked = "n";
+				}
+
+				System.out.println("loginUser" + loginUser);
+				System.out.println("secretPwd" + secretPwd);
+				qna.setGuestId(loginUser);
+				qna.setQnaTitle(title);
+				qna.setQnaContent(content);
+				qna.setQnaFile(realFileName);
+				if (secretChecked.contentEquals("y")) {
+					qna.setQnaPassword(secretPwd);
+				}
+				qna.setQnaSecret(secretChecked);
+				System.out.println("insert 하기전");
+				service.insertQna(qna);
+
+			} catch (Exception e) {
 				e.printStackTrace();
-			
+
 			}
 			/*?nowPage=1&cntPerPage=5*/
 			response.sendRedirect("qnaHome.do");

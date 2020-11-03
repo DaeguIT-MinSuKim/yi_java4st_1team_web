@@ -1,4 +1,4 @@
-package hairrang_web.controller.handler.qna;
+package hairrang_web.controller.handler.admin.chart;
 
 import java.io.IOException;
 
@@ -8,15 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import hairrang_web.controller.Command;
 
-public class QnaDeleteFormHandler implements Command {
+public class AdminChartGuestHandler implements Command {
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		String url = "qna/qnaDeleteForm.jsp";
-		String no = request.getParameter("no");
-		request.setAttribute("no", no);
-		return url;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

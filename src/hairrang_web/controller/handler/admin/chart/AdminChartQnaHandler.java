@@ -11,32 +11,30 @@ import org.json.JSONArray;
 import hairrang_web.controller.Command;
 import hairrang_web.service.ChartService;
 
-public class AdminChartHandler implements Command {
-	private ChartService service = new ChartService();
+public class AdminChartQnaHandler implements Command {
+	ChartService service = new ChartService();
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		String url = "chart/chart_list.jsp";
+		String url = "chart/qna_Chart.jsp";
 
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("GET");
 
-			JSONArray qnaArray  = service.selectOnlyQnA();
-			JSONArray joinGuest  = service.joinGuestByOneDay();
-			JSONArray gender  = service.gender();
+			JSONArray qna = service.selectOnlyQnA();
+			JSONArray res = service.QnAByRes();
 			
-			request.setAttribute("qnaArray", qnaArray);
-			request.setAttribute("joinGuest", joinGuest);
-			request.setAttribute("gender", gender);
+			
+			request.setAttribute("qna", qna);
+			request.setAttribute("res", res);
+
 			return url;
 		} else {
 			System.out.println("POST");
-			
-
-			
-			return url;
 		}
+
+		return null;
 	}
 
 }

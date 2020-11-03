@@ -1,6 +1,7 @@
 package hairrang_web.controller.handler.qna;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,17 @@ public class QnaDeleteHandler implements Command {
 		int qnaNo = Integer.parseInt(request.getParameter("no"));
 		int res = service.deleteQna(new QnA(qnaNo));
 		System.out.println("delete"+res);
-		return url;
+		
+		
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=utf-8");
+		response.setStatus(HttpServletResponse.SC_ACCEPTED);
+
+		PrintWriter pw = response.getWriter();
+		pw.print(res);
+		pw.flush();
+		
+		return null;
 	}
 
 }

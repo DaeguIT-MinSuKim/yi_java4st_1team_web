@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script>
 	document.title += ' - 공지사항 목록'
 
@@ -234,9 +235,9 @@
 									class="custom-select custom-select-sm form-control form-control-sm"
 									name="stay">
 										<option value="all"
-											<c:if test="${stay eq 'all'}">selected</c:if>>전체 보기</option>
+											<c:if test="${stay eq 'all'}">selected</c:if>>전체</option>
 										<option value="del"
-											<c:if test="${stay eq 'del'}">selected</c:if>>삭제 보기</option>
+											<c:if test="${stay eq 'del'}">selected</c:if>>삭제</option>
 								</select>
 								</label>
 							</div>
@@ -259,13 +260,15 @@
 						<!-- 테이블 상단 필터링 끝 -->
 
 						<!-- 테이블 시작 -->
-						<table class="table table-bordered text-center" id="dataTable" cellspacing="0">
+						<table class="table table-bordered text-center" id="dataTable"
+							cellspacing="0">
 							<thead>
 								<tr>
 									<th></th>
 									<th>번호</th>
 									<th>제목</th>
-									<th style="width: 180px; min-width:180px; max-width:180px;"></th>
+									<th>작성일</th>
+									<th style="width: 180px; min-width: 180px; max-width: 180px;"></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -276,6 +279,10 @@
 										<td style="width: 20px;">${notice.noticeNo}</td>
 										<td style="width: 100px;"><a
 											href="noticeDetail.do?no=${notice.noticeNo }">${notice.noticeTitle}</a></td>
+										<td style="width: 100px;"><fmt:parseDate
+												value="${notice.noticeRegDate}" pattern="yyyy-MM-dd'T'HH:mm"
+												var="regDate" type="both" /> <fmt:formatDate
+												value="${regDate}" pattern="yyyy-MM-dd" /></td>
 										<c:if test="${stay eq 'del' }">
 											<td><input type="button" name="info" value="복원"
 												class="btn bg-gray-200 btn-sm detailViewButton"
@@ -283,10 +290,9 @@
 										</c:if>
 										<c:if test="${stay eq 'all' }">
 											<td><input type="button" name="info" value="삭제"
-												class="btn bg-gray-200 btn-sm detailViewButton"
+												class="btn btn-danger btn-sm deleteButton"
 												onclick="buttonDel()"> <input type="button"
-												name="info" value="수정"
-												class="btn bg-gray-200 btn-sm detailViewButton"
+												name="info" value="수정" class="btn btn-primary btn-sm"
 												onclick="location.href='noticeUpdate.do?no=${notice.noticeNo}'">
 												<!-- <input type="button" value="삭제" name="delete" class="btn btn-danger btn-sm" style="float: left;"> -->
 											</td>

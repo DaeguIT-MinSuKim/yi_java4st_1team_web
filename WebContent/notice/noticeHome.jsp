@@ -20,7 +20,7 @@
 <body>
 	
 	<div class="qna_wrapper">
-		<p style="text-align:center; font-size:30px;">문의 사항</p>
+		<p style="text-align:center; font-size:30px;">공지 사항</p>
 		<div style="width:1000px; margin:0 auto; text-align:right; padding:10px;">
 			<select id="cntPerPage" name="sel" onchange="selChange()">
 			<option value="5"
@@ -37,13 +37,15 @@
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
-				<th>내용</th>
+				<th>작성일</th>
 			</tr>
 			<c:forEach items="${viewAll}" var="list">
 				<tr>
 					<td>${list.noticeNo }</td>
 					<td><a href="noticeDetail.do?no=${list.noticeNo}">${list.noticeTitle }</a></td>
-					<td>${list.noticeContent }</td>
+					<td><fmt:parseDate value="${list.noticeRegDate}"
+							pattern="yyyy-MM-dd'T'HH:mm" var="regDate" type="both" /> <fmt:formatDate
+							value="${regDate}" pattern="yyyy-MM-dd" /></td>
 				</tr>
 			</c:forEach>
 		</table>

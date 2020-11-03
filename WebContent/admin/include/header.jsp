@@ -136,9 +136,17 @@
       
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="chartList.do">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts" aria-expanded="true" aria-controls="collapsePages">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>차트 관리</span>
+        </a>
+        <div id="collapseCharts" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="chartQna.do">Q&A</a>
+            <a class="collapse-item" href="chartGuest.do">Guest</a>
+            <a class="collapse-item" href="chartOrders.do">Orders</a>
+          </div>
+        </div>
       </li>
 
       <!-- Divider -->
