@@ -12,12 +12,9 @@
 
   <title>HAIRRANG - ADMIN PAGE</title>
 
-<!--아이콘-->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css?ver=191202">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/v4-shims.css?ver=191202">
-  
   <script src="vendor/jquery/jquery.min.js"></script>
-
+  <script src="vendor/datepicker/bootstrap-datepicker.js"></script>
+  <script src="vendor/datepicker/bootstrap-datepicker.ko.min.js"></script>
   
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -28,6 +25,9 @@
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
   <link href="css/admin_custom.css" rel="stylesheet">
+  <link href="vendor/datepicker/bootstrap-datepicker3.css" rel="stylesheet">
+  <link href="vendor/datepicker/bootstrap-datepicker3.standalone.css" rel="stylesheet">
+  
 <script src="guest/guest.js"></script>
 </head>
 

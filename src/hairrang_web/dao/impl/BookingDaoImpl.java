@@ -284,6 +284,23 @@ public class BookingDaoImpl implements BookingDao {
 		return 0;
 	}
 
+	@Override
+	public int selectNextValBookNo() {
+		String sql = "SELECT BOOK_NO_SEQ.NEXTVAL FROM DUAL";
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if(rs.next()) {
+				System.out.println("조회가 없어?");
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException();
+		}
+		
+		return 0;
+	}
 	
 	@Override
 	public int selectMaxBookNo() {
@@ -722,7 +739,7 @@ public class BookingDaoImpl implements BookingDao {
 	
 	
 	@Override
-	public int countBookingByConditionForPaging(Paging paging, String where, String query, String sorter, String designer) {
+	public int countBookingByConditionForPaging(Paging paging, String where, String query, String sorter, String designer, String startDate, String endDate) {
 		String sql = "SELECT COUNT(*) FROM booking_guest_view ";
 		int cnt = 0;
 		
@@ -745,10 +762,10 @@ public class BookingDaoImpl implements BookingDao {
 		} else {
 			if(cnt == 1) {
 				sql += " AND BOOK_STATUS = " + sorter;
-				cnt++;
 			} else {
 				sql += " WHERE BOOK_STATUS = " + sorter;
 			}
+			cnt++;
 		}
 		
 		if(designer == null) {
@@ -759,6 +776,29 @@ public class BookingDaoImpl implements BookingDao {
 			} else {
 				sql += " WHERE DE_NO = " + designer;
 			}
+			cnt++;
+		}
+		
+		if(startDate == null) {
+		} else if (startDate.trim().equals("")) {
+		} else {
+			if(cnt >= 1) {
+				sql += " AND TO_CHAR(book_time, 'YYYY-MM-DD') >= '" + startDate + "' ";
+			} else {
+				sql += " WHERE TO_CHAR(book_time, 'YYYY-MM-DD') >= '" + startDate + "'";
+			}
+			cnt++;
+		}
+		
+		if(endDate == null) {
+		} else if (endDate.trim().equals("")) {
+		} else {
+			if(cnt >= 1) {
+				sql += " AND TO_CHAR(book_time, 'YYYY-MM-DD') <= '" + endDate + "' ";
+			} else {
+				sql += " WHERE TO_CHAR(book_time, 'YYYY-MM-DD') <= '" + endDate + "' ";
+			}
+			cnt++;
 		}
 		
 		System.out.println("완성된 쿼리" + sql);
@@ -777,7 +817,7 @@ public class BookingDaoImpl implements BookingDao {
 	
 	
 	@Override
-	public ArrayList<Booking> selectBookingByCondition(Paging paging, String where, String query, String sorter, String designer) {
+	public ArrayList<Booking> selectBookingByCondition(Paging paging, String where, String query, String sorter, String designer, String startDate, String endDate) {
 		
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking_guest_view ";
 		int cnt = 0;
@@ -806,7 +846,7 @@ public class BookingDaoImpl implements BookingDao {
 			} else {
 				sql += " WHERE BOOK_STATUS = " + sorter;
 			}
-			
+			cnt++;
 		}
 		
 		if(designer == null) {
@@ -817,7 +857,31 @@ public class BookingDaoImpl implements BookingDao {
 			} else {
 				sql += " WHERE DE_NO = " + designer;
 			}
+			cnt++;
 		}
+		
+		if(startDate == null) {
+		} else if (startDate.trim().equals("")) {
+		} else {
+			if(cnt >= 1) {
+				sql += " AND TO_CHAR(book_time, 'YYYY-MM-DD') >= '" + startDate + "' ";
+			} else {
+				sql += " WHERE TO_CHAR(book_time, 'YYYY-MM-DD') >= '" + startDate + "'";
+			}
+			cnt++;
+		}
+		
+		if(endDate == null) {
+		} else if (endDate.trim().equals("")) {
+		} else {
+			if(cnt >= 1) {
+				sql += " AND TO_CHAR(book_time, 'YYYY-MM-DD') <= '" + endDate + "' ";
+			} else {
+				sql += " WHERE TO_CHAR(book_time, 'YYYY-MM-DD') <= '" + endDate + "' ";
+			}
+			cnt++;
+		}
+		
 		sql += " ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
 		
 		System.out.println("완성된 sql + " + sql);

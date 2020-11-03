@@ -240,6 +240,7 @@ BEGIN
 	IF Inserting AND :NEW.ORDERS_NO IS NULL THEN 
 		SELECT LAST_NUMBER-1 INTO :NEW.ORDERS_NO FROM USER_SEQUENCES WHERE SEQUENCE_NAME = 'ORDERS_NO_SEQ';
 	END IF;
+<<<<<<< HEAD
 END;
 
 
@@ -257,3 +258,6 @@ END;
 SELECT * FROM booking;
 SELECT * FROM BOOKING_hairs ORDER BY book_no;
 
+=======
+END;
+>>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git
