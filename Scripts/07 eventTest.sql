@@ -50,7 +50,6 @@ WHERE event_no = 2
 AND g.guest_id = 'test'
 AND event_start = TO_DATE(TO_CHAR(sysdate - 365, 'YYYY-') ||TO_CHAR(guest_birthday, 'MM-DD')) - 15
 AND event_end = TO_DATE(TO_CHAR(sysdate - 365, 'YYYY-') || TO_CHAR(guest_birthday, 'MM-DD')) + 15;
-
 --3. 안 받았으면 쏜다
 -- insert문 아까꺼
 
@@ -65,5 +64,7 @@ SELECT guest_id,
 FROM event, GUEST g
 WHERE event_no = 1;
 
-
+SELECT * FROM DESIGNER;
 SELECT * FROM EVENT where not event_no = 1 AND EVENT_STATUS = 's' ORDER BY EVENT_NO DESC;
+SELECT * FROM EVENT;
+UPDATE event SET EVENT_PIC = 'open_event.jpg' WHERE event_no = 2;

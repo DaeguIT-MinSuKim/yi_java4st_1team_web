@@ -23,8 +23,8 @@
 
 	#banner {
 		padding: 22em 0 10em 0;
-		background-image: url('images/main.jpg');
-		background-size: cover;
+		background-image: url('images/main3.jpg');
+		background-size: 100%;
 		background-position: top;
 		background-attachment: fixed;
 		background-repeat: no-repeat;

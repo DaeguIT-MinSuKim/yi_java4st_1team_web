@@ -95,10 +95,12 @@ CREATE OR REPLACE PROCEDURE UPDATE_JOB_BIRTHDAY_COUPON
       BEGIN
 	   --생일쿠폰 삽입
 	  INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
-		SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
+--		SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
+		SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" AS event_start, "thisyear_bd" + 14 - 1 / (24*60*60) + 1 AS event_end
 		FROM (
 		SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
-		) gb WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
+		) gb WHERE TO_CHAR(sysdate, 'YYYY-MM-DD') = TO_CHAR("thisyear_bd", 'YYYY-MM-DD');
+--		) gb WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
       END;
      
 
@@ -110,8 +112,8 @@ BEGIN
    (
    JOB => X
    , WHAT => 'UPDATE_JOB_BIRTHDAY_COUPON;' -- 등록할 프로시저 명 넣어주기 (마지막에 꼭 ; 넣어주기. job 실행하면서 에러 날 수 있음)
-   , NEXT_DATE => SYSDATE -- 현재시각부터 바로 시작
-   , INTERVAL => 'SYSDATE + 1/24/60/20' -- 3초 간격으로 실행
+   , NEXT_DATE => SYSDATE -- 현재시각부터 바로 시작 : 지금 한번 들어감
+   , INTERVAL => 'SYSDATE + 1' -- 3초 간격으로 실행
    , NO_PARSE => TRUE
    );
 END;
@@ -145,13 +147,13 @@ END;
 
 -- 등록되어 있는 JOB 삭제
 BEGIN
-   DBMS_JOB.REMOVE(74);
+   DBMS_JOB.REMOVE(72);
    COMMIT;
 END;
 
 -- 작업 비활성화 
 BEGIN
-   DBMS_JOB.BROKEN(, TRUE);
+   DBMS_JOB.BROKEN(77, TRUE);
    COMMIT;
 END;
 

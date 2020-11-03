@@ -47,22 +47,26 @@ public class OrdersService {
 		String odSql = "INSERT INTO ORDER_DETAIL(ORDERS_NO, HAIR_NO, OD_PRICE, OD_QUANTITY, COUPON_ID, OD_DISCOUNT) " + 
 				"SELECT ?, HAIR_NO, hair_price, ?, coupon_id, hair_price*event_salerate " + 
 				"FROM (SELECT HAIR_NO, hair_price, 0 AS fake FROM hair WHERE hair_no = ?) " + 
-				"LEFT OUTER JOIN (SELECT coupon_id, event_salerate, 0 AS fake FROM coupon_view WHERE coupon_id = ? AND GUEST_ID = ?) USING(fake)";
+				"LEFT OUTER JOIN (SELECT coupon_id, event_salerate, 0 AS fake FROM coupon_view WHERE coupon_id = ? AND GUEST_ID = ?) USING(fake)"; 
 		String bSql = "UPDATE BOOKING SET BOOK_STATUS = 2 WHERE BOOK_NO = ? ";
 		String tpSql = "UPDATE orders SET orders_total_price = (SELECT SUM(OD_PRICE*OD_QUANTITY-NVL(OD_DISCOUNT, 0)) FROM ORDER_DETAIL od WHERE orders_no = ?) WHERE orders_no = ?";
+		String cSql = "UPDATE COPUON SET USED_YN = 'y' WHERE COUPON_ID = ?";
 		
 		Connection con = null;
 		PreparedStatement oPstmt = null;
 		PreparedStatement odPstmt = null;
 		PreparedStatement bPstmt = null;
 		PreparedStatement tpPstmt = null;
+		PreparedStatement cPstmt = null;
 		
 		int ordersNo = 0;
+		int couponId = 0;
+		System.out.println("orderService insert");
+		System.out.println(orders);
 		
 		try {
 			con = JndiDs.getConnection();
 			con.setAutoCommit(false);
-			
 			
 			oPstmt = con.prepareStatement(oSql);
 					
@@ -76,19 +80,25 @@ public class OrdersService {
 			oPstmt.executeUpdate();
 			
 			odPstmt = con.prepareStatement(odSql);
-			
 			for(OrderDetail od : orders.getOdList()) {
-//				odPstmt.setInt(1, ordersNo);
-				odPstmt.setInt(1, od.getOdQuantity());
-				odPstmt.setInt(2, od.getHair().getHairNo());
+				odPstmt.setInt(1, ordersNo);
+				odPstmt.setInt(2, od.getOdQuantity());
+				odPstmt.setInt(3, od.getHair().getHairNo());
+				System.out.println("쿠폰 있니? " + od.getCoupon());
 				if(od.getCoupon() != null) {
-					odPstmt.setInt(3, od.getCoupon().getCouponId());
+					if(od.getCoupon().getCouponId() == 0) {
+						odPstmt.setInt(4, od.getCoupon().getCouponId());
+						couponId = od.getCoupon().getCouponId();
+					}
+					odPstmt.setString(4, null);
 				} else {
-					odPstmt.setString(3, null);
+					odPstmt.setString(4, null);
 				}
-				odPstmt.setString(4, guestId);
+				odPstmt.setString(5, guestId);
 				odPstmt.executeUpdate();
 			}
+			
+			System.out.println("어디서 롤백?");
 			
 			if(bookNo > 0) {
 				bPstmt = con.prepareStatement(bSql);
@@ -105,6 +115,12 @@ public class OrdersService {
 			
 			tpPstmt.executeUpdate();
 			
+			if (couponId != 0) {
+				cPstmt = con.prepareStatement(cSql);
+				cPstmt.setInt(1, couponId);
+				cPstmt.executeUpdate();
+			}
+			
 		} catch (SQLException e) {
 			rollbackUtil(con, e);
 			/*for(int i = 0; i < backSql.length; i++) {
@@ -117,7 +133,7 @@ public class OrdersService {
 			}*/
 			ordersNo = 0;
 		} finally {
-			closeUtil(con, oPstmt, odPstmt);
+			closeUtil(con, oPstmt, odPstmt, tpPstmt, cPstmt);
 		}
 		
 		return ordersNo;
@@ -133,14 +149,13 @@ public class OrdersService {
         }
     }
 
-    private void closeUtil(Connection con, PreparedStatement dPstmt, PreparedStatement tPstmt) {
+    private void closeUtil(Connection con, PreparedStatement...pstmt) {
         try {
-            if (dPstmt != null) {
-                dPstmt.close();
-            }
-            if (tPstmt != null) {
-                tPstmt.close();
-            }
+         	for(PreparedStatement p:pstmt) {
+         		if(p != null) {
+         			p.close();
+         		}
+         	}
             if (con != null) {
                 con.setAutoCommit(true);
                 con.close();

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ include file="../include/header.jsp"%>
 <script src="order/admin_order_list.js"></script>
 <!-- Page Heading -->
@@ -31,8 +32,37 @@
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
 				<!-- 테이블 상단 필터링 시작 -->
-				<form action="orderList.do" name="searchForm">
-				
+				<form  autocomplete="off" action="orderList.do" name="searchForm">
+				<div class="row m-0 mb-2">
+					<div class="col-sm-12 col-md-12 p-0">
+						<div class="form-inline justify-content-center">
+							<i class="far fa-calendar-alt mr-3" style="font-size: 22px;"></i>
+							<div class="input-group input-group-sm mr-3">
+								<div class="input-group-prepend">
+									<input type="text" class="form-control" id="startDate" name="startDate" style="width: 120px;" placeholder="시작일">
+								</div>
+								<div class="input-group-prepend">
+									<label class="input-group-text">~</label>
+								</div>
+									<input type="text" class="form-control" id="endDate" name="endDate" style="width: 120px;" placeholder="종료일">
+							</div>
+							<button type="submit" class="form-control btn-primary" id="dateBtn">조회</button>
+						</div>
+					</div>
+				</div>
+				<div class="row m-0">
+					<div class="col-sm-12 col-md-12 p-0">
+						<div class="form-inline justify-content-center" style="height: 32px;">
+							<div class="btn-group btn-group-sm" role="group" aria-label="Basic example" style>
+							  <button type="button" class="btn btn-sm btn-outline-secondary" id="todayBtn">오늘</button>
+							  <button type="button" class="btn btn-sm btn-outline-secondary" id="aWeekBtn">1주</button>
+							  <button type="button" class="btn btn-sm btn-outline-secondary" id="twoWeeksBtn">2주</button>
+							  <button type="button" class="btn btn-sm btn-outline-secondary" id="aMonthBtn">1개월</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
 				<div class="row m-0 mb-2">
 					<div class="col-sm-12 col-md-6 p-0">
 						<div class="dataTables_length form-inline" id="dataTable_length">
@@ -51,7 +81,7 @@
 								<select name="designer" aria-controls="dataTable" class="custom-select custom-select-sm">
 									<option selected value="">전체</option>
 									<c:forEach var="de" items="${ dList}">
-										<option value="${de.deNo }">${de.deNickname } ${de.deLevel } (${de.deName }) </option>
+										<option value="${de.deNo }">${de.deNickname } ${de.deLevel }</option>
 									</c:forEach>
 								</select>
 							</div>

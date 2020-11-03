@@ -8,16 +8,17 @@
 
 <style>
 .book a {background-color:white;  border-bottom:1px solid white;}
+.book-btn {border:none; background-color:#fff; cursor:pointer;}
 </style>     
 
 <body>
 
 <div class="book_wrapper">
-
+<h3 style="text-align:center; padding:20px; margin-bottom:50px;">RESERVATION</h3>
 <div class="tcenter" style="padding:10px;">
-	<input type="button" value="전체보기" onclick="location.href='guestBook.do'">
-	<input type="button" value="예약완료" onclick="location.href='status1.do'">
-	<input type="button" value="예약취소" onclick="location.href='status0.do'">
+	<input type="button" value="전체보기" onclick="location.href='guestBook.do'" class="book-btn">
+	<input type="button" value="예약완료" onclick="location.href='status1.do'" class="book-btn">
+	<input type="button" value="예약취소" onclick="location.href='status0.do'" class="book-btn">
 </div>
 <table id="board">
 	<tr>
@@ -64,28 +65,94 @@
 	</c:forEach>
 </table>
 
-<div class="paging">
-			<c:if test="${paging.startPage != 1}">
-				<a href="guestBook.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}"><i class="xi-angle-left"></i></a>	
-			</c:if>
-			&nbsp;&nbsp;
-			<c:forEach begin="${paging.startPage}" end="${paging.endPage }" var="p">
-				<c:choose>
-					<c:when test="${p == paging.nowPage }">
-					${p}
-					</c:when>
-					<c:when test="${p != paging.nowPage }">
-						<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><b style="margin:5px;">${p}</b></a>
-					</c:when>
-				</c:choose>
-			</c:forEach>
-			&nbsp;&nbsp;
-			<c:if test="${paging.endPage != paging.lastPage }">
-				<a href="guestBook.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}"><i class="xi-angle-right"></i></a>
-			</c:if>	
-		</div>
-	</div> 
 
+<!-- 페이징 시작 -->
+
+<div>	
+	<div style="width:700px;  margin:0 auto; text-align:center; padding:20px;">
+					<p>Total : ${total}</p>
+					
+						<!-- << -->
+						<c:if test="${paging.startPage != 1}">
+							<div class="paging-line">
+							<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+								<i class="fas fa-angle-double-left"></i>
+							</a>
+							</div>
+						</c:if>
+						<c:if test="${paging.startPage == 1}">
+							<div class="paging-line">
+								<i class="fas fa-angle-double-left"></i>
+							</div>
+						</c:if>
+						
+						
+						<!-- 이전페이지 -->
+						<c:choose>
+							<c:when test="${paging.nowPage != 1}">
+								<div class="paging-line">
+									<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
+								</div>
+							</c:when>
+							<c:when test="${paging.nowPage == 1}">
+								<div class="paging-line">
+									<i class="fas fa-angle-left"></i>
+								</div>
+							</c:when>
+						
+						</c:choose>
+						
+						<!-- 페이지 숫자 -->
+						
+						<c:forEach begin="${paging.startPage}" end="${paging.endPage }"
+							var="p">
+							<c:choose>
+								<c:when test="${p == paging.nowPage }">
+									<div class="paging-line" style="font-weight:bold">${p}</div>
+								</c:when>
+								<c:when test="${p != paging.nowPage }">
+									<div class="paging-line">
+									<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+									${p}</a></div>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						
+						
+						
+						<!-- 다음페이지 -->
+						<c:choose>
+							<c:when test="${paging.nowPage != paging.lastPage}">
+								<div class="paging-line">
+									<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
+								</div>
+							</c:when>
+							<c:when test="${paging.nowPage == paging.lastPage}">
+								<div class="paging-line">
+									<i class="fas fa-angle-right"></i>
+								</div>	
+							</c:when>
+						
+						</c:choose>	
+						
+						<!-- >> -->
+						
+					
+						<c:if test="${paging.endPage != paging.lastPage }">
+							<div class="paging-line">
+							<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+							<i class="fas fa-angle-double-right"></i></a>
+							</div>
+						</c:if>
+						<c:if test="${paging.endPage == paging.lastPage}">
+							<div class="paging-line">
+							<i class="fas fa-angle-double-right"></i>
+							</div>
+						</c:if>
+					
+					</div>
+				</div>
+</div>
 </body>
 
 <%@ include file="../footer.jsp" %>  

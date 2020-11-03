@@ -38,8 +38,38 @@
 			<!-- bootStrap table wrapper-->
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 				<!-- 테이블 상단 필터링 시작 -->
-				<form action="bookingList.do" name="searchForm">
+				<form autocomplete="off" action="bookingList.do" name="searchForm">
 						
+				<div class="row m-0 mb-2">
+					<div class="col-sm-12 col-md-12 p-0">
+						<div class="form-inline justify-content-center">
+							<i class="far fa-calendar-alt mr-3" style="font-size: 22px;"></i>
+							<div class="input-group input-group-sm mr-3">
+								<div class="input-group-prepend">
+									<input type="text" class="form-control" id="startDate" name="startDate" style="width: 120px;" placeholder="시작일">
+								</div>
+								<div class="input-group-prepend">
+									<label class="input-group-text">~</label>
+								</div>
+									<input type="text" class="form-control" id="endDate" name="endDate" style="width: 120px;" placeholder="종료일">
+							</div>
+							<button type="submit" class="form-control btn-primary btn-sm" id="dateBtn">조회</button>
+						</div>
+					</div>
+				</div>
+				<div class="row m-0">
+					<div class="col-sm-12 col-md-12 p-0">
+						<div class="form-inline justify-content-center" style="height: 32px;">
+							<div class="btn-group btn-group-sm" role="group" aria-label="Basic example" style>
+							  <button type="button" class="btn btn-sm btn-outline-secondary dateBtn" value="1" id="todayBtn">오늘</button>
+							  <button type="button" class="btn btn-sm btn-outline-secondary dateBtn" value="7" id="aWeekBtn">1주</button>
+							  <button type="button" class="btn btn-sm btn-outline-secondary dateBtn" value="14" id="twoWeeksBtn">2주</button>
+							  <button type="button" class="btn btn-sm btn-outline-secondary dateBtn" value="31" id="aMonthBtn">1개월</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
 				<div class="row m-0 mb-2">
 					<div class="col-sm-12 col-md-6 p-0">
 						<div class="dataTables_length form-inline" id="dataTable_length">
@@ -151,7 +181,7 @@
 							<!-- << -->
 							<div class="paging-line">
 								<c:if test="${paging.startPage > 1}">
-									<a href="bookingList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&designer=${designer }&where=${where }&query=${query}">
+									<a href="bookingList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&sorter=${sorter}&designer=${designer }&where=${where }&query=${query}">
 										<i class="fas fa-angle-double-left"></i>
 									</a>
 								</c:if>
@@ -164,7 +194,7 @@
 							<c:choose>
 								<c:when test="${paging.nowPage > 1}">
 									<div class="paging-line">
-										<a href="bookingList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}"><i class="fas fa-angle-left"></i></a>
+										<a href="bookingList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}"><i class="fas fa-angle-left"></i></a>
 									</div>
 								</c:when>
 								<c:when test="${paging.nowPage == 1}">
@@ -185,7 +215,7 @@
 									</c:when>
 									<c:when test="${p != paging.nowPage }">
 										<div class="paging-line" style="font-weight: 600;">
-										<a href="bookingList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}">${p}</a></div>
+										<a href="bookingList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}">${p}</a></div>
 									</c:when>
 								</c:choose>
 							</c:forEach>
@@ -196,7 +226,7 @@
 							<c:choose>
 								<c:when test="${paging.nowPage < paging.lastPage}">
 									<div class="paging-line">
-										<a href="bookingList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&query=${query}"><i class="fas fa-angle-right"></i></a>
+										<a href="bookingList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&sorter=${sorter}&where=${where }&query=${query}"><i class="fas fa-angle-right"></i></a>
 									</div>
 								</c:when>
 								<c:when test="${paging.nowPage >= paging.lastPage}">
@@ -209,7 +239,7 @@
 							<!-- >> -->
 							<c:if test="${paging.endPage < paging.lastPage }">
 								<div class="paging-line">
-								<a href="bookingList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}">
+								<a href="bookingList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}">
 									<i class="fas fa-angle-double-right"></i></a>
 								</div>
 							</c:if>

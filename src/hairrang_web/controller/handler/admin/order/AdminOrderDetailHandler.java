@@ -32,7 +32,6 @@ public class AdminOrderDetailHandler implements Command {
 				Orders order = oService.getOrderOneByOrdersNo(no);
 
 				request.setAttribute("order", order);
-				
 			}
 			
 		} else {

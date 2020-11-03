@@ -15,6 +15,10 @@ import hairrang_web.utils.Paging;
 public class EventService {
 	EventDao dao = EventDaoImpl.getInstance();
 	
+	public ArrayList<Event> selectEventAllForBoard(){
+		return dao.selectEventAllForBoard();
+	}
+	
 	public ArrayList<Event> selectEventAll(){
 		return dao.selectEventAll();
 	}

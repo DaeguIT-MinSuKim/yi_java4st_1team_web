@@ -40,13 +40,17 @@ public class AdminLoginHandler implements Command {
 				HttpSession session = request.getSession();
 				session.setAttribute("loginAdmin", loginAdmin);
 				
-				System.out.println("4-1");
-				response.sendRedirect("main.do");
+				response.setContentType("text/html; charset=UTF-8;");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('로그인 성공!');location.href='main.do';</script>");
+				out.flush();
 			} else {
-				
-				System.out.println("4-2");
-				response.sendRedirect("login.do");
+				response.setContentType("text/html; charset=UTF-8;");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('로그인 정보가 일치하지 않습니다.');location.href='login.do';</script>");
+				out.flush();
 			}
+			
 			return null;
 		}
 	}

@@ -21,7 +21,6 @@ SELECT 14, 'test4', event_no, event_start, event_end, 'n' FROM event WHERE event
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
 VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-11-01', 'YYYY-MM-DD'), to_date('2020-11-30', 'YYYY-MM-DD'), NULL, '오픈 기념 20% 할인 행사');
 
-
 UPDATE event SET USE_YN = 'n' WHERE EVENT_NO = 5;
 
 --생일쿠폰 -> start: 생일로부터 10일전 end: 생일로부터 10일 후 
@@ -194,7 +193,7 @@ INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC,
 VALUES ('생일', 0.2, NULL, NULL, NULL, '생일로부터 10일 전후 동안만 사용할 수 있습니다.');
 
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
-VALUES ('오픈 기념 쿠폰', 0.2, to_date('2020-10-29', 'YYYY-MM-DD'), to_date('2020-11-14', 'YYYY-MM-DD') + - 1 / (24*60*60) + 1 , NULL, '오픈 기념 20% 할인 행사');
+VALUES ('오픈 기념 쿠폰', 0.2, to_date('2020-10-29', 'YYYY-MM-DD'), to_date('9999-12-19', 'YYYY-MM-DD') + - 1 / (24*60*60) + 1 , NULL, '오픈 기념 20% 할인 행사');
 
 SELECT c.*, TO_DATE(TO_CHAR(sysdate+12, 'YYYY-MM-DD'), 'YYYY-MM-DD') FROM coupon c WHERE guest_id = 'test' AND USED_YN = 'n' AND SYSDATE+11 BETWEEN EVENT_START AND EVENT_END;
 
@@ -276,6 +275,12 @@ SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GU
 ) gb
 WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
 
+--가입쿠폰
+INSERT INTO coupon(guest_id, event_no, event_start, event_end) 
+SELECT 'test111', event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 FROM event WHERE event_no = 2;
+
+
+
 /*
 생일 쿠폰 삽입 결과 확인용(조건 만족하는 사람 구하기)
 
@@ -304,7 +309,7 @@ WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60)
 UPDATE event SET event_status = 's' WHERE event_no = 's';
 
 --쿠폰view의 생일쿠폰만 보기
-SELECT * FROM (SELECT a.* FROM (SELECT * FROM COUPON_VIEW ORDER BY COUPON_ID desc) a) WHERE event_no = 23;
+SELECT * FROM (SELECT a.* FROM (SELECT * FROM COUPON_VIEW ORDER BY COUPON_ID desc) a) WHERE event_no = 1;
 
 ------
 SELECT * FROM COUPON ORDER BY COUPON_ID desc;
@@ -314,7 +319,7 @@ SELECT * FROM event;
 UPDATE COUPON SET EVENT_START = EVENT_START, EVENT_END = EVENT_END WHERE EVENT_NO = 32;
 
 INSERT INTO coupon(guest_id, event_no, event_start, event_end) 
-SELECT 'abcd', event_no, event_start, event_end FROM event WHERE event_no = 2;
+SELECT 'test', event_no, event_start, event_end FROM event WHERE event_no = 2;
 
 UPDATE COUPON SET EVENT_START = EVENT_START, EVENT_END = EVENT_END WHERE EVENT_NO = 23;
 
@@ -322,15 +327,10 @@ SELECT COUNT(*) FROM coupon where event_no = 20;
 DELETE coupon WHERE COUPON_id = 10;
 
 
-INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
-		SELECT guest_id, 7/*이벤트번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
-		FROM (
-		SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
-		) gb WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
-	
-UPDATE COUPON SET USED_YN = 'y' WHERE COUPON_ID = 27;
 
-UPDATE COUPON SET USED_YN = 'n' WHERE event_start <= sysdate AND event_end >= sysdate AND USED_YN IN ('n', 'w') ;
+SELECT * FROM EVENT ORDER BY EVENT_NO DESC;
 
-SELECT * FROM event;
-UPDATE event SET event_status = 's' WHERE event_start <= sysdate AND event_end >= sysdate;
+SELECT * FROM COUPON_VIEW ORDER BY COUPON_ID desc;
+
+UPDATE COUPON SET USED_YN = 'y' WHERE GUEST_ID = 'testtt' AND COUPON_ID = 39;
+UPDATE EVENT SET EVENT_CONTENT = '가입시 증정' WHERE EVENT_NO = 2;

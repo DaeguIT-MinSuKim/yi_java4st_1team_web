@@ -163,8 +163,8 @@ public class BookingService {
 	}
 	
 	public int insertBookingWithHairList(Booking booking) {
-		String bookingSql = "INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_NOTE) VALUES(?, ?, ?, ?)";
-		String hairsSql = "INSERT INTO BOOKING_HAIRS(HAIR_NO, HAIR_QUANTITY) VALUES(?, ?)";
+		String bookingSql = "INSERT INTO BOOKING(BOOK_NO, GUEST_ID, BOOK_TIME, DE_NO, BOOK_NOTE) VALUES(?, ?, ?, ?, ?)";
+		String hairsSql = "INSERT INTO BOOKING_HAIRS(BOOK_NO, HAIR_NO, HAIR_QUANTITY) VALUES(?, ?, ?)";
 		
 		Connection con = null;
 		PreparedStatement bookingPstmt = null;
@@ -176,21 +176,25 @@ public class BookingService {
 			con.setAutoCommit(false);
 			
 			bookingPstmt = con.prepareStatement(bookingSql);
-					
-			bookingPstmt.setString(1, booking.getGuest().getGuestId());
-			bookingPstmt.setTimestamp(2, Timestamp.valueOf(booking.getBookDate()));
-			bookingPstmt.setInt(3, booking.getDesigner().getDeNo());
-			bookingPstmt.setString(4, booking.getBookNote());
+			
+			bookingNo = dao.selectNextValBookNo();
+			
+			bookingPstmt.setInt(1, bookingNo);
+			bookingPstmt.setString(2, booking.getGuest().getGuestId());
+			bookingPstmt.setTimestamp(3, Timestamp.valueOf(booking.getBookDate()));
+			bookingPstmt.setInt(4, booking.getDesigner().getDeNo());
+			bookingPstmt.setString(5, booking.getBookNote());
 			
 			bookingPstmt.executeUpdate();
 			
+			System.out.println("booking 삽입?");
+			
 			hairsPstmt = con.prepareStatement(hairsSql);
-			bookingNo = dao.selectMaxBookNo() + 1; // 커밋되기 전이어서 +1 해줘야 함
 			
 			for(BookingHairs hs : booking.getHairList()) {
 				hairsPstmt.setInt(1, bookingNo);
-				hairsPstmt.setInt(1, hs.getHair().getHairNo());
-				hairsPstmt.setInt(2, hs.getQuantity());
+				hairsPstmt.setInt(2, hs.getHair().getHairNo());
+				hairsPstmt.setInt(3, hs.getQuantity());
 				hairsPstmt.executeUpdate();
 			}
 			
@@ -235,12 +239,12 @@ public class BookingService {
     }
     
     
-    public ArrayList<Booking> getBookingListBySearch(Paging paging, String where, String query, String sorter, String designer) {
-    	return dao.selectBookingByCondition(paging, where, query, sorter, designer);
+    public ArrayList<Booking> getBookingListBySearch(Paging paging, String where, String query, String sorter, String designer, String startDate, String endDate) {
+    	return dao.selectBookingByCondition(paging, where, query, sorter, designer, startDate, endDate);
     }
     
-    public int getTotalCountBySearch(Paging paging, String where, String query, String sorter, String designer) {
-    	return dao.countBookingByConditionForPaging(paging, where, query, sorter, designer);
+    public int getTotalCountBySearch(Paging paging, String where, String query, String sorter, String designer, String startDate, String endDate) {
+    	return dao.countBookingByConditionForPaging(paging, where, query, sorter, designer, startDate, endDate);
 	}
 	
 }

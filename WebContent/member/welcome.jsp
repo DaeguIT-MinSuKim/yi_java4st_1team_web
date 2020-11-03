@@ -58,7 +58,6 @@
 	
 	<div class=div-button>
 	<input type="button" value="메인페이지로 이동" class="go_main" onClick="location.href='index.do'">
-	<input type="button" value="실시간 예약" class="go_main" onClick="location.href='index.do'">
 	</div>
 	
 	
