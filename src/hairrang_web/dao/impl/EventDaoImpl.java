@@ -52,7 +52,7 @@ public class EventDaoImpl implements EventDao {
 
 	@Override
 	public ArrayList<Event> selectEventAllForBoard() {
-		String sql = "SELECT * FROM EVENT where not event_no = 1 AND EVENT_STATUS = 's' ORDER BY EVENT_NO DESC";
+		String sql = "SELECT * FROM EVENT where EVENT_STATUS = 's' ORDER BY EVENT_NO DESC";
 
 		try (Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);

@@ -75,6 +75,7 @@
 
 /*페이징*/
 .paging-line { width:20px; display:inline-block;}
+.paging-line a {text-decotation:none; }
 
 
 /*예약상세*/

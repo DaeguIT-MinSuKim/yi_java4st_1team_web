@@ -41,6 +41,7 @@ div.content {float:right; border:1px solid black;}
   clear: both;
 }
 
+
 .de_wrapper {width:1200px;}
 .de_sub_wrapper { width:1200px; margin:0 auto; }
 </style>
@@ -48,19 +49,21 @@ div.content {float:right; border:1px solid black;}
 <div class="de_wrapper">
 <h3 style="text-align:center; padding:20px; margin-bottom:50px;">EVENT</h3>
 <div class="de_sub_wrapper">
-<div style=" width:900px; margin:0 auto;">
+<div style=" width:900px; margin:0 auto; text-align:center">
 
-<table>
 <c:forEach var="event" items="${list}" varStatus="status">
-<tr>
-	<td><a href="eventDetail.do?eno=${event.eventNo }"><img src="event/images/${event.eventPic}" alt="" width=80%></a></td>
-	<td style="text-align:center; vertical-align:top; padding:20px;">
-   		<div style="font-size:22px; padding:10px;">${event.eventName}</div>
-   		<div><img src="images/cal-b.png" width=4% style="margin-bottom:-3px;"> ${event.eventStart} ~ ${event.eventEnd}</div>
-	</td>
-</tr>
+
+<a href="eventDetail.do?eno=${event.eventNo}"><img src="event/images/${event.eventPic}" alt="" width=60%></a>
+<div style="font-size:22px; font-weight :bold; padding:10px;">${event.eventName}</div>
+   		<div>
+   			<img src="images/cal-b.png" width=2% style="margin-bottom:-3px;"> ${event.eventStart} ~ 
+   			<c:if test="${event.eventEnd == '9999-12-30'}">상시적용</c:if>
+   			<c:if test="${event.eventEnd != '9999-12-30'}">${event.eventEnd}</c:if>
+   		</div>
+   		<br><br>
+   		<br><br>
 </c:forEach> 
-</table>
+
 
 </div>
 </div>

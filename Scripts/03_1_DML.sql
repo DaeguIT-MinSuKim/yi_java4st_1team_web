@@ -60,21 +60,23 @@ SELECT * FROM guest;
 /* event */
 SELECT * FROM event;
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
-VALUES ('생일 쿠폰', 0.2, to_date('2020-11-01','yyyy-MM-dd'),to_date('9999-12-30','yyyy-MM-dd'), NULL, '생일로부터 10일 전후 동안만 사용할 수 있습니다.');
+VALUES ('생일 쿠폰', 0.2, to_date('2020-11-01','yyyy-MM-dd'),to_date('9999-12-30','yyyy-MM-dd'), 'bd_event.jpg', '고객님의 생일을 축하드립니다. 생일로부터 14일 이내에 사용가능합니다.');
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
-VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-11-01','yyyy-MM-dd'), to_date('9999-12-30','yyyy-MM-dd'), 'open_event.jpg', '가입한 날짜로부터 30일 이내에 사용가능합니다.');
-
-
-UPDATE event SET EVENT_START = to_date('2020-11-01','yyyy-MM-dd'), EVENT_END = to_date('9999-12-30','yyyy-MM-dd') WHERE event_no = 1;
+VALUES ('오픈 기념 가입 쿠폰', 0.1, to_date('2020-11-01','yyyy-MM-dd'), to_date('2020-12-01','yyyy-MM-dd'), 'open_event.jpg', '가입한 날짜로부터 30일 이내에 사용가능합니다.');
 
 
 --생일인 사람 쿠폰 수동 삽입
-INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
-		SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
+ INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
+--SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
+		SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" AS event_start, "thisyear_bd" + 14 - 1 / (24*60*60) + 1 AS event_end
 		FROM (
 		SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
-		) gb WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
+		) gb WHERE TO_CHAR(sysdate, 'YYYY-MM-DD') = TO_CHAR("thisyear_bd", 'YYYY-MM-DD');
+--) gb WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
+      END;
 
+
+UPDATE GUEST SET GUEST_BIRTHDAY = to_date('11-03', 'MM-dd') WHERE GUEST_ID = 'test';
 	
 SELECT * FROM event;
 -- 모든 테스트 회원에게 오픈 기념 쿠폰 발행 -> 가입시 자동했음

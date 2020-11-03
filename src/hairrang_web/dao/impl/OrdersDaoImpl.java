@@ -7,9 +7,13 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import hairrang_web.dao.DesignerDao;
+import hairrang_web.dao.GuestDao;
+import hairrang_web.dao.HairDao;
 import hairrang_web.dao.OrdersDao;
 import hairrang_web.ds.JndiDs;
 import hairrang_web.dto.Booking;
+import hairrang_web.dto.BookingHairs;
 import hairrang_web.dto.Coupon;
 import hairrang_web.dto.Designer;
 import hairrang_web.dto.Event;
@@ -287,6 +291,70 @@ public class OrdersDaoImpl implements OrdersDao {
 		}
 		
 		return null;
+	}
+	
+	
+//마이페이지///////////////////////////////////////////////////////////////////////////////////////////////	
+
+	@Override
+	public ArrayList<Orders> pagingOrdersListById(Paging paging, String id) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM ORDERS WHERE GUEST_ID = ? ORDER BY ORDERS_NO desc) a) "
+				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, id);
+			pstmt.setInt(2, paging.getStart());
+			pstmt.setInt(3, paging.getEnd());
+			try(ResultSet rs = pstmt.executeQuery()){
+					if(rs.next()) {		
+						ArrayList<Orders> list = new ArrayList<Orders>();
+							//ORDERS_NO,ORDERS_DATE,DE_NO,GUEST_ID,ORDERS_TOTAL_PRICE
+						
+						do{ 
+							Orders orders = new Orders();
+							DesignerDao dDao = DesignerDaoImpl.getInstance();
+							GuestDao gDao = GuestDaoImpl.getInstance();
+							HairDao hDao = HairDaoImpl.getInstance();
+							
+							int ordersNo = rs.getInt("ORDERS_NO");
+							orders.setOrdersNo(ordersNo);
+							orders.setOrdersDate(rs.getTimestamp("ORDERS_DATE").toLocalDateTime());
+							orders.setDesigner(dDao.selectDesignerByNo(new Designer(rs.getInt("DE_NO"))));
+							orders.setGuest(gDao.selectGuestById(new Guest(rs.getString("GUEST_ID"))));
+							orders.setOrdersTotalPrice(rs.getInt("ORDERS_TOTAL_PRICE"));
+								
+							ArrayList<OrderDetail> odList = selectOrderDetailsByOrdersNo(ordersNo);
+							orders.setOdList(odList);
+								
+							list.add(orders);
+						}while (rs.next());
+						return list;
+					}
+				}
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+			return null;
+		}
+				
+				
+
+	@Override
+	public int countOrdersById(String id) {
+		String sql = "SELECT COUNT(*) FROM (SELECT orders_no FROM ORDERS WHERE guest_id = ?)";
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)){
+			pstmt.setString(1, id);
+				try (ResultSet rs = pstmt.executeQuery()) {
+					if (rs.next()) {
+						return rs.getInt(1);
+					}
+				}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return 0;
 	}
 	
 }
