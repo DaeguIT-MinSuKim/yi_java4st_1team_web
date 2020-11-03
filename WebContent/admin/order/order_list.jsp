@@ -31,8 +31,25 @@
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 
 				<!-- 테이블 상단 필터링 시작 -->
-				<form action="orderList.do" name="searchForm">
-				
+				<form  autocomplete="off" action="orderList.do" name="searchForm">
+				<div class="row m-0 mb-2 mb-3">
+					<div class="col-sm-12 col-md-12 p-0">
+						<div class="form-inline justify-content-center">
+							<i class="far fa-calendar-alt mr-3" style="font-size: 22px;"></i>
+							<div class="input-group input-group-sm mr-3">
+								<div class="input-group-prepend">
+									<input type="text" class="form-control" id="startDate" name="startDate" style="width: 120px;" placeholder="시작일">
+								</div>
+								<div class="input-group-prepend">
+									<label class="input-group-text">~</label>
+								</div>
+									<input type="text" class="form-control" id="endDate" name="endDate" style="width: 120px;" placeholder="종료일">
+							</div>
+							<button type="submit" class="form-control btn-primary" id="dateBtn">조회</button>
+						</div>
+					</div>
+				</div>
+				<hr>
 				<div class="row m-0 mb-2">
 					<div class="col-sm-12 col-md-6 p-0">
 						<div class="dataTables_length form-inline" id="dataTable_length">

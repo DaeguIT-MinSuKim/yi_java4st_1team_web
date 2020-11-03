@@ -13,7 +13,43 @@ $(function() {
 		});
 
 		setFilteringPaging();
+		
+		$("#startDate").datepicker({
+			format: "yyyy-mm-dd",
+			language: "ko",
+			todayBtn: "linked",
+			clearBtn: true
+		});
+		
+		$("#endDate").datepicker({
+			format: "yyyy-mm-dd",
+			language: "ko",
+			todayBtn: "linked",
+			clearBtn: true
+		});
+		
+		$("#todayBtn").click(function() {
+			$("#startDate").val();
+			$("#endDate").val();
+		})
+		
+		$("#aWeekBtn").click(function() {
+		})
+		
+		$("#twoWeeksBtn").click(function() {
+			
+		})
+		
+		$("#aMonthBtn").click(function() {
+			
+		})
 	});
+	
+	
+	function setDateDuration(startDate, endDate) {
+		
+	}
+	
 	
 	function setFilteringPaging() {
 		var thisUrlStr = window.location.href;
@@ -27,12 +63,26 @@ $(function() {
 		if(cntPerPage != null) {
 			$("select[name=cntPerPage]").val(cntPerPage);
 		}
-		if(where.length != 0) {
+		if(!where) {
+		} else if(where.length != 0) {
 			$("select[name=where]").val(where);
 			$("input[name=query]").val(query);
 		}
-		if(designer.length != 0) {
+		if(!sorter) {
+		} else if (sorter.length != 0) {
+			$("select[name=sorter]").val(sorter);
+		}
+		if(!designer) {
+		} else if(designer.length != 0) {
 			$("select[name=designer]").val(designer);
+		}
+		if(!startDate) {
+		} else if(startDate.length != 0) {
+			$("select[name=startDate]").val(startDate);
+		}
+		if(!endDate) {
+		} else if(endDate.length != 0) {
+			$("select[name=endDate]").val(endDate);
 		}
 	}
 	
