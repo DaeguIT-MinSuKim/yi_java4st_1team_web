@@ -34,8 +34,6 @@ public class AdminOrderListHandler implements Command {
 		if(request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println(getClass().getSimpleName() + ">> GET");
 			
-			System.out.println("> 파라미터 확인");
-			
 			Paging paging = new Paging();
 			
 			String nowPage = request.getParameter("nowPage");
@@ -77,7 +75,6 @@ public class AdminOrderListHandler implements Command {
 			request.setAttribute("nowPage", Integer.parseInt(nowPage));
 			request.setAttribute("cntPerPage", Integer.parseInt(cntPerPage));
 			request.setAttribute("paging", paging);
-			System.out.println(paging);
 			
 			ArrayList<Orders> list = oService.getOrdersListBySearch(paging, where, query, designer);
 			request.setAttribute("list", list);

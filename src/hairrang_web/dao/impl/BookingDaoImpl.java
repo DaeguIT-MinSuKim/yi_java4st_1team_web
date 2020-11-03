@@ -801,7 +801,6 @@ public class BookingDaoImpl implements BookingDao {
 			cnt++;
 		}
 		
-		System.out.println("완성된 쿼리" + sql);
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
@@ -884,7 +883,6 @@ public class BookingDaoImpl implements BookingDao {
 		
 		sql += " ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
 		
-		System.out.println("완성된 sql + " + sql);
 		try (Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, paging.getStart());

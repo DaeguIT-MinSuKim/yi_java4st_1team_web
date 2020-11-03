@@ -43,10 +43,8 @@ public class AdminLoginCheckFilter implements Filter {
 						isLogin = true;
 					} 
 				}
-				System.out.println("1");
 				if (isLogin == false) {
 					hResponse.sendRedirect("login.do");
-					System.out.println("2");
 					return;
 				}
 			}
@@ -56,7 +54,6 @@ public class AdminLoginCheckFilter implements Filter {
 			if(hRequest.getMethod().equalsIgnoreCase("POST")) {
 			}
 		}
-		System.out.println("3");
 		chain.doFilter(request, response);
 	}
 

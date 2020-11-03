@@ -241,8 +241,6 @@ function setBookingData(){
 
 function setBookingData_return(data){
     selBooking = data;
-    console.log("예약 정보");
-    console.log(data);
 }
 
 function setBookingInfoDiv() {
@@ -349,7 +347,6 @@ function loadCouponList(guestId) {
 		},
 		error: function(error) {
 			alert("쿠폰 리스트를 불러오는데 실패했습니다.");
-			console.log(error.responseText);
 		}
 	});
 }
@@ -422,7 +419,6 @@ $(document).on("click", "#guestSerachModalOpenBtn", function() {
 });
 
 $(document).on("click", "#bookingSerchModalOpenBtn", function() {
-	console.log(selectedBookingNo);
 	if(!selectedBookingNo) {
 		$("#todayBookingTable .table-primary").removeClass("table-primary");
 	}
@@ -447,7 +443,6 @@ function loadGuestSearchTable(target, data) {
 	var paging = data.paging;
 	
 	var dataArr = "";
-	console.log(data.guestList);
 	
 	if(data.guestList == null) {
 		dataArr += "<tr><td colspan='4'>조건에 부합하는 검색 결과가 존재하지 않습니다.</td></tr>";
@@ -561,9 +556,6 @@ $(document).on("click", "#orderRegBtn", function() {
 		order: order
 	};
 	
-	console.log(info);
-	alert(JSON.stringify(info));
-	/*
 	$.ajax({
 		url: "orderRegister.do",
 		type: "post",
@@ -572,18 +564,17 @@ $(document).on("click", "#orderRegBtn", function() {
 		success: function(data) {
 			if(data != 0) {
 				alert("주문이 등록되었습니다.");
-				location.href="orderList.do";
-//				location.href="orderDetail.do?no="+data;
+//				location.href="orderList.do";
+				location.href="orderDetail.do?no="+data;
 			} else {
 				console.log(data);
 			}
 		},
 		error: function(error) {
-			console.log(error)
 			alert("주문 등록에 실패했습니다.");
 		}
 	});
-	*/
+	
 });
 
 /* 주문등록 버튼 클릭 시 input 값들 다 읽어오기 */
