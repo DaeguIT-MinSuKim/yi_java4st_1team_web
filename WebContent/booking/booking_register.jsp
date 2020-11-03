@@ -3,8 +3,8 @@
 <script src="booking/booking_register.js"></script>
 	<div class="book_wrapper" style="width: 840px; margin: 0 auto;">
 		<form name="bookForm">
-			<p style="font-size:30px; text-align:center;">예약 등록</p>
-			<h4 style="text-align:center;">방문일 당일 예약은 어렵습니다. (예약일로부터 최소 1일 전 예약 가능)</h4>
+			<p style="font-size:30px; text-align:center; margin: 1.2em;">예약 등록</p>
+			<h4 style="text-align:center;">당일 예약은 어렵습니다. (내일부터 한 달간 예약 가능)</h4>
 			<hr>
 			<div style="border-top: 1px solid lightgray; border-bottom: 1px solid lightgray; padding: 20px 20px;">
 				<div style="width: 360px; display: inline-block; border-right: 1px solid lightgray;">
