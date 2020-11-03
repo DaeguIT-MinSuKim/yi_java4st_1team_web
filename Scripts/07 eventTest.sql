@@ -68,3 +68,4 @@ SELECT * FROM DESIGNER;
 SELECT * FROM EVENT where not event_no = 1 AND EVENT_STATUS = 's' ORDER BY EVENT_NO DESC;
 SELECT * FROM EVENT;
 UPDATE event SET EVENT_PIC = 'open_event.jpg' WHERE event_no = 2;
+

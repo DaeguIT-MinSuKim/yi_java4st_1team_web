@@ -12,9 +12,8 @@
 
 
 <div class="book_wrapper">
-<h3 style="text-align:center; padding:20px; margin-bottom:50px;">ORDER</h3>
+<h3 style="text-align:center; padding:20px; margin-bottom:50px;">MY ORDER</h3>
 
-${list}
 <table id="board">
 	<tr>
 		<th>번호</th> <th>주문날짜</th> <th>시술 정보</th> <th>디자이너</th> <th>총 금액</th>
@@ -26,7 +25,7 @@ ${list}
 	</c:choose>
 	
 	<c:forEach var="orders" items="${list}" varStatus="status">
- 	<tr onclick="location.href='guestBookDetail.do?bookNo=${booking.bookNo}'" style="cursor:pointer;" class="mypage_title">
+ 	<tr onclick="location.href='guestOrderDetail.do?orderNo=${orders.ordersNo}'" style="cursor:pointer;" class="mypage_title">
  		<td class="book_index"> ${total - ((paging.nowPage-1) * cnt + status.index)}
  		<input type="hidden" value="${orders.ordersNo}" name="ordersNo">
  		</td>
@@ -35,24 +34,17 @@ ${list}
 			<fmt:formatDate value="${date}" pattern="yyyy-MM-dd HH:mm" />
 		</td>
 		<td class="book_name">
-			${orders.odList}
-				<%-- <c:if test="${order.odList.size() == 1}">
+		
+			<c:if test="${orders.odList.size() == 1}">
 				${orders.odList.get(0).hair.hairName}
 			</c:if>
-			<c:if test="${order.odList.size() != 1}">
-			${orders.odList.get(0).hair.hairName} 외  ${fn:length(orders.odList)-1}건
-			</c:if>  --%>
+			<c:if test="${orders.odList.size() != 1}">
+				${orders.odList.get(0).hair.hairName} 외  ${fn:length(orders.odList)-1}건
+			</c:if>
 		</td>
 		<td>${orders.designer.deNickname }</td>
 		<td class="book_price">
-			${prices }
-			<%-- <c:set var="pSum" value="0" />
-			<c:forEach items="${orders.odList}" var="o">
-				<c:set var="pSum" value="${pSum}+${o.hair.hairPrice }*${h.quantity }" />
-			</c:forEach>
-			${pSum }
-			<fmt:formatNumber value="${pSum}" type="currency"/>
-			<fmt:formatNumber value="${pp.get(status.index)}" pattern="#,###" /> --%>
+			<fmt:formatNumber value="${orders.ordersTotalPrice}" pattern="#,###" /> 
 		</td>
 	</tr>
 	</c:forEach>
@@ -68,7 +60,7 @@ ${list}
 						<!-- << -->
 						<c:if test="${paging.startPage != 1}">
 							<div class="paging-line">
-							<a href="guestBook.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
+							<a href="guestOrder.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
 								<i class="fas fa-angle-double-left"></i>
 							</a>
 							</div>
@@ -84,7 +76,7 @@ ${list}
 						<c:choose>
 							<c:when test="${paging.nowPage != 1}">
 								<div class="paging-line">
-									<a href="guestBook.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
+									<a href="guestOrder.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == 1}">
@@ -105,7 +97,7 @@ ${list}
 								</c:when>
 								<c:when test="${p != paging.nowPage }">
 									<div class="paging-line">
-									<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+									<a href="guestOrder.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
 									${p}</a></div>
 								</c:when>
 							</c:choose>
@@ -117,7 +109,7 @@ ${list}
 						<c:choose>
 							<c:when test="${paging.nowPage != paging.lastPage}">
 								<div class="paging-line">
-									<a href="guestBook.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
+									<a href="guestOrder.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == paging.lastPage}">
@@ -133,7 +125,7 @@ ${list}
 					
 						<c:if test="${paging.endPage != paging.lastPage }">
 							<div class="paging-line">
-							<a href="guestBook.do?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">
+							<a href="guestOrder.do?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">
 							<i class="fas fa-angle-double-right"></i></a>
 							</div>
 						</c:if>

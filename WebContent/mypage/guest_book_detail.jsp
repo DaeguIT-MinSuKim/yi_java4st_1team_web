@@ -11,7 +11,7 @@
 <form method="post" name="formm" action="guestBookCandel.do">
 
 <div class="book_detail_wrapper">
-<p>예약 정보</p>
+<p class="tcenter" style="font-weight:bold">예약 정보</p>
 <table class="book_detail_info">
 	<tr style="border-top:1px solid #e4e4e4;">
 		<td>예약 번호</td><td class="border-left-line">${booking.bookNo} 
@@ -47,7 +47,7 @@
 
 <br><br>
 
-<p>시술 정보</p>
+<p class="tcenter" style="font-weight:bold">시술 정보</p>
 <table class="book_hair_info">
 
 	<tr style="text-align:center;">

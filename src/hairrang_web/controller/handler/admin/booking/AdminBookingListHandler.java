@@ -31,8 +31,6 @@ public class AdminBookingListHandler implements Command {
 		if(request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println(getClass().getSimpleName() + ">> GET");
 			
-			System.out.println("> 파라미터 확인");
-			
 			Paging paging = new Paging();
 			
 			String nowPage = request.getParameter("nowPage");
@@ -43,9 +41,6 @@ public class AdminBookingListHandler implements Command {
 			String designer = request.getParameter("designer");
 			String startDate = request.getParameter("startDate");
 			String endDate = request.getParameter("endDate");
-			
-			System.out.println(startDate);
-			System.out.println(endDate);
 			
 			if (where != null && query != null) {
 				if(!where.trim().equals("") && !query.trim().equals("") ) {
@@ -80,7 +75,6 @@ public class AdminBookingListHandler implements Command {
 			request.setAttribute("nowPage", Integer.parseInt(nowPage));
 			request.setAttribute("cntPerPage", Integer.parseInt(cntPerPage));
 			request.setAttribute("paging", paging);
-			System.out.println(paging);
 			
 			ArrayList<Booking> list = bService.getBookingListBySearch(paging, where, query, sorter, designer, startDate, endDate);
 			request.setAttribute("list", list);

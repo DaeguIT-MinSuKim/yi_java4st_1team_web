@@ -29,7 +29,10 @@ public class GuestBookDetailHandler implements Command {
 			
 			// 파라미터 없이 직접 접근한 경우 guestBook 화면으로 리디렉션
 			if(bookNoStr == null) {
-				response.sendRedirect("guestBook.do");
+				response.setContentType("text/html; charset=UTF-8;");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('잘못된 접근입니다');location.href='guestBook.do';</script>");
+				out.flush();
 				return null;
 			}
 			

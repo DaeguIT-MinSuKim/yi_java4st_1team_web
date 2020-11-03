@@ -81,7 +81,7 @@
 								<select name="designer" aria-controls="dataTable" class="custom-select custom-select-sm">
 									<option selected value="">전체</option>
 									<c:forEach var="de" items="${ dList}">
-										<option value="${de.deNo }">${de.deNickname } ${de.deLevel } (${de.deName }) </option>
+										<option value="${de.deNo }">${de.deNickname } ${de.deLevel }</option>
 									</c:forEach>
 								</select>
 							</div>

@@ -20,7 +20,7 @@ public class EventHomeHandler implements Command {
 		String url = "event/eventHome.jsp";
 		
 		//디비에서 이벤트 정보 받아오기
-		ArrayList<Event> list = service.selectEventAll();
+		ArrayList<Event> list = service.selectEventAllForBoard();
 		request.setAttribute("list", list);
 		return url;
 	}

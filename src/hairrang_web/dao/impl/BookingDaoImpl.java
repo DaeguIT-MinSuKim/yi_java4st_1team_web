@@ -77,7 +77,7 @@ public class BookingDaoImpl implements BookingDao {
 	
 	private BookingHairs getSimpleBookingHairs(ResultSet rs) throws SQLException {
 		// BOOK_NO,HAIR_NO,HAIR_NAME,HAIR_PRICE,KIND_NO,HAIR_QUANTITY
-		Hair hair = new Hair(rs.getInt("BOOK_NO"));
+		Hair hair = new Hair(rs.getInt("HAIR_NO"));
 		hair.setHairName(rs.getString("HAIR_NAME"));
 		hair.setHairPrice(rs.getInt("hair_price"));
 		int quantity = rs.getInt("HAIR_QUANTITY");
@@ -801,7 +801,6 @@ public class BookingDaoImpl implements BookingDao {
 			cnt++;
 		}
 		
-		System.out.println("완성된 쿼리" + sql);
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
@@ -884,7 +883,6 @@ public class BookingDaoImpl implements BookingDao {
 		
 		sql += " ORDER BY book_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
 		
-		System.out.println("완성된 sql + " + sql);
 		try (Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, paging.getStart());

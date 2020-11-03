@@ -59,14 +59,17 @@ public class OrdersService {
 				"LEFT OUTER JOIN (SELECT coupon_id, event_salerate, 0 AS fake FROM coupon_view WHERE coupon_id = ? AND GUEST_ID = ?) USING(fake)"; 
 		String bSql = "UPDATE BOOKING SET BOOK_STATUS = 2 WHERE BOOK_NO = ? ";
 		String tpSql = "UPDATE orders SET orders_total_price = (SELECT SUM(OD_PRICE*OD_QUANTITY-NVL(OD_DISCOUNT, 0)) FROM ORDER_DETAIL od WHERE orders_no = ?) WHERE orders_no = ?";
+		String cSql = "UPDATE COPUON SET USED_YN = 'y' WHERE COUPON_ID = ?";
 		
 		Connection con = null;
 		PreparedStatement oPstmt = null;
 		PreparedStatement odPstmt = null;
 		PreparedStatement bPstmt = null;
 		PreparedStatement tpPstmt = null;
+		PreparedStatement cPstmt = null;
 		
 		int ordersNo = 0;
+		int couponId = 0;
 		System.out.println("orderService insert");
 		System.out.println(orders);
 		
@@ -94,6 +97,7 @@ public class OrdersService {
 				if(od.getCoupon() != null) {
 					if(od.getCoupon().getCouponId() == 0) {
 						odPstmt.setInt(4, od.getCoupon().getCouponId());
+						couponId = od.getCoupon().getCouponId();
 					}
 					odPstmt.setString(4, null);
 				} else {
@@ -120,6 +124,12 @@ public class OrdersService {
 			
 			tpPstmt.executeUpdate();
 			
+			if (couponId != 0) {
+				cPstmt = con.prepareStatement(cSql);
+				cPstmt.setInt(1, couponId);
+				cPstmt.executeUpdate();
+			}
+			
 		} catch (SQLException e) {
 			rollbackUtil(con, e);
 			/*for(int i = 0; i < backSql.length; i++) {
@@ -132,7 +142,7 @@ public class OrdersService {
 			}*/
 			ordersNo = 0;
 		} finally {
-			closeUtil(con, oPstmt, odPstmt);
+			closeUtil(con, oPstmt, odPstmt, tpPstmt, cPstmt);
 		}
 		
 		return ordersNo;
@@ -148,14 +158,13 @@ public class OrdersService {
         }
     }
 
-    private void closeUtil(Connection con, PreparedStatement dPstmt, PreparedStatement tPstmt) {
+    private void closeUtil(Connection con, PreparedStatement...pstmt) {
         try {
-            if (dPstmt != null) {
-                dPstmt.close();
-            }
-            if (tPstmt != null) {
-                tPstmt.close();
-            }
+         	for(PreparedStatement p:pstmt) {
+         		if(p != null) {
+         			p.close();
+         		}
+         	}
             if (con != null) {
                 con.setAutoCommit(true);
                 con.close();

@@ -59,16 +59,16 @@ $(document).ready(function() {
 <c:choose>
 	<c:when test="${message == -1}">
 	 	<script>
-	          alert('예약내역이 없음')
+	          alert('현재 비밀번호가 맞지않습니다.')
 	          history.go(-1);
 	    </script>
 	</c:when>
-	<%-- <c:when test="${message == -2}">
+	<c:when test="${message == -2}">
 	 	<script>
 	          alert('로그인이 필요합니다.')
 	          location.href="login.do";
 	    </script>
-	</c:when> --%>
+	</c:when>
 </c:choose>
 
 <div class="info_submenu">

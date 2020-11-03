@@ -48,6 +48,7 @@ div.content {}
 </style>
 <body>
 <div class="de_wrapper">
+<h3 style="text-align:center; padding:20px; margin-bottom:50px;">DESIGNERS</h3>
 <div class="de_sub_wrapper">
 <div style=" width:1200px; margin-left:30px;">
 
