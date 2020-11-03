@@ -52,19 +52,24 @@ SELECT * FROM hair;
 SELECT * FROM guest;
 
 /* event */
+SELECT * FROM event;
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
-VALUES ('생일을 축하드립니다.', 0.2, NULL, NULL, NULL, '생일로부터 10일 전후 동안만 사용할 수 있습니다.');
+VALUES ('생일 쿠폰', 0.2, sysdate, NULL, NULL, '생일로부터 10일 전후 동안만 사용할 수 있습니다.');
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
-VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-11-01', 'YYYY-MM-DD'), to_date('2020-12-01', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사');
+VALUES ('오픈 기념 쿠폰', 0.1, NULL, NULL, 'open_event.jpg', '가입한 날짜로부터 30일 이내에 사용가능합니다.');
+/*
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
 VALUES ('테스트', 0.2, to_date('2020-11-15', 'YYYY-MM-DD'), to_date('2020-11-20', 'YYYY-MM-DD') + - 1 / (24*60*60) + 1, NULL, '테스트');
+*/
+
+UPDATE event SET EVENT_START = to_date('2020-11-01','yyyy-MM-dd'), EVENT_END = to_date('9999-12-30','yyyy-MM-dd') WHERE event_no = 1;
 
 --생일쿠폰 테스트할 고객
 --job에 이벤트번호 생일쿠폰으로 수정하시오
 INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
-VALUES('test111', 'tt123', '테스트유저', to_date('19921102', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
+VALUES('test111', 'tt123', '테스트유저', to_date('19921103', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
 
---생일인 사람 쿠폰 모두 삽입
+--생일인 사람 쿠폰 수동 삽입
 INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
 		SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
 		FROM (
@@ -72,16 +77,19 @@ INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
 		) gb WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
 
 	
-	
--- 모든 회원에게 오픈 기념 쿠폰 발행
-INSERT INTO coupon(guest_id, event_no, event_start, event_end, used_yn) 
-SELECT 'test', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
-INSERT INTO coupon(guest_id, event_no, event_start, event_end, used_yn) 
-SELECT 'abcd', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
-INSERT INTO coupon(guest_id, event_no, event_start, event_end, used_yn) 
-SELECT 'test4321', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
+SELECT * FROM COUPON;
+
+SELECT * FROM event;
+-- 모든 테스트 회원에게 오픈 기념 쿠폰 발행 -> 가입시 자동했음
+INSERT INTO coupon(guest_id, event_no, event_start, event_end) 
+SELECT 'test', event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 FROM event WHERE event_no = 2;
+INSERT INTO coupon(guest_id, event_no, event_start, event_end) 
+SELECT 'test4321', event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 FROM event WHERE event_no = 2;
+INSERT INTO coupon(guest_id, event_no, event_start, event_end) 
+SELECT 'abcd', event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 FROM event WHERE event_no = 2;
 
 
+DELETE FROM COUPON;
 /* designer */
 
 SELECT * FROM DESIGNER;

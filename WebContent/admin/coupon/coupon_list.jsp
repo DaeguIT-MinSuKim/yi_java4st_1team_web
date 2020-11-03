@@ -86,7 +86,7 @@ function tableChange(){
 				<table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th style="width:10px;"></th>
+							<!-- <th style="width:10px;"></th> -->
 							<th>발급번호</th>
 							<th>아이디</th>
 							<th>이벤트번호</th>
@@ -95,7 +95,7 @@ function tableChange(){
 							<th>시작일</th>
 							<th>종료일</th>
 							<th>사용여부</th>
-							<th></th>
+							
 						</tr>
 					</thead>
 					<tbody>
@@ -103,7 +103,7 @@ function tableChange(){
 						<c:forEach var="c" items="${list}" varStatus="status">
 						<tr>
 						<%--<td><input type="checkbox" name="check" value="${guest.guestId}"></td> --%>
-							<td style="width:20px;"> ${total - ((paging.nowPage-1) * cnt + status.index)}</td>
+							<%-- <td style="width:20px;"> ${total - ((paging.nowPage-1) * cnt + status.index)}</td> --%>
 							<td style="width:100px;">${c.couponId}</td>
 							<td style="width:50px;">${c.guest.guestId}</td>
 							<td style="width:50px;">${c.event.eventNo}</td>
@@ -128,9 +128,9 @@ function tableChange(){
 								</c:choose>
 							</td>
 				
-							<td style="width:80px;">
+							<%-- <td style="width:80px;">
 								<input type="button" value="삭제" id="btn_delete" guestId="${guest.guestId}" class="btn btn-danger btn-sm">
-							</td>
+							</td> --%>
 						</tr>
 						
 						</c:forEach>

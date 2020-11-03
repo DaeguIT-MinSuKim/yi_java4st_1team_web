@@ -96,8 +96,7 @@ public class GuestDaoImpl implements GuestDao {
 
 	@Override
 	public int insertGuest(Guest guest) {
-		String sql = "INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, INFO_YN) VALUES"
-				+ "(?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO guest(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, INFO_YN) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, guest.getGuestId());

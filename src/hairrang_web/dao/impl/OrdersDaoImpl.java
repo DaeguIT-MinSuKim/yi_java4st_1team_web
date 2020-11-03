@@ -69,7 +69,7 @@ public class OrdersDaoImpl implements OrdersDao {
 
 	@Override
 	public ArrayList<Orders> selectOrdersByGuest(Guest guest) {
-		String sql = "SELECT * FROM ORDERS BY GUEST_ID = ? ORDER BY ORDERS_NO DESC";
+		String sql = "SELECT * FROM ORDERS WHERE GUEST_ID = ? ORDER BY ORDERS_NO DESC";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
