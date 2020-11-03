@@ -78,15 +78,18 @@ public class OrdersService {
 			odPstmt = con.prepareStatement(odSql);
 			
 			for(OrderDetail od : orders.getOdList()) {
-//				odPstmt.setInt(1, ordersNo);
-				odPstmt.setInt(1, od.getOdQuantity());
-				odPstmt.setInt(2, od.getHair().getHairNo());
+				odPstmt.setInt(1, ordersNo);
+				odPstmt.setInt(2, od.getOdQuantity());
+				odPstmt.setInt(3, od.getHair().getHairNo());
 				if(od.getCoupon() != null) {
-					odPstmt.setInt(3, od.getCoupon().getCouponId());
+					if(od.getCoupon().getCouponId() == 0) {
+						odPstmt.setInt(4, od.getCoupon().getCouponId());
+					}
+					odPstmt.setString(4, null);
 				} else {
-					odPstmt.setString(3, null);
+					odPstmt.setString(4, null);
 				}
-				odPstmt.setString(4, guestId);
+				odPstmt.setString(5, guestId);
 				odPstmt.executeUpdate();
 			}
 			

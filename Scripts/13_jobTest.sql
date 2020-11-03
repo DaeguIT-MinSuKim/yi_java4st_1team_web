@@ -112,7 +112,7 @@ BEGIN
    (
    JOB => X
    , WHAT => 'UPDATE_JOB_BIRTHDAY_COUPON;' -- 등록할 프로시저 명 넣어주기 (마지막에 꼭 ; 넣어주기. job 실행하면서 에러 날 수 있음)
-   , NEXT_DATE => SYSDATE -- 현재시각부터 바로 시작
+   , NEXT_DATE => SYSDATE -- 현재시각부터 바로 시작 : 지금 한번 들어감
    , INTERVAL => 'SYSDATE + 1' -- 3초 간격으로 실행
    , NO_PARSE => TRUE
    );
@@ -147,7 +147,7 @@ END;
 
 -- 등록되어 있는 JOB 삭제
 BEGIN
-   DBMS_JOB.REMOVE(24);
+   DBMS_JOB.REMOVE(72);
    COMMIT;
 END;
 
