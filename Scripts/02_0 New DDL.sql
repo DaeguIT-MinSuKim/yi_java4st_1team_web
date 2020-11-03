@@ -275,9 +275,13 @@ CREATE TABLE NOTICE (
 	notice_title varchar2(100), /*공지제목*/
 	notice_content varchar2(1000), /*공지내용*/
 	notice_delYn char(1) DEFAULT 'n', /*삭제여부*/
-	notice_file varchar2(1000)	/*첨부파일 경로*/
+	notice_file varchar2(1000),	/*첨부파일 경로*/
+	notice_regDate DATE DEFAULT sysdate
 );
 
+
+--notice Date
+--ALTER TABLE notice ADD notice_regDate DATE DEFAULT sysdate ;
 /*첨부파일 경로*/
 ALTER TABLE notice ADD notice_file varchar2(1000);
 /*삭제여부 추가*/

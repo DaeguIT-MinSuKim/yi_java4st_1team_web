@@ -66,7 +66,7 @@ function tableChange(){
 				</div>
 				<div style="float:right; padding:5px;">
 				<ul>
-					<li class="btn-info btn-sm" style="width: 80px; display: inline;">사용가능</li>
+					<li class="btn-info btn-sm" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&no=${no}&status=${status}' ">사용가능</li>
 					<li class="btn-warning btn-sm" style="width: 80px; display: inline;">대기중</li>
 					<li class="btn-secondary btn-sm" style="width: 80px; display: inline;">사용완료</li>
 					<li class="btn-dark btn-sm" style="width: 80px; display: inline;">기간만료</li>
@@ -137,7 +137,7 @@ function tableChange(){
 					</tbody>
 				</table>
 				<!-- 테이블 끝 -->
-			<input type="button" value="쿠폰 등록" class="btn btn-info btn-sm" style="float:left;" onclick="location.href='couponAdd.do' ">
+			<!-- <input type="button" value="쿠폰 등록" class="btn btn-info btn-sm" style="float:left;" onclick="location.href='couponAdd.do' "> -->
 	
 					<!-- 페이징 시작 -->
 					

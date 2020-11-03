@@ -10,12 +10,8 @@
 		<br> <img alt="" src="${findEvent.eventPic }"><br>
 		<br> ${findEvent.eventContent }
 	</div>
-	
-	
-	
-	
-	
-	
+
+
 	<br><br><br><br>
 	<div style="display: block; text-align: center;">
 		<c:forEach items="${list }" var="event">

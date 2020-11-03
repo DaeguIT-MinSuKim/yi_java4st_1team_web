@@ -53,7 +53,7 @@ SELECT * FROM guest;
 
 /* event */
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
-VALUES ('생일', 0.2, NULL, NULL, NULL, '생일로부터 10일 전후 동안만 사용할 수 있습니다.');
+VALUES ('생일을 축하드립니다.', 0.2, NULL, NULL, NULL, '생일로부터 10일 전후 동안만 사용할 수 있습니다.');
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
 VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-11-01', 'YYYY-MM-DD'), to_date('2020-12-01', 'YYYY-MM-DD'), NULL, '오픈 기념 10% 할인 행사');
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
@@ -64,15 +64,33 @@ VALUES ('테스트', 0.2, to_date('2020-11-15', 'YYYY-MM-DD'), to_date('2020-11-
 INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
 VALUES('test111', 'tt123', '테스트유저', to_date('19921102', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
 
+--생일인 사람 쿠폰 모두 삽입
+INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
+		SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
+		FROM (
+		SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
+		) gb WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
+
+	
+	
+-- 모든 회원에게 오픈 기념 쿠폰 발행
+INSERT INTO coupon(guest_id, event_no, event_start, event_end, used_yn) 
+SELECT 'test', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
+INSERT INTO coupon(guest_id, event_no, event_start, event_end, used_yn) 
+SELECT 'abcd', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
+INSERT INTO coupon(guest_id, event_no, event_start, event_end, used_yn) 
+SELECT 'test4321', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
+
 
 /* designer */
 
 SELECT * FROM DESIGNER;
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('손승완', '웬디', '원장', 'designer/images/wd.jpg','#찰떡스타일링 #정형화되지않은스타일 #얼굴형보완 #내츄럴웨이브 #연예인머리 #컨셉세팅펌');
-INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('배주현', '아이린', '디자이너', 'designer/images/irene.jpg','#내추럴컷 #레이어드컷 #스타일링커트 #루즈컷 #유럽피안컷 #팜므파탈 #손질없이커트만으로멋나는 #얼굴보완컷 #퍼스널컬러디렉팅');
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('강슬기', '슬기', '디자이너', 'designer/images/sk.jpg','#클래식 #고급스러움 #단발머리 #단발컷 #풍성한웨이브 #로맨틱웨이브 #드라마틱볼륨 #글램웨이브 #러블리헤어');
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('김예림', '예리', '디자이너', 'designer/images/yr.jpg','#단발컷 #태슬컷 #내츄럴웨이브펌 #볼륨레이어컷 #볼륨펌');
-INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('박수영', '조이', '스탭', 'designer/images/joy.jpg','#레이어드컷 #단발레이어드컷 #풍성한볼륨 #볼륨매직 #글램웨이브 #긴머리웨이브 #러블리헤어 ');
+INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('박수영', '조이', '디자이너', 'designer/images/joy.jpg','#레이어드컷 #단발레이어드컷 #풍성한볼륨 #볼륨매직 #글램웨이브 #긴머리웨이브 #러블리헤어 ');
+INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('신유나', '유나', '스탭', 'designer/images/yn.jpg','#내추럴컷 #레이어드컷 #스타일링커트 #루즈컷 #유럽피안컷 #팜므파탈 #손질없이커트만으로멋나는 #얼굴보완컷 #퍼스널컬러디렉팅');
+INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('신류진', '류진', '스탭', 'designer/images/rj.jpg','#단발머리 #다채로운단발스타일링 #디자인컷 #커트만으로멋나는단발 #남자컷 #연예인컷 #연예인염색');
 
 
 /* coupon */
@@ -123,14 +141,6 @@ INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HB
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (4,'m3', NULL, 'hair/images/4-3.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (4,'m4', NULL, 'hair/images/4-4.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (4,'m5', NULL, 'hair/images/4-5.jpg', sysdate);
-
--- 모든 회원에게 오픈 기념 쿠폰 발행
-INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, used_yn) 
-SELECT 1, 'test', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
-INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, used_yn) 
-SELECT 2, 'abcd', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
-INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, used_yn) 
-SELECT 3, 'test4321', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
 
 
 
