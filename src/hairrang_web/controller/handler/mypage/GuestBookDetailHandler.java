@@ -48,6 +48,14 @@ public class GuestBookDetailHandler implements Command {
 			}
 			
 			Booking selBooking = bService.getBookingByBookingNo(new Booking(bookNo));
+
+			if(selBooking.getBookStatus() != 1) {
+				response.setContentType("text/html; charset=UTF-8;");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('잘못된 접근입니다. (취소할 수 없는 예약 상태)');location.href='index.do';</script>");
+				out.flush();
+				return null;
+			}
 			
 			int sum= 0;
 			for(BookingHairs hairs:selBooking.getHairList()) {

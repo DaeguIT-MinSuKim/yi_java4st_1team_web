@@ -69,7 +69,9 @@
 <br>
 <div class="tcenter" style="margin-top:50px;">
 	<input type="button" class="button" value="목록보기" onclick="location.href='guestBook.do'">
-	<input type="button" class="button" value="예약취소" onClick="book_cancel()">
+	<c:if test="${booking.bookStatus eq 1}">
+		<input type="button" class="button" value="예약취소" onClick="book_cancel()">
+	</c:if>
 </div>
 </div>
 </form>

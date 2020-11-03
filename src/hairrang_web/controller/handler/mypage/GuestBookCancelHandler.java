@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Booking;
+import hairrang_web.dto.Guest;
+import hairrang_web.service.BookingCancelSendEmail;
 import hairrang_web.service.BookingService;
 
 public class GuestBookCancelHandler implements Command {
@@ -21,12 +23,29 @@ public class GuestBookCancelHandler implements Command {
 			
 		}else {
 			System.out.println("post");
-			System.out.println("오나");
+			
 			int bookNo = Integer.parseInt(request.getParameter("bookNo"));
 			int res = service.updateBookingStatus(new Booking(bookNo));
+			
+			if(res==1) {
+				Booking booking = service.getBookingByBookingNo(new Booking(bookNo));
+				Guest guest = booking.getGuest();
+				
+				try {
+					BookingCancelSendEmail emailThr = new BookingCancelSendEmail();
+					emailThr.setGuest(guest);
+					emailThr.setBooking(booking);
+					
+					Thread t = new Thread(emailThr);
+					t.start();
+				} catch (Exception e) {
+					throw new RuntimeException();
+				}
+			}
+			
 			System.out.println(res);
 			
-			return "/admin/guest/guest_list.jsp";
+			return "guestBook.do";
 		}
 		return null;
 	}
