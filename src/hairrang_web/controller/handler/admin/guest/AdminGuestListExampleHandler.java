@@ -29,51 +29,68 @@ public class AdminGuestListExampleHandler implements Command {
 
 		String nowPage = request.getParameter("nowPage");
 		String cntPerPage = request.getParameter("cntPerPage");
+		String del = null;
+		String where = request.getParameter("opt");
+		String query = request.getParameter("value");
 
-		if (nowPage == null && cntPerPage == null) {
+		if (where != null && query != null) {
+			if(!where.trim().equals("") && !query.trim().equals("") ) {
+				request.setAttribute("opt", where);
+				request.setAttribute("value", query);
+			}
+		} else {
+			where = null;
+			query = null;
+		}
+		
+		if(nowPage == null) {
 			nowPage = "1";
-			cntPerPage = "10";
-		} else if (nowPage == null) {
-			nowPage = "1";
-		} else if (cntPerPage == null) {
-			cntPerPage = "10";
+		}
+		if(cntPerPage == null) {
+			cntPerPage ="10";
 		}
 
-		int total = 0;
-		Paging paging = null;
-		ArrayList<Guest> list = null;
-
-		String opt = request.getParameter("opt"); //0 아이디, 1이름, 2폰번호
-		String value = request.getParameter("value");
 		
-		if(value != null) {
+		int total = 0;
+		Paging paging = new Paging();
+
+		paging.setNowPage(Integer.parseInt(nowPage));
+		paging.setCntPerPage(Integer.parseInt(cntPerPage));
+		
+		paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+		request.setAttribute("nowPage", nowPage);
+		request.setAttribute("cntPerPage", cntPerPage);
+		request.setAttribute("paging", paging);
+		
+		ArrayList<Guest> list = service.selectGuestByCondition(paging, del, where, query);
+
+		/*if(value != null) {
 			value = value.trim();
 		}
-
-//		if (value == null || value == "" || opt.equals("0") || opt == null) {
-//			// 검색 조건이 없는 경우 -> all list
-//			total = service.countGuest();
-//			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-//			list = service.pagingGuestByAll(paging);
-//		} else if (opt.equals("1")) { // 아이디로 검색
-//			total = service.countIdSearch(value);
-//			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-//			list = service.searchGuestById(paging, value);
-//		} else if (opt.equals("2")) {// 이름으로 검색
-//			total = service.countNameSearch(value);
-//			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-//			list = service.searchGuestByName(paging, value);
-//		} else if (opt.equals("3")) { // 폰번호 검색
-//			total = service.countPhoneSearch(value);
-//			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-//			list = service.searchGuestByPhone(paging, value);
-//		}
-
-
+		
+		if (value == null || value == "" || opt.equals("0") || opt == null) {
+			// 검색 조건이 없는 경우 -> all list
+			total = service.countGuest();
+			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+			list = service.pagingGuestByAll(paging);
+		} else if (opt.equals("1")) { // 아이디로 검색
+			total = service.countIdSearch(value);
+			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+			list = service.searchGuestById(paging, value);
+		} else if (opt.equals("2")) {// 이름으로 검색
+			total = service.countNameSearch(value);
+			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+			list = service.searchGuestByName(paging, value);
+		} else if (opt.equals("3")) { // 폰번호 검색
+			total = service.countPhoneSearch(value);
+			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+			list = service.searchGuestByPhone(paging, value);
+		}*/
+		
 		System.out.println("현재 페이지 =>" + nowPage);
 		System.out.println("페이지당 게시물 수 =>" + cntPerPage);
 		System.out.println("총 게시물 갯수 =>" + total);
-
+		
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println(getClass().getSimpleName() + " >> GET");
 			// 페이지 새로고침 되도 무방한 곳

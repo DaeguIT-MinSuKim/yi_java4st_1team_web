@@ -29,10 +29,10 @@ $(function(){
 					<div class="form-group row">
 						<div class="col-sm-3 pr-0">
 							<select class="form-control" id="guestSearchOpt">
-								<option value="0">전체</option>
-								<option value="1">아이디</option>
-								<option value="2">이름</option>
-								<option value="3">연락처</option>
+								<option value="">전체</option>
+								<option value="guestId">아이디</option>
+								<option value="guestName">이름</option>
+								<option value="guesetPhone">연락처</option>
 							</select>
 						</div>
 						<div class="col-sm-7 pr-0">

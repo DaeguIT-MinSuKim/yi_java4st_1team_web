@@ -67,7 +67,7 @@ UPDATE event SET EVENT_START = to_date('2020-11-01','yyyy-MM-dd'), EVENT_END = t
 --생일쿠폰 테스트할 고객
 --job에 이벤트번호 생일쿠폰으로 수정하시오
 INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
-VALUES('test111', 'tt123', '테스트유저', to_date('19921102', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
+VALUES('test111', 'tt123', '테스트유저', to_date('19921103', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
 
 --생일인 사람 쿠폰 수동 삽입
 INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
@@ -79,9 +79,10 @@ INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
 	
 SELECT * FROM COUPON;
 
+SELECT * FROM event;
 -- 모든 테스트 회원에게 오픈 기념 쿠폰 발행 -> 가입시 자동했음
 INSERT INTO coupon(guest_id, event_no, event_start, event_end) 
-SELECT 'test111', event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 FROM event WHERE event_no = 2;
+SELECT 'test', event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 FROM event WHERE event_no = 2;
 INSERT INTO coupon(guest_id, event_no, event_start, event_end) 
 SELECT 'test4321', event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 FROM event WHERE event_no = 2;
 INSERT INTO coupon(guest_id, event_no, event_start, event_end) 

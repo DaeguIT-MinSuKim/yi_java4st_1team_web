@@ -284,9 +284,9 @@ CREATE TABLE NOTICE (
 --notice Date
 --ALTER TABLE notice ADD notice_regDate DATE DEFAULT sysdate ;
 /*첨부파일 경로*/
-ALTER TABLE notice ADD notice_file varchar2(1000);
+--ALTER TABLE notice ADD notice_file varchar2(1000);
 /*삭제여부 추가*/
-ALTER TABLE notice ADD notice_delYn char(1) DEFAULT 'n';
+--ALTER TABLE notice ADD notice_delYn char(1) DEFAULT 'n';
 
 ALTER TABLE NOTICE
 ADD CONSTRAINT PK_NOTICE_NO PRIMARY KEY (notice_no);

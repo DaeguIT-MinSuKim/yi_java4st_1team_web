@@ -21,7 +21,6 @@ SELECT 14, 'test4', event_no, event_start, event_end, 'n' FROM event WHERE event
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
 VALUES ('오픈 기념 쿠폰', 0.1, to_date('2020-11-01', 'YYYY-MM-DD'), to_date('2020-11-30', 'YYYY-MM-DD'), NULL, '오픈 기념 20% 할인 행사');
 
-
 UPDATE event SET USE_YN = 'n' WHERE EVENT_NO = 5;
 
 --생일쿠폰 -> start: 생일로부터 10일전 end: 생일로부터 10일 후 

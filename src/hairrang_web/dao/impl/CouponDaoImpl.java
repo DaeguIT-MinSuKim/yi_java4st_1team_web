@@ -91,7 +91,7 @@ public class CouponDaoImpl implements CouponDao{
 	// 오늘자 사용가능한 쿠폰 보여주기
 	@Override
 	public ArrayList<Coupon> selectAvailableCouponToday(String id) {
-		String sql = "SELECT * FROM coupon WHERE guest_id = ? AND USED_YN = 'n' AND SYSDATE BETWEEN EVENT_START AND EVENT_END";
+		String sql = "SELECT * FROM coupon_view WHERE guest_id = ? AND USED_YN = 'n' AND SYSDATE BETWEEN EVENT_START AND EVENT_END";
 		
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {

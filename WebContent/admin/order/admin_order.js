@@ -347,6 +347,7 @@ function loadCouponList(guestId) {
 		},
 		error: function(error) {
 			alert("쿠폰 리스트를 불러오는데 실패했습니다.");
+			console.log(error.responseText);
 		}
 	});
 }
