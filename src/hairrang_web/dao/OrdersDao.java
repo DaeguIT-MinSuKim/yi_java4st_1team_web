@@ -31,4 +31,11 @@ public interface OrdersDao {
 	ArrayList<Orders> selectOrdersByCondition(Paging paging, String where, String query, String sorter);
 	
 	// int, update, delete는 트랜잭션 적용으로 service에서 구현.
+	
+	//마이페이지
+	ArrayList<Orders> pagingOrdersListById(Paging paging, String id);
+	int countOrdersById(String id);
+
+	
+	
 }
