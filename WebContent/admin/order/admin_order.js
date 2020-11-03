@@ -241,6 +241,8 @@ function setBookingData(){
 
 function setBookingData_return(data){
     selBooking = data;
+    console.log("예약 정보");
+    console.log(data);
 }
 
 function setBookingInfoDiv() {
@@ -393,8 +395,6 @@ function searchGuest(nowPage, opt, value) {
 			value: value
 		},
 		success: function(data) {
-			console.log(data.guestList);
-			console.log(data.paging);
 			loadGuestSearchTable($("#guestSearchTable tbody"), data);
 		},
 		error: function(error) {
@@ -561,7 +561,9 @@ $(document).on("click", "#orderRegBtn", function() {
 		order: order
 	};
 	
+	console.log(info);
 	alert(JSON.stringify(info));
+	/*
 	$.ajax({
 		url: "orderRegister.do",
 		type: "post",
@@ -581,6 +583,7 @@ $(document).on("click", "#orderRegBtn", function() {
 			alert("주문 등록에 실패했습니다.");
 		}
 	});
+	*/
 });
 
 /* 주문등록 버튼 클릭 시 input 값들 다 읽어오기 */

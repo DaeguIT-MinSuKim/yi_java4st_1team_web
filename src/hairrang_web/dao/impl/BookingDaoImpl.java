@@ -77,7 +77,7 @@ public class BookingDaoImpl implements BookingDao {
 	
 	private BookingHairs getSimpleBookingHairs(ResultSet rs) throws SQLException {
 		// BOOK_NO,HAIR_NO,HAIR_NAME,HAIR_PRICE,KIND_NO,HAIR_QUANTITY
-		Hair hair = new Hair(rs.getInt("BOOK_NO"));
+		Hair hair = new Hair(rs.getInt("HAIR_NO"));
 		hair.setHairName(rs.getString("HAIR_NAME"));
 		hair.setHairPrice(rs.getInt("hair_price"));
 		int quantity = rs.getInt("HAIR_QUANTITY");
