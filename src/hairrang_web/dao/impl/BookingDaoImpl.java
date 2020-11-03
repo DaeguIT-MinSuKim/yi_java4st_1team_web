@@ -288,7 +288,7 @@ public class BookingDaoImpl implements BookingDao {
 	@Override
 	public int selectMaxBookNo() {
 //		String sql = "SELECT max(book_no) FROM booking";
-		String sql = "SELECT book_no FROM booking WHERE BOOK_REGDATE = (SELECT max(BOOK_REGDATE) FROM BOOKING)";
+		String sql = "SELECT NVL(book_no, 0) FROM booking WHERE BOOK_REGDATE = (SELECT max(BOOK_REGDATE) FROM BOOKING)";
 		// test 데이터 60, 61번 때문에 가장 최근에 등록한 예약 번호 얻어오기로 변경.
 		
 		try(Connection con = JndiDs.getConnection();

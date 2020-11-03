@@ -22,6 +22,9 @@
 
 <!-- 아이콘 -->
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+<!--아이콘-->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css?ver=191202">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/v4-shims.css?ver=191202">
  
 <!--slider -->
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">

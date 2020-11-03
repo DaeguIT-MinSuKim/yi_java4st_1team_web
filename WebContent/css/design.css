@@ -69,7 +69,7 @@
 
 /*mypage guest_book*/
 .book_wrapper {margin:0 auto; margin-top:60px; width:1000px;}
-#board {clear:both; width:1000px; margin:0 auto;  text-align:center;}
+#board {clear:both; width:1000px; margin:0 auto;  text-align:center; font-size:15px;}
 #board tr {border-bottom:1px solid #E4E4E4;}
 #board tr td {padding:15px 0;}
 #board th {border-top:3px solid black; padding:5px 0; font-weight:bold;}
@@ -99,8 +99,8 @@
 .detail-width {width:200px;}
 
 /**/
-.paging {display: block; text-align: center; padding:30px;}
-.paging a {text-decoration:none;}
+.paging-line { width:20px; display:inline-block;}
+.paging-line a {text-decotation:none;}
 
 .qna_wrapper { margin-top:60px; display: block; margin: 0 auto;}
 .qna_buttons {width:1000px; margin:0 auto; text-align:right;}

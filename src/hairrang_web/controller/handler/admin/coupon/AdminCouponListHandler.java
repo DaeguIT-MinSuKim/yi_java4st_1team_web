@@ -73,7 +73,7 @@ public class AdminCouponListHandler implements Command {
 			///////////
 			
 			ArrayList<Event> eventList = eService.selectEventAll();
-			
+			System.out.println("이벤트리스트" + eventList);
 			
 			request.setAttribute("no", no);
 			request.setAttribute("eventList", eventList);

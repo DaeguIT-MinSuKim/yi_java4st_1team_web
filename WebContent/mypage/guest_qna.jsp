@@ -14,7 +14,7 @@
 
 <body>
 	<div class="book_wrapper">
-		<p style="text-align: center; font-size: 30px;">문의 내역</p>
+		<h3 style="text-align:center; padding:20px; margin-bottom:50px;">MY QNA</h3>
 		<table id="board">
 			<tr class=>
 				<th>번호</th>

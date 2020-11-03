@@ -18,6 +18,10 @@ public class CouponService {
 		return dao.countCoupon();
 	}
 	
+	public int insertJoinCoupon(String id) {
+		return dao.insertJoinCoupon(id);
+	}
+	
 	public ArrayList<Coupon> pagingCouponByEventNo(Paging paging, int eventNo){
 		return dao.pagingCouponByEventNo(paging, eventNo);
 	}

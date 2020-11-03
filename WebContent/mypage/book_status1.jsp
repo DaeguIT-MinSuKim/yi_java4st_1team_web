@@ -8,15 +8,17 @@
 
 <style>
 .book a {background-color:white;  border-bottom:1px solid white;}
+.book-btn {border:none; background-color:#fff; cursor:pointer;}
+
 </style>
 
 <body>
 <div class="book_wrapper">
-
+<h3 style="text-align:center; padding:20px; margin-bottom:50px;">RESERVATION</h3>
 <div class="tcenter" style="padding:10px;">
-	<input type="button" value="전체보기" onclick="location.href='guestBook.do'">
-	<input type="button" value="예약완료" onclick="location.href='status1.do'">
-	<input type="button" value="예약취소" onclick="location.href='status0.do'">
+	<input type="button" value="전체보기" onclick="location.href='guestBook.do'"  class="book-btn">
+	<input type="button" value="예약완료" onclick="location.href='status1.do'"  class="book-btn">
+	<input type="button" value="예약취소" onclick="location.href='status0.do'"  class="book-btn">
 </div>
 <table id="board">
 	<tr>

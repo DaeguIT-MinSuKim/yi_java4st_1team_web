@@ -29,5 +29,8 @@ public interface CouponDao {
 
 	// 오늘 기준 해당 회원이 사용할 수 있는 쿠폰 리스트 조회
 	ArrayList<Coupon> selectAvailableCouponToday(String id);
+	
+	//가입쿠폰
+	int insertJoinCoupon(String id);
 
 }	

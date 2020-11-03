@@ -27,9 +27,31 @@ public class EventDaoImpl implements EventDao {
 	public static EventDaoImpl getInstance() {
 		return instance;
 	}
-
+	
 	@Override
 	public ArrayList<Event> selectEventAll() {
+		String sql = "SELECT * FROM EVENT ORDER BY EVENT_NO DESC";
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+
+			if (rs.next()) {
+				ArrayList<Event> list = new ArrayList<>();
+				do {
+					list.add(getEvent(rs));
+				} while (rs.next());
+				return list;
+			}
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+		return null;
+	}
+
+	@Override
+	public ArrayList<Event> selectEventAllForBoard() {
 		String sql = "SELECT * FROM EVENT where not event_no = 1 AND EVENT_STATUS = 's' ORDER BY EVENT_NO DESC";
 
 		try (Connection con = JndiDs.getConnection();
@@ -75,7 +97,7 @@ public class EventDaoImpl implements EventDao {
 
 	@Override
 	public Event selectEventByNo(Event event) {
-		String sql = "SELECT * FROM EVENT where EVENT_STATUS = 's' ";
+		String sql = "SELECT * FROM EVENT where event_no = ? ";
 
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 
@@ -200,6 +222,8 @@ public class EventDaoImpl implements EventDao {
 	        }
 	        return 0;
 	}
+
+
 
 	
 }

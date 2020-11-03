@@ -7,6 +7,10 @@ import hairrang_web.utils.Paging;
 
 public interface EventDao {
 
+	//게시판에서 보여줄 이벤트. 생일쿠폰 제외
+	ArrayList<Event> selectEventAllForBoard();
+	
+	//찐이벤트
 	ArrayList<Event> selectEventAll();
 	
 	Event selectEventByNo(Event event);

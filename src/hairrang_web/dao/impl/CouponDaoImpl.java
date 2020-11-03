@@ -68,7 +68,7 @@ public class CouponDaoImpl implements CouponDao{
 	
 	@Override
 	public ArrayList<Coupon> selectCouponById(String id) {
-		String sql = "SELECT COUPON_ID,GUEST_ID,EVENT_NO,EVENT_START,EVENT_END,USED_YN FROM coupon WHERE GUEST_ID = ?";
+		String sql = "SELECT COUPON_ID,GUEST_ID,EVENT_NO,EVENT_START,EVENT_END,USED_YN FROM coupon_view WHERE GUEST_ID = ?";
 		try(Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)){
 			pstmt.setString(1, id);
@@ -201,7 +201,7 @@ public class CouponDaoImpl implements CouponDao{
 	
 	@Override
 	public ArrayList<Coupon> pagingCouponById(Paging paging, String id) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon WHERE GUEST_ID = ? ORDER BY COUPON_ID desc) a) "
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon_view WHERE GUEST_ID = ? and not event_status = 'w' ORDER BY COUPON_ID desc) a) "
 				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
 		try (Connection con = JndiDs.getConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
@@ -242,6 +242,19 @@ public class CouponDaoImpl implements CouponDao{
 
 	}
 
-	
+	@Override
+	public int insertJoinCoupon(String id) {
+		String sql = "INSERT INTO coupon(guest_id, event_no, event_start, event_end)" +
+				"SELECT ?, event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 "
+				+ "FROM event WHERE event_no = 2";
+		try (Connection con = JndiDs.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+				pstmt.setString(1, id);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	
 }

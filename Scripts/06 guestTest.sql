@@ -192,3 +192,5 @@ SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM guest_view) a) WHERE rn
 SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM guest_view) WHERE rn BETWEEN ? AND ? ORDER BY rn
 SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM guest_view  and guest_id LIKE '%te%') a) WHERE rn BETWEEN :1  AND :2  ORDER BY rn
 SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM guest_view WHERE guest_id LIKE '%te%') a) WHERE rn BETWEEN 1  AND 10  ORDER BY rn;
+
+DELETE FROM BOOKING WHERE BOOK_NO = 11;

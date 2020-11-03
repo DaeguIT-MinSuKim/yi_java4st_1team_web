@@ -145,13 +145,13 @@ END;
 
 -- 등록되어 있는 JOB 삭제
 BEGIN
-   DBMS_JOB.REMOVE(74);
+   DBMS_JOB.REMOVE(75);
    COMMIT;
 END;
 
 -- 작업 비활성화 
 BEGIN
-   DBMS_JOB.BROKEN(, TRUE);
+   DBMS_JOB.BROKEN(77, TRUE);
    COMMIT;
 END;
 

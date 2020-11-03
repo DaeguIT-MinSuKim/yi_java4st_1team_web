@@ -11,10 +11,12 @@ import javax.servlet.http.HttpSession;
 
 import hairrang_web.controller.Command;
 import hairrang_web.dto.Guest;
+import hairrang_web.service.CouponService;
 import hairrang_web.service.GuestService;
 
 public class JoinHandler implements Command{
 	private GuestService service = new GuestService();
+	private CouponService cService = new CouponService();
 
 	@Override
 	public String process(HttpServletRequest request, HttpServletResponse response)
@@ -52,7 +54,10 @@ public class JoinHandler implements Command{
 			System.out.println(g);
 			session.setAttribute("name", request.getParameter("name"));
 			int res = service.insertGuest(g);
-			System.out.println(res);
+			//가입쿠폰 
+			int res2 = cService.insertJoinCoupon(guestId);
+			System.out.println("가입:" + res);
+			System.out.println("가입쿠폰: " + res2);
 
 			return "member/welcome.jsp";
 		}
