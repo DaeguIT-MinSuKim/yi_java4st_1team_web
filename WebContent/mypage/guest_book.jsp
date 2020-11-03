@@ -68,7 +68,7 @@
 
 <!-- 페이징 시작 -->
 
-					<div style="width:100%; text-align:center; display:inline-block; margin:0 auto;">
+					<div style="width:100%; margin:0 auto; text-align:center;">
 					<p>Total : ${total}</p>
 					
 						<!-- << -->
@@ -151,6 +151,7 @@
 					
 					</div>
 				</div>
+				
 </body>
 
 <%@ include file="../footer.jsp" %>  

@@ -49,6 +49,7 @@ div.content {}
 
 </style>
 <body>
+<h3 style="text-align:center; padding:20px; margin-bottom:50px;">HAIR</h3>
 
 ${cateNoList}
 

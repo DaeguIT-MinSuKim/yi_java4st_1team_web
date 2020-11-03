@@ -15,8 +15,10 @@ $(function() {
 		var maxDate = new Date();
 		maxDate.setDate(tomorrow.getDate() + 28);
 		
-		var minDateStr = tomorrow.getFullYear() + "-" + (tomorrow.getMonth() + 1) + "-" + tomorrow.getDate();
-		var maxDateStr = maxDate.getFullYear() + "-" + (maxDate.getMonth() + 1) + "-" + maxDate.getDate();
+		var minDateStr = dateToString(tomorrow);
+		var maxDateStr = dateToString(maxDate);
+		console.log(minDateStr);
+		console.log(maxDateStr);
 		document.getElementById('bookDate').min = minDateStr;
 		document.getElementById('bookDate').max = maxDateStr;
 		
@@ -125,6 +127,22 @@ $(function() {
 	});
 });
 
+function dateToString(date) {
+	var year = date.getFullYear(); 
+	var month = new String(date.getMonth()+1); 
+	var day = new String(date.getDate()); 
+
+	// 한자리수일 경우 0을 채워준다. 
+	if(month.length == 1){ 
+	  month = "0" + month; 
+	} 
+	if(day.length == 1){ 
+	  day = "0" + day; 
+	} 
+	
+	return year + "-" + month + "-" + day;
+}
+
 function addHair(hairNo, hairName) {
 	// console.log($(".addedHair[hairNo=" + itemNo + "]").attr("hairName"));
 	// $(".addedHair[hairNo=" + itemNo + "]").remove();
@@ -139,7 +157,7 @@ function addHair(hairNo, hairName) {
 		// 처음 선택한 경우
 		var addLine = "<li class='addedHair' hairNo='" + hairNo + "' hairName='" + hairName + "' quantity='" + quantity + "'>"
 						+ hairName + " <span class='quantity'>" + quantity + "</span>회 <a href='javascript:void(0);' onclick='delHairItem(" + hairNo +"); return false;'>X</a></li>";
-		$(".addedHairList").append(addLine);
+		$(".addedHairList ul").append(addLine);
 	} else {
 		// 이미 존재하는 경우 수량을 증가시킴
 		quantity = selectedItem.attr("quantity") * 1;
