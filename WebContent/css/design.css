@@ -35,9 +35,8 @@
 
 /* .bookForm {text-align: } */
 .bookForm table {width: 400px;}
-.bookForm label {width: 140px;}
-.bookForm input {height: 32px; padding: 0px 6px;margin: 6px 0px; width: 240px; font-size: 14px;}
-.bookForm select {height: 32px; padding: 0px 6px;margin: 6px 0px; width: 240px; font-size: 14px;}
+.bookForm input {height: 32px; padding: 0px 6px; margin-bottom: 12px; width: 180px; font-size: 14px;}
+.bookForm select {height: 32px; padding: 0px 6px; margin-bottom: 12px; width: 180px; font-size: 14px;}
 .bookForm table tr td:first-child {width: 180px;}
 
 
