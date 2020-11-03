@@ -49,6 +49,18 @@
 						</div>
 					</div>
 				</div>
+				<div class="row m-0">
+					<div class="col-sm-12 col-md-12 p-0">
+						<div class="form-inline justify-content-center" style="height: 32px;">
+							<div class="btn-group btn-group-sm" role="group" aria-label="Basic example" style>
+							  <button type="button" class="btn btn-sm btn-outline-secondary" id="todayBtn">오늘</button>
+							  <button type="button" class="btn btn-sm btn-outline-secondary" id="aWeekBtn">1주</button>
+							  <button type="button" class="btn btn-sm btn-outline-secondary" id="twoWeeksBtn">2주</button>
+							  <button type="button" class="btn btn-sm btn-outline-secondary" id="aMonthBtn">1개월</button>
+							</div>
+						</div>
+					</div>
+				</div>
 				<hr>
 				<div class="row m-0 mb-2">
 					<div class="col-sm-12 col-md-6 p-0">

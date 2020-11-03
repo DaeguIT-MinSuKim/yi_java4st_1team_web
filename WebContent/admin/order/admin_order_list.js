@@ -29,27 +29,54 @@ $(function() {
 		});
 		
 		$("#todayBtn").click(function() {
-			$("#startDate").val();
-			$("#endDate").val();
+			setDateValue(0);
 		})
 		
 		$("#aWeekBtn").click(function() {
+			setDateValue(6);
 		})
 		
 		$("#twoWeeksBtn").click(function() {
-			
+			setDateValue(15);
 		})
 		
 		$("#aMonthBtn").click(function() {
+			var today = new Date();
+			var wantDate = new Date();
+			wantDate.setMonth(wantDate.getMonth() - 1);
+			wantDate.setDate(wantDate.getDate() + 1);
 			
+			$("#startDate").val(dateToString(wantDate));
+			$("#endDate").val(dateToString(today));
 		})
+		
 	});
 	
 	
-	function setDateDuration(startDate, endDate) {
+	function setDateValue(days) {
+		var today = new Date();
+		var wantDate = new Date();
+		wantDate.setDate(wantDate.getDate() - days);
 		
+		$("#startDate").val(dateToString(wantDate));
+		$("#endDate").val(dateToString(today));
 	}
 	
+	function dateToString(date) {
+		var year = date.getFullYear(); 
+		var month = new String(date.getMonth()+1); 
+		var day = new String(date.getDate()); 
+
+		// 한자리수일 경우 0을 채워준다. 
+		if(month.length == 1){ 
+		  month = "0" + month; 
+		} 
+		if(day.length == 1){ 
+		  day = "0" + day; 
+		} 
+		
+		return year + "-" + month + "-" + day;
+	}
 	
 	function setFilteringPaging() {
 		var thisUrlStr = window.location.href;
@@ -59,6 +86,8 @@ $(function() {
 		var query = thisUrl.searchParams.get("query");
 		var cntPerPage = thisUrl.searchParams.get("cntPerPage");
 		var designer = thisUrl.searchParams.get("designer");
+		var startDate = thisUrl.searchParams.get("startDate");
+		var endDate = thisUrl.searchParams.get("endDate");
 		
 		if(cntPerPage != null) {
 			$("select[name=cntPerPage]").val(cntPerPage);
@@ -67,10 +96,6 @@ $(function() {
 		} else if(where.length != 0) {
 			$("select[name=where]").val(where);
 			$("input[name=query]").val(query);
-		}
-		if(!sorter) {
-		} else if (sorter.length != 0) {
-			$("select[name=sorter]").val(sorter);
 		}
 		if(!designer) {
 		} else if(designer.length != 0) {
@@ -81,9 +106,12 @@ $(function() {
 			$("select[name=startDate]").val(startDate);
 		}
 		if(!endDate) {
+			$("#endDate").val(dateToString(new Date()));
+			console.log("셋팅");
 		} else if(endDate.length != 0) {
 			$("select[name=endDate]").val(endDate);
 		}
+		console.log("endDate" + endDate);
 	}
 	
 	$("#searchBtn").click(function(e) {
