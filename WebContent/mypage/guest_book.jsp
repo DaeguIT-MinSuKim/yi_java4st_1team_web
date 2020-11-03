@@ -68,14 +68,13 @@
 
 <!-- 페이징 시작 -->
 
-<div>	
-	<div style="width:700px;  margin:0 auto; text-align:center; padding:20px;">
+					<div style="width:100%; text-align:center; display:inline-block; margin:0 auto;">
 					<p>Total : ${total}</p>
 					
 						<!-- << -->
 						<c:if test="${paging.startPage != 1}">
 							<div class="paging-line">
-							<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+							<a href="guestBook.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
 								<i class="fas fa-angle-double-left"></i>
 							</a>
 							</div>
@@ -91,7 +90,7 @@
 						<c:choose>
 							<c:when test="${paging.nowPage != 1}">
 								<div class="paging-line">
-									<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
+									<a href="guestBook.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == 1}">
@@ -124,7 +123,7 @@
 						<c:choose>
 							<c:when test="${paging.nowPage != paging.lastPage}">
 								<div class="paging-line">
-									<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
+									<a href="guestBook.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == paging.lastPage}">
@@ -140,7 +139,7 @@
 					
 						<c:if test="${paging.endPage != paging.lastPage }">
 							<div class="paging-line">
-							<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+							<a href="guestBook.do?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">
 							<i class="fas fa-angle-double-right"></i></a>
 							</div>
 						</c:if>
@@ -152,7 +151,6 @@
 					
 					</div>
 				</div>
-</div>
 </body>
 
 <%@ include file="../footer.jsp" %>  

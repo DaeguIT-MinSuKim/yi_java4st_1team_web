@@ -58,6 +58,10 @@ public class GuestBookStatus0 implements Command {
 		ArrayList<Booking> statusList = new ArrayList<Booking>();
 		//System.out.println(status0NoList);
 		if(status0NoList == null) {
+			request.setAttribute("nowPage", nowPage);
+			request.setAttribute("paging", paging);
+			request.setAttribute("cnt", cntPerPage);
+			request.setAttribute("total", total);
 			request.setAttribute("message", -1);
 			return "mypage/book_status0.jsp";
 		}

@@ -100,7 +100,7 @@
 
 /**/
 .paging-line { width:20px; display:inline-block;}
-.paging-line a {text-decotation:none;}
+.paging-line a {text-decotation:none; color:black;}
 
 .qna_wrapper { margin-top:60px; display: block; margin: 0 auto;}
 .qna_buttons {width:1000px; margin:0 auto; text-align:right;}
