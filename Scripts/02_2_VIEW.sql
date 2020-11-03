@@ -68,7 +68,7 @@ ORDER BY book_no, hair_no;
 SELECT * FROM booking_view;
 
 
-/* 생성은 했지만 VIEW 안 쓰고 BOOKING, BOOKING_HAIRS로부터 따로 조회하는 게 좋음 */
+/* booking_hairs & hairs */
 CREATE OR REPLACE VIEW booking_hairs_view
 AS
 SELECT BOOK_NO, h.hair_no, h.hair_name, h.hair_price, h.kind_no, hair_quantity

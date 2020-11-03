@@ -52,30 +52,30 @@ $(function() {
 	});
 	
 	
-function setDateValue(days) {
-	var today = new Date();
-	var wantDate = new Date();
-	wantDate.setDate(wantDate.getDate() + days);
+	function setDateValue(days) {
+		var today = new Date();
+		var wantDate = new Date();
+		wantDate.setDate(wantDate.getDate() + days);
+		
+		$("#startDate").val(dateToString(today));
+		$("#endDate").val(dateToString(wantDate));
+	}
 	
-	$("#startDate").val(dateToString(today));
-	$("#endDate").val(dateToString(wantDate));
-}
-
-function dateToString(date) {
-	var year = date.getFullYear(); 
-	var month = new String(date.getMonth()+1); 
-	var day = new String(date.getDate()); 
-
-	// 한자리수일 경우 0을 채워준다. 
-	if(month.length == 1){ 
-	  month = "0" + month; 
-	} 
-	if(day.length == 1){ 
-	  day = "0" + day; 
-	} 
+	function dateToString(date) {
+		var year = date.getFullYear(); 
+		var month = new String(date.getMonth()+1); 
+		var day = new String(date.getDate()); 
 	
-	return year + "-" + month + "-" + day;
-}
+		// 한자리수일 경우 0을 채워준다. 
+		if(month.length == 1){ 
+		  month = "0" + month; 
+		} 
+		if(day.length == 1){ 
+		  day = "0" + day; 
+		} 
+		
+		return year + "-" + month + "-" + day;
+	}
 });	
 
 $("#selectAll").click(function(){

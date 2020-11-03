@@ -45,7 +45,6 @@ public class LoginCheckFilter implements Filter {
 		// 1. 로그인 체크가 필요하냐?
 		if (isNeededLoginCheck(hRequest)) {
 			HttpSession session = hRequest.getSession(false);
-			System.out.println("1. 로그인 필요함");
 			boolean isLogin = false;
 			
 			// 2. session이 존재하는가?
@@ -70,10 +69,7 @@ public class LoginCheckFilter implements Filter {
 					
 					// (2) Session을 이용한 redirection
 					
-					System.out.println("2. redirectURI 세션에 설정함: " + getThisURI(hRequest));
 					session.setAttribute("redirectURI", getThisURI(hRequest));
-					System.out.println("3. login.do로 리디렉션");
-					
 					hResponse.sendRedirect("login.do");
 					return;
 				}
@@ -82,10 +78,8 @@ public class LoginCheckFilter implements Filter {
 			// 다른 페이지 접근시 redirectURI 지워주기
 			if (!getThisURI(hRequest).equals("login.do") && !getThisURI(hRequest).equals("logout.do")) {
 				HttpSession session = hRequest.getSession(false);
-				System.out.println("4. login.do / logout.do가 아님");
 //				removeCookie(hResponse);
 				if (session != null) {
-					System.out.println("(4. redirectURI 지워줌)");
 					session.removeAttribute("redirectURI");
 				}
 			}

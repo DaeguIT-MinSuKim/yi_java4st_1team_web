@@ -50,7 +50,7 @@
 			</c:forEach>
 		</table>
 
-		<div class="paging">
+		<div class="paging" style="text-align: center;">
 			<c:if test="${paging.startPage != 1}">
 				<a href="noticeHome.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}"><i class="xi-angle-left"></i></a>	
 			</c:if>
