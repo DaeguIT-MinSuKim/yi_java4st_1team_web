@@ -86,3 +86,4 @@ INSERT INTO ORDER_DETAIL(ORDERS_NO, HAIR_NO, OD_PRICE, OD_QUANTITY, COUPON_ID, O
 SELECT 35, HAIR_NO, hair_price, 1, coupon_id, hair_price*event_salerate 
 FROM (SELECT HAIR_NO, hair_price, 0 AS fake FROM hair WHERE hair_no = 14) 
 LEFT OUTER JOIN (SELECT coupon_id, event_salerate, 0 AS fake FROM coupon_view WHERE coupon_id = 28 AND GUEST_ID = 'test') USING(fake)
+
