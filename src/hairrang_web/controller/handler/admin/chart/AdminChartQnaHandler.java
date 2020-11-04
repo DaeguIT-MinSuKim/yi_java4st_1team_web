@@ -36,6 +36,7 @@ public class AdminChartQnaHandler implements Command {
 			System.out.println("POST");
 			
 			String year = request.getParameter("year");
+			System.out.println("=================="+year);
 			
 			JSONArray qna = service.selectOnlyQnA(year);
 			JSONArray res = service.QnAByRes(year);
