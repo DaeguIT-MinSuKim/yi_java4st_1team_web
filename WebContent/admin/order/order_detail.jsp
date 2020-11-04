@@ -33,28 +33,6 @@ $(function(){
             <!-- card-body -->
             <div class="card-body p-5">
               <form>
-              	<%-- <table class="table text-left">
-              		<tr>
-              			<td>주문번호</td>
-              			<td>${order.ordersNo}</td>
-              		</tr>
-              		<tr>
-              			<td>주문일시</td>
-              			<td>${order.ordersDate}</td>
-              		</tr>
-              		<tr>
-              			<td>고객</td>
-              			<td>${order.guest.guestName } (${order.guest.guestId})</td>
-              		</tr>
-              		<tr>
-              			<td>연락처</td>
-              			<td>${order.guest.guestPhone}</td>
-              		</tr>
-              		<tr>
-              			<td>담당 디자이너</td>
-              			<td>${order.designer.deName }</td>
-              		</tr>
-              	</table> --%>
               	<p class="h6 font-weight-bold text-primary">▶ 주문 정보</p>
               	<div class="spacing"></div>
               	
@@ -77,7 +55,7 @@ $(function(){
 					</div>
                 	<div class="row">
 		                <label class="col-sm-3 col-form-label font-weight-bold">담당 디자이너</label>
-                 		<label class="col-6 col-form-label">${order.designer.deName }</label>
+                 		<label class="col-6 col-form-label">${order.designer.deNickname }</label>
 					</div>
                 </div>
 
