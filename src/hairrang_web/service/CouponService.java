@@ -21,13 +21,14 @@ public class CouponService {
 	public int insertJoinCoupon(String id) {
 		return dao.insertJoinCoupon(id);
 	}
+
 	
-	public ArrayList<Coupon> pagingCouponByEventNo(Paging paging, int eventNo){
-		return dao.pagingCouponByEventNo(paging, eventNo);
+	public ArrayList<Coupon> pagingCouponByEventNo(Paging paging, String no, String status) {
+		return dao.pagingCouponByEventNo(paging, no, status);
 	}
 	
-	public int countCoupon(int eventNo) {
-		return dao.countCoupon(eventNo);
+	public int countCoupon(Paging paging, String eventNo, String status) {
+		return dao.countCoupon(paging, eventNo, status);
 	}
 	
 	public ArrayList<Coupon> selectCouponById(String id){
