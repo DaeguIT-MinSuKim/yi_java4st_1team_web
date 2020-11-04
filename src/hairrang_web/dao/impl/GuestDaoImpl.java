@@ -57,7 +57,12 @@ public class GuestDaoImpl implements GuestDao {
 
 		String guestId = rs.getString("GUEST_ID");
 		String guestPwd = null;
-
+		
+		if(guestId.equals("nonmember")) {
+			Guest guest = new Guest(guestId);
+			guest.setGuestName(rs.getString("GUEST_NAME"));
+			return guest;
+		}
 		try {
 			guestPwd = rs.getString("GUEST_PWD");
 		} catch (SQLException e) {
