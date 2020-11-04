@@ -80,5 +80,9 @@ SELECT * FROM ORDERS LEFT OUTER JOIN ORDER_DETAIL USING(ORDERS_NO) ORDER BY ORDE
 SELECT * FROM ORDER_DETAIL od WHERE ORDERS_NO = 
 
 SELECT * FROM ORDERS_GUEST_VIEW WHERE ORDERS_NO = 16;
-
-SELECT * FROM od_guest_hair_coupon_view WHERE orders_no = 29;
+SELECT * FROM od_guest_hair_coupon_view WHERE orders_no = 35;
+SELECT * FROM coupon;
+INSERT INTO ORDER_DETAIL(ORDERS_NO, HAIR_NO, OD_PRICE, OD_QUANTITY, COUPON_ID, OD_DISCOUNT) 
+SELECT 35, HAIR_NO, hair_price, 1, coupon_id, hair_price*event_salerate 
+FROM (SELECT HAIR_NO, hair_price, 0 AS fake FROM hair WHERE hair_no = 14) 
+LEFT OUTER JOIN (SELECT coupon_id, event_salerate, 0 AS fake FROM coupon_view WHERE coupon_id = 28 AND GUEST_ID = 'test') USING(fake)
