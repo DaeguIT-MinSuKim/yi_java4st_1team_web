@@ -182,9 +182,9 @@ public class ChartDaoImpl implements ChartDao {
 		if (year.equals("all")) {
 			sql = "SELECT GUEST_GENDER ,COUNT(*)AS count FROM GUEST";
 		} else {
-			sql = "SELECT GUEST_GENDER ,COUNT(*)AS count FROM GUEST";
+			sql = "SELECT GUEST_GENDER ,COUNT(*)AS count FROM ";
 			if (year != null) {
-				sql += " WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = " + year + " ";
+				sql += "(SELECT * FROM GUEST WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = " + year + " AND DEL_YN = 'n') ";
 			}
 		}
 
