@@ -99,6 +99,7 @@ FROM booking b
 	LEFT OUTER JOIN guest g ON(b.GUEST_ID = g.GUEST_ID);
 
 
+--이거안됨
 /* 페이징용 orders */
 CREATE OR REPLACE VIEW orders_guest_view
 as
@@ -109,6 +110,6 @@ CREATE OR REPLACE VIEW OD_guest_HAIR_COUPON_view
 AS
 SELECT od.*, h.HAIR_NAME, c.EVENT_NAME FROM ORDER_DETAIL od
 LEFT OUTER JOIN HAIR h ON (od.HAIR_NO = h.HAIR_NO )
-LEFT OUTER JOIN COUPON_VIEW c ON(od.COUPON_ID  = c.COUPON_ID );
+LEFT OUTER JOIN COUPON_VIEW c ON(od.coupon  = c.COUPON_ID);
 
 SELECT * FROM od_guest_hair_coupon_view;

@@ -13,11 +13,8 @@ VALUES('test4321', '43211234', '사삼이', to_date('20001021', 'YYYYMMDD'), '01
 --생일쿠폰 테스트할 고객
 --job에 이벤트번호 생일쿠폰으로 수정 / 생일 오늘로 수정해라
 INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
-VALUES('test111', 'tt123', '테스트유저', to_date('19921103', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
+VALUES('test111', 'tt123', '생일테스트', to_date('19921104', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
 
-
-
-UPDATE guest SET DEL_YN = 'n' WHERE GUEST_ID = 'test';
 
 /* hair_kind */
 SELECT * FROM HAIR_KIND;
@@ -55,7 +52,7 @@ INSERT INTO HAIR(HAIR_NAME, HAIR_PRICE, HAIR_PIC, HAIR_CONTENT, KIND_NO) VALUES(
 INSERT INTO HAIR(HAIR_NAME, HAIR_PRICE, HAIR_PIC, HAIR_CONTENT, KIND_NO) VALUES('두피 케어', 100000, NULL, NULL, 7);
 SELECT * FROM hair;
 
-SELECT * FROM guest;
+SELECT * FROM guest ORDER BY ;
 
 /* event */
 SELECT * FROM event;
@@ -64,14 +61,14 @@ VALUES ('생일 쿠폰', 0.2, to_date('2020-11-01','yyyy-MM-dd'),to_date('9999-1
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
 VALUES ('오픈 기념 가입 쿠폰', 0.1, to_date('2020-11-01','yyyy-MM-dd'), to_date('2020-12-01','yyyy-MM-dd'), 'open_event.jpg', '가입한 날짜로부터 30일 이내에 사용가능합니다.');
 
-UPDATE EVENT SET EVENT_CONTENT = '고객님의 생일을 축하드립니다. <br>생일 당일 발급되며 생일로부터 14일 이내에 사용가능합니다.' WHERE event_no = 1;
+SELECT * FROM BOOKING;
 
 --생일인 사람 쿠폰 수동 삽입
- INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
-		SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" AS event_start, "thisyear_bd" + 14 - 1 / (24*60*60) + 1 AS event_end
-		FROM (
-		SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
-		) gb WHERE TO_CHAR(sysdate, 'YYYY-MM-DD') = TO_CHAR("thisyear_bd", 'YYYY-MM-DD');
+-- INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
+--		SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" AS event_start, "thisyear_bd" + 14 - 1 / (24*60*60) + 1 AS event_end
+--		FROM (
+--		SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
+--		) gb WHERE TO_CHAR(sysdate, 'YYYY-MM-DD') = TO_CHAR("thisyear_bd", 'YYYY-MM-DD');
 
 
 SELECT * FROM event;
@@ -118,7 +115,6 @@ INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HB
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (1,'s5', NULL, 'hair/images/1-5.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (1,'s5', NULL, 'hair/images/1-6.jpg', sysdate);
 
-
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (2,'m1', NULL, 'hair/images/2-1.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (2,'m2', NULL, 'hair/images/2-2.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (2,'m3', NULL, 'hair/images/2-3.jpg', sysdate);
@@ -126,7 +122,6 @@ INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HB
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (2,'m5', NULL, 'hair/images/2-5.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (2,'m6', NULL, 'hair/images/2-6.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (2,'m7', NULL, 'hair/images/2-7.jpg', sysdate);
-
 
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (3,'l1', NULL, 'hair/images/3-1.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (3,'l2', NULL, 'hair/images/3-2.jpg', sysdate);
@@ -136,7 +131,6 @@ INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HB
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (3,'l6', NULL, 'hair/images/3-6.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (3,'l7', NULL, 'hair/images/3-7.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (3,'l8', NULL, 'hair/images/3-8.jpg', sysdate);
-
 
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (4,'m1', NULL, 'hair/images/4-1.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (4,'m2', NULL, 'hair/images/4-2.jpg', sysdate);
@@ -171,6 +165,20 @@ INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(62, 10, 1);
 INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(62, 12, 2);
 */
 
+SELECT * FROM BOOKING;
+SELECT * FROM BOOKING_HAIRS;
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('test', sysdate + 10 - 6/24, 9, 2, sysdate, 1, null);
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('test', sysdate + 12 - 2/24, 14, 2, sysdate, 1, null);
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('test', sysdate + 10 - 6/24, 9, 2, sysdate, 1, null);
+
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(2, 16, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(2, 14, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(3, 11, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(4, 10, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(4, 12, 2);
 
 /*테스트 admin*/
 INSERT INTO ADMIN VALUES ('testadmin','1234','testadmin');

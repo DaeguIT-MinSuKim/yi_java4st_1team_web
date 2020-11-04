@@ -56,7 +56,7 @@ ADD	CONSTRAINT PK_GUEST	PRIMARY KEY (guest_id);
 /* 이벤트 */
 CREATE TABLE EVENT (
 	event_no NUMBER(10) NOT NULL, /* 이벤트번호 */
-	event_name VARCHAR2(20), /* 이벤트명 */
+	event_name VARCHAR2(200), /* 이벤트명 */
 	event_salerate NUMBER(3, 2), /* 할인율 */
 	event_start DATE, /* 시작일 */
 	event_end DATE, /* 종료일 */
@@ -144,12 +144,12 @@ ADD CONSTRAINT PK_ORDERS PRIMARY KEY (orders_no);
 /* 주문상세 */
 CREATE TABLE ORDER_DETAIL (
 	od_no NUMBER(10) NOT NULL, /* 주문상세번호 */
-	event_no NUMBER(10), /* 이벤트번호 */
+	coupon_id NUMBER, /* 이벤트번호 */
 	hair_no NUMBER(10), /* 헤어번호 */
 	order_no NUMBER(10), /* 주문번호 */
 	od_price number(7),
 	od_quantity number(2),
-	od_discount number(7)
+	od_discount number(7),
 );
 
 
