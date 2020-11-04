@@ -21,7 +21,7 @@
 							<td><label for="bookDesigner">디자이너 </label></td>
 							<td><select name="bookDesigner" id="designerBox">
 								<c:forEach var="de" items="${deList}">
-									<option value="${de.deNo }">${de.deName }</option>
+									<option value="${de.deNo }">${de.deNickname }</option>
 								</c:forEach>
 							</select></td>
 						</tr>	

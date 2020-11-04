@@ -56,7 +56,7 @@ ADD	CONSTRAINT PK_GUEST	PRIMARY KEY (guest_id);
 /* 이벤트 */
 CREATE TABLE EVENT (
 	event_no NUMBER(10) NOT NULL, /* 이벤트번호 */
-	event_name VARCHAR2(20), /* 이벤트명 */
+	event_name VARCHAR2(200), /* 이벤트명 */
 	event_salerate NUMBER(3, 2), /* 할인율 */
 	event_start DATE, /* 시작일 */
 	event_end DATE, /* 종료일 */
@@ -65,6 +65,8 @@ CREATE TABLE EVENT (
 	event_status CHAR(1) DEFAULT 'w' /*상태  => w:대기, s:시작, e:종료*/
 );
 
+
+ALTER TABLE event MODIFY event_name varchar2(60);
 ALTER TABLE EVENT
 ADD CONSTRAINT PK_EVENT PRIMARY KEY (event_no);
 
@@ -115,7 +117,6 @@ CREATE TABLE BOOKING (
 	book_no NUMBER(10) NOT NULL, /* 예약번호 */
 	guest_id VARCHAR2(20) NOT NULL, /* 고객아이디 */
 	book_time DATE NOT NULL, /* 예약시간 */
-	hair_no NUMBER(10), /* 헤어번호 */
 	de_no NUMBER(10), /* 디자이너 */
 	book_regDate DATE DEFAULT SYSDATE,
 	book_status NUMBER(1) DEFAULT 1, /* 예약 */
@@ -140,24 +141,6 @@ ALTER TABLE ORDERS
 ADD CONSTRAINT PK_ORDERS PRIMARY KEY (orders_no);
 	
 	
-
-/* 주문상세 */
-CREATE TABLE ORDER_DETAIL (
-	od_no NUMBER(10) NOT NULL, /* 주문상세번호 */
-	event_no NUMBER(10), /* 이벤트번호 */
-	hair_no NUMBER(10), /* 헤어번호 */
-	order_no NUMBER(10), /* 주문번호 */
-	od_price number(7),
-	od_quantity number(2),
-	od_discount number(7)
-);
-
-
-/*
-ALTER TABLE ORDER_DETAIL
-ADD CONSTRAINT PK_ORDER_DETAIL PRIMARY KEY (od_no);
-*/
-
 
 
 /* 관리자 */
@@ -281,6 +264,33 @@ CREATE TABLE NOTICE (
 );
 
 
+/* 주문상세 */
+CREATE TABLE ORDER_DETAIL (
+	od_no NUMBER(10) NOT NULL, /* 주문상세번호 */
+	coupon_id NUMBER, /* 이벤트번호 */
+	hair_no NUMBER(10), /* 헤어번호 */
+	orders_no NUMBER(10), /* 주문번호 */
+	od_price number(7),
+	od_quantity number(2),
+	od_discount number(7)
+);
+
+-- 기본키
+ALTER TABLE ORDER_DETAIL
+ADD CONSTRAINT PK_ORDER_DETAIL PRIMARY KEY (od_no);
+
+-- 외부키
+ALTER TABLE ORDER_DETAIL
+ADD CONSTRAINT FK_COUPON_TO_ORDER_DETAIL FOREIGN KEY (COUPON_ID)
+		REFERENCES COUPON(COUPON_ID);
+	
+ALTER TABLE ORDER_DETAIL
+ADD CONSTRAINT FK_HAIR_TO_ORDER_DETAIL FOREIGN KEY (hair_no)
+		REFERENCES HAIR (hair_no);
+
+
+
+
 --notice Date
 --ALTER TABLE notice ADD notice_regDate DATE DEFAULT sysdate ;
 /*첨부파일 경로*/
@@ -297,10 +307,6 @@ ADD CONSTRAINT FK_HAIR_KIND_TO_HAIR FOREIGN KEY (kind_no)
 		REFERENCES HAIR_KIND (kind_no);
 
 ALTER TABLE BOOKING
-ADD	CONSTRAINT FK_HAIR_TO_BOOKING FOREIGN KEY (hair_no)
-		REFERENCES HAIR (hair_no);
-
-ALTER TABLE BOOKING
 ADD CONSTRAINT FK_GUEST_TO_BOOKING FOREIGN KEY (guest_id)
 		REFERENCES GUEST (guest_id);
 
@@ -308,17 +314,6 @@ ALTER TABLE BOOKING
 ADD CONSTRAINT FK_DESIGNER_TO_BOOKING FOREIGN KEY (de_no)
 		REFERENCES DESIGNER (de_no);
 	
-ALTER TABLE ORDER_DETAIL
-ADD CONSTRAINT FK_EVENT_TO_ORDER_DETAIL FOREIGN KEY (event_no)
-		REFERENCES EVENT (event_no);
-
-ALTER TABLE ORDER_DETAIL
-ADD CONSTRAINT FK_HAIR_TO_ORDER_DETAIL FOREIGN KEY (hair_no)
-		REFERENCES HAIR (hair_no);
-
-ALTER TABLE ORDER_DETAIL
-ADD CONSTRAINT FK_ORDER_TO_ORDER_DETAIL FOREIGN KEY (order_no)
-		REFERENCES ORDERS (orders_no);
 
 ALTER TABLE QNA
 ADD CONSTRAINT FK_QNA_TO_QNA FOREIGN KEY (qna_refNo)
@@ -348,11 +343,6 @@ ALTER TABLE COUPON
 ADD CONSTRAINT FK_EVENT_TO_COUPON FOREIGN KEY (event_no)
 		REFERENCES EVENT (event_no);
 
-/*
-ALTER TABLE HAIR_BOARD
-ADD CONSTRAINT FK_HAIR_TO_HAIR_BOARD FOREIGN KEY (hair_no)
-		REFERENCES HAIR (hair_no);
-*/
 
 ALTER TABLE HAIR_BOARD
 ADD CONSTRAINT FK_HB_CATEGORY_TO_HAIR_BOARD FOREIGN KEY (hboard_cateno)

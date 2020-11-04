@@ -22,16 +22,17 @@ DELETE FROM ORDER_DETAIL od ;
 DELETE FROM ORDERS o ;
 
 -- 테이블 컬럼 및 제약조건 변경
-ALTER TABLE order_detail ADD od_price NUMBER(6);
+/*
+ALTER TABLE order_detail ADD od_price NUMBER(7);
 ALTER TABLE order_detail ADD od_quantity number(2);
-ALTER TABLE order_detail ADD od_discount number(6);
-ALTER TABLE coupon MODIFY coupon_id NUMBER;
+ALTER TABLE order_detail ADD od_discount number(7);
 
 ALTER TABLE ORDER_DETAIL RENAME COLUMN order_no TO orders_no;
 ALTER TABLE ORDER_DETAIL RENAME COLUMN event_no TO coupon_id;
 ALTER TABLE orders ADD orders_total_price NUMBER(7);
 ALTER TABLE ORDER_DETAIL 
 DROP CONSTRAINT FK_ORDER_TO_ORDER_DETAIL;
+*/
 
 
 -- 가짜 조인 이용해서 INSERT
@@ -79,3 +80,9 @@ SELECT * FROM ORDERS LEFT OUTER JOIN ORDER_DETAIL USING(ORDERS_NO) ORDER BY ORDE
 SELECT * FROM ORDER_DETAIL od WHERE ORDERS_NO = 
 
 SELECT * FROM ORDERS_GUEST_VIEW WHERE ORDERS_NO = 16;
+SELECT * FROM od_guest_hair_coupon_view WHERE orders_no = 35;
+SELECT * FROM coupon;
+INSERT INTO ORDER_DETAIL(ORDERS_NO, HAIR_NO, OD_PRICE, OD_QUANTITY, COUPON_ID, OD_DISCOUNT) 
+SELECT 35, HAIR_NO, hair_price, 1, coupon_id, hair_price*event_salerate 
+FROM (SELECT HAIR_NO, hair_price, 0 AS fake FROM hair WHERE hair_no = 14) 
+LEFT OUTER JOIN (SELECT coupon_id, event_salerate, 0 AS fake FROM coupon_view WHERE coupon_id = 28 AND GUEST_ID = 'test') USING(fake)

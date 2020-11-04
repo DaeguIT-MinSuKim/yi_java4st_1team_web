@@ -23,20 +23,8 @@ $(function() {
 			clearBtn: true
 		});
 		
-		/*$("#todayBtn").click(function() {
-			setDateValue(0);
-		})
-		
-		$("#aWeekBtn").click(function() {
-			setDateValue(7);
-		})
-		
-		$("#twoWeeksBtn").click(function() {
-			setDateValue(14);
-		})*/
-		
-		$(".dateBtn").click(function() {
-			//setDateValue($(this).val() - 1);
+		$(".dateBtn").not("#aMonthBtn").click(function() {
+			setDateValue($(this).val() - 1);
 		});
 		
 		$("#aMonthBtn").click(function() {
@@ -45,8 +33,8 @@ $(function() {
 			wantDate.setMonth(wantDate.getMonth() + 1);
 			wantDate.setDate(wantDate.getDate() - 1);
 			
-			$("#startDate").val(dateToString(today));
-			$("#endDate").val(dateToString(wantDate));
+			$("#startDate").datepicker("update", dateToString(today));
+			$("#endDate").datepicker("update", dateToString(wantDate));
 		})
 		
 	});
@@ -57,8 +45,8 @@ $(function() {
 		var wantDate = new Date();
 		wantDate.setDate(wantDate.getDate() + days);
 		
-		$("#startDate").val(dateToString(today));
-		$("#endDate").val(dateToString(wantDate));
+		$("#startDate").datepicker("update", dateToString(today));
+		$("#endDate").datepicker("update", dateToString(wantDate));
 	}
 	
 	function dateToString(date) {

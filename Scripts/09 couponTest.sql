@@ -9,11 +9,9 @@ SELECT c.COUPON_ID, c.GUEST_ID, e.EVENT_NO, e.EVENT_NAME, e.EVENT_START, e.EVENT
 FROM COUPON c 
 LEFT JOIN event e ON c.event_no = e.event_no WHERE c.GUEST_ID = 'chini91';
 
-
 --쿠폰 넣기
-INSERT INTO coupon(coupon_id, guest_id, event_no, event_start, event_end, used_yn) 
-
-SELECT 2, 'test', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
+INSERT INTO coupon(guest_id, event_no, event_start, event_end, used_yn) 
+SELECT 'test4321', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 2;
 
 SELECT 14, 'test4', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 1;
 
@@ -66,11 +64,7 @@ UPDATE COUPON SET USED_YN = 'n';
 --
 --넣기
 INSERT INTO coupon(COUPON_ID, guest_id, event_no, event_start, event_end, used_yn)
-SELECT 18, 'test', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 7;
---
-SELECT * FROM COUPON;
-SELECT * FROM EVENT ORDER BY EVENT_NO;
-
+SELECT 20, 'test', event_no, event_start, event_end, 'n' FROM event WHERE event_no = 1;
 --
 --사용 가능 => 기간 o 사용 x
 --미사용 만료 => 기간 x 사용 x
@@ -103,9 +97,6 @@ SELECT 4, 'test', event_no, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(guest_b
 
 SELECT EVENT_NO,EVENT_NAME,EVENT_SALERATE,EVENT_START,EVENT_END,EVENT_PIC,EVENT_CONTENT,USE_YN FROM event;
 SELECT COUPON_ID,GUEST_ID,EVENT_NO,EVENT_START,EVENT_END,USED_YN FROM coupon ORDER BY COUPON_ID;
-
-SELECT * FROM coupon_view;
-SELECT * FROM ORDER_DETAIL od;
 
 
 -- 개인에게 6번 이벤트 쿠폰 발행
@@ -245,7 +236,6 @@ INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
 SELECT guest_id, 4/*쿠폰번호*/, "thisyear_bd" - 10 AS event_start, "thisyear_bd" + 10 - 1 / (24*60*60) + 1 AS event_end
 FROM (SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g) gb
 WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
-=======
 
 
 --
@@ -334,3 +324,5 @@ SELECT * FROM COUPON_VIEW ORDER BY COUPON_ID desc;
 
 UPDATE COUPON SET USED_YN = 'y' WHERE GUEST_ID = 'testtt' AND COUPON_ID = 39;
 UPDATE EVENT SET EVENT_CONTENT = '가입시 증정' WHERE EVENT_NO = 2;
+
+SELECT * FROM event;

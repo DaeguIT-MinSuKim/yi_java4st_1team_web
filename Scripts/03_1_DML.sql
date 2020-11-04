@@ -5,7 +5,7 @@ SELECT * FROM BOOKING_HAIRS;
 /* TEST용 회원 */
 SELECT * FROM GUEST;
 INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
-VALUES('test', 'tt123', '테스트유저', to_date('19921015', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
+VALUES('test', 'tt123', '태수튼', to_date('19921015', 'YYYYMMDD'), '010-1234-5678', 'earth_do@naver.com', 0, sysdate, '머리카락이 약하심', 'n', 'y');
 INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
 VALUES('abcd', 'efghijk', '에이비', to_date('19960115', 'YYYYMMDD'), '010-1234-5678', 'abcd@test.co.kr', 1, sysdate, null, 'n', 'n');
 INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
@@ -13,11 +13,8 @@ VALUES('test4321', '43211234', '사삼이', to_date('20001021', 'YYYYMMDD'), '01
 --생일쿠폰 테스트할 고객
 --job에 이벤트번호 생일쿠폰으로 수정 / 생일 오늘로 수정해라
 INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
-VALUES('test111', 'tt123', '테스트유저', to_date('19921103', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
+VALUES('test111', 'tt123', '생일테스트', to_date('19921104', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
 
-
-
-UPDATE guest SET DEL_YN = 'n' WHERE GUEST_ID = 'test';
 
 /* hair_kind */
 SELECT * FROM HAIR_KIND;
@@ -55,23 +52,23 @@ INSERT INTO HAIR(HAIR_NAME, HAIR_PRICE, HAIR_PIC, HAIR_CONTENT, KIND_NO) VALUES(
 INSERT INTO HAIR(HAIR_NAME, HAIR_PRICE, HAIR_PIC, HAIR_CONTENT, KIND_NO) VALUES('두피 케어', 100000, NULL, NULL, 7);
 SELECT * FROM hair;
 
-SELECT * FROM guest;
+
 
 /* event */
-SELECT * FROM event;
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
 VALUES ('생일 쿠폰', 0.2, to_date('2020-11-01','yyyy-MM-dd'),to_date('9999-12-30','yyyy-MM-dd'), 'bd_event.jpg', '고객님의 생일을 축하드립니다. <br>생일 당일 발급되며 생일로부터 14일 이내에 사용가능합니다.');
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
 VALUES ('오픈 기념 가입 쿠폰', 0.1, to_date('2020-11-01','yyyy-MM-dd'), to_date('2020-12-01','yyyy-MM-dd'), 'open_event.jpg', '가입한 날짜로부터 30일 이내에 사용가능합니다.');
 
+SELECT * FROM BOOKING;
 UPDATE EVENT SET EVENT_CONTENT = '고객님의 생일을 축하드립니다. <br>생일 당일 발급되며 생일로부터 14일 이내에 사용가능합니다.' WHERE event_no = 1;
 
 --생일인 사람 쿠폰 수동 삽입
- INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
-		SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" AS event_start, "thisyear_bd" + 14 - 1 / (24*60*60) + 1 AS event_end
-		FROM (
-		SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
-		) gb WHERE TO_CHAR(sysdate, 'YYYY-MM-DD') = TO_CHAR("thisyear_bd", 'YYYY-MM-DD');
+-- INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
+--		SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" AS event_start, "thisyear_bd" + 14 - 1 / (24*60*60) + 1 AS event_end
+--		FROM (
+--		SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
+--		) gb WHERE TO_CHAR(sysdate, 'YYYY-MM-DD') = TO_CHAR("thisyear_bd", 'YYYY-MM-DD');
 
 
 SELECT * FROM event;
@@ -82,7 +79,6 @@ INSERT INTO coupon(guest_id, event_no, event_start, event_end)
 SELECT 'test4321', event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 FROM event WHERE event_no = 2;
 INSERT INTO coupon(guest_id, event_no, event_start, event_end) 
 SELECT 'abcd', event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 FROM event WHERE event_no = 2;
-
 
 /* designer */
 
@@ -118,7 +114,6 @@ INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HB
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (1,'s5', NULL, 'hair/images/1-5.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (1,'s5', NULL, 'hair/images/1-6.jpg', sysdate);
 
-
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (2,'m1', NULL, 'hair/images/2-1.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (2,'m2', NULL, 'hair/images/2-2.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (2,'m3', NULL, 'hair/images/2-3.jpg', sysdate);
@@ -126,7 +121,6 @@ INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HB
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (2,'m5', NULL, 'hair/images/2-5.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (2,'m6', NULL, 'hair/images/2-6.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (2,'m7', NULL, 'hair/images/2-7.jpg', sysdate);
-
 
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (3,'l1', NULL, 'hair/images/3-1.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (3,'l2', NULL, 'hair/images/3-2.jpg', sysdate);
@@ -136,7 +130,6 @@ INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HB
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (3,'l6', NULL, 'hair/images/3-6.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (3,'l7', NULL, 'hair/images/3-7.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (3,'l8', NULL, 'hair/images/3-8.jpg', sysdate);
-
 
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (4,'m1', NULL, 'hair/images/4-1.jpg', sysdate);
 INSERT INTO HAIR_BOARD (HBOARD_CATENO, HBOARD_TITLE,HBOARD_CONTENT,HBOARD_PIC,HBOARD_REGDATE) VALUES (4,'m2', NULL, 'hair/images/4-2.jpg', sysdate);
@@ -171,6 +164,26 @@ INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(62, 10, 1);
 INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(62, 12, 2);
 */
 
+/*booking data*/
+SELECT * FROM BOOKING;
+SELECT * FROM BOOKING_HAIRS;
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('abcd', sysdate + 1 - 2/24, 2, sysdate, 1, null);
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('test4321', sysdate + 1 - 6/24, 2, sysdate, 1, null);
+
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(1, 16, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(2, 14, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(2, 11, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(3, 10, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(3, 12, 2);
+
+
+/*주문*/
+SELECT * FROM orders;
+SELECT * FROM ORDER_DETAIL;
 
 /*테스트 admin*/
 INSERT INTO ADMIN VALUES ('testadmin','1234','testadmin');
@@ -222,6 +235,7 @@ INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('te
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y');
+
 /*qnaNotice*/
 INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y');
 INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn) VALUES ('testadmin','주의점','헤어랑사이트에서 따로 광고글이나 관련없는 글은 올리면 삭제하도록하겠습니다.', 'y');

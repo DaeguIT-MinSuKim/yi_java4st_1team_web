@@ -50,6 +50,3 @@ SELECT 1 AS used FROM BOOKING WHERE TO_char(BOOK_TIME, 'YYYY-MM-DD hh24:mi') = '
 -- 고객이름
 -- 고객아이디
 -- 연락처
-
-UPDATE guest SET GUEST_EMAIL = 'earth_do@naver.com' WHERE guest_id = 'test';
-SELECT * FROM booking WHERE TO_CHAR(book_time, 'YYYY-MM-DD') >= '2020-10-31';
