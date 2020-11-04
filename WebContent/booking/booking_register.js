@@ -8,20 +8,20 @@ $(document).on("click", ".time_table ul li", function() {
 $(function() {
 	$(document).ready(function() {
 		document.title += ' - 예약하기'
+			
+		var bookDate = $("#bookDate");
 		var tomorrow = new Date();
 		tomorrow.setDate(tomorrow.getDate() + 1);
-		document.getElementById('bookDate').valueAsDate = tomorrow;
 		
 		var maxDate = new Date();
 		maxDate.setDate(tomorrow.getDate() + 28);
 		
 		var minDateStr = dateToString(tomorrow);
 		var maxDateStr = dateToString(maxDate);
-		console.log(minDateStr);
-		console.log(maxDateStr);
-		document.getElementById('bookDate').min = minDateStr;
-		document.getElementById('bookDate').max = maxDateStr;
 		
+		$(bookDate).val(minDateStr);
+		$(bookDate).attr("min", minDateStr);
+		$(bookDate).attr("max", maxDateStr);
 	
 		/* 헤어 대분류 불러오기 */
 		$.ajax({
