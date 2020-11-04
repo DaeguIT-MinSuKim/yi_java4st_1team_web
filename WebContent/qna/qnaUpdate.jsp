@@ -78,45 +78,33 @@ tr td:nth-child(2) {
 </style>
 <script>
 	function go_QnaUpdate() {
-		var url = "qnaUpdateForm.do?title="
-				+ document.getElementById("title").value + "&content="
-				+ document.getElementById("content").value + "&no="
-				+ document.getElementById("no").value;
-		window
-				.open(url, "_blank_1",
-						"toolbar=no, menubar=no, scrollbars=yes, resizable=no, width=400, height=100");
+		var qtitle = $("#title").val();
+		var qcontent = $("#content").val();
+		var qno = $("#no").val();
+
+		if (confirm("정말 수정하시겠습니까?")) {
+			$.post("qnaUpdate.do", {
+				content : qcontent,
+				no : qno
+			}, function() {
+				location.href = 'qnaHome.do';
+			});
+		}
 	}
 </script>
 <%@ include file="../header.jsp"%>
-<%-- <body>
-	<h1>문의 수정</h1>
-	<form name="form" method="post" action="qnaUpdate.do">
-		<input type="hidden" name="no" value="${qna.qnaNo}" id="no"> <label>제목</label>
-		<input type="text" readonly name="title" id="title"
-			value="${qna.qnaTitle }"><br> <label>내용</label>
-		<textarea name="content" id="content">${qna.qnaContent}</textarea>
-		<br>
 
-
-		<div id="buttons" style="float: right">
-			<input type="submit" value="수정하기" id="updateButton"> <input
-				type="reset" value="초기화" id="reset"> <input type="button"
-				value="취소" id="home" onclick="location.href='qnaHome.do'">
-		</div>
-	</form>
-</body> --%>
 
 
 <h3 style="text-align: center;">Q & A 수정</h3>
 
 <div class="content1-inner" style="text-align: center;">
 	<p></p>
-	<br>
+	<br> <input type="hidden" id="no" value="${qna.qnaNo }">
 	<table class="outer">
-
 		<tr class="tr" style="border-top: 1px solid black;">
 			<th>제목</th>
-			<td><input type="text" readonly name="title" id="title"
+			<td><input type="text" name="title" id="title"
 				value="${qna.qnaTitle }"></td>
 		</tr>
 		<tr class="tr">
@@ -129,7 +117,7 @@ tr td:nth-child(2) {
 			<tr class="tr">
 				<th>내용</th>
 				<td style="padding-top: 100px;"><textarea name="content"
-						id="content">${qna.qnaContent}</textarea></td>
+						id="content" cols="60" rows="10">${qna.qnaContent}</textarea></td>
 			</tr>
 		</c:if>
 
@@ -143,10 +131,10 @@ tr td:nth-child(2) {
 
 </div>
 <div id="buttons" style="float: right">
-	<input type="submit" value="수정하기" id="updateButton" class="button">
-	<input type="reset" value="초기화" id="reset" class="button"> <input
-		type="button" class="button" value="취소" id="home"
-		onclick="location.href='qnaHome.do'">
+	<input type="submit" value="수정하기" id="updateButton" class="button"
+		onclick="go_QnaUpdate()"> <input type="reset" value="초기화"
+		id="reset" class="button"> <input type="button" class="button"
+		value="취소" id="home" onclick="location.href='qnaHome.do'">
 </div>
 
 

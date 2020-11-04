@@ -144,7 +144,6 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="chartQna.do">Q&A</a>
             <a class="collapse-item" href="chartGuest.do">Guest</a>
-            <a class="collapse-item" href="chartOrders.do">Orders</a>
           </div>
         </div>
       </li>

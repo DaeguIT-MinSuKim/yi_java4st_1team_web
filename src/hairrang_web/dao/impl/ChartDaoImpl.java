@@ -23,8 +23,17 @@ public class ChartDaoImpl implements ChartDao {
 	}
 
 	@Override
-	public JSONArray QnAByoneDay() {
-		String sql = "SELECT TO_CHAR(QNA_REGDATE,'yyyy-mm')AS day ,COUNT(*)AS count FROM qna WHERE ADMIN_ID IS NULL GROUP BY TO_CHAR(QNA_REGDATE,'yyyy-mm') ORDER BY TO_CHAR(QNA_REGDATE,'yyyy-mm')";
+	public JSONArray qnaByoneDay(String year) {
+		String sql = null;
+		if (year.equals("all")) {
+			sql = "SELECT TO_CHAR(QNA_REGDATE,'yyyy') AS day ,COUNT(*)AS count FROM qna WHERE ADMIN_ID IS NULL  GROUP BY TO_CHAR(QNA_REGDATE,'yyyy') ORDER BY TO_CHAR(QNA_REGDATE,'yyyy')";
+		} else {
+			sql = "SELECT TO_CHAR(QNA_REGDATE,'mm') AS day ,COUNT(*)AS count FROM qna WHERE ADMIN_ID IS NULL ";
+			if (year != null) {
+				sql += " AND TO_CHAR(QNA_REGDATE,'yyyy') = " + year + " ";
+			}
+			sql += " GROUP BY TO_CHAR(QNA_REGDATE,'mm') ORDER BY TO_CHAR(QNA_REGDATE,'mm')";
+		}
 
 		JSONArray jsonArray = new JSONArray();
 
@@ -52,9 +61,95 @@ public class ChartDaoImpl implements ChartDao {
 	}
 
 	@Override
-	public JSONArray joinGuestByOneDay() {
-		String sql = "SELECT TO_CHAR(GUEST_JOIN_DATE,'yyyy-mm')AS day ,COUNT(*)AS count FROM  GUEST GROUP BY TO_CHAR(GUEST_JOIN_DATE,'yyyy-mm') ORDER BY TO_CHAR(GUEST_JOIN_DATE,'yyyy-mm')";
+	public JSONArray qnaByRes(String year) {
+		String sql = null;
+		if (year.equals("all")) {
+			sql = "SELECT RES_YN ,COUNT(*)AS count FROM qna ";
+		} else {
+			sql = "SELECT RES_YN ,COUNT(*)AS count FROM qna ";
+			if (year != null) {
+				sql += " WHERE TO_CHAR(QNA_REGDATE,'yyyy') = " + year + " ";
+			}
+		}
 
+		sql += "GROUP BY RES_YN ORDER BY RES_YN";
+
+		JSONArray jsonArray = new JSONArray();
+
+		JSONArray colNameArray = new JSONArray();
+		colNameArray.put("Result");
+		colNameArray.put("답변");
+		jsonArray.put(colNameArray);
+
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+
+				do {
+					JSONArray rowArray = new JSONArray();
+					rowArray.put(rs.getString("RES_YN"));
+					rowArray.put(rs.getInt("count"));
+					jsonArray.put(rowArray);
+				} while (rs.next());
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return jsonArray;
+	}
+
+	@Override
+	public JSONArray qnaBySecret(String year) {
+		String sql = null;
+		if (year.equals("all")) {
+			sql = "SELECT QNA_SECRET ,COUNT(*)AS count FROM qna ";
+		} else {
+			sql = "SELECT QNA_SECRET ,COUNT(*)AS count FROM qna ";
+			if (year != null) {
+				sql += " WHERE TO_CHAR(QNA_REGDATE,'yyyy') = " + year + " ";
+			}
+		}
+
+		sql += "GROUP BY QNA_SECRET ORDER BY QNA_SECRET";
+
+		JSONArray jsonArray = new JSONArray();
+
+		JSONArray colNameArray = new JSONArray();
+		colNameArray.put("Secret");
+		colNameArray.put("비밀");
+		jsonArray.put(colNameArray);
+
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+
+				do {
+					JSONArray rowArray = new JSONArray();
+					rowArray.put(rs.getString("QNA_SECRET"));
+					rowArray.put(rs.getInt("count"));
+					jsonArray.put(rowArray);
+				} while (rs.next());
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return jsonArray;
+	}
+
+	@Override
+	public JSONArray guestByJoin(String year) {
+		String sql = null;
+		if (year.equals("all")) {
+			sql = "SELECT TO_CHAR(GUEST_JOIN_DATE,'yyyy')AS day ,COUNT(*)AS count FROM GUEST  GROUP BY TO_CHAR(GUEST_JOIN_DATE,'yyyy') ORDER BY TO_CHAR(GUEST_JOIN_DATE,'yyyy')";
+		} else {
+			sql = "SELECT TO_CHAR(GUEST_JOIN_DATE,'mm')AS day ,COUNT(*)AS count FROM GUEST ";
+			if (year != null) {
+				sql += " WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = " + year + " GROUP BY TO_CHAR(GUEST_JOIN_DATE,'mm') ORDER BY TO_CHAR(GUEST_JOIN_DATE,'mm')";
+			}
+		}
+		
 		JSONArray jsonArray = new JSONArray();
 
 		JSONArray colNameArray = new JSONArray();
@@ -80,10 +175,20 @@ public class ChartDaoImpl implements ChartDao {
 		return jsonArray;
 	}
 
-	@Override
-	public JSONArray gender() {
-		String sql = "SELECT GUEST_GENDER ,COUNT(*)AS count FROM  GUEST GROUP BY GUEST_GENDER ORDER BY GUEST_GENDER";
 
+	@Override
+	public JSONArray guestByGender(String year) {
+		String sql = null;
+		if (year.equals("all")) {
+			sql = "SELECT GUEST_GENDER ,COUNT(*)AS count FROM GUEST";
+		} else {
+			sql = "SELECT GUEST_GENDER ,COUNT(*)AS count FROM GUEST";
+			if (year != null) {
+				sql += " WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = " + year + " ";
+			}
+		}
+
+		sql += " GROUP BY GUEST_GENDER ORDER BY GUEST_GENDER";
 		JSONArray jsonArray = new JSONArray();
 
 		JSONArray colNameArray = new JSONArray();
@@ -98,11 +203,49 @@ public class ChartDaoImpl implements ChartDao {
 
 				do {
 					JSONArray rowArray = new JSONArray();
-					if(rs.getString("GUEST_GENDER").equals("0")){
+					if (rs.getString("GUEST_GENDER").equals("0")) {
 						rowArray.put("남자");
-					}else {
+					} else {
 						rowArray.put("여자");
 					}
+					rowArray.put(rs.getInt("count"));
+					jsonArray.put(rowArray);
+				} while (rs.next());
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return jsonArray;
+	}
+
+	@Override
+	public JSONArray guestByOut(String year) {
+		String sql = null;
+		if (year.equals("all")) {
+			sql = "SELECT DEL_YN ,COUNT(*)AS count FROM ";
+		} else {
+			sql = "SELECT DEL_YN ,COUNT(*)AS count FROM ";
+			if (year != null) {
+				sql += " WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = " + year + " ";
+			}
+		}
+
+		sql += " GUEST GROUP BY DEL_YN ORDER BY DEL_YN";
+		JSONArray jsonArray = new JSONArray();
+
+		JSONArray colNameArray = new JSONArray();
+		colNameArray.put("Delete");
+		colNameArray.put("탈퇴");
+		jsonArray.put(colNameArray);
+
+		try (Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+
+				do {
+					JSONArray rowArray = new JSONArray();
+					rowArray.put(rs.getString("DEL_YN"));
 					rowArray.put(rs.getInt("count"));
 					jsonArray.put(rowArray);
 				} while (rs.next());
@@ -373,34 +516,4 @@ public class ChartDaoImpl implements ChartDao {
 		}
 		return jsonArray;
 	}
-
-	@Override
-	public JSONArray QnAByRes() {
-		String sql = "SELECT RES_YN ,COUNT(*)AS count FROM qna GROUP BY RES_YN ORDER BY RES_YN";
-
-		JSONArray jsonArray = new JSONArray();
-
-		JSONArray colNameArray = new JSONArray();
-		colNameArray.put("Result");
-		colNameArray.put("답변");
-		jsonArray.put(colNameArray);
-
-		try (Connection con = JndiDs.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery()) {
-			if (rs.next()) {
-
-				do {
-					JSONArray rowArray = new JSONArray();
-					rowArray.put(rs.getString("RES_YN"));
-					rowArray.put(rs.getInt("count"));
-					jsonArray.put(rowArray);
-				} while (rs.next());
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		return jsonArray;
-	}
-
 }

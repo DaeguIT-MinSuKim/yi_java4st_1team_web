@@ -27,7 +27,7 @@ $(function(){
 		function drawChart(){
 
 			var options1 = {
-				title : 'QnA Day',
+				title : 'Guest Join',
 				height : '100%',
 				width : '100%',
 				curveType: 'function',
@@ -36,7 +36,7 @@ $(function(){
 			};
 			
 			var options2 = {
-				title : 'QnA Result',
+				title : 'Guest Gender',
 				height : '100%',
 				width : '100%',
 				pieHole: 0.4,
@@ -44,27 +44,27 @@ $(function(){
 			};
 			
 			var options3 = {
-				title : 'QnA Secret',
+				title : 'Guest Out',
 				height : '100%',
 				width : '100%',
 				pieHole: 0.4,
 				backgroundColor: "transparent"
 			};
 			
-			var qnaTable = google.visualization.arrayToDataTable(${qna});
+			var qnaTable = google.visualization.arrayToDataTable(${join});
 	
 			var objDiv = document.getElementById('myChart1');
 			var chart = new google.visualization.LineChart(objDiv);
 			chart.draw(qnaTable, options1);
 			
 			
-			var resTable = google.visualization.arrayToDataTable(${res})
+			var resTable = google.visualization.arrayToDataTable(${gender})
 			
 			var objDiv = document.getElementById('myChart2');
 			var chart = new google.visualization.PieChart(objDiv);
 			chart.draw(resTable, options2);
 			
-			var seTable = google.visualization.arrayToDataTable(${secret})
+			var seTable = google.visualization.arrayToDataTable(${out})
 			
 			var objDiv = document.getElementById('myChart3');
 			var chart = new google.visualization.PieChart(objDiv);

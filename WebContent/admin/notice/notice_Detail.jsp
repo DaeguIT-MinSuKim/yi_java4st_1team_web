@@ -23,7 +23,7 @@
 		<div class="card-body">
 			<div class="table-responsive">
 				<!-- bootStrap table wrapper-->
-				<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+				<div class="dt-bootstrap4">
 
 
 					<div id="add-wrapper">
@@ -36,8 +36,7 @@
 							</tr>
 							<tr>
 								<td>공지명</td>
-								<td><input type="text" name="name"
-									value="${notice.noticeTitle }"></td>
+								<td>${notice.noticeTitle }</td>
 
 							</tr>
 							<tr>
@@ -53,8 +52,7 @@
 							</tr>
 							<tr>
 								<td>공지 내용</td>
-								<td><input type='text' name="content"
-									value="${notice.noticeContent}" style="height: 60px;" /></td>
+								<td>${notice.noticeContent}</td>
 							</tr>
 
 							<tr>

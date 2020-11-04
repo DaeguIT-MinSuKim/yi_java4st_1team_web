@@ -188,7 +188,7 @@ tr td:nth-child(2) {
 	<div id="buttons" style="float: right">
 		<c:if test="${loginUser.guestId eq qna.guestId.guestId}">
 			<c:if test="${qna.qnaResYn eq 'n' }">
-				<input type="button" value="수정하기" id="updateButton" class="button" onclick="qnaUpdate.do?no=${qna.qnaNo}" >
+				<input type="button" value="수정하기" id="updateButton" class="button" onclick="location.href='qnaUpdate.do?no=${qna.qnaNo}'" >
 			</c:if>
 			<input type="button" value=delete id="delete" class="button"
 				onclick="go_delQna(${qna.qnaNo })">

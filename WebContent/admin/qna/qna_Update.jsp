@@ -23,58 +23,85 @@
 					<div id="add-wrapper">
 
 						<table class="add-table">
-							<tr>
-								<td>번호</td>
-								<td>${qna.qnaNo}<input type="hidden" name="no"
-									value="${qna.qnaNo}"></td>
-							</tr>
-							<tr>
-								<td>문의명</td>
-								<td><input type="text" name="name" value="${qna.qnaTitle }"
-									readonly></td>
-
-							</tr>
-							<tr>
-								<td>문의 상태</td>
-								<td><c:if test="${qna.qnaDelYn eq 'n'}">
-										<div class="btn-info btn-sm"
-											style="width: 80px; margin: 0 auto">진행중</div>
-									</c:if> <c:if test="${qna.qnaDelYn eq 'y'}">
-										<div class="btn-secondary btn-sm"
-											style="width: 80px; margin: 0 auto">종료</div>
-									</c:if></td>
-
-							</tr>
-							<tr>
-								<td>문의 내용</td>
-								<td><input type='text' name="content"
-									value="${qna.qnaContent}" style="height: 60px;" readonly /></td>
-							</tr>
-							<tr>
-								<td>문의 작성일</td>
-								<td>${qna.qnaRegDate}</td>
-							</tr>
-
-							<c:if test="${qna.qnaFile != null}">
+							<c:if test="${qna.qnaNotice eq 'y' }">
 								<tr>
-									<td>사진</td>
-									<td><img alt="" src="../notice/setload/${qna.qnaFile}">
-									</td>
+									<td>번호</td>
+									<td>${qna.qnaNo}<input type="hidden" name="no"
+										value="${qnaRes.qnaNo}"></td>
+								</tr>
+								<tr>
+									<td>공지명</td>
+									<td><input type="text" name="title"
+										value="${qna.qnaTitle }" /></td>
+
+								</tr>
+								<tr>
+									<td>문의 상태</td>
+									<td><c:if test="${qna.qnaDelYn eq 'n'}">
+											<div class="btn-info btn-sm"
+												style="width: 80px; margin: 0 auto">진행중</div>
+										</c:if> <c:if test="${qna.qnaDelYn eq 'y'}">
+											<div class="btn-secondary btn-sm"
+												style="width: 80px; margin: 0 auto">종료</div>
+										</c:if></td>
+								</tr>
+								<tr>
+									<td>공지 내용</td>
+									<td><textarea rows="20" cols="60" name="content">${qna.qnaContent }</textarea></td>
 								</tr>
 							</c:if>
-							<tr>
-								<td>답변 제목</td>
-								<td><input type="text" name="title"
-									value="${qnaRes.qnaTitle }" />
-							</tr>
-							<tr>
-								<td>답변 내용</td>
-								<td><textarea rows="20" cols="60" name="content">${qnaRes.qnaContent }</textarea></td>
-							</tr>
-							<tr>
-								<td>업로드 사진</td>
-								<td><img alt="" src="../notice/setload${qnaRes.qnaFile }"></td>
-							</tr>
+							<c:if test="${qna.qnaNotice eq 'n' }">
+								<tr>
+									<td>번호</td>
+									<td>${qna.qnaNo}<input type="hidden" name="no"
+										value="${qnaRes.qnaNo}"></td>
+								</tr>
+								<tr>
+									<td>문의명</td>
+									<td>${qna.qnaTitle }</td>
+
+								</tr>
+								<tr>
+									<td>문의 상태</td>
+									<td><c:if test="${qna.qnaDelYn eq 'n'}">
+											<div class="btn-info btn-sm"
+												style="width: 80px; margin: 0 auto">진행중</div>
+										</c:if> <c:if test="${qna.qnaDelYn eq 'y'}">
+											<div class="btn-secondary btn-sm"
+												style="width: 80px; margin: 0 auto">종료</div>
+										</c:if></td>
+
+								</tr>
+								<tr>
+									<td>문의 내용</td>
+									<td>${qna.qnaContent}</td>
+								</tr>
+								<tr>
+									<td>문의 작성일</td>
+									<td>${qna.qnaRegDate}</td>
+								</tr>
+
+								<c:if test="${qna.qnaFile != null}">
+									<tr>
+										<td>사진</td>
+										<td><img alt="" src="../notice/setload/${qna.qnaFile}">
+										</td>
+									</tr>
+								</c:if>
+								<tr>
+									<td>답변 제목</td>
+									<td><input type="text" name="title"
+										value="${qnaRes.qnaTitle }" />
+								</tr>
+								<tr>
+									<td>답변 내용</td>
+									<td><textarea rows="20" cols="60" name="content">${qnaRes.qnaContent }</textarea></td>
+								</tr>
+								<tr>
+									<td>업로드 사진</td>
+									<td><img alt="" src="../notice/setload${qnaRes.qnaFile }"></td>
+								</tr>
+							</c:if>
 						</table>
 						<br> <br>
 						<div class="clear"></div>

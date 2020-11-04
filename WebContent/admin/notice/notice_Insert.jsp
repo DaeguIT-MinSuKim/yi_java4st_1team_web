@@ -23,7 +23,7 @@
 
 						<table class="add-table">
 							<tr>
-								<td>공지명</td>
+								<td><div style="width:60px">공지명</div></td>
 								<td><input type="text" id="title" name="title" /></td>
 
 							</tr>

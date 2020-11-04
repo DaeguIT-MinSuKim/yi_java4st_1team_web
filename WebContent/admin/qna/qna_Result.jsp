@@ -30,8 +30,7 @@
 							</tr>
 							<tr>
 								<td>문의명</td>
-								<td><input type="text" name="name" value="${qna.qnaTitle }"
-									readonly></td>
+								<td>${qna.qnaTitle }</td>
 
 							</tr>
 							<tr>
@@ -47,8 +46,7 @@
 							</tr>
 							<tr>
 								<td>문의 내용</td>
-								<td><input type='text' name="content"
-									value="${qna.qnaContent}" style="height: 60px;" readonly /></td>
+								<td>${qna.qnaContent}</td>
 							</tr>
 							<tr>
 								<td>문의 작성일</td>

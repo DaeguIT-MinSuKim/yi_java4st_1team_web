@@ -180,16 +180,64 @@ INSERT INTO ADMIN VALUES ('testadmin','1234','testadmin');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 운영공지','사이트운영방침에 따라 이번년도는 1명의 운영자로 운영할 예정');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사기 조심','헤어랑을 빙자해서 선예약금 지불 사례발생 조심해주세요.');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('일부 상품 가격 조정','이번년도 물가가 올라서 일부 상품들의 가격이 올라갑니다.');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 정기정검','11월 10일날 사이트 정기정검을 할 예정입니다.');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 11월1일정기정검',' 사이트 정기정검을 할 예정입니다.');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 11월 5일정기정검',' 사이트 정기정검을 할 예정입니다.');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 10월 15일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-10-15','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 10월 3일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-10-03','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 9월 26일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-09-26','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 9월 3일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-09-03','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 9월 1일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-09-01','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 5월 3일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-05-03','y');
+
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 12월 1일정기정검',' 사이트 정기정검을 할 예정입니다.','2019-12-01','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 11월 4일정기정검',' 사이트 정기정검을 할 예정입니다.','2019-11-04','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 10월 24일정기정검',' 사이트 정기정검을 할 예정입니다.','2019-10-24','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 5월 7일정기정검',' 사이트 정기정검을 할 예정입니다.','2019-05-07','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 3월 1일정기정검',' 사이트 정기정검을 할 예정입니다.','2019-03-01','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 1월 1일정기정검',' 사이트 정기정검을 할 예정입니다.','2019-01-01','y');
+
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 12월 20일정기정검',' 사이트 정기정검을 할 예정입니다.','2018-12-20','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 11월 15일정기정검',' 사이트 정기정검을 할 예정입니다.','2018-11-15','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 6월 5일정기정검',' 사이트 정기정검을 할 예정입니다.','2018-06-05','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 3월 1일정기정검',' 사이트 정기정검을 할 예정입니다.','2018-03-01','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 4월 24일정기정검',' 사이트 정기정검을 할 예정입니다.','2018-04-24','y');
 
 
 /*qna*/
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('test','로그인이 안된다고 떠요','로그인창에서 로그인을 눌렀는데 자꾸 튕겨요 어떻게 해야해요?');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('test111','신상품 언제나오나요?','신상품 언제쯤 들어오나요 이번주안에 들어오나요?');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('abcd','정확한 위치를 모르겠는데','지도를 봐도 정확한 위치를 모르겠는데 따로 안내해주실수있나요?');
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2020-11-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2020-10-1','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2020-09-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2020-1-13','y');
+
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-1-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-1-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-1-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-1-13','y');
+
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y');
 /*qnaNotice*/
 INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y');
 INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn) VALUES ('testadmin','주의점','헤어랑사이트에서 따로 광고글이나 관련없는 글은 올리면 삭제하도록하겠습니다.', 'y');
 INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn) VALUES ('testadmin','실시간 문의사항','실시간으로 물어볼게 있으시다면 챗봇을 이용하요 문의해주시기바랍니다.', 'y');
 
+INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn,QNA_REGDATE ,DEL_YN ) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y','2020-08-02','y');
+INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn,QNA_REGDATE ,DEL_YN ) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y','2020-07-02','y');
+INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn,QNA_REGDATE ,DEL_YN ) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y','2020-04-02','y');
+INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn,QNA_REGDATE ,DEL_YN ) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y','2020-01-02','y');
+
+INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn,QNA_REGDATE ,DEL_YN ) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y','2019-08-02','y');
+INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn,QNA_REGDATE ,DEL_YN ) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y','2019-07-02','y');
+INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn,QNA_REGDATE ,DEL_YN ) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y','2019-04-02','y');
+INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn,QNA_REGDATE ,DEL_YN ) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y','2019-01-02','y');
+
+INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn,QNA_REGDATE ,DEL_YN ) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y','2018-08-02','y');
+INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn,QNA_REGDATE ,DEL_YN ) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y','2018-07-02','y');
+INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn,QNA_REGDATE ,DEL_YN ) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y','2018-04-02','y');
+INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn,QNA_REGDATE ,DEL_YN ) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y','2018-01-02','y');
