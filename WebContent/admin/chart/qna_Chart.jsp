@@ -86,8 +86,8 @@ $(function(){
 			<select id="year" name="year">
 				<option value="all" >전체</option>
 				<option value="2020">2020</option>
-				<option value="2000">2019</option>
-				<option value="2000">2018</option>
+				<option value="2019">2019</option>
+				<option value="2018">2018</option>
 			</select> <input type="submit" value="검색" id="chartSearch"
 				class="btn btn-primary btn-sm">
 		</div>

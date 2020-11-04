@@ -154,7 +154,7 @@ tr td:nth-child(2) {
 
 		</table>
 		<c:if test="${ qna.qnaFile != null}">
-			<img alt="" src="notice/upload/${qna.qnaFile}"
+			<img alt="" src="qna/upload/${qna.qnaFile}"
 				style="width: 600px; height: 600px;">
 		</c:if>
 

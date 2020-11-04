@@ -84,6 +84,8 @@ public class OrdersService {
 			oPstmt.setString(2, guestId);
 			oPstmt.setInt(3,  orders.getDesigner().getDeNo());
 			
+			System.out.println(ordersNo + " " + orders.getGuest() + " " + orders.getDesigner());
+			
 			oPstmt.executeUpdate();
 			odPstmt = con.prepareStatement(odSql);
 			for(OrderDetail od : orders.getOdList()) {

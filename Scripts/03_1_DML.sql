@@ -2,6 +2,10 @@
 --VALUES();
 SELECT * FROM BOOKING_HAIRS;
 
+/* 비회원  코드*/
+INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
+VALUES('nonmember', 'admin', '비회원', NULL, '0', NULL, NULL, NULL, NULL, 'n', 'n');
+
 /* TEST용 회원 */
 -- 아이디 test 생일설정
 SELECT * FROM GUEST;
@@ -189,13 +193,13 @@ SELECT * FROM ORDER_DETAIL;
 /*테스트 admin*/
 INSERT INTO ADMIN VALUES ('testadmin','1234','testadmin');
 
-
 /*notice*/
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 운영공지','사이트운영방침에 따라 이번년도는 1명의 운영자로 운영할 예정');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사기 조심','헤어랑을 빙자해서 선예약금 지불 사례발생 조심해주세요.');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('일부 상품 가격 조정','이번년도 물가가 올라서 일부 상품들의 가격이 올라갑니다.');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 11월1일정기정검',' 사이트 정기정검을 할 예정입니다.');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 11월 5일정기정검',' 사이트 정기정검을 할 예정입니다.');
+
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 10월 15일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-10-15','y');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 10월 3일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-10-03','y');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 9월 26일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-09-26','y');
@@ -224,18 +228,35 @@ INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('abcd','정확한 위�
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2020-11-13','y');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2020-10-1','y');
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2020-09-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ,RES_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2020-09-13','y','y');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2020-1-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ,RES_YN) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2020-1-13','y','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ,RES_YN) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2020-1-13','y','y');
 
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-1-13','y');
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-1-13','y');
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-1-13','y');
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-1-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-3-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-4-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-5-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-7-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ,RES_YN) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-2-13','y','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ,RES_YN,QNA_SECRET) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-12-13','y','y','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ,RES_YN,QNA_SECRET) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-10-13','y','y','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ,RES_YN,QNA_SECRET) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-1-13','y','y','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ,RES_YN,QNA_SECRET) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-12-13','y','y','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ,RES_YN,QNA_SECRET) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-5-13','y','y','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ,RES_YN,QNA_SECRET) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2019-1-13','y','y','y');
 
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN,QNA_SECRET ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN,QNA_SECRET ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-3-13','y','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ,QNA_SECRET) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN,QNA_SECRET ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-5-13','y','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-5-13','y');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y');
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y');
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y');
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-2-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-12-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-11-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-10-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-2-13','y');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ,RES_YN) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2018-1-13','y','y');
 
 /*qnaNotice*/
 INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y');

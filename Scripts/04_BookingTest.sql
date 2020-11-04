@@ -50,3 +50,10 @@ SELECT 1 AS used FROM BOOKING WHERE TO_char(BOOK_TIME, 'YYYY-MM-DD hh24:mi') = '
 -- 고객이름
 -- 고객아이디
 -- 연락처
+
+-- 뭔차이
+SELECT * FROM guest WHERE guest_id != 'nonmember';
+SELECT g.* FROM guest g
+LEFT OUTER JOIN (SELECT guest_Id FROM guest WHERE guest_id = 'nonmember') g2
+ON (g.guest_id = g2.guest_Id)
+WHERE g2.guest_id IS NULL;

@@ -1,121 +1,135 @@
 $(function() {
 	$(document).ready(function() {
 		document.title += ' - 예약 목록';
-		
-		$(".bookingToOrderButton").on("click", function() {
-			var trIdx = $(this).closest("tr").prevAll().length;
-			console.log(trIdx);
-		});
-		
 		setFilteringPaging();
-		
-		$("#startDate").datepicker({
-			format: "yyyy-mm-dd",
-			language: "ko",
-			todayBtn: "linked",
-			clearBtn: true
-		});
-		
-		$("#endDate").datepicker({
-			format: "yyyy-mm-dd",
-			language: "ko",
-			todayBtn: "linked",
-			clearBtn: true
-		});
-		
-		$(".dateBtn").not("#aMonthBtn").click(function() {
-			setDateValue($(this).val() - 1);
-		});
-		
-		$("#aMonthBtn").click(function() {
-			var today = new Date();
-			var wantDate = new Date();
-			wantDate.setMonth(wantDate.getMonth() + 1);
-			wantDate.setDate(wantDate.getDate() - 1);
-			
-			$("#startDate").datepicker("update", dateToString(today));
-			$("#endDate").datepicker("update", dateToString(wantDate));
-		})
-		
+	});	
+	
+	$("#startDate").datepicker({
+		format: "yyyy-mm-dd",
+		language: "ko",
+		todayBtn: "linked",
+		clearBtn: true
+	});
+
+	$("#endDate").datepicker({
+		format: "yyyy-mm-dd",
+		language: "ko",
+		todayBtn: "linked",
+		clearBtn: true
 	});
 	
+	$(".dateBtn").not("#aMonthBtn").click(function() {
+		setDateValue($(this).val() - 1);
+	});
 	
-	function setDateValue(days) {
+	$("#aMonthBtn").click(function() {
 		var today = new Date();
 		var wantDate = new Date();
-		wantDate.setDate(wantDate.getDate() + days);
+		wantDate.setMonth(wantDate.getMonth() + 1);
+		wantDate.setDate(wantDate.getDate() - 1);
 		
 		$("#startDate").datepicker("update", dateToString(today));
 		$("#endDate").datepicker("update", dateToString(wantDate));
-	}
-	
-	function dateToString(date) {
-		var year = date.getFullYear(); 
-		var month = new String(date.getMonth()+1); 
-		var day = new String(date.getDate()); 
-	
-		// 한자리수일 경우 0을 채워준다. 
-		if(month.length == 1){ 
-		  month = "0" + month; 
-		} 
-		if(day.length == 1){ 
-		  day = "0" + day; 
-		} 
-		
-		return year + "-" + month + "-" + day;
-	}
-});	
-
-$("#selectAll").click(function(){
-	$("input[type=checkbox]").prop("checked", true);
-	$("input[type=checkbox]:checked").closest("tr").addClass("table-primary");
+	});
 });
 
-$("#deselectAll").click(function(){
-	$("input[type=checkbox]:checked").closest("tr").removeClass("table-primary");
-	$("input[type=checkbox]").prop("checked", false);
+
+function setDateValue(days) {
+	var today = new Date();
+	var wantDate = new Date();
+	wantDate.setDate(wantDate.getDate() + days);
+	
+	$("#startDate").datepicker("update", dateToString(today));
+	$("#endDate").datepicker("update", dateToString(wantDate));
+};
+
+function dateToString(date) {
+	var year = date.getFullYear(); 
+	var month = new String(date.getMonth()+1); 
+	var day = new String(date.getDate()); 
+
+	// 한자리수일 경우 0을 채워준다. 
+	if(month.length == 1){ 
+	  month = "0" + month; 
+	} 
+	if(day.length == 1){ 
+	  day = "0" + day; 
+	} 
+	
+	return year + "-" + month + "-" + day;
+};
+	
+$(function(){
+	$("#selectAll").click(function(){
+		console.log($(".ckbox"));
+		$(".ckbox").prop("checked", true);
+		$(".ckbox:checked").closest("tr").addClass("table-primary");
+	});
+
+	$("#deselectAll").click(function(){
+		$(".ckbox:checked").closest("tr").removeClass("table-primary");
+		$(".ckbox").prop("checked", false);
+	});
+
+	$(".ckbox").click(function() {
+		if($(this).is(":checked")) {
+			$(this).closest("tr").addClass("table-primary");
+		} else {
+			$(this).closest("tr").removeClass("table-primary");
+		}
+	});
+	
+	$("#deleteSelected").click(function() {
+	    console.log($("input[type=checkbox]:checked").attr("no"));
+	    var checkedList = new Array();
+	    $("input[type=checkbox]:checked").each(function() {
+	    	checkedList.push(this.value);
+	    });
+	    console.log(checkedList);
+	    
+	    if(!checkedList) {
+	    	alert("예약을 취소할 예약건을 선택하세요.");
+	    	return;
+	    }
+	    
+	    if(confirm("선택한 예약건(" + checkedList.length + "건)을 예약취소 하시겠습니까?") == true) {
+	    	$.ajax({
+		  		  type:'post',
+		  		  url:'bookingCancle.do',
+		  		  data: {list: checkedList},
+		  		  dataType: "text",
+		  		  success:function(data){
+		  			  alert("예약이 취소 되었습니다. (" + checkedList.length + "건)");
+		  			  location.reload();
+		  		  },
+		  		  error:function(data){
+		  			  alert("예약을 취소하는데 실패했습니다.");
+		  			  console.log(data);
+		  		  }
+		     	});
+	    }
+	});
+})
+
+/*$(document).on("click", "#selectAll", function(){
+	console.log($(".ckbox"));
+	$(".ckbox").prop("checked", true);
+	$(".ckbox:checked").closest("tr").addClass("table-primary");
 });
 
-$("input[type=checkbox]").click(function() {
-	console.log("눌림");
+$(document).on("click", "#deselectAll", function(){
+	$(".ckbox:checked").closest("tr").removeClass("table-primary");
+	$(".ckbox").prop("checked", false);
+});
+
+$(document).on("click", ".ckbox", function() {
 	if($(this).is(":checked")) {
 		$(this).closest("tr").addClass("table-primary");
 	} else {
 		$(this).closest("tr").removeClass("table-primary");
 	}
-});
+});*/
 
-
-$("#deleteSelected").click(function() {
-    console.log($("input[type=checkbox]:checked").attr("no"));
-    var checkedList = new Array();
-    $("input[type=checkbox]:checked").each(function() {
-    	checkedList.push(this.value);
-    });
-    console.log(checkedList);
-    
-    if(!checkedList) {
-    	alert("예약을 취소할 예약건을 선택하세요.");
-    	return;
-    }
-    
-    if(confirm("선택한 예약건(" + checkedList.length + "건)을 예약취소 하시겠습니까?") == true) {
-    	$.ajax({
-	  		  type:'post',
-	  		  url:'bookingCancle.do',
-	  		  data: {list: checkedList},
-	  		  dataType: "text",
-	  		  success:function(data){
-	  			  alert("예약이 취소 되었습니다. (" + checkedList.length + "건)");
-	  			  location.reload();
-	  		  },
-	  		  error:function(data){
-	  			  alert("예약을 취소하는데 실패했습니다.");
-	  			  console.log(data);
-	  		  }
-	     	});
-    }
-});
 
 
 $(document).on('click', '.deleteButton', function() {
@@ -177,6 +191,7 @@ function setFilteringPaging() {
 	var startDate = thisUrl.searchParams.get("startDate");
 	var endDate = thisUrl.searchParams.get("endDate");
 	
+	
 	if(cntPerPage != null) {
 		$("select[name=cntPerPage]").val(cntPerPage);
 	}
@@ -195,11 +210,13 @@ function setFilteringPaging() {
 	}
 	if(!startDate) {
 	} else if(startDate.length != 0) {
-		$("select[name=startDate]").val(startDate);
+//		$("#startDate").val(startDate);
+		$("#startDate").datepicker("update", startDate);
 	}
 	if(!endDate) {
 	} else if(endDate.length != 0) {
-		$("select[name=endDate]").val(endDate);
+//		$("#endDate").val(endDate);
+		$("#endDate").datepicker("update", endDate);
 	}
 }
 

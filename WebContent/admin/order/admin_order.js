@@ -106,6 +106,9 @@ $(function() {
 		}
 		
 		selectedBookingNo = 0;
+		selectedGuestId = "";
+		
+		$("#guestSearchTable .table-primary").removeClass("table-primary"); // 모달창 선택 clear
 		$("#todayBookingTable .table-primary").removeClass("table-primary"); // 모달창 선택 clear
 	});
 	
@@ -214,6 +217,9 @@ $(document).on("click", "#bookingSearchModalConfirm", function(){
 $(document).on("click", "#guestSearchModalConfirm", function(){
 	setOrderViewClear();
 	
+	selectedBookingNo = 0;
+	$("#todayBookingTable .table-primary").removeClass("table-primary"); // 모달창 선택 clear
+	
 	selectedGuestId = $("#guestSearchTable .table-primary td").eq(1).text();
 	$("#guestInput").prop("readonly", true);
 	$("#nonMemberCK").prop("checked", false);
@@ -281,11 +287,15 @@ function setOrderViewClear() {
 	$("#discountAmount").attr("discountAmount", 0);
 	$("#totalPrice").text("0");
 	$("#totalPrice").attr("totalPrice", 0);
+	
+	
 }
 
 /* DB에서 조회한 예약정보 화면에 set */
 function setBookingInfo(selBooking) {
 	setOrderViewClear();
+	
+	$("#guestSearchTable .table-primary").removeClass("table-primary"); // 모달창 선택 clear
 	
 	$("div [name=bookingDetail]").empty();
 	$("#guestInput").prop("readonly", true);
@@ -564,7 +574,6 @@ $(document).on("click", "#orderRegBtn", function() {
 		success: function(data) {
 			if(data != 0) {
 				alert("주문이 등록되었습니다.");
-//				location.href="orderList.do";
 				location.href="orderDetail.do?no="+data;
 			} else {
 				console.log(data);
@@ -581,7 +590,7 @@ $(document).on("click", "#orderRegBtn", function() {
 function readInputOrder(){
 	var guestId;
 	
-	if($("#nonMemberCK").is("checked")) {
+	if($("#nonMemberCK").is(":checked")) {
 		guestId = "nonmember";
 	} else {
 		$("#guestInput").prop("disabled", false);
@@ -621,8 +630,6 @@ function readInputOrder(){
 		
 		odList.push(od);
 	})
-	
-	
 	
 	var order = {
 			guest: { guestId: guestId },
