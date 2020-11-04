@@ -129,9 +129,14 @@ function info_update(){
 };
 
 function pwd_update(){
-	alert('비밀번호가 변경되었습니다.');
-	document.formm.action = "guestPwdUpdate.do";
-    document.formm.submit();
+	if($('#new_pwd').val()!=$('#new_pwdCheck').val()){
+		alert('암호가 일치하지 않습니다.');
+		return;
+	}else{
+		alert('비밀번호가 변경되었습니다.');
+		document.formm.action = "guestPwdUpdate.do";
+		document.formm.submit();
+	}
 };
 
 function go_leave(){
