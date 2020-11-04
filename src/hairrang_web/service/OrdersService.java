@@ -59,7 +59,7 @@ public class OrdersService {
 				"LEFT OUTER JOIN (SELECT coupon_id, event_salerate, 0 AS fake FROM coupon_view WHERE coupon_id = ? AND GUEST_ID = ?) USING(fake)"; 
 		String bSql = "UPDATE BOOKING SET BOOK_STATUS = 2 WHERE BOOK_NO = ? ";
 		String tpSql = "UPDATE orders SET orders_total_price = (SELECT SUM(OD_PRICE*OD_QUANTITY-NVL(OD_DISCOUNT, 0)) FROM ORDER_DETAIL od WHERE orders_no = ?) WHERE orders_no = ?";
-		String cSql = "UPDATE COPUON SET USED_YN = 'y' WHERE COUPON_ID = ?";
+		String cSql = "UPDATE COUPON SET USED_YN = 'y' WHERE COUPON_ID = ?";
 		
 		Connection con = null;
 		PreparedStatement oPstmt = null;
@@ -70,8 +70,6 @@ public class OrdersService {
 		
 		int ordersNo = 0;
 		int couponId = 0;
-		System.out.println("orderService insert");
-		System.out.println(orders);
 		
 		try {
 			con = JndiDs.getConnection();
@@ -87,27 +85,24 @@ public class OrdersService {
 			oPstmt.setInt(3,  orders.getDesigner().getDeNo());
 			
 			oPstmt.executeUpdate();
-			
 			odPstmt = con.prepareStatement(odSql);
 			for(OrderDetail od : orders.getOdList()) {
 				odPstmt.setInt(1, ordersNo);
 				odPstmt.setInt(2, od.getOdQuantity());
 				odPstmt.setInt(3, od.getHair().getHairNo());
-				System.out.println("쿠폰 있니? " + od.getCoupon());
 				if(od.getCoupon() != null) {
-					if(od.getCoupon().getCouponId() == 0) {
-						odPstmt.setInt(4, od.getCoupon().getCouponId());
+					if(od.getCoupon().getCouponId() != 0) {
 						couponId = od.getCoupon().getCouponId();
+						odPstmt.setInt(4, couponId);
+					} else {
+						odPstmt.setString(4, null);
 					}
-					odPstmt.setString(4, null);
 				} else {
 					odPstmt.setString(4, null);
 				}
 				odPstmt.setString(5, guestId);
 				odPstmt.executeUpdate();
 			}
-			
-			System.out.println("어디서 롤백?");
 			
 			if(bookNo > 0) {
 				bPstmt = con.prepareStatement(bSql);
@@ -132,14 +127,6 @@ public class OrdersService {
 			
 		} catch (SQLException e) {
 			rollbackUtil(con, e);
-			/*for(int i = 0; i < backSql.length; i++) {
-				try {
-					backPstmt = con.prepareStatement(backSql[i]);
-					backPstmt.executeUpdate();
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-			}*/
 			ordersNo = 0;
 		} finally {
 			closeUtil(con, oPstmt, odPstmt, tpPstmt, cPstmt);
