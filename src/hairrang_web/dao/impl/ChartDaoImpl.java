@@ -226,7 +226,7 @@ public class ChartDaoImpl implements ChartDao {
 		} else {
 			sql = "SELECT DEL_YN ,COUNT(*)AS count FROM ";
 			if (year != null) {
-				sql += " WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = " + year + " ";
+				sql += " (SELECT * FROM GUEST WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = " + year + " AND DEL_YN ='y') ";
 			}
 		}
 
