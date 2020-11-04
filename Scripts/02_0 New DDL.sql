@@ -56,7 +56,7 @@ ADD	CONSTRAINT PK_GUEST	PRIMARY KEY (guest_id);
 /* 이벤트 */
 CREATE TABLE EVENT (
 	event_no NUMBER(10) NOT NULL, /* 이벤트번호 */
-	event_name VARCHAR2(20), /* 이벤트명 */
+	event_name VARCHAR2(60), /* 이벤트명 */
 	event_salerate NUMBER(3, 2), /* 할인율 */
 	event_start DATE, /* 시작일 */
 	event_end DATE, /* 종료일 */
@@ -65,6 +65,8 @@ CREATE TABLE EVENT (
 	event_status CHAR(1) DEFAULT 'w' /*상태  => w:대기, s:시작, e:종료*/
 );
 
+
+ALTER TABLE event MODIFY event_name varchar2(60);
 ALTER TABLE EVENT
 ADD CONSTRAINT PK_EVENT PRIMARY KEY (event_no);
 

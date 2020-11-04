@@ -95,7 +95,7 @@ public class OrdersService {
 				odPstmt.setInt(3, od.getHair().getHairNo());
 				System.out.println("쿠폰 있니? " + od.getCoupon());
 				if(od.getCoupon() != null) {
-					if(od.getCoupon().getCouponId() == 0) {
+					if(od.getCoupon().getCouponId() != 0) {
 						odPstmt.setInt(4, od.getCoupon().getCouponId());
 						couponId = od.getCoupon().getCouponId();
 					}
@@ -106,8 +106,6 @@ public class OrdersService {
 				odPstmt.setString(5, guestId);
 				odPstmt.executeUpdate();
 			}
-			
-			System.out.println("어디서 롤백?");
 			
 			if(bookNo > 0) {
 				bPstmt = con.prepareStatement(bSql);

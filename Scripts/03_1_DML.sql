@@ -58,12 +58,10 @@ SELECT * FROM hair;
 SELECT * FROM guest;
 
 /* event */
-SELECT * FROM event;
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
 VALUES ('생일 쿠폰', 0.2, to_date('2020-11-01','yyyy-MM-dd'),to_date('9999-12-30','yyyy-MM-dd'), 'bd_event.jpg', '고객님의 생일을 축하드립니다. <br>생일 당일 발급되며 생일로부터 14일 이내에 사용가능합니다.');
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
 VALUES ('오픈 기념 가입 쿠폰', 0.1, to_date('2020-11-01','yyyy-MM-dd'), to_date('2020-12-01','yyyy-MM-dd'), 'open_event.jpg', '가입한 날짜로부터 30일 이내에 사용가능합니다.');
-
 UPDATE EVENT SET EVENT_CONTENT = '고객님의 생일을 축하드립니다. <br>생일 당일 발급되며 생일로부터 14일 이내에 사용가능합니다.' WHERE event_no = 1;
 
 --생일인 사람 쿠폰 수동 삽입
@@ -82,7 +80,6 @@ INSERT INTO coupon(guest_id, event_no, event_start, event_end)
 SELECT 'test4321', event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 FROM event WHERE event_no = 2;
 INSERT INTO coupon(guest_id, event_no, event_start, event_end) 
 SELECT 'abcd', event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 FROM event WHERE event_no = 2;
-
 
 /* designer */
 
