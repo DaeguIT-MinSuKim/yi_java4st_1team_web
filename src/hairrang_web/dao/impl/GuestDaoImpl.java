@@ -524,14 +524,14 @@ public class GuestDaoImpl implements GuestDao {
 			} else if (where.equals("guestPhone")) {
 				where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
 			}
-			
 			sql += " where " + where + " LIKE '%" + query + "%'";	
 			cnt++;
+			System.out.println(cnt);
 		}
 		
 		if(del == null || del.equals("")) {
-			if(cnt>=1) {
-				sql += " and del_yn = 'n'";
+			if(cnt<=1) {
+				sql += " where del_yn = 'n'";
 			}
 		} else {
 			sql += " where del_yn = '" + del + "'"; 

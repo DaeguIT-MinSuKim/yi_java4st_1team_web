@@ -52,7 +52,7 @@ INSERT INTO HAIR(HAIR_NAME, HAIR_PRICE, HAIR_PIC, HAIR_CONTENT, KIND_NO) VALUES(
 INSERT INTO HAIR(HAIR_NAME, HAIR_PRICE, HAIR_PIC, HAIR_CONTENT, KIND_NO) VALUES('두피 케어', 100000, NULL, NULL, 7);
 SELECT * FROM hair;
 
-SELECT * FROM guest ORDER BY ;
+
 
 /* event */
 SELECT * FROM event;
@@ -165,6 +165,7 @@ INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(62, 10, 1);
 INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(62, 12, 2);
 */
 
+/*booking data*/
 SELECT * FROM BOOKING;
 SELECT * FROM BOOKING_HAIRS;
 INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
@@ -174,11 +175,16 @@ VALUES('test', sysdate + 12 - 2/24, 14, 2, sysdate, 1, null);
 INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, HAIR_NO, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
 VALUES('test', sysdate + 10 - 6/24, 9, 2, sysdate, 1, null);
 
-INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(2, 16, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(1, 16, 1);
 INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(2, 14, 2);
-INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(3, 11, 1);
-INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(4, 10, 1);
-INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(4, 12, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(2, 11, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(3, 10, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(3, 12, 2);
+
+
+/*주문*/
+SELECT * FROM orders;
+SELECT * FROM ORDER_DETAIL;
 
 /*테스트 admin*/
 INSERT INTO ADMIN VALUES ('testadmin','1234','testadmin');
@@ -195,7 +201,8 @@ INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 정기정검',
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('test','로그인이 안된다고 떠요','로그인창에서 로그인을 눌렀는데 자꾸 튕겨요 어떻게 해야해요?');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('test111','신상품 언제나오나요?','신상품 언제쯤 들어오나요 이번주안에 들어오나요?');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('abcd','정확한 위치를 모르겠는데','지도를 봐도 정확한 위치를 모르겠는데 따로 안내해주실수있나요?');
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운영하시나요?');
+
 /*qnaNotice*/
 INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn) VALUES ('testadmin','Q&A문의판 양식','꼭 제목과 내용을 적어주시고 기다려주신다면 빠르시간내에 응답해드리겠습니다', 'y');
 INSERT INTO QNA (ADMIN_ID,QNA_TITLE,QNA_CONTENT, notice_yn) VALUES ('testadmin','주의점','헤어랑사이트에서 따로 광고글이나 관련없는 글은 올리면 삭제하도록하겠습니다.', 'y');
