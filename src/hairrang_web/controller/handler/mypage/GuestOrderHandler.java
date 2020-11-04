@@ -63,7 +63,7 @@ public class GuestOrderHandler implements Command {
 			request.setAttribute("cnt", cntPerPage);
 			request.setAttribute("total", total);
 			request.setAttribute("message", -1);
-			return "mypage/guest_book.jsp";
+			return "mypage/guest_order.jsp";
 		}
 		
 		ArrayList<Integer> prices = new ArrayList<>();

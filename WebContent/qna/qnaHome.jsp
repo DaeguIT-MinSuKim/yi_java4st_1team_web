@@ -84,7 +84,7 @@
 			</c:forEach>
 		</table>
 
-		<div class="paging">
+		<div class="paging" style="text-align: center;">
 			<c:if test="${paging.startPage != 1}">
 				<a
 					href="qnaHome.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}"><i
