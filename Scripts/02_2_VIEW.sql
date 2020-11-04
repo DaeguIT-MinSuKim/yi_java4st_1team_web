@@ -99,7 +99,6 @@ FROM booking b
 	LEFT OUTER JOIN guest g ON(b.GUEST_ID = g.GUEST_ID);
 
 
---이거안됨
 /* 페이징용 orders */
 CREATE OR REPLACE VIEW orders_guest_view
 as

@@ -12,7 +12,7 @@
 <h3 style="text-align:center; padding:20px; margin-bottom:50px;">MY COUPON</h3>
 <table id="board">
 		<tr>
-			 <th>번호</th> <th>쿠폰명</th> <th>쿠폰 기간</th> <th>사용여부</th> <th>이벤트상태</th>
+			 <th>번호</th> <th>쿠폰명</th> <th>할인율</th> <th>쿠폰 기간</th> <th>사용여부</th> <th>이벤트상태</th>
 		</tr>
 		<c:forEach items="${list}" var="coupon" varStatus="status">
 			<tr>
@@ -21,6 +21,7 @@
 				<%-- <td>${coupon.couponId}</td>
 				<td>${coupon.event.eventNo}</td> --%>
 				<td style="width:200px">${coupon.event.eventName}</td>
+				<td style="width:50px"><fmt:parseNumber value="${coupon.event.eventSaleRate * 100}" integerOnly="true"/> %</td>
 				<td style="width:200px;">${coupon.event.eventStart} ~ ${coupon.event.eventEnd}</td>
 				<td style="width:50px">
 					<c:if test="${coupon.usedYn == 'n'}">사용가능</c:if>

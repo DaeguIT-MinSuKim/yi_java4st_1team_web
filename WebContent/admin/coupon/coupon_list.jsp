@@ -26,11 +26,12 @@ function getParameter(name) {
 
 function tableChange(){
 	var sel = document.getElementById('selectPage').value;
-	location.href = "couponList.do?nowPage=1&no="+ sel;
+	location.href = "couponList.do?nowPage=1&no="+ sel+"&status=";
 	if(sel == 0){
 		location.href = "couponList.do";
 	}
 }
+/* couponList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&no=${no}&status */
 
 </script>
 
@@ -65,12 +66,12 @@ function tableChange(){
 						
 				</div>
 				<div style="float:right; padding:5px;">
-				<ul>
-					<li class="btn-info btn-sm" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&no=${no}&status=${status}' ">사용가능</li>
-					<li class="btn-warning btn-sm" style="width: 80px; display: inline;">대기중</li>
-					<li class="btn-secondary btn-sm" style="width: 80px; display: inline;">사용완료</li>
-					<li class="btn-dark btn-sm" style="width: 80px; display: inline;">기간만료</li>
-				</ul>
+				
+					<input type="button" name="n" class="btn btn-info btn-sm" value="사용가능" style="width: 80px; display: inline; cursor:pointer;" name="" onclick="location.href='couponList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&no=${no}&status=n' ">
+					<input type="button" name="w" class="btn btn-warning btn-sm" value="대기중" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&no=${no}&status=w' ">
+					<input type="button" name="y" class="btn btn-secondary btn-sm" value="사용완료" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&no=${no}&&status=y' ">
+					<input type="button" name="e" class="btn btn-dark btn-sm" value="기간만료" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&no=${no}&&status=e' ">
+				
 
 			</div>
 				<!-- 테이블 상단 필터링 시작 -->

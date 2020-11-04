@@ -16,12 +16,10 @@
 			<div class="mt-2 float-left">
              	예약 내역 목록
             </div>
-            <div class="float-right">
 				<!-- <button id="addNew" class="btn btn-success btn-sm" style="float: right;">등록</button> -->
 				<button id="deselectAll" class="btn btn-outline-secondary btn-sm" style="float: right;  margin-right: 10px;">선택해제</button>
 				<button id="selectAll" class="btn btn-secondary btn-sm" style="float: right;  margin-right: 10px;">전체선택</button>
 	           	<button id="deleteSelected"class="btn btn-danger btn-sm" style="float: right; margin-right: 10px;">예약 취소</button>
-            </div>			
 		</h6>
 		<!-- <h6 class="m-1 font-weight-bold text-primary" style="line-height: 16px; font-size: 1.3em">
 		
@@ -148,7 +146,7 @@
 						<tr>
 							<td>
 								<c:if test="${booking.bookStatus eq 1}">
-									<input type="checkbox" value="${booking.bookNo }">
+									<input type="checkbox" class="ckbox"value="${booking.bookNo }">
 								</c:if>
 							</td>
 							<td>${booking.bookNo }</td>

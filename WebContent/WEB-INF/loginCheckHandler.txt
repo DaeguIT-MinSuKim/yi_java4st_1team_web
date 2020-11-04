@@ -8,7 +8,7 @@ guestBookCancel.do
 guestOrder.do
 guestQna.do
 pwdConfirm.do
-guestInfoUpdate.do
+guestInfoUpdate.doz
 guestPwdUpdate.do
 infoUpdate.do
 pwdUpdate.do

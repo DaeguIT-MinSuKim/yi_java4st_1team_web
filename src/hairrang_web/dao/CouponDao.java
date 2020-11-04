@@ -10,9 +10,9 @@ public interface CouponDao {
 	//총 쿠폰
 	ArrayList<Coupon> pagingCouponByAll(Paging paging);
 	int countCoupon();
-	//이벤트번호별 리스트
-	ArrayList<Coupon> pagingCouponByEventNo(Paging paging, int eventNo);
-	int countCoupon(int eventNo);
+	//이벤트번호별, 상태별 리스트
+	ArrayList<Coupon> pagingCouponByEventNo(Paging paging, String eventNo, String status);
+	int countCoupon(Paging paging, String eventNo, String status);
 	
 	// 쿠폰 id를 통해 해당 쿠폰 1개의 정보 조회
 	// orderDetail에서 사용된 쿠폰 정보 조회하려고.
@@ -32,5 +32,5 @@ public interface CouponDao {
 	
 	//가입쿠폰
 	int insertJoinCoupon(String id);
-
+	
 }	
