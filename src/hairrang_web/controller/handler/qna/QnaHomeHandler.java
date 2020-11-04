@@ -38,11 +38,11 @@ public class QnaHomeHandler implements Command {
 		int total = service.countQna();
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
-			cntPerPage = "5";
+			cntPerPage = "10";
 		}else if(nowPage == null) {
 			nowPage = "1";
 		}else if(cntPerPage == null) {
-			cntPerPage ="5";
+			cntPerPage ="10";
 		}
 		System.out.println("지금현채 페이지 ===>"+nowPage);
 		System.out.println("한 페이지당 나오는 게시물수 ===>"+cntPerPage);

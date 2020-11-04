@@ -8,7 +8,13 @@
 
 <title>Insert title here</title>
 <style>
-	
+a{
+	text-decoration: none;
+}
+
+tr *{
+	text-align: left;
+}
 </style>
 <script>
 	function selChange() {
@@ -35,13 +41,13 @@
 		</div>
 		<table id="board">
 			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성일</th>
+				<th style="width: 60px; text-align: center;">번호</th>
+				<th style="text-align: center;">제목</th>
+				<th style="width: 100px; text-align: center;">작성일</th>
 			</tr>
 			<c:forEach items="${viewAll}" var="list">
 				<tr>
-					<td>${list.noticeNo }</td>
+					<td style="text-align: center;">${list.noticeNo }</td>
 					<td><a href="noticeDetail.do?no=${list.noticeNo}">${list.noticeTitle }</a></td>
 					<td><fmt:parseDate value="${list.noticeRegDate}"
 							pattern="yyyy-MM-dd'T'HH:mm" var="regDate" type="both" /> <fmt:formatDate

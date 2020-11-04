@@ -51,12 +51,13 @@ button {
 
 .tr {
 	padding: 50px;
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid #EEEEEE;
 }
 
 * td {
-	padding-top: 20px;
-	padding-bottom: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	
 }
 
 tr td:first-child {
@@ -68,14 +69,12 @@ tr td:nth-child(2) {
 }
 
 .button {
-	border:3px solid gray; 
-	width:100px; 
-	padding:10px; 
-	margin:0 auto; 
-	border-radius:10px; 
-	color: black; 
-	font-weight:bold;
-	cursor:pointer;
+	border: 1px solid gray;
+	width: 100px;
+	padding: 5px;
+	margin: 0 auto;
+	color: black;
+	font-weight: bold;
 }
 </style>
 
@@ -87,17 +86,16 @@ tr td:nth-child(2) {
 	<table class="outer">
 
 		<tr class="tr" style="border-top: 1px solid black;">
-			<th>제목</th>
+			<th style="width: 15%;">제목</th>
 			<td>${notice.noticeTitle }</td>
 		</tr>
 		<tr class="tr">
 			<th>작성일</th>
 			<td>${notice.noticeRegDate }</td>
 		</tr>
-		<tr class="tr">
+		<tr class="tr" style="border-bottom: 1px solid black;">
 			<th>내용</th>
-			<td >${notice.noticeContent }</td>
-
+			<td>${notice.noticeContent }</td>
 		</tr>
 		<%-- <c:if test="${ notice.noticeFile != null}">
 			<tr class="tr">
@@ -106,12 +104,30 @@ tr td:nth-child(2) {
 		</c:if> --%>
 
 	</table>
-	<c:if test="${ notice.noticeFile != null}">
 		<img alt="" src="notice/setload/${notice.noticeFile}"
-			style="width: 600px; height: 600px;">
-	</c:if>
+			style="max-width: 100%; height: auto;">
 </div>
 <input style="float: right;" type="button" value="홈으로" class="button"
 	onclick="location.href='noticeHome.do'">
 
+<%-- ======================================================
+<div class="qna_wrapper">
+	<table id="board">
+			<tr>
+				<th>번호</th>
+				<th>제목</th>
+				<th>작성일</th>
+			</tr>
+			<c:forEach items="${viewAll}" var="list">
+				<tr>
+					<td>${list.noticeNo }</td>
+					<td><a href="noticeDetail.do?no=${list.noticeNo}">${list.noticeTitle }</a></td>
+					<td><fmt:parseDate value="${list.noticeRegDate}"
+							pattern="yyyy-MM-dd'T'HH:mm" var="regDate" type="both" /> <fmt:formatDate
+							value="${regDate}" pattern="yyyy-MM-dd" /></td>
+				</tr>
+			</c:forEach>
+		</table>
+</div>
+ --%>
 <%@ include file="../footer.jsp"%>
