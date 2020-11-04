@@ -56,11 +56,7 @@ ADD	CONSTRAINT PK_GUEST	PRIMARY KEY (guest_id);
 /* 이벤트 */
 CREATE TABLE EVENT (
 	event_no NUMBER(10) NOT NULL, /* 이벤트번호 */
-<<<<<<< HEAD
 	event_name VARCHAR2(200), /* 이벤트명 */
-=======
-	event_name VARCHAR2(60), /* 이벤트명 */
->>>>>>> branch 'master' of https://github.com/DaeguIT-MinSuKim/yi_java4st_1team_web.git
 	event_salerate NUMBER(3, 2), /* 할인율 */
 	event_start DATE, /* 시작일 */
 	event_end DATE, /* 종료일 */
