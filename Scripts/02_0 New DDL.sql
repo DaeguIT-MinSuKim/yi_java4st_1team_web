@@ -56,7 +56,7 @@ ADD	CONSTRAINT PK_GUEST	PRIMARY KEY (guest_id);
 /* 이벤트 */
 CREATE TABLE EVENT (
 	event_no NUMBER(10) NOT NULL, /* 이벤트번호 */
-	event_name VARCHAR2(60), /* 이벤트명 */
+	event_name VARCHAR2(200), /* 이벤트명 */
 	event_salerate NUMBER(3, 2), /* 할인율 */
 	event_start DATE, /* 시작일 */
 	event_end DATE, /* 종료일 */
@@ -142,31 +142,6 @@ ALTER TABLE ORDERS
 ADD CONSTRAINT PK_ORDERS PRIMARY KEY (orders_no);
 	
 	
-
-/* 주문상세 */
-CREATE TABLE ORDER_DETAIL (
-	od_no NUMBER(10) NOT NULL, /* 주문상세번호 */
-	coupon_id NUMBER, /* 이벤트번호 */
-	hair_no NUMBER(10), /* 헤어번호 */
-	orders_no NUMBER(10), /* 주문번호 */
-	od_price number(7),
-	od_quantity number(2),
-	od_discount number(7)
-);
-
--- 기본키
-ALTER TABLE ORDER_DETAIL
-ADD CONSTRAINT PK_ORDER_DETAIL PRIMARY KEY (od_no);
-
--- 외부키
-ALTER TABLE ORDER_DETAIL
-ADD CONSTRAINT FK_COUPON_TO_ORDER_DETAIL FOREIGN KEY (COUPON_ID)
-		REFERENCES COUPON(COUPON_ID);
-	
-ALTER TABLE ORDER_DETAIL
-ADD CONSTRAINT FK_HAIR_TO_ORDER_DETAIL FOREIGN KEY (hair_no)
-		REFERENCES HAIR (hair_no);
-
 
 
 /* 관리자 */
@@ -288,6 +263,33 @@ CREATE TABLE NOTICE (
 	notice_file varchar2(1000),	/*첨부파일 경로*/
 	notice_regDate DATE DEFAULT sysdate
 );
+
+
+/* 주문상세 */
+CREATE TABLE ORDER_DETAIL (
+	od_no NUMBER(10) NOT NULL, /* 주문상세번호 */
+	coupon_id NUMBER, /* 이벤트번호 */
+	hair_no NUMBER(10), /* 헤어번호 */
+	orders_no NUMBER(10), /* 주문번호 */
+	od_price number(7),
+	od_quantity number(2),
+	od_discount number(7)
+);
+
+-- 기본키
+ALTER TABLE ORDER_DETAIL
+ADD CONSTRAINT PK_ORDER_DETAIL PRIMARY KEY (od_no);
+
+-- 외부키
+ALTER TABLE ORDER_DETAIL
+ADD CONSTRAINT FK_COUPON_TO_ORDER_DETAIL FOREIGN KEY (COUPON_ID)
+		REFERENCES COUPON(COUPON_ID);
+	
+ALTER TABLE ORDER_DETAIL
+ADD CONSTRAINT FK_HAIR_TO_ORDER_DETAIL FOREIGN KEY (hair_no)
+		REFERENCES HAIR (hair_no);
+
+
 
 
 --notice Date
