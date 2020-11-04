@@ -22,16 +22,17 @@ DELETE FROM ORDER_DETAIL od ;
 DELETE FROM ORDERS o ;
 
 -- 테이블 컬럼 및 제약조건 변경
-ALTER TABLE order_detail ADD od_price NUMBER(6);
+/*
+ALTER TABLE order_detail ADD od_price NUMBER(7);
 ALTER TABLE order_detail ADD od_quantity number(2);
-ALTER TABLE order_detail ADD od_discount number(6);
-ALTER TABLE coupon MODIFY coupon_id NUMBER;
+ALTER TABLE order_detail ADD od_discount number(7);
 
 ALTER TABLE ORDER_DETAIL RENAME COLUMN order_no TO orders_no;
 ALTER TABLE ORDER_DETAIL RENAME COLUMN event_no TO coupon_id;
 ALTER TABLE orders ADD orders_total_price NUMBER(7);
 ALTER TABLE ORDER_DETAIL 
 DROP CONSTRAINT FK_ORDER_TO_ORDER_DETAIL;
+*/
 
 
 -- 가짜 조인 이용해서 INSERT

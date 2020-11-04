@@ -8,20 +8,20 @@ $(document).on("click", ".time_table ul li", function() {
 $(function() {
 	$(document).ready(function() {
 		document.title += ' - 예약하기'
+			
+		var bookDate = $("#bookDate");
 		var tomorrow = new Date();
 		tomorrow.setDate(tomorrow.getDate() + 1);
-		document.getElementById('bookDate').valueAsDate = tomorrow;
 		
 		var maxDate = new Date();
 		maxDate.setDate(tomorrow.getDate() + 28);
 		
 		var minDateStr = dateToString(tomorrow);
 		var maxDateStr = dateToString(maxDate);
-		console.log(minDateStr);
-		console.log(maxDateStr);
-		document.getElementById('bookDate').min = minDateStr;
-		document.getElementById('bookDate').max = maxDateStr;
 		
+		$(bookDate).val(minDateStr);
+		$(bookDate).attr("min", minDateStr);
+		$(bookDate).attr("max", maxDateStr);
 	
 		/* 헤어 대분류 불러오기 */
 		$.ajax({
@@ -31,7 +31,7 @@ $(function() {
 			success: function(data) {
 				console.log(data);
 				loadHairKindCombo($("#hairkindbox"), data);
-				$("#hairkindbox").val("");
+				$("#hairkindbox").val("4").trigger("change");
 			},
 			complete: function(){
 				$("#designerBox").trigger("change");
@@ -64,13 +64,12 @@ $(function() {
 					loadHairBox($("#hairbox"), data);
 				},
 				error: function(error) {
-					console.log("[load hiarbox] error: " + error);
+					alert("[load hiarbox] error");
 				}
 			});
 		});
 		 
 		function loadHairBox(target, data) {
-			// var dataArr = [];
 			target.empty();
 			var dataArr = "<option value='0'>--시술 선택--</option>";
 			
@@ -107,7 +106,6 @@ $(function() {
 				data: "bookDate=" + bookDateVal + "&deNo=" + deNoVal,
 				dataType: "json",
 				success: function(data) {
-					console.log(data);
 					loadTimeTable($(".time_table ul"), data);
 				}
 			});
@@ -144,8 +142,6 @@ function dateToString(date) {
 }
 
 function addHair(hairNo, hairName) {
-	// console.log($(".addedHair[hairNo=" + itemNo + "]").attr("hairName"));
-	// $(".addedHair[hairNo=" + itemNo + "]").remove();
 	if(hairNo == 0) {
 		return;
 	}
@@ -164,16 +160,9 @@ function addHair(hairNo, hairName) {
 		$(selectedItem).attr("quantity", ++quantity);
 		$(selectedItem).children(".quantity").text(quantity);
 	}
-	
-	
-	console.log($(".addedHair[hairNo=" + hairNo + "]").attr("hairName"));
-	// console.log(selectedItem.attr("hairName"));
-	
-	
 }
 
 function delHairItem(itemNo) {
-	// console.log($(".addedHair[hairNo=" + itemNo + "]").attr("hairName"));
 	$(".addedHair[hairNo=" + itemNo + "]").remove();
 }
 
@@ -202,8 +191,6 @@ function checkBookForm() {
 		hairs.push(bookingHairs);
 	}
 	
-	console.log(hairs);
-	
 	var designer = { deNo: $('#designerBox').val() };
 	var booking = {
 			 bookDate: $("#bookDate").val() + " " + $(".time_table .active").attr("time24"),
@@ -211,9 +198,6 @@ function checkBookForm() {
 			 designer: designer
 		};
 
-
-    console.log(JSON.stringify(booking));
-	
     $.ajax({
         type:"post",
         url:"bookingRegister.do",
@@ -222,7 +206,7 @@ function checkBookForm() {
         dataType: "text",
         success: function(data) {
      	  if (data == -1) {
-     		  alert("이미 예약된 시간입니다. 새로고침 후 다시 이용해주세요.");
+     		  alert("이미 예약된 시간 또는 예약할 수 없는 날입니다. 새로고침 후 다시 이용해주세요.");
      		  location.reload();
      	  } else if (data == 0) {
      		  alert("오류가 발생했습니다. 다시 시도해주세요.");

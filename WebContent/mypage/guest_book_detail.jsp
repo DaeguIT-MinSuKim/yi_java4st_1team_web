@@ -41,7 +41,7 @@
 	</tr>
 	<tr>
 		<td>담당 디자이너</td>
-		<td class="border-left-line">${booking.designer.deName}</td>
+		<td class="border-left-line">${booking.designer.deNickname}</td>
 	</tr>
 </table>
 
