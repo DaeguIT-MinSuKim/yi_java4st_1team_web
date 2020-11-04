@@ -70,7 +70,10 @@ public class AdminNoticeInsertHandler implements Command {
 				File findFile = new File(uploadFilePath + "/" + fileName);
 
 				
-				String realFileName = nowDate + "-" + fileName; // 현재시간과 확장자 합치기
+				String realFileName = null;
+				if(fileName != null) {
+					realFileName = nowDate + "-" + fileName; //현재시간과 확장자 합치기
+				}
 				System.out.println("realFileName : " + realFileName);
 				String FilegetPath = uploadFilePath + "/" + realFileName;
 				File newFile = new File(FilegetPath);

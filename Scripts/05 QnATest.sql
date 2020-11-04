@@ -12,7 +12,7 @@ INSERT INTO ADMIN VALUES ('testadmin','1234','testadmin');
 SELECT * FROM QNA;
 DELETE FROM QNA q2 WHERE QNA_NO =10;
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,notice_yn,qna_secret,qna_password) VALUES ('nottest','nottesttest','n','n','y','123');
-INSERT INTO QNA (GUEST_ID,QNA_TITLE) VALUES ('test','testTitl2123123');
+INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_REGDATE) VALUES ('test','testTitl2123123','2000-03-01');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE) VALUES ('test','testTitl4');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,RES_YN,QNA_REGDATE) VALUES ('test','123123','n','2020-10-22');
 INSERT INTO QNA (ADMIN_ID,QNA_TITLE,DEL_YN, notice_yn) VALUES ('testadmin','admintestolenfoej','n', 'y');

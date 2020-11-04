@@ -8,20 +8,28 @@ import hairrang_web.dao.impl.ChartDaoImpl;
 public class ChartService {
 	private ChartDao dao = ChartDaoImpl.getInstance();
 
-	public JSONArray selectOnlyQnA() {
-		return dao.QnAByoneDay();
+	public JSONArray selectOnlyQnA(String year) {
+		return dao.qnaByoneDay(year);
 	}
 	
-	public JSONArray QnAByRes() {
-		return dao.QnAByRes();
+	public JSONArray QnAByRes(String year) {
+		return dao.qnaByRes(year);
+	}
+	
+	public JSONArray QnABySecret(String year) {
+		return dao.qnaBySecret(year);
 	}
 
-	public JSONArray joinGuestByOneDay() {
-		return dao.joinGuestByOneDay();
+	public JSONArray joinGuestByOneDay(String year) {
+		return dao.guestByJoin(year);
 	}
 
-	public JSONArray gender() {
-		return dao.gender();
+	public JSONArray gender(String year) {
+		return dao.guestByGender(year);
+	}
+	 
+	public JSONArray GuestByOut(String year) {
+		return dao.guestByGender(year);
 	}
 
 	public JSONArray bookingByTime() {

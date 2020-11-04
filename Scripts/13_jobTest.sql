@@ -147,7 +147,7 @@ END;
 
 -- 등록되어 있는 JOB 삭제
 BEGIN
-   DBMS_JOB.REMOVE(82);
+   DBMS_JOB.REMOVE(84);
    COMMIT;
 END;
 

@@ -28,82 +28,64 @@
 	</div>
 	<!-- card-body -->
 	<div class="card-body">
-		<%-- <ul>
-			
-			<li>${booking.bookNo }</li>
-			<li>${booking.bookDateStr }</li>
-			<li>${booking.guest.guestId } (${booking.guest.guestName })</li>
-			<li>${booking.guest.guestPhone }</li>
-			<li>
-				<c:forEach var="bookingHair" items="${booking.hairList }">
-					[${bookingHair.hair.hairNo}]${bookingHair.hair.hairName}(${bookingHair.hair.hairPrice }) * ${bookingHair.quantity}회
-					= ${bookingHair.hair.hairPrice * bookingHair.quantity}<br>
-				</c:forEach>
-			</li>
-			<li>디자이너 : ${booking.designer.deName }</li>
-			<li>[${booking.bookStatus }]${booking.bookStatusStr }</li>
-			<li>예약등록일: ${booking.bookRegDateStr }</li>
-		</ul> --%>
+		<table class="book_detail_info">
+			<p class="tcenter">예약 정보 </p>
+			<tr style="border-top:1px solid #e4e4e4;">
+				<td>예약 번호</td><td class="border-left-line">${booking.bookNo} 
+				<input type="hidden" value="${booking.bookNo}" name="bookNo">
+				</td>
+				
+			</tr>
+			<tr>
+				<td>예약일</td>
+				<td class="border-left-line">
+					<fmt:parseDate value="${booking.bookRegDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookReg" type="both" />
+					<fmt:formatDate value="${bookReg}" pattern="yyyy-MM-dd HH:mm" />
+				</td>
+			</tr>
+			<tr>
+				<td>예약자</td><td class="border-left-line">${booking.guest.guestName}(${booking.guest.guestId})</td>
+			</tr>
+			<tr>
+				<td>연락처</td><td class="border-left-line">${booking.guest.guestPhone}</td>
+			</tr>
+			<tr>
+				<td>예약 상태</td><td class="border-left-line">${booking.bookStatusStr}</td>
+			</tr>
+			<tr>
+				<td>이용 날짜</td> 
+				<td class="border-left-line">
+					<fmt:parseDate value="${booking.bookDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookDate" type="both" />
+					<fmt:formatDate value="${bookDate}" pattern="yyyy-MM-dd HH:mm" />
+				</td>
+			</tr>
+			<tr>
+				<td>담당 디자이너</td>
+				<td class="border-left-line">${booking.designer.deNickname}</td>
+			</tr>
+		</table>
 		
+		<br><br>
 		
-<table class="book_detail_info">
-	<p class="tcenter">예약 정보 </p>
-	<tr style="border-top:1px solid #e4e4e4;">
-		<td>예약 번호</td><td class="border-left-line">${booking.bookNo} 
-		<input type="hidden" value="${booking.bookNo}" name="bookNo">
-		</td>
-		
-	</tr>
-	<tr>
-		<td>예약일</td>
-		<td class="border-left-line">
-			<fmt:parseDate value="${booking.bookRegDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookReg" type="both" />
-			<fmt:formatDate value="${bookReg}" pattern="yyyy-MM-dd HH:mm" />
-		</td>
-	</tr>
-	<tr>
-		<td>예약자</td><td class="border-left-line">${booking.guest.guestName}(${booking.guest.guestId})</td>
-	</tr>
-	<tr>
-		<td>연락처</td><td class="border-left-line">${booking.guest.guestPhone}</td>
-	</tr>
-	<tr>
-		<td>예약 상태</td><td class="border-left-line">${booking.bookStatusStr}</td>
-	</tr>
-	<tr>
-		<td>이용 날짜</td> 
-		<td class="border-left-line">
-			<fmt:parseDate value="${booking.bookDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookDate" type="both" />
-			<fmt:formatDate value="${bookDate}" pattern="yyyy-MM-dd HH:mm" />
-		</td>
-	</tr>
-	<tr>
-		<td>담당 디자이너</td>
-		<td class="border-left-line">${booking.designer.deName}</td>
-	</tr>
-</table>
+		<p class="tcenter">시술 정보</p>
+		<table class="book_hair_info">
 
-<br><br>
-
-<p class="tcenter">시술 정보</p>
-<table class="book_hair_info">
-
-	<tr style="text-align:center;">
-		<td style="border-top:1px solid #e4e4e4; width:250px;">시술 정보</td> 
-		<td style="border-top:1px solid #e4e4e4; width:50px;">가격</td> 
-		<td style="border-top:1px solid #e4e4e4; width:50px;">수량</td>
-	</tr>
-	<c:forEach var="hairs" items="${booking.hairList}" varStatus="status">
-	<tr>	
-		<td class="tcenter">${hairs.hair.hairName}</td>
-		<td class="border-left-line tcenter"><fmt:formatNumber value="${hairs.hair.hairPrice}" pattern="#,###" /></td>
-		<td class="border-left-line tcenter">${hairs.quantity}</td>
-	</tr>
-	</c:forEach>
-	<tr>
-		<td colspan="3" class="tright">합계 : <b style="font-weight:bold"><fmt:formatNumber value="${price}" pattern="#,###" /> 원</b></td>
-	</tr>
-	</table>
+			<tr style="text-align:center;">
+				<td style="border-top:1px solid #e4e4e4; width:250px;">시술 정보</td> 
+				<td style="border-top:1px solid #e4e4e4; width:50px;">가격</td> 
+				<td style="border-top:1px solid #e4e4e4; width:50px;">수량</td>
+			</tr>
+			<c:forEach var="hairs" items="${booking.hairList}" varStatus="status">
+				<tr>	
+					<td class="tcenter">${hairs.hair.hairName}</td>
+					<td class="border-left-line tcenter"><fmt:formatNumber value="${hairs.hair.hairPrice}" pattern="#,###" /></td>
+					<td class="border-left-line tcenter">${hairs.quantity}</td>
+				</tr>
+			</c:forEach>
+			<tr>
+				<td colspan="3" class="tright">합계 : <b style="font-weight:bold"><fmt:formatNumber value="${price}" pattern="#,###" /> 원</b></td>
+			</tr>
+		</table>
 		
 		
 		

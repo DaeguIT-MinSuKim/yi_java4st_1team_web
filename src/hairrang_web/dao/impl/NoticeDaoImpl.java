@@ -26,7 +26,7 @@ public class NoticeDaoImpl implements NoticeDao {
 
 	@Override
 	public int countNoitce() {
-		String sql = "SELECT COUNT(*) AS COUNT FROM NOTICE";
+		String sql = "SELECT COUNT(*) AS COUNT FROM NOTICE where NOTICE_DELYN = 'n'";
 		try (Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {

@@ -65,7 +65,10 @@ public class AdminQnaResultHandler implements Command {
 				// 업로드된 파일 얻기
 				File findFile = new File(uploadFilePath + "/" + fileName);
 
-				String realFileName = nowDate + "-" + fileName; // 현재시간과 확장자 합치기
+				String realFileName = null;
+				if(fileName != null) {
+					realFileName = nowDate + "-" + fileName; //현재시간과 확장자 합치기
+				}
 				System.out.println("realFileName : " + realFileName);
 				String FilegetPath = uploadFilePath + "/" + realFileName;
 				File newFile = new File(FilegetPath);

@@ -26,12 +26,12 @@
 							<tr>
 								<td>번호</td>
 								<td>${qna.qnaNo}<input type="hidden" name="no"
-									value="${qna.qnaNo}"></td>
+									value="${qna.qnaNo}">
+								</td>
 							</tr>
 							<tr>
 								<td>문의명</td>
-								<td><input type="text" name="name" value="${qna.qnaTitle }"
-									readonly></td>
+								<td>${qna.qnaTitle }</td>
 
 							</tr>
 							<tr>
@@ -47,8 +47,7 @@
 							</tr>
 							<tr>
 								<td>문의 내용</td>
-								<td><input type='text' name="content"
-									value="${qna.qnaContent}" style="height: 60px;" readonly /></td>
+								<td>${qna.qnaContent}</td>
 							</tr>
 							<tr>
 								<td>문의 작성일</td>
@@ -68,13 +67,11 @@
 							<c:if test="${qnaResult != null}">
 								<tr>
 									<td>답변명</td>
-									<td><input type="text" name="title" readonly
-										value="${qnaResult.qnaTitle }" /></td>
+									<td>${qnaResult.qnaTitle }</td>
 								</tr>
 								<tr>
 									<td>답변 내용</td>
-									<td><input type="text" name="title" readonly
-										value="${qnaResult.qnaTitle }" /></td>
+									<td>${qnaResult.qnaContent }</td>
 								</tr>
 								<tr>
 									<td>사진</td>
@@ -87,12 +84,14 @@
 						</table>
 						<br> <br>
 						<div class="clear"></div>
-						<br>
+						<br> <img alt="" src="../notice/setload/${qnaResult.qnaFile}">
 						<div class="add-buttons" style="float: right">
-							<img alt="" src="../notice/setload/${qnaResult.qnaFile}"> <input
-								type="button" value="수정" onclick="qnaDetail.do?no=${qna.qnaNo}"
-								class="btn btn-primary btn-sm"> <input type="reset"
-								value="취소" class="btn btn-primary btn-sm"
+							<c:if test="${qna.qnaResYn eq 'y' || qna.qnaNotice eq 'y' }">
+								<input type="button" value="수정"
+									onclick="location.href='qnaUpdate.do?no=${qna.qnaNo}'"
+									class="btn btn-primary btn-sm">
+							</c:if>
+							<input type="reset" value="취소" class="btn btn-primary btn-sm"
 								onclick="location.href='qnaList.do'">
 
 						</div>

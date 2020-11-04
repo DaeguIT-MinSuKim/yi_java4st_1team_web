@@ -22,19 +22,31 @@ public class AdminChartQnaHandler implements Command {
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("GET");
 
-			JSONArray qna = service.selectOnlyQnA();
-			JSONArray res = service.QnAByRes();
+			JSONArray qna = service.selectOnlyQnA("all");
+			JSONArray res = service.QnAByRes("all");
+			JSONArray secret = service.QnABySecret("all");
 			
 			
 			request.setAttribute("qna", qna);
 			request.setAttribute("res", res);
+			request.setAttribute("secret", secret);
 
 			return url;
 		} else {
 			System.out.println("POST");
+			
+			String year = request.getParameter("year");
+			
+			JSONArray qna = service.selectOnlyQnA(year);
+			JSONArray res = service.QnAByRes(year);
+			JSONArray secret = service.QnABySecret(year);
+			
+			request.setAttribute("qna", qna);
+			request.setAttribute("res", res);
+			request.setAttribute("secret", secret);
+			
+			return url;
 		}
-
-		return null;
 	}
 
 }
