@@ -170,8 +170,8 @@ INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(62, 12, 2);
 */
 
 /*booking data*/
-SELECT * FROM BOOKING;
-SELECT * FROM BOOKING_HAIRS;
+SELECT * FROM BOOKING ORDER BY BOOK_NO;
+SELECT * FROM BOOKING_HAIRS ORDER BY BOOK_NO;
 INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
 VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
 INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
@@ -185,6 +185,23 @@ INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(2, 11, 1);
 INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(3, 10, 1);
 INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(3, 12, 2);
 
+
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(5, 16, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(5, 14, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(6, 11, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(6, 10, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(7, 12, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(12, 12, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(13, 15, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(14, 16, 2);
 
 /*주문*/
 SELECT * FROM orders;

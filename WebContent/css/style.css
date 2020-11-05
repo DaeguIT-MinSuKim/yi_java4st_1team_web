@@ -2,12 +2,10 @@
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800");
 /*@font-face { font-family: 'S-CoreDream-4Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff'); font-weight: normal; font-style: normal; }
 @font-face { font-family: 'S-CoreDream-3Light'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff'); font-weight: normal; font-style: normal; }
-
 .nanumsquare {
     font-family: 'NanumSquare', sans-serif !important;
 }*/
-
-
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300&display=swap');
 /* Basic */
 
 	html, body {
@@ -16,10 +14,12 @@
 		height: 100%; 
 		margin:0 auto;
 		/*font-family: 'NanumSquare', sans-serif !important;*/
+		font-family: 'Noto Sans KR', sans-serif;
 
 		
 	}
-
+	input,button,select  {font-family: 'Noto Sans KR', sans-serif;}
+	
 		body.loading * {
 			-moz-transition: none !important;
 			-webkit-transition: none !important;

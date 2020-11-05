@@ -41,7 +41,6 @@ $(document).on('click', '[id=btn_delete]', function() {
 					<li class="btn btn-outline-warning btn-sm" style="width :80px;  display: inline; cursor:pointer;" onclick="location.href='eventList.do?nowPage=1&&status=w'">대기중</li>
 					
 				</ul>
-
 			</div>
 				<!-- 테이블 상단 필터링 시작 -->
 				<div class="row mb-2">
