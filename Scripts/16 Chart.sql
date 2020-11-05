@@ -9,9 +9,7 @@ SELECT QNA_SECRET ,COUNT(*)AS count FROM qna GROUP BY QNA_SECRET ORDER BY QNA_SE
 
 
 
-SELECT * FROM GUEST ;
---가입일별날짜
-SELECT TO_CHAR(GUEST_JOIN_DATE,'mm')AS day ,NVL(COUNT(*), 0) AS count FROM GUEST WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = 2020 GROUP BY TO_CHAR(GUEST_JOIN_DATE,'mm') ORDER BY TO_CHAR(GUEST_JOIN_DATE,'mm');
+
 --남자여자(이전)
 SELECT GUEST_GENDER ,COUNT(*)AS count FROM  GUEST TO_CHAR(SYSDATE ,'yyyy') = 2019 GROUP BY GUEST_GENDER ORDER BY GUEST_GENDER;
 --탈퇴한 회원비율
@@ -57,10 +55,75 @@ SELECT de_level ,COUNT(*)AS count FROM DESIGNER GROUP BY de_level ORDER BY de_le
 
 --------------------------------------------------------------------
 
---날짜별 문의
+
+
+
+--남자여자(x)
+SELECT TO_CHAR(b.dt, 'YYYY-MM-DD') AS GUEST_JOIN_DATE 
+     , NVL(SUM(a.mail), 0) MAIL ,NVL(SUM(a.femail), 0) FEMAIL 
+  FROM ( SELECT TO_CHAR('2020-11-01', 'YYYY-MM-DD') AS GUEST_JOIN_DATE
+              , (SELECT COUNT(*) FROM GUEST WHERE GUEST_GENDER =1)AS mail
+              , (SELECT COUNT(*) FROM GUEST WHERE GUEST_GENDER =0)AS femail
+           FROM GUEST
+          WHERE DEL_YN ='n' AND GUEST_JOIN_DATE <= TO_DATE('2020-11-01', 'YYYY-MM-DD')
+        ) a
+      , ( SELECT TO_DATE('2020-11-01','YYYY-MM-DD') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-11-01','YYYY-MM-DD') 
+                            - TO_DATE('2020-11-01','YYYY-MM-DD') + 1)
+        ) b
+  WHERE b.dt = a.GUEST_JOIN_DATE(+)
+  GROUP BY b.dt
+  ORDER BY b.dt;
+
+ SELECT COUNT(*)AS mail FROM GUEST WHERE GUEST_GENDER =0 AND DEL_YN = 'n';
+ SELECT COUNT(*)AS mail FROM GUEST WHERE GUEST_GENDER =0 AND DEL_YN = 'y';
+
+SELECT COUNT(a.*)AS mail, count(b.*)AS femail FROM (SELECT * FROM GUEST WHERE GUEST_GENDER =0 AND DEL_YN = 'n')AS a,
+	(SELECT * FROM GUEST WHERE GUEST_GENDER =0 AND DEL_YN = 'n')AS b;
+
+
+
+
+--회원 증가율 차트(o)
+SELECT TO_CHAR(b.dt, 'YYYY-MM-DD') AS GUEST_JOIN_DATE 
+     , NVL(SUM(a.mail), 0) MAIL ,NVL(SUM(a.femail), 0) FEMAIL 
+  FROM ( SELECT TO_CHAR(GUEST_JOIN_DATE, 'YYYY-MM-DD') AS GUEST_JOIN_DATE
+              , (SELECT COUNT(*) FROM GUEST WHERE GUEST_GENDER =1)AS mail
+              , (SELECT COUNT(*) FROM GUEST WHERE GUEST_GENDER =0)AS femail
+           FROM GUEST
+          WHERE DEL_YN ='n' AND GUEST_JOIN_DATE BETWEEN TO_DATE('2020-11-01', 'YYYY-MM-DD')
+                             AND TO_DATE('2020-11-05' , 'YYYY-MM-DD') 
+          GROUP BY GUEST_JOIN_DATE 
+        ) a
+      , ( SELECT TO_DATE('2020-11-01','YYYY-MM-DD') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-11-05','YYYY-MM-DD') 
+                            - TO_DATE('2020-11-01','YYYY-MM-DD') + 1)
+        ) b
+  WHERE b.dt = a.GUEST_JOIN_DATE(+)
+  GROUP BY b.dt
+  ORDER BY b.dt;
+
+
+
+
+-----------------------------------------------------------------------------
+
+
+--날짜별 문의통계
+SELECT TO_CHAR(QNA_REGDATE,'yyyy-MM') AS day ,COUNT(*)AS count FROM qna WHERE ADMIN_ID IS NULL  GROUP BY TO_CHAR(QNA_REGDATE,'yyyy-MM') ORDER BY TO_CHAR(QNA_REGDATE,'yyyy-MM');
+--답변별 문의통계
+SELECT RES_YN ,COUNT(*)AS count FROM qna GROUP BY RES_YN ORDER BY RES_YN;
+--비밀별 문의통계
+SELECT QNA_SECRET ,COUNT(*)AS count FROM qna GROUP BY QNA_SECRET ORDER BY QNA_SECRET;
+
+
+
+--일별 문의통계(o)
 SELECT TO_CHAR(QNA_REGDATE,'yyyy-MM-dd') AS day ,COUNT(*)AS count FROM qna WHERE ADMIN_ID IS NULL  GROUP BY TO_CHAR(QNA_REGDATE,'yyyy-MM-dd') ORDER BY TO_CHAR(QNA_REGDATE,'yyyy-MM-dd');
 
-SELECT TO_CHAR(b.dt, 'YYYY-MM-DD') AS QNA_REGDATE
+SELECT TO_CHAR(b.dt, 'DD') AS QNA_REGDATE
      , NVL(SUM(a.cnt), 0) cnt
   FROM ( SELECT TO_CHAR(QNA_REGDATE, 'YYYY-MM-DD') AS QNA_REGDATE
               , COUNT(*) cnt
@@ -78,23 +141,130 @@ SELECT TO_CHAR(b.dt, 'YYYY-MM-DD') AS QNA_REGDATE
   GROUP BY b.dt
   ORDER BY b.dt;
 
+-----------------------------------------------------------------------------------------------
+ 
+ --예약 월별 카운팅(o)
+SELECT TO_CHAR(BOOK_REGDATE,'yyyy-MM') AS day ,COUNT(*)AS count FROM qna WHERE ADMIN_ID IS NULL  GROUP BY TO_CHAR(QNA_REGDATE,'yyyy-MM') ORDER BY TO_CHAR(QNA_REGDATE,'yyyy-MM');
 
+SELECT TO_CHAR(b.dt, 'yyyy-MM') AS BOOK_REGDATE
+     , NVL(SUM(a.cnt), 0) cnt
+  FROM ( SELECT TO_CHAR(BOOK_REGDATE , 'yyyy-MM') AS BOOK_REGDATE
+              , COUNT(*) cnt
+           FROM BOOKING 
+          WHERE BOOK_REGDATE BETWEEN TO_DATE('2020-11', 'yyyy-MM')
+                             AND TO_DATE('2020-11' , 'yyyy-MM') 
+          GROUP BY BOOK_REGDATE
+        ) a
+      , ( SELECT TO_DATE('2020-11','yyyy-MM') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-11','yyyy-MM') 
+                            - TO_DATE('2020-11','yyyy-MM') + 1)
+        ) b
+  WHERE b.dt = a.BOOK_REGDATE(+)
+  GROUP BY b.dt
+  ORDER BY b.dt;
 
+--시간대별 카운팅(x)
+SELECT TO_CHAR(b.dt, 'yyyy-MM-dd HH') AS BOOK_REGDATE
+     , NVL(SUM(a.cnt), 0) cnt
+  FROM ( SELECT TO_CHAR(BOOK_REGDATE , 'yyyy-MM-dd HH') AS BOOK_REGDATE
+              , COUNT(*) cnt
+           FROM BOOKING 
+          WHERE BOOK_REGDATE BETWEEN TO_DATE('2020-11-01', 'yyyy-MM-dd HH')
+                             AND TO_DATE('2020-11-05' , 'yyyy-MM-dd HH') 
+          GROUP BY BOOK_REGDATE
+        ) a
+      , ( SELECT TO_DATE('2020-11-01 :00','yyyy-MM-dd HH') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-11-05 :23','yyyy-MM-dd HH') 
+                            - TO_DATE('2020-11-01 :00','yyyy-MM-dd HH') + 1)
+        ) b
+  WHERE b.dt = a.BOOK_REGDATE(+)
+  GROUP BY b.dt
+  ORDER BY b.dt;
 
+ ---------------------------------------------------------
+ SELECT * FROM ORDER_DETAIL od ;
+SELECT * FROM ORDERS o ;
+ 
+SELECT * FROM ORDERS WHERE ORDERS_DATE BETWEEN '2020-11-01' AND '2020-11-05';
 
+SELECT * FROM ORDER_DETAIL od ;
 
+--일별 주문카운팅(o)
+SELECT TO_CHAR(b.dt, 'yyyy-MM-dd ') AS ORDERS_DATE
+    , NVL(SUM(a.cnt), 0) cnt
+  FROM ( SELECT TO_CHAR(ORDERS_DATE , 'yyyy-MM-dd ') AS ORDERS_DATE
+              , COUNT(*) cnt
+           FROM ORDERS
+          WHERE ORDERS_DATE BETWEEN TO_DATE('2020-11-01', 'yyyy-MM-dd ')
+                             AND TO_DATE('2020-11-05' , 'yyyy-MM-dd ') 
+          GROUP BY ORDERS_DATE
+        ) a
+      , ( SELECT TO_DATE('2020-11-01 ','yyyy-MM-dd ') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-11-05 ','yyyy-MM-dd ') 
+                            - TO_DATE('2020-11-01 ','yyyy-MM-dd ') + 1)
+        ) b
+  WHERE b.dt = a.ORDERS_DATE(+)
+  GROUP BY b.dt
+  ORDER BY b.dt;
+ 
+/*--월별 주문카운팅(x)
+SELECT TO_CHAR(b.dt, 'yyyy-MM ') AS ORDERS_DATE
+    , NVL(SUM(a.cnt), 0) cnt
+  FROM ( SELECT TO_CHAR(ORDERS_DATE , 'yyyy-MM ') AS ORDERS_DATE
+              , COUNT(*) cnt
+           FROM ORDERS
+          WHERE ORDERS_DATE BETWEEN TO_DATE('2020-12', 'yyyy-MM ')
+                             AND TO_DATE('2020-11' , 'yyyy-MM ') 
+          GROUP BY ORDERS_DATE
+        ) a
+      , ( SELECT TO_DATE('2020-11 ','yyyy-MM') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-12 ','yyyy-MM ') 
+                            - TO_DATE('2020-11 ','yyyy-MM ') + 1)
+        ) b
+  WHERE b.dt = a.ORDERS_DATE(+)
+  GROUP BY b.dt
+  ORDER BY b.dt;*/
+ 
+ 
+--일별 주문금액(o)
+SELECT TO_CHAR(b.dt, 'yyyy-MM-dd ') AS ORDERS_DATE
+    , NVL(SUM(a.total), 0) total
+  FROM ( SELECT TO_CHAR(ORDERS_DATE , 'yyyy-MM-dd ') AS ORDERS_DATE
+              , TO_CHAR(SUM(ORDERS_TOTAL_PRICE),'999,999,999,999,999')  total
+           FROM ORDERS
+          WHERE ORDERS_DATE BETWEEN TO_DATE('2020-11-01', 'yyyy-MM-dd ')
+                             AND TO_DATE('2020-11-05' , 'yyyy-MM-dd ') 
+          GROUP BY ORDERS_DATE
+        ) a
+      , ( SELECT TO_DATE('2020-11-01 ','yyyy-MM-dd ') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-11-05 ','yyyy-MM-dd ') 
+                            - TO_DATE('2020-11-01 ','yyyy-MM-dd ') + 1)
+        ) b
+  WHERE b.dt = a.ORDERS_DATE(+)
+  GROUP BY b.dt
+  ORDER BY b.dt;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
+ -- 월별 주문금액(x)
+SELECT TO_CHAR(b.dt, 'yyyy-MM-dd ') AS ORDERS_DATE
+    , NVL(SUM(a.total), 0) total
+  FROM ( SELECT TO_CHAR(ORDERS_DATE , 'yyyy-MM-dd ') AS ORDERS_DATE
+              , TO_CHAR(SUM(ORDERS_TOTAL_PRICE),'999,999,999,999,999')  total
+           FROM ORDERS
+          WHERE ORDERS_DATE BETWEEN TO_DATE('2020-11-01', 'yyyy-MM-dd ')
+                             AND TO_DATE('2020-11-05' , 'yyyy-MM-dd ') 
+          GROUP BY ORDERS_DATE
+        ) a
+      , ( SELECT TO_DATE('2020-11-01 ','yyyy-MM-dd ') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-11-05 ','yyyy-MM-dd ') 
+                            - TO_DATE('2020-11-01 ','yyyy-MM-dd ') + 1)
+        ) b
+  WHERE b.dt = a.ORDERS_DATE(+)
+  GROUP BY b.dt
+  ORDER BY b.dt;

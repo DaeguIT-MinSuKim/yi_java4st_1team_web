@@ -20,16 +20,16 @@ public class ChartService {
 		return dao.qnaBySecret(year);
 	}
 
-	public JSONArray joinGuestByOneDay(String year) {
-		return dao.guestByJoin(year);
+	public JSONArray joinGuestByOneDay(String startDate, String endDate) {
+		return dao.guestByJoin(startDate,endDate);
 	}
 
 	public JSONArray gender(String year) {
 		return dao.guestByGender(year);
 	}
 	 
-	public JSONArray GuestByOut(String year) {
-		return dao.guestByGender(year);
+	public JSONArray guestIncrease(String startDate, String endDate) {
+		return dao.guestIncrease(startDate, endDate);
 	}
 
 	public JSONArray bookingByTime() {

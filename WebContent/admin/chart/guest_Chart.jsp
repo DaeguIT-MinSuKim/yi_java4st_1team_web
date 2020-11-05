@@ -76,10 +76,11 @@ div.content {
 	margin: 0 auto;
 }
 </style>
+<script src="chart/chart.js"></script>
 <script type="text/javascript"
 	src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-$(function(){
+/* $(function(){
 			google.charts.load('current', {
 				'packages' : [ 'corechart' ]
 			});
@@ -97,21 +98,9 @@ $(function(){
 				backgroundColor: "transparent"
 			};
 			
-			var options2 = {
-				title : 'Guest Gender',
-				height : '100%',
-				width : '100%',
-				pieHole: 0.4,
-				backgroundColor: "transparent"
-			};
 			
-			var options3 = {
-				title : 'Guest Out',
-				height : '100%',
-				width : '100%',
-				pieHole: 0.4,
-				backgroundColor: "transparent"
-			};
+			
+			
 			
 			var qnaTable = google.visualization.arrayToDataTable(${join});
 	
@@ -120,26 +109,56 @@ $(function(){
 			chart.draw(qnaTable, options1);
 			
 			
-			var resTable = google.visualization.arrayToDataTable(${gender})
 			
-			var objDiv = document.getElementById('myChart2');
-			var chart = new google.visualization.PieChart(objDiv);
-			chart.draw(resTable, options2);
-			
-			var seTable = google.visualization.arrayToDataTable(${out})
-			
-			var objDiv = document.getElementById('myChart3');
-			var chart = new google.visualization.PieChart(objDiv);
-			chart.draw(seTable, options3);
 		}
+}); */
+$(function(){
+	google.charts.load('current', {
+		'packages' : [ 'bar' ]
+	});
+
+	google.charts.setOnLoadCallback(drawChart);
+	
+	function drawChart(){
+		
+		var options2 = {
+				title : 'Guest Gender',
+				height : '100%',
+				width : '100%',
+				pieHole: 0.4,
+				backgroundColor: "transparent"
+		};
+		
+		var options3 = {
+				title : 'Guest Out',
+				height : '100%',
+				width : '100%',
+				pieHole: 0.4,
+				backgroundColor: "transparent"
+			};
+		
+		var resTable = google.visualization.arrayToDataTable(${gender});
+		
+		var objDiv = document.getElementById('myChart2');
+		var chart = new google.charts.Bar(objDiv);
+		chart.draw(resTable, google.charts.Bar.convertOptions(options2));
+		
+		var seTable = google.visualization.arrayToDataTable(${out})
+		
+		var objDiv = document.getElementById('myChart3');
+		var chart = new google.charts.Bar(objDiv);
+		chart.draw(seTable, google.charts.Bar.convertOptions(options3));
+
+	}
+	
 });
 </script>
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
 	<h1 class="h3 mb-0 text-gray-800">Guest Chart</h1>
 </div>
-<form method="post">
-	<div class="card shadow mb-4" style="width: 80%; margin: 0 auto;">
+<form action="chartGuest.do" method="post">
+	<div class="card shadow mb-4" style="margin: 0 auto;">
 		<div class="card-header py-2">
 			<h6 class="m-1 font-weight-bold text-primary"
 				style="line-height: 16px; font-size: 1.3em">
@@ -155,12 +174,10 @@ $(function(){
 					onclick="location.href='chartOrders.do' ">
 			</h6>
 		</div>
-
 		<!-- <!-- card-body -->
 		<div class="card-body">
 			<div class="table-responsive">
 				<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-
 					<div class="row m-0 mb-2">
 						<div class="col-sm-12 col-md-12 p-0">
 							<div class="form-inline justify-content-center">
@@ -210,9 +227,9 @@ $(function(){
 						</div>
 					</div>
 					<div class="card-body">
-						<div id="myChart1"></div>
+						<!-- <div id="myChart1"></div>
 						<br> <br>
-						<hr>
+						<hr> -->
 						<div id="myChart2"></div>
 						<br> <br>
 						<hr>
