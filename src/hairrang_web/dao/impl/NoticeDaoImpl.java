@@ -237,12 +237,12 @@ public class NoticeDaoImpl implements NoticeDao {
 		}
 
 		if (condition != null ) {
-			sql += " and";
+			sql += " and ";
 			if (condition.equalsIgnoreCase("noticeTitle")) {
 				condition = " notice_title";
 				sql += condition + " like '%"+ keyword + "%'";
 			} else if (condition.equalsIgnoreCase("noticeContent")) {
-				condition = "notice_content";
+				condition = " notice_content";
 				sql += condition + " like '%" + keyword + "%'";
 			}
 		}

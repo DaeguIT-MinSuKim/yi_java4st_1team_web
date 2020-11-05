@@ -3,8 +3,12 @@
 <%@ include file="../include/header.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style>
-.add-table {
-	text-align: left;
+.add-table td {
+	padding: 10px;
+}
+
+.add-table tr td:nth-child(1) {
+	width: 100px;
 }
 
 .add-table tr td:nth-child(2) {
@@ -16,9 +20,10 @@ h3 {
 }
 
 .resCard {
-	background-color: #C5C5DB;
-	box-shadow: 5px 5px 5px 5px;
-	color: #C866CA;
+	width: 99%;
+	background-color: #F6F6F6;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
 }
 </style>
 <!-- Page Heading -->
@@ -30,7 +35,10 @@ h3 {
 	<div class="card shadow mb-4" style="width: 700px">
 		<div class="card-header py-2">
 			<h6 class="m-1 font-weight-bold text-primary"
-				style="line-height: 16px; font-size: 1.3em"></h6>
+				style="line-height: 16px; font-size: 1.3em">
+				<c:if test="${qna.qnaNotice eq 'y' }">공지상세 보기</c:if>
+				<c:if test="${qna.qnaNotice eq 'n' }">문의상세 보기</c:if>
+			</h6>
 		</div>
 		<!-- card-body -->
 		<div class="card-body">
@@ -83,14 +91,13 @@ h3 {
 									style="max-width: 100%; height: auto;">
 							</c:if>
 						</c:if>
-						<br>
+						<br> <br>
+						<c:if test="${qnaResult != null}">
+							<div class="resCard">
+								<h3>답변</h3>
+								<table class="add-table">
 
-
-						<div class="resCard">
-							<h3>답변</h3>
-							<table class="add-table">
-								<c:if test="${qnaResult != null}">
-									<tr>
+									<tr style="border-top: 1px solid black;">
 										<td>답변명</td>
 										<td>${qnaResult.qnaTitle }</td>
 									</tr>
@@ -103,14 +110,15 @@ h3 {
 										<td><img alt=""
 											src="../notice/setload/${qnaResult.qnaFile}"></td>
 									</tr>
+
+								</table>
+								<br>
+								<c:if test="${ qna.qnaFile != null}">
+									<img alt="" src="../notice/setload/${qnaResult.qnaFile}"
+										style="max-width: 100%; height: auto;">
 								</c:if>
-							</table>
-							<br>
-							<c:if test="${ qna.qnaFile != null}">
-								<img alt="" src="../notice/setload/${qnaResult.qnaFile}"
-									style="max-width: 100%; height: auto;">
-							</c:if>
-						</div>
+							</div>
+						</c:if>
 						<br> <br>
 						<div class="clear"></div>
 						<br> <img alt="" src="../notice/setload/${qnaResult.qnaFile}">

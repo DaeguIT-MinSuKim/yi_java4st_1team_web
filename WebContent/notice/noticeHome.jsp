@@ -1,43 +1,58 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@ include file="../header.jsp" %>  
+<%@ include file="../header.jsp"%>
 
 <title>Insert title here</title>
 <style>
-a{
+a {
 	text-decoration: none;
 }
 
-tr *{
+tr * {
 	text-align: left;
 }
 </style>
 <script>
 	function selChange() {
 		var sel = document.getElementById('cntPerPage').value;
-		location.href="noticeHome.do?nowPage=${paging.nowPage}&cntPerPage="+sel;
+		location.href = "noticeHome.do?nowPage=${paging.nowPage}&cntPerPage="
+				+ sel;
 	}
 </script>
-</head>
-<body>
-	
+<form method="get" name="formm">
 	<div class="qna_wrapper">
-		<p style="text-align:center; font-size:30px;">공지 사항</p>
-		<div style="width:1000px; margin:0 auto; text-align:right; padding:10px;">
-			<select id="cntPerPage" name="sel" onchange="selChange()">
-			<option value="5"
-				<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
-			<option value="10"
-				<c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
-			<option value="15"
-				<c:if test="${paging.cntPerPage == 15}">selected</c:if>>15줄 보기</option>
-			<option value="20"
-				<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄 보기</option>
-		</select>
+		<p style="text-align: center; font-size: 30px;">공지 사항</p>
+		<div
+			style="width: 1000px; margin: 0 auto; text-align: right; padding: 10px;">
+			<select id="cntPerPage" name="sel" onchange="selChange()"
+				style="float: left;">
+				<option value="5"
+					<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄
+					보기</option>
+				<option value="10"
+					<c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄
+					보기</option>
+				<option value="15"
+					<c:if test="${paging.cntPerPage == 15}">selected</c:if>>15줄
+					보기</option>
+				<option value="20"
+					<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄
+					보기</option>
+			</select>
+			<div style="float: right;">
+				<select class="custom-select custom-select-sm" name="condition"
+					style="width: 80px;">
+					<option <c:if test="${condition eq 'noticeTitle'}"> selected </c:if>  value="noticeTitle">제목</option>
+					<option <c:if test="${condition eq 'noticeContent'}"> selected </c:if> value="noticeContent">내용</option>
+				</select> <label> <input type="search" name="keyword" placeholder=""
+					aria-controls="dataTable" style="width: 130px;">
+				</label> <input type="submit" value="검색">
+			</div>
+			<br>
 		</div>
 		<table id="board">
 			<tr>
@@ -58,22 +73,28 @@ tr *{
 
 		<div class="paging" style="text-align: center;">
 			<c:if test="${paging.startPage != 1}">
-				<a href="noticeHome.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}"><i class="xi-angle-left"></i></a>	
+				<a
+					href="noticeHome.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}"><i
+					class="xi-angle-left"></i></a>
 			</c:if>
-			<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+			<c:forEach begin="${paging.startPage }" end="${paging.endPage }"
+				var="p">
 				<c:choose>
 					<c:when test="${p == paging.nowPage }">
 						<b>${p }</b>
 					</c:when>
 					<c:when test="${p != paging.nowPage }">
-						<a href="noticeHome.do?nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a>
+						<a
+							href="noticeHome.do?nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a>
 					</c:when>
 				</c:choose>
-			</c:forEach>		
+			</c:forEach>
 			<c:if test="${paging.endPage != paging.lastPage }">
-				<a href="noticeHome.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}"><i class="xi-angle-right"></i></a>
-			</c:if>	
+				<a
+					href="noticeHome.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}"><i
+					class="xi-angle-right"></i></a>
+			</c:if>
 		</div>
 	</div>
-</body>
-<%@ include file="../footer.jsp" %>  
+</form>
+<%@ include file="../footer.jsp"%>

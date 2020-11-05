@@ -33,13 +33,13 @@ tr * {
 				+ sel;
 	}
 </script>
-</head>
-<body>
-
+<form method="get" name="formm">
 	<div class="qna_wrapper">
 		<p style="text-align: center; font-size: 30px;">문의 사항</p>
-		<div style="width: 1000px; margin: 0 auto; text-align: right; padding: 10px;">
-			<select id="cntPerPage" name="sel" onchange="selChange()">
+		<div
+			style="width: 1000px; margin: 0 auto; text-align: right; padding: 10px;">
+			<select id="cntPerPage" name="sel" onchange="selChange()"
+				style="float: left;">
 				<option value="5"
 					<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄
 					보기</option>
@@ -53,6 +53,19 @@ tr * {
 					<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄
 					보기</option>
 			</select>
+			<div id="dataTable_filter" class="dataTables_filter ">
+				<select name="condition" style="width: 80px;">
+					<option <c:if test="${condition eq 'qnaTitle'}"> selected </c:if>
+						value="qnaTitle">제목</option>
+					<option <c:if test="${condition eq 'qnaContent'}"> selected </c:if>
+						value="qnaContent">내용</option>
+					<option <c:if test="${condition eq 'qnaWriter'}"> selected </c:if>
+						value="qnaWriter">작성자</option>
+				</select> <label> <input type="search" name="keyword"
+					class="form-control form-control-sm" placeholder=""
+					aria-controls="dataTable" style="width: 130px;">
+				</label> <input type="submit" value="검색">
+			</div>
 		</div>
 		<table id="board">
 			<tr>
@@ -69,26 +82,28 @@ tr * {
 				<c:if test="${list.qnaNotice eq 'n'}">
 					<tr>
 				</c:if>
-				<td><c:if test="${list.qnaSecret eq 'y'}">
-						<img src="qna/images/secret.png" alt=""
-							style="width: 20px; height: auto;" />
-					</c:if> ${list.qnaNo }</td>
+				<td>${list.qnaNo }</td>
 				<td><a
-					href="qnaConfirmPassword.do?no=${list.qnaNo}&secret=${list.qnaSecret}">${list.qnaTitle }</a></td>
+					href="qnaConfirmPassword.do?no=${list.qnaNo}&secret=${list.qnaSecret}">
+						<c:if test="${list.qnaNotice eq 'y'}">
+							<i class="fas fa-flag"></i>
+						</c:if> <c:if test="${list.qnaSecret eq 'y'}">
+							<i class="fas fa-lock"></i>
+						</c:if> ${list.qnaTitle }
+				</a></td>
 				<td><c:if test="${list.qnaNotice eq 'y' }">Hairrang</c:if>${list.guestId.guestId}</td>
 				<td><fmt:parseDate value="${list.qnaRegDate}"
 						pattern="yyyy-MM-dd'T'HH:mm" var="regDate" type="both" /> <fmt:formatDate
 						value="${regDate}" pattern="yyyy-MM-dd HH:mm" /></td>
 
 				<c:if test="${list.guestId.guestId != null}">
-					<td><c:if test="${list.qnaResYn eq 'y'}"><img alt="" src="qna/images/check.png" style="max-width: 60%; height: auto;"></c:if></td>
+					<td><c:if test="${list.qnaResYn eq 'y'}">
+							<i class="fas fa-check" style="color: #09D345;"></i>
+						</c:if></td>
 				</c:if>
 				<c:if test="${list.guestId.guestId == null}">
 					<td></td>
 				</c:if>
-
-
-
 				</tr>
 			</c:forEach>
 		</table>
@@ -124,5 +139,5 @@ tr * {
 			class="button" value="문의 내역" id="list"
 			onclick="location.href='qnaList.do'">
 	</div>
-</body>
+</form>
 <%@ include file="../footer.jsp"%>

@@ -3,12 +3,20 @@
 <%@ include file="../include/header.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style>
-.add-table {
-	text-align: left;
+.add-table td {
+	padding: 10px;
+}
+
+.add-table tr td:nth-child(1) {
+	width: 100px;
 }
 
 .add-table tr td:nth-child(2) {
 	text-align: left;
+}
+
+.add-table tr td {
+	padding: 10px;
 }
 
 h3 {
@@ -16,9 +24,10 @@ h3 {
 }
 
 .resCard {
-	background-color: #C5C5DB;
-	box-shadow: 5px 5px 5px 5px;
-	color: #C866CA;
+	width: 99%;
+	background-color: #F6F6F6;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
 }
 </style>
 <!-- Page Heading -->
@@ -31,7 +40,7 @@ h3 {
 	<div class="card shadow mb-4" style="width: 700px">
 		<div class="card-header py-2">
 			<h6 class="m-1 font-weight-bold text-primary"
-				style="line-height: 16px; font-size: 1.3em"></h6>
+				style="line-height: 16px; font-size: 1.3em">문의 답변</h6>
 		</div>
 		<!-- card-body -->
 		<div class="card-body">
@@ -78,21 +87,23 @@ h3 {
 						<c:if test="${qna.qnaFile != null}">
 							<img alt="" src="../qna/upload/${qna.qnaFile}">
 						</c:if>
-						<br>
-						<h3>답변</h3>
-						<table class="add-table">
-							<tr style="border-top: 1px solid black;">
-								<td>답변 제목</td>
-								<td><input type="text" name="title" />
-							</tr>
-							<tr>
-								<td>답변 내용</td>
-								<td><textarea rows="20" cols="60" name="content"></textarea></td>
-							</tr>
-						</table>
-						<input type="file" value="파일첨부" multiple id="setload"
-									name="setload" style="width: 100px;">
-
+						<br><br>
+						<div class="resCard">
+							<h3>답변</h3>
+							<table class="add-table">
+								<tr style="border-top: 1px solid black;">
+									<td>답변 제목</td>
+									<td><input type="text" name="title" />
+								</tr>
+								<tr>
+									<td>답변 내용</td>
+									<td><textarea rows="20" cols="60" name="content"
+											style="resize: none;"></textarea></td>
+								</tr>
+							</table>
+							<input type="file" value="파일첨부" multiple id="setload"
+								name="setload" style="width: 100px;">
+						</div>
 						<br> <br>
 						<div class="clear"></div>
 						<br>

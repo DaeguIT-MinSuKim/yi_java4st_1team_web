@@ -3,8 +3,12 @@
 <%@ include file="../include/header.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <style>
-.add-table {
-	text-align: left;
+.add-table td {
+	padding: 10px;
+}
+
+.add-table tr td:nth-child(1) {
+	width: 100px;
 }
 
 .add-table tr td:nth-child(2) {
@@ -16,9 +20,9 @@ h3 {
 }
 
 .resCard {
-	background-color: #C5C5DB;
-	box-shadow: 5px 5px 5px 5px;
-	color: #C866CA;
+	width: 99%;
+	background-color: #F6F6F6;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 </style>
 <!-- Page Heading -->
@@ -31,7 +35,7 @@ h3 {
 	<div class="card shadow mb-4" style="width: 700px">
 		<div class="card-header py-2">
 			<h6 class="m-1 font-weight-bold text-primary"
-				style="line-height: 16px; font-size: 1.3em"></h6>
+				style="line-height: 16px; font-size: 1.3em">문의및공지 수정</h6>
 		</div>
 		<!-- card-body -->
 		<div class="card-body">
@@ -70,7 +74,8 @@ h3 {
 								</tr>
 								<tr>
 									<td>공지 내용</td>
-									<td><textarea rows="20" cols="60" name="content">${qna.qnaContent }</textarea></td>
+									<td><textarea rows="20" cols="60" name="content"
+											style="resize: none;">${qna.qnaContent }</textarea></td>
 								</tr>
 							</table>
 							<br>
@@ -118,18 +123,24 @@ h3 {
 								<img alt="" src="../qna/upload/${qna.qnaFile}">
 							</c:if>
 							<br>
-
+							<br>
 							<div class="resCard">
 								<h3>답변</h3>
 								<table class="add-table">
 									<tr style="border-top: 1px solid black;">
+										<td>번호</td>
+										<td>${qnaRes.qnaNo}<input type="hidden" name="no"
+											value="${qnaRes.qnaNo}"></td>
+									</tr>
+									<tr>
 										<td>답변 제목</td>
 										<td><input type="text" name="title"
 											value="${qnaRes.qnaTitle }" />
 									</tr>
 									<tr>
 										<td>답변 내용</td>
-										<td><textarea rows="20" cols="60" name="content">${qnaRes.qnaContent }</textarea></td>
+										<td><textarea rows="20" cols="60" name="content"
+												style="resize: none;">${qnaRes.qnaContent }</textarea></td>
 									</tr>
 								</table>
 								<br>

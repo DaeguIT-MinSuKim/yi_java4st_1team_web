@@ -249,8 +249,8 @@
 							<div id="dataTable_filter" class="dataTables_filter ">
 								<select class="custom-select custom-select-sm" name="condition"
 									style="width: 80px;">
-									<option value="noticeTitle">제목</option>
-									<option value="noticeContent">내용</option>
+									<option <c:if test="${condition eq 'noticeTitle'}"> selected </c:if> value="noticeTitle">제목</option>
+									<option <c:if test="${condition eq 'noticeContent'}"> selected </c:if> value="noticeContent">내용</option>
 								</select> <label> <input type="search" name="keyword"
 									class="form-control form-control-sm" placeholder=""
 									aria-controls="dataTable">

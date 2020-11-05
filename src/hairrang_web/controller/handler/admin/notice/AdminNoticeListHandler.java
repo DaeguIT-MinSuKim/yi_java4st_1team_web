@@ -84,6 +84,7 @@ public class AdminNoticeListHandler implements Command {
 			list = service.selectPagingNoticeSearch(paging, condition, keyword, stay);
 
 			// 이후 페이지 클래스로 정리하는곳
+			request.setAttribute("condition", condition);
 			request.setAttribute("cnt", cntPerPage);
 			request.setAttribute("stay", stay);
 			request.setAttribute("paging", paging);

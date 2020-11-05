@@ -3,6 +3,11 @@
 <%@ include file="../include/header.jsp"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+.leftTd {
+	text-align: left;
+}
+</style>
 <script>
 	document.title += ' - 문의 목록';
 
@@ -232,8 +237,15 @@
 							<div id="dataTable_filter" class="dataTables_filter ">
 								<select class="custom-select custom-select-sm" name="condition"
 									style="width: 80px;">
-									<option value="qnaTitle">제목</option>
-									<option value="qnaContent">내용</option>
+									<option
+										<c:if test="${condition eq 'qnaTitle'}"> selected </c:if>
+										value="qnaTitle">제목</option>
+									<option
+										<c:if test="${condition eq 'qnaContent'}"> selected </c:if>
+										value="qnaContent">내용</option>
+									<option
+										<c:if test="${condition eq 'qnaWriter'}"> selected </c:if>
+										value="qnaWriter">작성자</option>
 								</select> <label> <input type="search" name="keyword"
 									class="form-control form-control-sm" placeholder=""
 									aria-controls="dataTable">
@@ -269,15 +281,25 @@
 								<td><input type="checkbox" name="check"
 									value="${qna.qnaNo}"></td>
 								<td style="width: 20px;">${qna.qnaNo}</td>
-								<td style="width: 80px;">${qna.guestId.guestId}</td>
-								<td style="width: 130px;"><a
-									href="qnaDetail.do?no=${qna.qnaNo }">${qna.qnaTitle}</a></td>
+								<td style="width: 80px;" class="leftTd">${qna.guestId.guestId}</td>
+								<td style="width: 130px;" class="leftTd"><a
+									href="qnaDetail.do?no=${qna.qnaNo }"><c:if
+											test="${qna.qnaNotice eq 'y'}">
+											<i class="fas fa-flag"></i>
+										</c:if> <c:if test="${qna.qnaSecret eq 'y'}">
+											<i class="fas fa-lock"></i>
+										</c:if>${qna.qnaTitle}</a></td>
 								<td style="width: 150px;"><fmt:parseDate
 										value="${qna.qnaRegDate}" pattern="yyyy-MM-dd'T'HH:mm"
 										var="regDate" type="both" /> <fmt:formatDate
 										value="${regDate}" pattern="yyyy-MM-dd HH:mm" /></td>
 								<td style="width: 150px;"><c:if
-										test="${qna.qnaNotice eq 'n' }">${qna.qnaResYn}</c:if></td>
+										test="${qna.qnaNotice eq 'n' }">
+										<c:if test="${qna.qnaResYn eq 'y' }">
+											<i class="fas fa-check" style="color: #09D345;"></i>
+										</c:if>
+
+									</c:if></td>
 
 								<td style="width: 100px;"><c:if
 										test="${qna.qnaResYn eq 'y'}">
