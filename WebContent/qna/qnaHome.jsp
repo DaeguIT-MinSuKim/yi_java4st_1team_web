@@ -5,7 +5,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ include file="../header.jsp"%>
-<
 <style>
 .button {
 	border: 1px solid gray;
@@ -39,8 +38,7 @@ tr * {
 
 	<div class="qna_wrapper">
 		<p style="text-align: center; font-size: 30px;">문의 사항</p>
-		<div
-			style="width: 1000px; margin: 0 auto; text-align: right; padding: 10px;">
+		<div style="width: 1000px; margin: 0 auto; text-align: right; padding: 10px;">
 			<select id="cntPerPage" name="sel" onchange="selChange()">
 				<option value="5"
 					<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄

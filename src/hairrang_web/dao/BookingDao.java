@@ -36,27 +36,15 @@ public interface BookingDao {
 	int updateBookingStaus(Booking booking);
 		
 	/////페이징
-	int countBookingById(String id);
-	
-	int countStatus1(String id);
-	
-	int countStatus0(String id);
+	int countBookingById(String id, String status);
 	
 	ArrayList<BookingHairs> pagingBookingHairsById(Paging paging, String id);
 	
 	ArrayList<Integer> selectNoBooking(String id);
 	
-	ArrayList<Integer> selectNoStatus0 (String id);
-	
-	ArrayList<Integer> selectNoStatus1 (String id);
-	
 	Booking pagingBookingById(Paging paging, String id, int no);
-	
-	Booking selectBookStatus1(Paging paging, String id, int no);
 
-	Booking selectBookStatus0(Paging paging, String id, int no);
-
-	ArrayList<Booking> pagingBookingListById(Paging paging, String id);
+	ArrayList<Booking> pagingBookingListById(Paging paging, String id, String status);
 
 	/* Admin */
 	
@@ -68,6 +56,8 @@ public interface BookingDao {
 	int countBookingByConditionForPaging(Paging paging, String where, String query, String sorter, String designer, String startDate, String endDate);
 
 	int selectNextValBookNo();
+
+	
 
 
 
