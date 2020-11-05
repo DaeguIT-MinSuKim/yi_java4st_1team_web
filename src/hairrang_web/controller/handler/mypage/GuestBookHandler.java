@@ -87,7 +87,6 @@ public class GuestBookHandler implements Command {
 			
 			for(Booking book : bookingList) {
 				int sum = 0;
-				//System.out.println("hairList 있습니까? : " + book.getHairList());
 				for(BookingHairs bh : book.getHairList()) {
 					sum += bh.getHair().getHairPrice() * bh.getQuantity();
 				}

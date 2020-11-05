@@ -6,7 +6,22 @@
      <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
      <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
-
+<script>
+$(function(){
+	$(document).ready(function() {
+		var thisUrlStr = window.location.href;
+		var thisUrl = new URL(thisUrlStr);
+		var booking = thisUrl.searchParams.get("booking");
+		if(booking != undefined) {
+			if(booking == "past") {
+				$("#pastBookingBtn").css("font-weight", "bold");
+			}
+		} else {
+			$("#allBookingBtn").css("font-weight", "bold");
+		}
+	});
+});
+</script>
 <style>
 .book a {background-color:white;  border-bottom:1px solid white;}
 .book-btn {background-color:#fff; cursor:pointer; font-size:15px; border:none;}
@@ -17,8 +32,8 @@
 <div class="book_wrapper">
 <h3 style="text-align:center; margin-bottom:20px;">나의 예약내역</h3>
 <div class="tcenter" style="margin-bottom:20px; float:right">
-	<input type="button" value="전체보기" onclick="location.href='guestBook.do'" class="book-btn"><span style="color:gray">ㅣ</span> 
-	<input type="button" value="지난 예약 내역" onclick="location.href='guestBook.do?nowPage=1&booking=past'" class="book-btn">
+	<input type="button" id="allBookingBtn" value="전체보기" onclick="location.href='guestBook.do'" class="book-btn"><span style="color:gray">ㅣ</span> 
+	<input type="button" id="pastBookingBtn" value="지난 예약 내역" onclick="location.href='guestBook.do?nowPage=1&booking=past'" class="book-btn">
 </div>
 <table id="board">
 	<tr>

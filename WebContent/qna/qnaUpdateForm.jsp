@@ -28,11 +28,11 @@
 	<%-- <input type="hidden" value="${qna}" name="qna" id="qna"> --%>
 	정말로 수정하시겠습니까?
 	<form action="qnaUpdate.do" method="get">
-		<input type="hidden" id="no" value="${qna.qnaNo}" name="no"> <input
-			type="hidden" value="${qna.qnaTitle }" name="title"> <input
-			type="hidden" value="${qna.qnaContent }" name="content"> <input
-			type="submit" value="수정"> <input type="button" value="취소"
-			onclick="QnaCancel()">
+		<input type="hidden" id="no" value="${qna.qnaNo}" name="no">
+		<input type="hidden" value="${qna.qnaTitle }" name="title">
+		<input type="hidden" value="${qna.qnaContent }" name="content">
+		<input type="submit" value="수정">
+		<input type="button" value="취소" onclick="QnaCancel()">
 	</form>
 </body>
 </html>

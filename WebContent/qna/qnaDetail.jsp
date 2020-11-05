@@ -184,7 +184,7 @@ tr td:nth-child(2) {
 			</div>
 		</c:if>
 	</div>
-	<div id="buttons" style="float: right">
+	<div id="buttons" class="outer" style="margin: 0px auto; text-align:right;">
 		<c:if test="${loginUser.guestId eq qna.guestId.guestId}">
 			<c:if test="${qna.qnaResYn eq 'n' }">
 				<input type="button" value="수정하기" id="updateButton" class="button"
