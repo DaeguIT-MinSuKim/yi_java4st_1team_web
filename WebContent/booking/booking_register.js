@@ -152,7 +152,7 @@ function addHair(hairNo, hairName) {
 	if (selectedItem.length == 0) {
 		// 처음 선택한 경우
 		var addLine = "<li class='addedHair' hairNo='" + hairNo + "' hairName='" + hairName + "' quantity='" + quantity + "'>"
-						+ hairName + " <span class='quantity'>" + quantity + "</span>회 <a href='javascript:void(0);' onclick='delHairItem(" + hairNo +"); return false;'>X</a></li>";
+						+ hairName + " <span class='quantity'>" + quantity + "</span>회 <a href='javascript:void(0);' onclick='delHairItem(" + hairNo +"); return false;'><i class='fas fa-times' style='color:#ff6464'></i></a> </li>";
 		$(".addedHairList ul").append(addLine);
 	} else {
 		// 이미 존재하는 경우 수량을 증가시킴
