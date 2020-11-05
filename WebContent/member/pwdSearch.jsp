@@ -9,6 +9,8 @@
 	}
 
 </style>
+<link rel="stylesheet" href="css/design.css">
+<link rel="stylesheet" href="css/style.css">
 <script type="text/javascript" src="member/member.js"></script>
 <body>
 <form method=post name=formm style="margin-right:0" action="pwdSearch.do" >

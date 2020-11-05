@@ -6,6 +6,8 @@ function confirm(){
 	self.close();
 }
 </script>
+<link rel="stylesheet" href="css/design.css">
+<link rel="stylesheet" href="css/style.css">
 <body>
 <c:choose>
 	<c:when test="${message == -1}">
@@ -16,7 +18,7 @@ function confirm(){
 	</c:when>
 	<c:when test="${error ne null}">
 	 	<script>
-	          alert(${error})
+	          alert(${error});
 	          history.go(-1);
 	    </script>
 	</c:when>

@@ -93,7 +93,7 @@ $(document).ready(function() {
 				</tr>
 				<tr>
 					<td style="text-align:left">성별</td>
-					<td style="text-align:left"><input type="checkbox" name="gender" value="0" style="width: 30px;">
+					<td style="text-align:center"><input type="checkbox" name="gender" value="0" style="width: 30px;">
 						여성 
 						<input type="checkbox" name="gender" value ="1" style="width: 30px;">
 						남성</td>
