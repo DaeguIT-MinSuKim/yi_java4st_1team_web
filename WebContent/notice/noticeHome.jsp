@@ -10,11 +10,10 @@
 <style>
 a {
 	text-decoration: none;
+	color:black;
 }
 
-tr * {
-	text-align: left;
-}
+.qna-btn {background-color:white; border:1px solid gray; border-radius:2px; cursor:pointer}
 </style>
 <script>
 	function selChange() {
@@ -28,21 +27,7 @@ tr * {
 		<p style="text-align: center; font-size: 30px;">공지 사항</p>
 		<div
 			style="width: 1000px; margin: 0 auto; text-align: right; padding: 10px;">
-			<select id="cntPerPage" name="sel" onchange="selChange()"
-				style="float: left;">
-				<option value="5"
-					<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄
-					보기</option>
-				<option value="10"
-					<c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄
-					보기</option>
-				<option value="15"
-					<c:if test="${paging.cntPerPage == 15}">selected</c:if>>15줄
-					보기</option>
-				<option value="20"
-					<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄
-					보기</option>
-			</select>
+			
 			<div style="float: right;">
 				<select class="custom-select custom-select-sm" name="condition"
 					style="width: 80px;">
@@ -50,20 +35,20 @@ tr * {
 					<option <c:if test="${condition eq 'noticeContent'}"> selected </c:if> value="noticeContent">내용</option>
 				</select> <label> <input type="search" name="keyword" placeholder=""
 					aria-controls="dataTable" style="width: 130px;">
-				</label> <input type="submit" value="검색">
+				</label> <input type="submit" value="검색" class="qna-btn">
 			</div>
 			<br>
 		</div>
-		<table id="board">
+		<table id="board" style="margin-bottom:50px">
 			<tr>
-				<th style="width: 60px; text-align: center;">번호</th>
+				<th style="width: 100px; text-align: center;">번호</th>
 				<th style="text-align: center;">제목</th>
 				<th style="width: 100px; text-align: center;">작성일</th>
 			</tr>
 			<c:forEach items="${viewAll}" var="list">
 				<tr>
-					<td style="text-align: center;">${list.noticeNo }</td>
-					<td><a href="noticeDetail.do?no=${list.noticeNo}">${list.noticeTitle }</a></td>
+					<td style="text-align: center;  font-weight:bold;">${list.noticeNo }</td>
+					<td style="text-align:left;  font-weight:bold;"><a href="noticeDetail.do?no=${list.noticeNo}">${list.noticeTitle }</a></td>
 					<td><fmt:parseDate value="${list.noticeRegDate}"
 							pattern="yyyy-MM-dd'T'HH:mm" var="regDate" type="both" /> <fmt:formatDate
 							value="${regDate}" pattern="yyyy-MM-dd" /></td>
@@ -71,30 +56,91 @@ tr * {
 			</c:forEach>
 		</table>
 
-		<div class="paging" style="text-align: center;">
-			<c:if test="${paging.startPage != 1}">
-				<a
-					href="noticeHome.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}"><i
-					class="xi-angle-left"></i></a>
-			</c:if>
-			<c:forEach begin="${paging.startPage }" end="${paging.endPage }"
-				var="p">
-				<c:choose>
-					<c:when test="${p == paging.nowPage }">
-						<b>${p }</b>
-					</c:when>
-					<c:when test="${p != paging.nowPage }">
-						<a
-							href="noticeHome.do?nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p }</a>
-					</c:when>
-				</c:choose>
-			</c:forEach>
-			<c:if test="${paging.endPage != paging.lastPage }">
-				<a
-					href="noticeHome.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}"><i
-					class="xi-angle-right"></i></a>
-			</c:if>
-		</div>
-	</div>
+			<!-- 페이징 시작 -->
+
+					<div style="width:100%; margin:0 auto; text-align:center; margin-top:20px;">
+					
+					
+						<!-- << -->
+						<c:if test="${paging.startPage != 1}">
+							<div class="paging-line">
+							<a href="guestBook.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
+								<i class="fas fa-angle-double-left"></i>
+							</a>
+							</div>
+						</c:if>
+						<c:if test="${paging.startPage == 1}">
+							<div class="paging-line">
+								<i class="fas fa-angle-double-left"></i>
+							</div>
+						</c:if>
+						
+						
+						<!-- 이전페이지 -->
+						<c:choose>
+							<c:when test="${paging.nowPage != 1}">
+								<div class="paging-line">
+									<a href="guestBook.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
+								</div>
+							</c:when>
+							<c:when test="${paging.nowPage == 1}">
+								<div class="paging-line">
+									<i class="fas fa-angle-left"></i>
+								</div>
+							</c:when>
+						
+						</c:choose>
+						
+						<!-- 페이지 숫자 -->
+						
+						<c:forEach begin="${paging.startPage}" end="${paging.endPage }"
+							var="p">
+							<c:choose>
+								<c:when test="${p == paging.nowPage }">
+									<div class="paging-line" style="font-weight:bold">${p}</div>
+								</c:when>
+								<c:when test="${p != paging.nowPage }">
+									<div class="paging-line">
+									<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+									${p}</a></div>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						
+						
+						
+						<!-- 다음페이지 -->
+						<c:choose>
+							<c:when test="${paging.nowPage != paging.lastPage}">
+								<div class="paging-line">
+									<a href="guestBook.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
+								</div>
+							</c:when>
+							<c:when test="${paging.nowPage == paging.lastPage}">
+								<div class="paging-line">
+									<i class="fas fa-angle-right"></i>
+								</div>	
+							</c:when>
+						
+						</c:choose>	
+						
+						<!-- >> -->
+						
+					
+						<c:if test="${paging.endPage != paging.lastPage }">
+							<div class="paging-line">
+							<a href="guestBook.do?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">
+							<i class="fas fa-angle-double-right"></i></a>
+							</div>
+						</c:if>
+						<c:if test="${paging.endPage == paging.lastPage}">
+							<div class="paging-line">
+							<i class="fas fa-angle-double-right"></i>
+							</div>
+						</c:if>
+					
+					</div>
+				</div>	
+	
 </form>
 <%@ include file="../footer.jsp"%>

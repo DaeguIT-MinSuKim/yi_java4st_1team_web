@@ -277,7 +277,6 @@ public class GuestDaoImpl implements GuestDao {
 	@Override
 	public int countBookingByConditionForPaging(Paging paging, String del, String where, String query) {
 		String sql = "SELECT count(*) FROM GUEST_VIEW";
-		
 		int cnt = 0;
 		
 		if(where == null) {

@@ -17,22 +17,21 @@
 
 <form method=post name=formm style="margin-right:0" action="guestInfoDelete.do" >
 <div class="delete_wrapper">
-	<p style="font-size:27px;"><i class="fas fa-user-check" style="color:gray"></i>
-	  회원 탈퇴 시 아래 유의사항을 반드시 확인하시기 바랍니다.</p> <br> 
-	<div class="delete_sub1">
-	탈퇴 시 아이디는 재사용 및 복구 불가능합니다. 
+	<p style="font-size:27px;"><i class="fas fa-user-check" style="color:gray;padding:5px;"></i>회원 탈퇴 시 아래 유의사항을 반드시 확인하시기 바랍니다.</p> <br> 
+	<div style="padding:20px;">
+	<i class="fas fa-check" style="padding:10px;"></i>탈퇴 시 아이디는 재사용 및 복구 불가능합니다. 
 		 <div class="check">
 		     	<input type="checkbox" name="ok">동의함 <br><br>
 		 </div>
 	</div>
-	<div class="delete_sub2">
-	온라인 회원의 개인혜택과 회원정보는 자동 소멸됩니다. 
+	<div  style="padding:20px;">
+	<i class="fas fa-check"  style="padding:10px;"></i>온라인 회원의 개인혜택과 회원정보는 자동 소멸됩니다. 
 	 <div class="check">
 	     	<input type="checkbox" name="ok">동의함 <br><br>
 	     </div>
 	</div>
-	<div class="delete_sub3">
-	게시판형 서비스에 등록하신 게시글은 삭제가 불가능합니다. 
+	<div style="padding:20px;">
+	<i class="fas fa-check"  style="padding:10px;"></i>게시판형 서비스에 등록하신 게시글은 삭제가 불가능합니다. 
 	<div class="check">
 	     	<input type="checkbox" name="ok">동의함 <br><br>
 	     </div>

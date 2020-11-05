@@ -17,7 +17,7 @@
 </div>
 <table id="board">
 		<tr>
-			 <th>번호</th> <th>쿠폰명</th> <th>할인율</th> <th>사용 여부</th> <th>쿠폰 기간</th> <th>이벤트 상태</th>
+			 <th>번호</th> <th>쿠폰명</th> <th>쿠폰 기간</th> <th>할인율</th> <th>사용 여부</th> <th>이벤트 상태</th>
 		</tr>
 		<c:forEach items="${list}" var="coupon" varStatus="status">
 			<tr>
@@ -25,10 +25,10 @@
 				<td class="book_index">${total - ((paging.nowPage-1) * cnt + status.index)}</td>
 				<%-- <td>${coupon.couponId}</td>
 				<td>${coupon.event.eventNo}</td> --%>
-				<td style="width:350px">${coupon.event.eventName}</td>
+				<td style="width:300px">${coupon.event.eventName}</td>
 				<td style="width:200px;">${coupon.event.eventStart} ~ ${coupon.event.eventEnd}</td>
 				<td style="width:50px"><fmt:parseNumber value="${coupon.event.eventSaleRate * 100}" integerOnly="true"/>%</td>
-				<td style="width:50px">
+				<td style="width:80px">
 					<c:if test="${coupon.usedYn == 'n'}"><span style="font-weight:bold">사용가능</span></c:if>
 					<c:if test="${coupon.usedYn == 'y'}">사용완료</c:if>
 					<c:if test="${coupon.usedYn == 'e'}"><span style="color:gray">미사용만료</span></c:if>
