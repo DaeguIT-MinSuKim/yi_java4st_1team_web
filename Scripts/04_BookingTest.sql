@@ -57,3 +57,7 @@ SELECT g.* FROM guest g
 LEFT OUTER JOIN (SELECT guest_Id FROM guest WHERE guest_id = 'nonmember') g2
 ON (g.guest_id = g2.guest_Id)
 WHERE g2.guest_id IS NULL;
+
+SELECT * FROM BOOKING_HAIRS_VIEW bhv ;
+SELECT * FROM guest;
+UPDATE guest SET GUEST_EMAIL = 'earthdo.x@gmail.com' WHERE guest_id = 'test';
