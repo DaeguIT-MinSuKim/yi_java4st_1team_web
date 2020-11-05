@@ -1,5 +1,6 @@
 package hairrang_web.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -108,6 +109,14 @@ public class Booking {
 		return this.bookDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 	}
 	
+	public String getOnlyBookDateStr() {
+		return this.bookDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	}
+	
+	public String getBookDateStrKo() {
+		return this.bookDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd(E) a h시 mm분"));
+	}
+	
 	public void setBookDate(LocalDateTime bookDate) {
 		this.bookDate = bookDate;
 	}
@@ -130,7 +139,18 @@ public class Booking {
 	}
 	
 	public String getBookRegDateStr() {
-		 return this.bookRegDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+		String fmt = null;
+		if(this.bookRegDate.toLocalDate().isEqual(LocalDate.now())) {
+			fmt = "yyyy-MM-dd HH:mm";
+		} else {
+			fmt = "yyyy-MM-dd";
+		}
+		return this.bookRegDate.format(DateTimeFormatter.ofPattern(fmt));
+//		 return this.bookRegDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+	}
+	
+	public String getBookRegDateStrStd() {
+		return this.bookRegDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 	}
 
 	public void setBookRegDate(LocalDateTime bookRegDate) {
@@ -182,6 +202,18 @@ public class Booking {
 			.collect(Collectors.toCollection(ArrayList::new));
 		
 		return String.format("%s 외 %d 건", hairs.get(0).getHairName(), hairs.size() - 1);
+	}
+	
+	public int getTotalPrice() {
+		int totalPrice = 0;
+		if(this.hairList.size() == 1) {
+			totalPrice = hairList.get(0).getHair().getHairPrice() * hairList.get(0).getQuantity();
+		} else {
+			for(BookingHairs bh : this.hairList) {
+				totalPrice += bh.getQuantity() * bh.getHair().getHairPrice();
+			}
+		}
+		return totalPrice;
 	}
 	
 	@Override

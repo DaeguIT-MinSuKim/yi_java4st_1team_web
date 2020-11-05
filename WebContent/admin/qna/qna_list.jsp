@@ -5,8 +5,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 .leftTd {
-	text-align: left;
+	text-align: center;
 }
+
+a {text-decoration:none;}
+table td {text-align:center;}
 </style>
 <script>
 	document.title += ' - 문의 목록';
@@ -217,16 +220,16 @@
 										<option value="all"
 											<c:if test="${stay eq 'all'}">selected</c:if>>전체</option>
 										<option value="resy"
-											<c:if test="${stay eq 'resy'}">selected</c:if>>답변된문의
+											<c:if test="${stay eq 'resy'}">selected</c:if>>답변된 문의
 										</option>
 										<option value="resn"
-											<c:if test="${stay eq 'resn'}">selected</c:if>>미답변된공지
+											<c:if test="${stay eq 'resn'}">selected</c:if>>미답변된 문의
 										</option>
 										<option value="delq"
-											<c:if test="${stay eq 'delq'}">selected</c:if>>삭제된문의
+											<c:if test="${stay eq 'delq'}">selected</c:if>>삭제된 문의
 										</option>
 										<option value="deln"
-											<c:if test="${stay eq 'deln'}">selected</c:if>>삭제된공지
+											<c:if test="${stay eq 'deln'}">selected</c:if>>삭제된 공지
 										</option>
 								</select>
 
@@ -262,8 +265,8 @@
 							<tr>
 								<th></th>
 								<th></th>
-								<th>아이디</th>
 								<th>제목</th>
+								<th>아이디</th>
 								<th>작성일</th>
 								<th>답변여부</th>
 								<th>답변</th>
@@ -273,33 +276,39 @@
 						<tbody>
 							<c:forEach var="qna" items="${viewAll}" varStatus="status">
 								<c:if test="${qna.qnaNotice eq 'y'}">
-									<tr style="background-color: #BCBCD9">
+									<tr style="background-color: #ebf1ff">
 								</c:if>
 								<c:if test="${qna.qnaNotice eq 'n'}">
 									<tr>
 								</c:if>
-								<td><input type="checkbox" name="check"
+								
+								<td style="width:30px"><input type="checkbox" name="check"
 									value="${qna.qnaNo}"></td>
-								<td style="width: 20px;">${qna.qnaNo}</td>
-								<td style="width: 80px;" class="leftTd">${qna.guestId.guestId}</td>
-								<td style="width: 130px;" class="leftTd"><a
+								<td style="width: 4px;" class="leftTd">
+								<c:if test="${qna.qnaNotice eq 'y'}"><span style="font-weight:bold">공지</span></c:if>	
+								<c:if test="${qna.qnaNotice eq 'n'}">${qna.qnaNo}</c:if>
+								</td>
+								<td style="width: 350px;" class="leftTd"><a
 									href="qnaDetail.do?no=${qna.qnaNo }"><c:if
 											test="${qna.qnaNotice eq 'y'}">
-											<i class="fas fa-flag"></i>
 										</c:if> <c:if test="${qna.qnaSecret eq 'y'}">
 											<i class="fas fa-lock"></i>
 										</c:if>${qna.qnaTitle}</a></td>
-								<td style="width: 150px;"><fmt:parseDate
+								<td style="width: 80px;" class="leftTd">${qna.guestId.guestId}</td>
+								
+								<td style="width: 100px;"><fmt:parseDate
 										value="${qna.qnaRegDate}" pattern="yyyy-MM-dd'T'HH:mm"
 										var="regDate" type="both" /> <fmt:formatDate
 										value="${regDate}" pattern="yyyy-MM-dd HH:mm" /></td>
-								<td style="width: 150px;"><c:if
-										test="${qna.qnaNotice eq 'n' }">
-										<c:if test="${qna.qnaResYn eq 'y' }">
-											<i class="fas fa-check" style="color: #09D345;"></i>
-										</c:if>
-
-									</c:if></td>
+								<td style="width: 40px;">
+									<c:if test="${qna.qnaResYn eq 'n'}">
+										<c:if test="${qna.qnaNotice eq 'n'}"><i class="fas fa-times"></i></c:if>
+									</c:if>
+									<c:if test="${qna.qnaResYn eq 'y' }">
+										<i class="fas fa-check" style="color: #09D345;"></i>
+									</c:if>
+									
+								</td>
 
 								<td style="width: 100px;"><c:if
 										test="${qna.qnaResYn eq 'y'}">

@@ -30,7 +30,7 @@ p {
 }
 
 button {
-	width: 130px;
+	width: 100px !important;
 	height: 50px;
 	color: black;
 	border: none;
@@ -45,6 +45,10 @@ button {
 
 .outer {
 	width: 800px;
+}
+
+.outer th {
+	font-weight: bold;
 }
 
 .tr {
@@ -66,11 +70,7 @@ tr td:nth-child(2) {
 }
 
 .button {
-	border: 1px solid gray;
-	width: 100px;
-	padding: 5px;
-	margin: 0 auto;
-	color: black;
+	width: 100px !important;
 	font-weight: bold;
 }
 
@@ -109,24 +109,21 @@ tr td:nth-child(2) {
 		<br> <input type="hidden" id="no" value="${qna.qnaNo }">
 		<table class="outer">
 			<tr class="tr" style="border-top: 1px solid black;">
-				<th style="width: 15%;">번호</th>
+				<th style="width: 100px;">번호</th>
 				<td>${qna.qnaNo }</td>
 			</tr>
 			<tr class="tr">
-				<th>제목</th>
-				<td><input type="text" name="title" id="title"
-					value="${qna.qnaTitle }" style="border: 1px solid #C5C5DB;"></td>
+				<th style="vertical-align: middle;">제목</th>
+				<td><input type="text" name="title" id="title" value="${qna.qnaTitle }" style="border: 1px solid #C5C5DB;"></td>
 			</tr>
 			<tr class="tr">
 				<th>작성일</th>
-				<td><fmt:parseDate value="${qna.qnaRegDate}"
-						pattern="yyyy-MM-dd'T'HH:mm" var="regDate" type="both" /> <fmt:formatDate
-						value="${regDate}" pattern="yyyy-MM-dd" /></td>
+				<td><fmt:parseDate value="${qna.qnaRegDate}" pattern="yyyy-MM-dd'T'HH:mm" var="regDate" type="both" />
+				<fmt:formatDate value="${regDate}" pattern="yyyy-MM-dd" /></td>
 			</tr>
 			<tr class="tr">
-				<th>내용</th>
-				<td><textarea name="content" id="content" cols="60" rows="10"
-						style="resize: none; border: 1px solid #C5C5DB;">${qna.qnaContent}</textarea>
+				<th style="vertical-align: middle;">내용</th>
+				<td><textarea name="content" id="content" cols="60" rows="10" style="resize: none; border: 1px solid #C5C5DB;">${qna.qnaContent}</textarea>
 				</td>
 			</tr>
 		</table>
@@ -137,12 +134,10 @@ tr td:nth-child(2) {
 				style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
 		</c:if>
 	</div>
-	<div id="rightButtons" style="float: right">
-		<input type="submit" value="수정하기" id="updateButton" class="button"
-			onclick="go_QnaUpdate()"> <input type="reset" value="초기화"
-			id="reset" class="button"> <input type="button"
-			class="button" value="취소" id="home"
-			onclick="location.href='qnaHome.do'">
+	<div id="rightButtons" class="outer" style="margin: 0px auto; text-align:right;" style="float: right">
+		<input type="button" class="button" value="돌아가기" id="home" onclick="location.href='qnaHome.do'">
+		<input type="reset" value="초기화" id="reset" class="button">
+		<input type="submit" value="수정하기" id="updateButton" class="button" onclick="go_QnaUpdate()">
 	</div>
 </form>
 

@@ -51,12 +51,12 @@ public class AdminBookingListHandler implements Command {
 				where = null;
 				query = null;
 			}
-			
+			/*
 			if(sorter != null) {
 				if(sorter.equals("")) {
 					sorter = null;
 				}
-			}
+			}*/
 			
 			if(nowPage == null) {
 				nowPage = "1";
@@ -65,16 +65,13 @@ public class AdminBookingListHandler implements Command {
 				cntPerPage ="10";
 			}
 			
-			paging.setNowPage(Integer.parseInt(nowPage));
-			paging.setCntPerPage(Integer.parseInt(cntPerPage));
-			
 			int total = bService.getTotalCountBySearch(paging, where, query, sorter, designer, startDate, endDate);
-			request.setAttribute("total", total);
-			
 			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-			request.setAttribute("nowPage", Integer.parseInt(nowPage));
-			request.setAttribute("cntPerPage", Integer.parseInt(cntPerPage));
 			request.setAttribute("paging", paging);
+			
+			request.setAttribute("designer", designer);
+			request.setAttribute("startDate", startDate);
+			request.setAttribute("endDate", endDate);
 			
 			ArrayList<Booking> list = bService.getBookingListBySearch(paging, where, query, sorter, designer, startDate, endDate);
 			request.setAttribute("list", list);

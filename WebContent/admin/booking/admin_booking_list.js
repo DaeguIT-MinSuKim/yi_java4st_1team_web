@@ -109,27 +109,25 @@ $(function(){
 		     	});
 	    }
 	});
+	
+	$("#searchBtn").click(function(e) {
+		if($("select[name=where]").val() == undefined || $("input[name=query]").val() == "") {
+			e.preventDefault();
+		}
+	});
+	 
+	$("select[name=cntPerPage]").change(function(){
+		document.searchForm.submit();
+	});
+
+	$("select[name=sorter]").change(function(){
+		document.searchForm.submit();
+	});
+
+	$("select[name=designer]").change(function(){
+		document.searchForm.submit();
+	});
 })
-
-/*$(document).on("click", "#selectAll", function(){
-	console.log($(".ckbox"));
-	$(".ckbox").prop("checked", true);
-	$(".ckbox:checked").closest("tr").addClass("table-primary");
-});
-
-$(document).on("click", "#deselectAll", function(){
-	$(".ckbox:checked").closest("tr").removeClass("table-primary");
-	$(".ckbox").prop("checked", false);
-});
-
-$(document).on("click", ".ckbox", function() {
-	if($(this).is(":checked")) {
-		$(this).closest("tr").addClass("table-primary");
-	} else {
-		$(this).closest("tr").removeClass("table-primary");
-	}
-});*/
-
 
 
 $(document).on('click', '.deleteButton', function() {
@@ -156,25 +154,6 @@ $(document).on('click', '.deleteButton', function() {
     		}
     	});
     }
-});
-
-
-$("#searchBtn").click(function(e) {
-	if($("select[name=where]").val() == undefined || $("input[name=query]").val() == "") {
-		e.preventDefault();
-	}
-});
- 
-$("select[name=cntPerPage]").change(function(){
-	document.searchForm.submit();
-});
-
-$("select[name=sorter]").change(function(){
-	document.searchForm.submit();
-});
-
-$("select[name=designer]").change(function(){
-	document.searchForm.submit();
 });
 
 function setFilteringPaging() {
@@ -210,42 +189,10 @@ function setFilteringPaging() {
 	}
 	if(!startDate) {
 	} else if(startDate.length != 0) {
-//		$("#startDate").val(startDate);
 		$("#startDate").datepicker("update", startDate);
 	}
 	if(!endDate) {
 	} else if(endDate.length != 0) {
-//		$("#endDate").val(endDate);
 		$("#endDate").datepicker("update", endDate);
 	}
 }
-
-/* function getFilteringPaging() {
-	var params = "";
-	var cntPerPage = $("select[name=cntPerPage]").val();
-	var where = $("select[name=where]").val();
-	var query = $("input[name=query]").val();
-	
-	console.log("1: " + params);
-	if(cntPerPage != undefined) {
-		if(params.length == 0) {
-			params += "?";
-		} else {
-			params += "&";
-		}
-		params += "cntPerPage=" + cntPerPage;
-		console.log("2: " + params);
-	}
-	
-	if(where != null && where.length != 0 && query != null && query.length) {
-		if(params.length == 0) {
-			params += "?";
-		} else if(params.length >= 1) {
-			params += "&";
-		} 
-		params += "where=" + where + "&query=" + query;
-		console.log("3: " + params);
-	}
-	
-	location.href="bookingList.do" + params;
-} */

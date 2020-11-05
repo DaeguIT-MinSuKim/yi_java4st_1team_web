@@ -35,10 +35,10 @@ public class AdminGuestListHandler implements Command {
 			String query = request.getParameter("query");
 			System.out.println("where" + where);
 			System.out.println("q" + query);
+			System.out.println("del" + del);
 			
-			if (where != null && query != null) {
-				if(!where.trim().equals("") && !query.trim().equals("") ) {
-					
+			if (where != null && query != null ) {
+				if(!where.trim().equals("") && !query.trim().equals("") ) {			
 					request.setAttribute("where", where);
 					request.setAttribute("query", query);
 				}
@@ -48,9 +48,11 @@ public class AdminGuestListHandler implements Command {
 			}
 			
 			if(del != null) {
-				if(del.equals("")) {
-					del = null;
+				if(!del.trim().equals("")) {
+					request.setAttribute("del", del);
 				}
+			}else {
+				del = null;
 			}
 			
 			if(nowPage == null) {
@@ -74,7 +76,7 @@ public class AdminGuestListHandler implements Command {
 			
 			ArrayList<Guest> list = service.selectGuestByCondition(paging, del, where, query);
 			request.setAttribute("list", list);
-			request.setAttribute("del", del);
+			
 			
 			
 		} else {

@@ -45,17 +45,24 @@ public class AdminQnaUpdateHandler implements Command {
 			
 			
 			// 다운로드경로
-						String savePath = "notice/setload";
+			String savePath = "notice/setload";
 
-						// 최대 업로드 파일 크기 5MB로 지정
-						int uploadFileSizeLimit = 5 * 1024 * 1024;
-						String entype = "UTF-8";
+			// 최대 업로드 파일 크기 5MB로 지정
+			int uploadFileSizeLimit = 5 * 1024 * 1024;
+			String entype = "UTF-8";
 
-						ServletContext context = request.getServletContext();
-						System.out.println("context :" + context);
-						String uploadFilePath = context.getRealPath(savePath);
-						System.out.println("서버상으 실제 디렉토리 :");
-						System.out.println(uploadFilePath);
+			ServletContext context = request.getServletContext();
+			System.out.println("context :" + context);
+			String uploadFilePath = context.getRealPath(savePath);
+			System.out.println("서버상으 실제 디렉토리 :");
+			System.out.println(uploadFilePath);
+			File isDir = new File(uploadFilePath);
+			
+			if (!isDir.isDirectory()) {
+				//디렉토리 생성 메서드
+				isDir.mkdirs();
+				System.out.println("created directory successfully!");
+			}
 			
 			try {
 				MultipartRequest multi = new MultipartRequest(request, // request 객체

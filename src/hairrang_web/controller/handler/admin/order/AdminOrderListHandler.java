@@ -41,6 +41,9 @@ public class AdminOrderListHandler implements Command {
 			String where = request.getParameter("where");
 			String query = request.getParameter("query");
 			String designer = request.getParameter("designer");
+			String membership = request.getParameter("membership");
+			String startDate = request.getParameter("startDate");
+			String endDate = request.getParameter("endDate");
 			
 			if (where != null && query != null) {
 				if(!where.trim().equals("") && !query.trim().equals("") ) {
@@ -52,12 +55,6 @@ public class AdminOrderListHandler implements Command {
 				query = null;
 			}
 			
-			if(designer != null) {
-				if(designer.equals("")) {
-					designer = null;
-				}
-			}
-			
 			if(nowPage == null) {
 				nowPage = "1";
 			}
@@ -65,10 +62,7 @@ public class AdminOrderListHandler implements Command {
 				cntPerPage ="10";
 			}
 			
-			paging.setNowPage(Integer.parseInt(nowPage));
-			paging.setCntPerPage(Integer.parseInt(cntPerPage));
-			
-			int total = oService.getTotalCountBySearch(paging, where, query, designer);
+			int total = oService.getTotalCountBySearch(paging, where, query, designer, membership, startDate, endDate);
 			request.setAttribute("total", total);
 			
 			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
@@ -76,7 +70,7 @@ public class AdminOrderListHandler implements Command {
 			request.setAttribute("cntPerPage", Integer.parseInt(cntPerPage));
 			request.setAttribute("paging", paging);
 			
-			ArrayList<Orders> list = oService.getOrdersListBySearch(paging, where, query, designer);
+			ArrayList<Orders> list = oService.getOrdersListBySearch(paging, where, query, designer, membership, startDate, endDate);
 			request.setAttribute("list", list);
 			request.setAttribute("sorter", designer);
 			

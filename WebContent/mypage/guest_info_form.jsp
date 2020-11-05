@@ -6,9 +6,9 @@
 <style>
 .info a{background-color:white;  border-bottom:1px solid white;}
 .underline {font-size:30px;}
-.table { width:550px; margin:0 auto; padding:20px;}
-td {width:80px; padding:10px;}
-input {margin-left:20px; width:260px; border: 1px solid #e8e8e8;}
+.table { width:550px; margin:0 auto; padding:20px; text-align:center;}
+td { padding:10px;}
+input {margin-left:50px; width:300px; border: 1px solid #e8e8e8;}
 
 .line { margin:0 auto; border:2px solid gray; width:120px; background:gray;
 	} 	
@@ -81,30 +81,30 @@ $(document).ready(function() {
 	<div id="wrapper">
 		<p style="font-size:30px; text-align:center;">개인정보 변경</p>
 		<table class="table">				<tr>
-					<td>아이디</td>
+					<td style="text-align:left">아이디</td>
 					<td><input type="text" name="id"  value="${id}" readonly/> 
 				</tr>
 				<tr>
-					<td>성명</td>
+					<td style="text-align:left">성명</td>
 					<td><input type="text" name="name" value="${name}"/></td>
 				</tr>				<tr>
-					<td>생년월일</td>
+					<td style="text-align:left">생년월일</td>
 					<td> <input type='date' name="birth" value="${birth}"/></td>
 				</tr>
 				<tr>
-					<td>성별</td>
-					<td><input type="checkbox" name="gender" value="0" style="width: 30px;">
+					<td style="text-align:left">성별</td>
+					<td style="text-align:left"><input type="checkbox" name="gender" value="0" style="width: 30px;">
 						여성 
 						<input type="checkbox" name="gender" value ="1" style="width: 30px;">
 						남성</td>
 						
 				</tr>
 				<tr>
-					<td>이메일</td>
+					<td style="text-align:left">이메일</td>
 					<td><input type="text" name="email" value="${email}"> 
 				</tr>
 				<tr>
-					<td>휴대폰</td>
+					<td style="text-align:left">휴대폰</td>
 					<td><input type="text" name="phone" class="phone" maxlength="13" value="${phone}">
 				</tr>
 			</table>

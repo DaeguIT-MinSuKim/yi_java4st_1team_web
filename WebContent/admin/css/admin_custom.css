@@ -4,7 +4,7 @@
 #dataTable_wrapper {min-width:1000px} // 상하 모듈 우측에 고정
 #dataTable {min-width:1000px} // 상하 모듈 고정된 상태에서 좌우로 스크롤시 그자리 그대로 
  */
-
+.delLine {text-decoration:line-through;}
 #wrapper #content-wrapper {min-width:1080px}
 /*
 .dataTables_filter {text-align: right;}
@@ -13,7 +13,7 @@
 
 /* 목록 뽑는 곳에서 */
 #dataTable td { padding: .35rem; }
-#dataTable td:first-child, td:nth-child(2){text-align: center;}
+#dataTable td:first-child, #dataTable td:nth-child(2){text-align: center;}
 #dataTable td:first-child { width: 58px; min-width: 58px; max-width: 58px; }
 #dataTable td:nth-child(2) { width: 100px; min-width: 100px; max-width: 100px; }
 /* #dataTable td:last-child{padding: 6px; width: 190px; min-width: 190px; max-width: 190px} */

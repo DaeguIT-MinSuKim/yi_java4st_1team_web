@@ -40,7 +40,10 @@ public class OrdersService {
 	public int countOrdersById(String id) {
 		return dao.countOrdersById(id);
 	}
-
+	
+	public int checkUser(Orders order, Guest guest) {
+		return dao.checkUser(order, guest);
+	}
 	
 	// 해당 주문의 상세주문 리스트
 	// 단독으로 쓰일 일은 없고, orders를 구할 때 내부적으로 사용될 것임
@@ -163,11 +166,11 @@ public class OrdersService {
     }
 	
     
-    public ArrayList<Orders> getOrdersListBySearch(Paging paging, String where, String query, String designer) {
-    	return dao.selectOrdersByCondition(paging, where, query, designer);
+    public ArrayList<Orders> getOrdersListBySearch(Paging paging, String where, String query, String designer, String membership, String startDate, String endDate) {
+    	return dao.selectOrdersByCondition(paging, where, query, designer, membership, startDate, endDate);
     }
     
-    public int getTotalCountBySearch(Paging paging, String where, String query, String designer) {
-    	return dao.countOrdersByConditionForPaging(paging, where, query, designer);
+    public int getTotalCountBySearch(Paging paging, String where, String query, String designer, String membership, String startDate, String endDate) {
+    	return dao.countOrdersByConditionForPaging(paging, where, query, designer, membership, startDate, endDate);
 	}
 }

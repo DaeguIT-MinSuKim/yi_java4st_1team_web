@@ -27,14 +27,16 @@ public interface OrdersDao {
 	int selectNextValOrdersNo();
 
 	// 페이징
-	int countOrdersByConditionForPaging(Paging paging, String where, String query, String sorter);
-	ArrayList<Orders> selectOrdersByCondition(Paging paging, String where, String query, String sorter);
+	int countOrdersByConditionForPaging(Paging paging, String where, String query, String sorter, String membership, String startDate, String endDate);
+	ArrayList<Orders> selectOrdersByCondition(Paging paging, String where, String query, String sorter, String membership, String startDate, String endDate);
 	
 	// int, update, delete는 트랜잭션 적용으로 service에서 구현.
 	
 	//마이페이지
 	ArrayList<Orders> pagingOrdersListById(Paging paging, String id);
 	int countOrdersById(String id);
+
+	int checkUser(Orders order, Guest guest);
 
 	
 	
