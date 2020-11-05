@@ -139,16 +139,35 @@ public class ChartDaoImpl implements ChartDao {
 	}
 
 	@Override
-	public JSONArray guestByJoin(String year) {
-		String sql = null;
-		if (year.equals("all")) {
+	public JSONArray guestByJoin(String startDate, String endDate) {
+		String sql = "SELECT TO_CHAR(b.dt, 'DD') AS QNA_REGDATE\r\n" + 
+				"     , NVL(SUM(a.cnt), 0) cnt\r\n" + 
+				"  FROM ( SELECT TO_CHAR(QNA_REGDATE, 'YYYY-MM-DD') AS QNA_REGDATE\r\n" + 
+				"              , COUNT(*) cnt\r\n" + 
+				"           FROM qna\r\n" + 
+				"          WHERE QNA_REGDATE BETWEEN TO_DATE('"+ startDate +"', 'YYYY-MM-DD')\r\n" + 
+				"                             AND TO_DATE('"+ endDate +"' , 'YYYY-MM-DD') \r\n" + 
+				"          GROUP BY QNA_REGDATE\r\n" + 
+				"        ) a\r\n" + 
+				"      , ( SELECT TO_DATE('"+ startDate +"','YYYY-MM-DD') + LEVEL - 1 AS dt\r\n" + 
+				"            FROM dual \r\n" + 
+				"         CONNECT BY LEVEL <= (TO_DATE('"+ endDate +"','YYYY-MM-DD') \r\n" + 
+				"                            - TO_DATE('"+ startDate +"','YYYY-MM-DD') + 1)\r\n" + 
+				"        ) b\r\n" + 
+				"  WHERE b.dt = a.QNA_REGDATE(+)\r\n" + 
+				"  GROUP BY b.dt\r\n" + 
+				"  ORDER BY b.dt";
+		
+		
+		
+		/*if (year.equals("all")) {
 			sql = "SELECT TO_CHAR(GUEST_JOIN_DATE,'yyyy')AS day ,COUNT(*)AS count FROM GUEST  GROUP BY TO_CHAR(GUEST_JOIN_DATE,'yyyy') ORDER BY TO_CHAR(GUEST_JOIN_DATE,'yyyy')";
 		} else {
 			sql = "SELECT TO_CHAR(GUEST_JOIN_DATE,'mm')AS day ,COUNT(*)AS count FROM GUEST ";
 			if (year != null) {
 				sql += " WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = " + year + " GROUP BY TO_CHAR(GUEST_JOIN_DATE,'mm') ORDER BY TO_CHAR(GUEST_JOIN_DATE,'mm')";
 			}
-		}
+		}*/
 		
 		JSONArray jsonArray = new JSONArray();
 
@@ -164,8 +183,8 @@ public class ChartDaoImpl implements ChartDao {
 
 				do {
 					JSONArray rowArray = new JSONArray();
-					rowArray.put(rs.getString("day"));
-					rowArray.put(rs.getInt("count"));
+					rowArray.put(rs.getString("QNA_REGDATE"));
+					rowArray.put(rs.getInt("cnt"));
 					jsonArray.put(rowArray);
 				} while (rs.next());
 			}
@@ -180,11 +199,11 @@ public class ChartDaoImpl implements ChartDao {
 	public JSONArray guestByGender(String year) {
 		String sql = null;
 		if (year.equals("all")) {
-			sql = "SELECT GUEST_GENDER ,COUNT(*)AS count FROM GUEST";
+			sql = "SELECT GUEST_GENDER ,COUNT(*)AS count FROM GUEST_VIEW";
 		} else {
 			sql = "SELECT GUEST_GENDER ,COUNT(*)AS count FROM ";
 			if (year != null) {
-				sql += "(SELECT * FROM GUEST WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = " + year + " AND DEL_YN = 'n') ";
+				sql += "(SELECT * FROM GUEST_VIEW WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = " + year + " AND DEL_YN = 'n') ";
 			}
 		}
 
@@ -219,23 +238,32 @@ public class ChartDaoImpl implements ChartDao {
 	}
 
 	@Override
-	public JSONArray guestByOut(String year) {
-		String sql = null;
-		if (year.equals("all")) {
-			sql = "SELECT DEL_YN ,COUNT(*)AS count FROM ";
-		} else {
-			sql = "SELECT DEL_YN ,COUNT(*)AS count FROM ";
-			if (year != null) {
-				sql += " (SELECT * FROM GUEST WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = " + year + " AND DEL_YN ='y') ";
-			}
-		}
-
-		sql += " GUEST GROUP BY DEL_YN ORDER BY DEL_YN";
+	public JSONArray guestIncrease(String startDate, String endDate) {
+		String sql = "SELECT TO_CHAR(b.dt, 'YYYY-MM-DD') AS GUEST_JOIN_DATE \r\n" + 
+				"     , NVL(SUM(a.mail), 0) MAIL ,NVL(SUM(a.femail), 0) FEMAIL \r\n" + 
+				"  FROM ( SELECT TO_CHAR(GUEST_JOIN_DATE, 'YYYY-MM-DD') AS GUEST_JOIN_DATE\r\n" + 
+				"              , (SELECT COUNT(*) FROM GUEST WHERE GUEST_GENDER =1)AS mail\r\n" + 
+				"              , (SELECT COUNT(*) FROM GUEST WHERE GUEST_GENDER =0)AS femail\r\n" + 
+				"           FROM GUEST\r\n" + 
+				"          WHERE DEL_YN ='n' AND GUEST_JOIN_DATE BETWEEN TO_DATE('"+ startDate +"', 'YYYY-MM-DD')\r\n" + 
+				"                             AND TO_DATE('"+ endDate +"' , 'YYYY-MM-DD') \r\n" + 
+				"          GROUP BY GUEST_JOIN_DATE \r\n" + 
+				"        ) a\r\n" + 
+				"      , ( SELECT TO_DATE('"+ startDate +"','YYYY-MM-DD') + LEVEL - 1 AS dt\r\n" + 
+				"            FROM dual \r\n" + 
+				"         CONNECT BY LEVEL <= (TO_DATE('"+ endDate +"','YYYY-MM-DD') \r\n" + 
+				"                            - TO_DATE('"+ startDate +"','YYYY-MM-DD') + 1)\r\n" + 
+				"        ) b\r\n" + 
+				"  WHERE b.dt = a.GUEST_JOIN_DATE(+)\r\n" + 
+				"  GROUP BY b.dt\r\n" + 
+				"  ORDER BY b.dt";
+		
 		JSONArray jsonArray = new JSONArray();
 
 		JSONArray colNameArray = new JSONArray();
-		colNameArray.put("Delete");
-		colNameArray.put("탈퇴");
+		colNameArray.put("Increase");
+		colNameArray.put("남자");
+		colNameArray.put("여자");
 		jsonArray.put(colNameArray);
 
 		try (Connection con = JndiDs.getConnection();
@@ -245,8 +273,9 @@ public class ChartDaoImpl implements ChartDao {
 
 				do {
 					JSONArray rowArray = new JSONArray();
-					rowArray.put(rs.getString("DEL_YN"));
-					rowArray.put(rs.getInt("count"));
+					rowArray.put(rs.getString("GUEST_JOIN_DATE"));
+					rowArray.put(rs.getInt("MAIL"));
+					rowArray.put(rs.getInt("FEMAIL"));
 					jsonArray.put(rowArray);
 				} while (rs.next());
 			}

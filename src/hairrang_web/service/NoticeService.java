@@ -12,7 +12,7 @@ import jdk.nashorn.internal.runtime.arrays.ArrayLikeIterator;
 public class NoticeService {
 	NoticeDao dao = NoticeDaoImpl.getInstance();
 	
-	public int countNotice() {
+	/*public int countNotice() {
 		return dao.countNoitce();
 	}
 	
@@ -27,7 +27,7 @@ public class NoticeService {
 	public List<Notice> selectPagingDelNotice(Paging paging){
 		return dao.selectPagingDelNotice(paging);
 	}
-	
+	*/
 	public Notice selectNoticeByNo(int noticeNo){
 		return dao.selectNoticeByNo(noticeNo);
 	}

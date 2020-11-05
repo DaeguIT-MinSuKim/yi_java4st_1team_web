@@ -47,7 +47,7 @@ public class QnADaoImpl implements QnADao {
 		return null;
 	}
 
-	// 총 글 갯수
+	/*// 총 글 갯수
 	@Override
 	public int countQnA() {
 		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE DEL_YN = 'n' and ADMIN_ID is null or NOTICE_YN ='y' AND DEL_YN ='n'";
@@ -62,7 +62,7 @@ public class QnADaoImpl implements QnADao {
 		}
 		return 0;
 	}
-
+	
 	// 총 글 페이징
 	@Override
 	public List<QnA> selectPagingQnA(Paging paging) {
@@ -84,7 +84,7 @@ public class QnADaoImpl implements QnADao {
 		}
 		return null;
 	}
-
+	
 	// 답변한 문의 갯수
 	@Override
 	public int countResYQnA() {
@@ -100,7 +100,7 @@ public class QnADaoImpl implements QnADao {
 		}
 		return 0;
 	}
-
+	
 	// 답변한 문의 페이징
 	@Override
 	public List<QnA> selectPagingResYQnA(Paging paging) {
@@ -122,7 +122,7 @@ public class QnADaoImpl implements QnADao {
 		}
 		return null;
 	}
-
+	
 	// 미답변 문의 갯수
 	@Override
 	public int countResNQnA() {
@@ -138,7 +138,7 @@ public class QnADaoImpl implements QnADao {
 		}
 		return 0;
 	}
-
+	
 	// 미답변 문의 페이징
 	@Override
 	public List<QnA> selectPagingResNQnA(Paging paging) {
@@ -160,7 +160,7 @@ public class QnADaoImpl implements QnADao {
 		}
 		return null;
 	}
-
+	
 	// 삭제된 문의 갯수
 	@Override
 	public int countDelYQnA() {
@@ -176,7 +176,7 @@ public class QnADaoImpl implements QnADao {
 		}
 		return 0;
 	}
-
+	
 	// 삭제된 문의 페이징
 	@Override
 	public List<QnA> selectPagingDelYQnA(Paging paging) {
@@ -198,7 +198,7 @@ public class QnADaoImpl implements QnADao {
 		}
 		return null;
 	}
-
+	
 	// 삭제된 문의공지 갯수
 	@Override
 	public int countDelYQnANotice() {
@@ -214,7 +214,7 @@ public class QnADaoImpl implements QnADao {
 		}
 		return 0;
 	}
-
+	
 	// 삭제된 문의공지 페이징
 	@Override
 	public List<QnA> selectPagingDelYQnANotice(Paging paging) {
@@ -235,7 +235,7 @@ public class QnADaoImpl implements QnADao {
 			throw new RuntimeException(e);
 		}
 		return null;
-	}
+	}*/
 
 	private QnA getQnA(ResultSet rs) throws SQLException {
 		// SELECT QNA_NO,QNA_TITLE,QNA_CONTENT,QNA_FILE,QNA_REGDATE,RES_YN FROM QNA

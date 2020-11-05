@@ -24,7 +24,7 @@ public class NoticeDaoImpl implements NoticeDao {
 	private NoticeDaoImpl() {
 	}
 
-	@Override
+	/*@Override
 	public int countNoitce() {
 		String sql = "SELECT COUNT(*) AS COUNT FROM NOTICE where NOTICE_DELYN = 'n'";
 		try (Connection con = JndiDs.getConnection();
@@ -38,7 +38,7 @@ public class NoticeDaoImpl implements NoticeDao {
 		}
 		return 0;
 	}
-
+	
 	@Override
 	public int countDelNotice() {
 		String sql = "SELECT COUNT(*) AS COUNT FROM NOTICE WHERE NOTICE_DELYN ='y'";
@@ -53,7 +53,7 @@ public class NoticeDaoImpl implements NoticeDao {
 		}
 		return 0;
 	}
-
+	
 	@Override
 	public List<Notice> selectPagingNotice(Paging paging) {
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM notice WHERE notice_delyn = 'n'  ORDER BY notice_no DESC) a) WHERE rn BETWEEN ? AND ?";
@@ -74,7 +74,7 @@ public class NoticeDaoImpl implements NoticeDao {
 		}
 		return null;
 	}
-
+	
 	@Override
 	public List<Notice> selectPagingDelNotice(Paging paging) {
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM notice WHERE notice_delyn = 'y'  ORDER BY notice_no DESC) a) WHERE rn BETWEEN ? AND ?";
@@ -94,7 +94,7 @@ public class NoticeDaoImpl implements NoticeDao {
 			throw new RuntimeException(e);
 		}
 		return null;
-	}
+	}*/
 
 	private Notice getNotice(ResultSet rs) throws SQLException {
 		int noticeNo = rs.getInt("notice_no");

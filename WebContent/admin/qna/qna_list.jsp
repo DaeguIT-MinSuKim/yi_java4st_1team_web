@@ -22,7 +22,6 @@ table td {text-align:center;}
 	};
 	function tableChange() {
 		var sel = document.getElementById('selectPage').value;
-		alert(sel);
 		location.href = "qnaList.do?nowPage=${paging.nowPage}&stay=" + sel;
 	}
 

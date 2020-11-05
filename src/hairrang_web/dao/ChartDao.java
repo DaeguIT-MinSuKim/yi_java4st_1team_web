@@ -13,11 +13,11 @@ public interface ChartDao {
 	JSONArray qnaBySecret(String year);
 	
 	//날짜일별기준으로 가입한사람의수
-	JSONArray guestByJoin(String year);
+	JSONArray guestByJoin(String startDate, String endDate);
 	//남자여자성별 비율
 	JSONArray guestByGender(String year);
-	//탈퇴한 비율
-	JSONArray guestByOut(String year);
+	//증가한 비율
+	JSONArray guestIncrease(String startDate, String endDate);
 	
 	//시간별에약 
 	JSONArray bookingByTime();

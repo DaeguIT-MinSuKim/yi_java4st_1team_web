@@ -9,7 +9,7 @@ public interface NoticeDao {
 	
 	List<Notice> NoticeAll();
 	
-	//총게시물
+	/*//총게시물
 	int countNoitce();
 	//페이징처리된 게시물
 	List<Notice> selectPagingNotice(Paging paging);
@@ -17,7 +17,7 @@ public interface NoticeDao {
 	//삭제된 게시물
 	int countDelNotice();
 	//페이징처리된 삭제된 게시물
-	List<Notice> selectPagingDelNotice(Paging paging);
+	List<Notice> selectPagingDelNotice(Paging paging);*/
 	
 	Notice selectNoticeByNo(int noticeNo);
 	

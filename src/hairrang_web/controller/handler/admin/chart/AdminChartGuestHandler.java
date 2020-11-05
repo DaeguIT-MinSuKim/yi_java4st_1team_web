@@ -1,6 +1,8 @@
 package hairrang_web.controller.handler.admin.chart;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +23,14 @@ public class AdminChartGuestHandler implements Command {
 
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("GET");
-
-			JSONArray join = service.joinGuestByOneDay("all");
+			SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
+			
+			Date date = new Date();
+			String day = format1.format(date);
+			
+			JSONArray join = service.joinGuestByOneDay(day,day);
 			JSONArray gender = service.gender("all");
-			JSONArray out = service.GuestByOut("all");
+			JSONArray out = service.guestIncrease(day,day);
 
 			request.setAttribute("join", join);
 			request.setAttribute("gender", gender);
@@ -34,11 +40,15 @@ public class AdminChartGuestHandler implements Command {
 		} else {
 			System.out.println("POST");
 
-			String year = request.getParameter("year");
-
-			JSONArray join = service.joinGuestByOneDay(year);
-			JSONArray gender = service.gender(year);
-			JSONArray out = service.GuestByOut(year);
+			String startDate = request.getParameter("startDate");
+			String endDate = request.getParameter("endDate");
+			System.out.println("==============================================");
+			System.out.println("시작날짜"+startDate);
+			System.out.println("끝날짜"+endDate);
+			
+			JSONArray join = service.joinGuestByOneDay(startDate, endDate);
+			JSONArray gender = service.gender("all");
+			JSONArray out = service.guestIncrease(startDate, endDate);
 
 			request.setAttribute("join", join);
 			request.setAttribute("gender", gender);

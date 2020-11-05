@@ -31,7 +31,7 @@ public interface QnADao {
 	
 	int nextQnaNo();
 	
-	//총개시물
+	/*//총개시물
 	int countQnA();
 	//페이징처리된  총게시물
 	List<QnA> selectPagingQnA(Paging paging);
@@ -54,7 +54,7 @@ public interface QnADao {
 	//삭제된 공지
 	int countDelYQnANotice();
 	//페이징 처리된 삭제된 공지
-	List<QnA> selectPagingDelYQnANotice(Paging paging);
+	List<QnA> selectPagingDelYQnANotice(Paging paging);*/
 	
 	//답변 찾기
 	QnA selectResByNo(QnA qna);
