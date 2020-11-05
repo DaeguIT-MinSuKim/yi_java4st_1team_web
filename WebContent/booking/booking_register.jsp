@@ -33,8 +33,8 @@
 						<tr>
 							<td><label for="bookHair">시술 </label></td>
 							<td><select name="bookHair" id="hairbox">
-								<option selected disabled>--시술 선택--</option><
-							</select></td>
+								<option selected disabled>--시술 선택--</option>
+								</select></td>
 						</tr>
 					</table>
 					<hr>
@@ -52,7 +52,7 @@
 			</div>
 			<hr>
 			
-			<div class style="margin: 0 auto; text-align: center;">
+			<div style="margin: 0 auto; text-align: center;">
 				<input class="button" style="margin: 0 auto;" type="button" name="submit" value="예약 등록" onclick="return checkBookForm();">
 			</div>
 		</form>
