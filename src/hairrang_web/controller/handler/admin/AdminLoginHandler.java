@@ -42,7 +42,7 @@ public class AdminLoginHandler implements Command {
 				
 				response.setContentType("text/html; charset=UTF-8;");
 				PrintWriter out = response.getWriter();
-				out.println("<script>alert('로그인 성공!');location.href='main.do';</script>");
+				out.println("<script>location.href='guestList.do';</script>");
 				out.flush();
 			} else {
 				response.setContentType("text/html; charset=UTF-8;");

@@ -1,24 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
 <%@ include file="../include/header.jsp"%>
 <script>
 	document.title += ' - 예약 목록'
 </script>
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800 font-weight">목록 템플릿</h1>
-<p class="mb-4">
-	여기에 간단한 설명 추가해주세요. 이렇게 링크도 달아도 됩니다. <a target="_blank"
-		href="https://datatables.net">링크</a>
-</p>
-
 <!-- DataTales Example -->
 <div class="card shadow mb-4" style="width:700px">
 	<div class="card-header py-2" style="padding: 0px;">
 		<h6 class=" font-weight-bold text-primary" style="font-size: 1.3em;">
-			<div class="mt-2 float-left pl-3">
-             	예약 상세내역
-            </div>
             <div class="float-right">
                 <a href="#" id="prevPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">이전</span></a>
                 <a href="#" id="nextPage" class="btn btn-secondary btn-sm" style="margin-right: 10px;"><span class="text">다음</span></a>
@@ -28,52 +20,54 @@
 	</div>
 	<!-- card-body -->
 	<div class="card-body">
+		<p class="tcenter font-weight-bold">예약 정보 </p>
 		<table class="book_detail_info">
-			<p class="tcenter">예약 정보 </p>
 			<tr style="border-top:1px solid #e4e4e4;">
-				<td>예약 번호</td><td class="border-left-line">${booking.bookNo} 
+				<th>예약 번호</th><td class="border-left-line">${booking.bookNo} 
 				<input type="hidden" value="${booking.bookNo}" name="bookNo">
 				</td>
 				
 			</tr>
 			<tr>
-				<td>예약일</td>
-				<td class="border-left-line">
-					<fmt:parseDate value="${booking.bookRegDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookReg" type="both" />
-					<fmt:formatDate value="${bookReg}" pattern="yyyy-MM-dd HH:mm" />
+				<th>예약자</th><td class="border-left-line">${booking.guest.guestName}(${booking.guest.guestId})</td>
+			</tr>
+			<tr>
+				<th>연락처</th><td class="border-left-line">${booking.guest.guestPhone}</td>
+			</tr>
+			<tr>
+				<th>예약 이용일시</th> 
+				<td class="border-left-line text-primary">
+					<%-- <fmt:parseDate value="${booking.bookDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookDate" type="both" />
+					<fmt:formatDate value="${bookDate}" pattern="yyyy-MM-dd HH:mm" /> --%>
+					${booking.bookDateStrKo }
 				</td>
 			</tr>
 			<tr>
-				<td>예약자</td><td class="border-left-line">${booking.guest.guestName}(${booking.guest.guestId})</td>
-			</tr>
-			<tr>
-				<td>연락처</td><td class="border-left-line">${booking.guest.guestPhone}</td>
-			</tr>
-			<tr>
-				<td>예약 상태</td><td class="border-left-line">${booking.bookStatusStr}</td>
-			</tr>
-			<tr>
-				<td>이용 날짜</td> 
-				<td class="border-left-line">
-					<fmt:parseDate value="${booking.bookDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookDate" type="both" />
-					<fmt:formatDate value="${bookDate}" pattern="yyyy-MM-dd HH:mm" />
-				</td>
-			</tr>
-			<tr>
-				<td>담당 디자이너</td>
+				<th>담당 디자이너</th>
 				<td class="border-left-line">${booking.designer.deNickname}</td>
+			</tr>
+			<tr>
+				<th>예약 상태</th><td class="border-left-line">${booking.bookStatusStr}</td>
+			</tr>
+			<tr>
+				<th>예약등록일</th>
+				<td class="border-left-line">
+					<%-- <fmt:parseDate value="${booking.bookRegDate}" pattern="yyyy-MM-dd'T'HH:mm" var="bookReg" type="both" />
+					<fmt:formatDate value="${bookReg}" pattern="yyyy-MM-dd HH:mm" /> --%>
+					${booking.bookRegDateStrStd }
+				</td>
 			</tr>
 		</table>
 		
 		<br><br>
 		
-		<p class="tcenter">시술 정보</p>
+		<p class="tcenter font-weight-bold">시술 정보</p>
 		<table class="book_hair_info">
 
-			<tr style="text-align:center;">
-				<td style="border-top:1px solid #e4e4e4; width:250px;">시술 정보</td> 
-				<td style="border-top:1px solid #e4e4e4; width:50px;">가격</td> 
-				<td style="border-top:1px solid #e4e4e4; width:50px;">수량</td>
+			<tr style="text-align:center; height: 24px;">
+				<th style="border-top:1px solid #e4e4e4; width:250px;">시술 정보</td> 
+				<th style="border-top:1px solid #e4e4e4; width:50px;">가격</td> 
+				<th style="border-top:1px solid #e4e4e4; width:50px;">수량</td>
 			</tr>
 			<c:forEach var="hairs" items="${booking.hairList}" varStatus="status">
 				<tr>	

@@ -38,8 +38,7 @@ public class AdminGuestListHandler implements Command {
 			System.out.println("del" + del);
 			
 			if (where != null && query != null ) {
-				if(!where.trim().equals("") && !query.trim().equals("") ) {
-					
+				if(!where.trim().equals("") && !query.trim().equals("") ) {			
 					request.setAttribute("where", where);
 					request.setAttribute("query", query);
 				}

@@ -271,7 +271,7 @@ function setBookingInfoDiv() {
 /* 디자이너, 시술 clear */
 function setOrderViewClear() {
 	$("#guestInput").val("");
-	$("#guestInput").prop("readonly", false);
+	//$("#guestInput").prop("readonly", true);
 	$("#nonMemberCK").prop("checked", false);
 	$("#designerSelector").val("");
 	$(".addedHairList").empty();
@@ -445,6 +445,14 @@ $(document).on("keydown", "#guestSearchInput", function(event) {
 	};
 });
 
+$(document).on("change", "#guestSearchOpt", function() {
+	if(!$("#guestSearchOpt").val()) {
+		$("#guestSearchInput").prop("readonly", true);
+		$("#guestSearchInput").val("");
+	} else {
+		$("#guestSearchInput").prop("readonly", false);
+	} 
+});
 
 function loadGuestSearchTable(target, data) {
 	target.empty();

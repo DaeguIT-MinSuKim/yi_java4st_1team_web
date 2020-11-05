@@ -279,7 +279,8 @@ public class GuestDaoImpl implements GuestDao {
 		String sql = "SELECT count(*) FROM GUEST_VIEW";
 		int cnt = 0;
 		
-		if(where == null || where.equals("") ) {		
+		if(where == null) {
+		} else if(where.equals("")) {
 		} else {
 			if(where.trim().equals("guestId")) {
 				where = "guest_id";
@@ -288,18 +289,18 @@ public class GuestDaoImpl implements GuestDao {
 			} else if (where.equals("guestPhone")) {
 				where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
 			}
-			sql += " where " + where + " LIKE '%" + query + "%'";	
-			cnt++;
-			System.out.println(cnt);
+			sql += " where " + where + " LIKE '%" + query + "%' ";		
+			cnt ++;
 		}
 		
-		if(del == null || del.equals("")) {
-			if(cnt>=1) {
-				sql += " and del_yn = '" + del + "'";
+		if(del == null) {
+		} else if (del.trim().equalsIgnoreCase("y") || del.trim().equalsIgnoreCase("n")){
+			if(cnt == 0) {
+				sql += " where ";
+			} else {
+				sql += " and "; 
 			}
-		} else {
-			sql += " where del_yn = '" + del + "'"; 
-			
+			sql += " del_yn = '" + del + "' ";
 		}
 		
 		System.out.println("count 쿼리: " + sql);
@@ -322,7 +323,8 @@ public class GuestDaoImpl implements GuestDao {
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM guest_view ";
 		int cnt = 0;
 		
-		if(where == null || where.equals("") ) {		
+		if(where == null) {
+		} else if(where.trim().equals("")) {
 		} else {
 			if(where.trim().equals("guestId")) {
 				where = "guest_id";
@@ -333,16 +335,16 @@ public class GuestDaoImpl implements GuestDao {
 			}
 			sql += " where " + where + " LIKE '%" + query + "%'";	
 			cnt++;
-			System.out.println(cnt);
 		}
 		
-		if(del == null || del.equals("")) {
-			if(cnt>=1) {
-				sql += " and del_yn = '" + del + "'";
+		if(del == null) {
+		} else if (del.trim().equalsIgnoreCase("y") || del.trim().equalsIgnoreCase("n")){
+			if(cnt == 0) {
+				sql += " where ";
+			} else {
+				sql += " and "; 
 			}
-		} else {
-			sql += " where del_yn = '" + del + "'"; 
-			
+			sql += " del_yn = '" + del + "' ";
 		}
 		
 		sql += ") a) WHERE rn BETWEEN ? AND ? ORDER BY rn";

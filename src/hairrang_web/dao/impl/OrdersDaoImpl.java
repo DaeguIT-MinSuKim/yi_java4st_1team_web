@@ -197,12 +197,12 @@ public class OrdersDaoImpl implements OrdersDao {
 
 	
 	@Override
-	public int countOrdersByConditionForPaging(Paging paging, String where, String query, String designer) {
+	public int countOrdersByConditionForPaging(Paging paging, String where, String query, String designer, String membership, String startDate, String endDate) {
 		String sql = "SELECT COUNT(*) FROM orders ";
 		int cnt = 0;
 		
 		if(where == null) {
-		} else if(where.equals("")) {
+		} else if(where.trim().equals("")) {
 		} else {
 			if(where.trim().equals("guestId")) {
 				where = "guest_id";
@@ -218,11 +218,50 @@ public class OrdersDaoImpl implements OrdersDao {
 		if(designer == null) {
 		} else if (designer.trim().equals("")) {
 		} else {
-			if(cnt == 1) {
-				sql += " AND DE_NO = " + designer;
-			} else {
+			if(cnt == 0) {
 				sql += " WHERE DE_NO = " + designer;
+			} else {
+				sql += " AND DE_NO = " + designer;
 			}
+			cnt++;
+		}
+		
+		if(membership == null) {
+		} else if (membership.trim().equalsIgnoreCase("y") || membership.trim().equalsIgnoreCase("n")) {
+			if(cnt == 0) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			if(membership.equalsIgnoreCase("y")) {
+				sql += "GUEST_ID != 'nonmember' ";
+			} else {
+				sql += "GUEST_ID = 'nonmember' ";
+			}
+			cnt++;
+		}
+		
+		// WHERE orders_date > TO_DATE('2020-11-04') AND orders_date < to_date('2020-11-05') + 1;
+		if(startDate == null) {
+		} else if (startDate.trim().equals("")) {
+		} else {
+			if(cnt == 0) {
+				sql += " WHERE ORDERS_DATE > TO_DATE('" + startDate + "') ";
+			} else {
+				sql += " AND ORDERS_DATE > TO_DATE('" + startDate + "') ";
+			}
+			cnt++;
+		}
+		
+		if(endDate == null) {
+		} else if (endDate.trim().equals("")) {
+		} else {
+			if(cnt == 0) {
+				sql += " WHERE ORDERS_DATE < TO_DATE('" + endDate + "') + 1 ";
+			} else {
+				sql += " AND ORDERS_DATE < TO_DATE('" + endDate + "') + 1 ";
+			}
+			cnt++;
 		}
 		
 		try(Connection con = JndiDs.getConnection();
@@ -240,15 +279,13 @@ public class OrdersDaoImpl implements OrdersDao {
 	
 	
 	@Override
-	public ArrayList<Orders> selectOrdersByCondition(Paging paging, String where, String query, String designer) {
+	public ArrayList<Orders> selectOrdersByCondition(Paging paging, String where, String query, String designer, String membership, String startDate, String endDate) {
 		
 		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM orders_guest_view ";
 		int cnt = 0;
 		
 		if(where == null) {
-			
 		} else if(where.equals("")) {
-			
 		} else {
 			if(where.trim().equals("guestId")) {
 				where = "guest_id";
@@ -262,16 +299,55 @@ public class OrdersDaoImpl implements OrdersDao {
 		}
 		
 		if(designer == null) {
-			sql += " ORDER BY orders_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
 		} else if (designer.trim().equals("")) {
 		} else {
-			if(cnt == 1) {
-				sql += " AND DE_NO = " + designer;
-			} else {
+			if(cnt == 0) {
 				sql += " WHERE DE_NO = " + designer;
+			} else {
+				sql += " AND DE_NO = " + designer;
 			}
-			sql += " ORDER BY orders_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+			cnt++;
 		}
+		
+		if(membership == null) {
+		} else if (membership.trim().equalsIgnoreCase("y") || membership.trim().equalsIgnoreCase("n")) {
+			if(cnt == 0) {
+				sql += " WHERE ";
+			} else {
+				sql += " AND ";
+			}
+			if(membership.equalsIgnoreCase("y")) {
+				sql += "GUEST_ID != 'nonmember' ";
+			} else {
+				sql += "GUEST_ID = 'nonmember' ";
+			}
+			cnt++;
+		}
+		
+		// WHERE orders_date > TO_DATE('2020-11-04') AND orders_date < to_date('2020-11-05') + 1;
+		if(startDate == null) {
+		} else if (startDate.trim().equals("")) {
+		} else {
+			if(cnt == 0) {
+				sql += " WHERE ORDERS_DATE > TO_DATE('" + startDate + "') ";
+			} else {
+				sql += " AND ORDERS_DATE > TO_DATE('" + startDate + "') ";
+			}
+			cnt++;
+		}
+		
+		if(endDate == null) {
+		} else if (endDate.trim().equals("")) {
+		} else {
+			if(cnt == 0) {
+				sql += " WHERE ORDERS_DATE < TO_DATE('" + endDate + "') + 1 ";
+			} else {
+				sql += " AND ORDERS_DATE < TO_DATE('" + endDate + "') + 1 ";
+			}
+			cnt++;
+		}
+		
+		sql += " ORDER BY orders_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
 		
 		try (Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql)) {

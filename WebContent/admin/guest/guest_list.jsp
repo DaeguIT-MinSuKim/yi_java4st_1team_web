@@ -139,9 +139,10 @@ $("#where").change(function(){
 								<option value="guestPhone">폰번호</option>
 							</select>
 							<label>
+								<input type="hidden" name="del" value="${del}">
 								<input type="search" name="query" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
 							</label>
-							<input type="button" value="검색" class="btn btn-primary btn-sm" id="searchBtn" onclick="location.href='guestList.do?nowPage=1&del=${del}&where=${where}&query=${query}'"></input>
+							<input type="submit" value="검색" class="btn btn-primary btn-sm" id="searchBtn" ></input>
 						</div>
 					</div>
 				</div>

@@ -36,10 +36,10 @@ $(function(){
 							</select>
 						</div>
 						<div class="col-sm-7 pr-0">
-							<input type="text" class="form-control" id="guestSearchInput" placeholder="">
+							<input type="text" class="form-control" id="guestSearchInput" placeholder="기준을 선택 후 입력해주세요" readonly>
 						</div>
 						<div class="col-auto">
-							<a href="#" class="btn btn-primary btn-sm" name="guestSearchBtn" id="guestSearchBtn">
+							<a href="#" class="btn btn-primary btn-sm" id="guestSearchBtn">
 								<span class="text">검색</span></a>
 						</div>
 					</div>
@@ -138,13 +138,13 @@ $(function(){
             </div>
             <!-- card-body -->
             <div class="card-body p-5">
-              <form>
+              <form autocomplete="off">
               	<input type="hidden" name="guestId" value="">
               	<input type="hidden" name="bookNo" value="">
                 <div class="form-group row">
                   <label for="inputEmail3" class="col-3 col-form-label font-weight-bold">고객</label>
                   <div class="col-6">
-                    <input type="text" class="form-control" id="guestInput" placeholder="검색 후 선택해주세요."><br>
+                    <input type="text" class="form-control" id="guestInput" placeholder="검색 후 선택해주세요." readonly><br>
                     <div class="ml-4">
 	                    <input type="checkbox" class="form-check-input" id="nonMemberCK" value="true">
 	                    <label class="form-check-label" for="">비회원</label>
