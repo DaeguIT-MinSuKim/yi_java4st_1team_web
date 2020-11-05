@@ -39,12 +39,12 @@ public class CouponService {
 		return dao.selectAvailableCouponToday(id);
 	}
 	
-	public ArrayList<Coupon> pagingCouponById(Paging paging, String id){
-		return dao.pagingCouponById(paging, id);
+	public ArrayList<Coupon> pagingCouponById(Paging paging, String id, String status){
+		return dao.pagingCouponById(paging, id, status);
 	}
 	
-	public int countCouponById(String id) {
-		return dao.countCouponById(id);
+	public int countCouponById(String id, String status) {
+		return dao.countCouponById(id, status);
 	}
 	
 	

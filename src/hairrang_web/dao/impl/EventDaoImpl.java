@@ -173,8 +173,14 @@ public class EventDaoImpl implements EventDao {
 ///////페이징///////////////////////////////////////////////////////////////////////////////
 	
 	@Override
-	public int countEvent() {
-		String sql = "SELECT COUNT(*) FROM event";
+	public int countEvent(Paging paging, String status) {
+		String sql = "SELECT COUNT(*) FROM event ";
+		
+		if(status == null || status.equals("")) {
+		} else {
+			sql += "where event_status = '" + status + "' "; 
+		}
+		
 		try (Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
@@ -188,9 +194,17 @@ public class EventDaoImpl implements EventDao {
 	}
 
 	@Override
-	public ArrayList<Event> PagingEventAll(Paging paging) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM event ORDER BY event_no desc) a) "
-				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+	public ArrayList<Event> PagingEventAll(Paging paging, String status) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM event ";
+		
+		if(status == null || status.equals("")) {
+		} else {
+			sql += "where event_status = '" + status + "' "; 
+		}
+		
+		sql +=" ORDER BY event_no desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		
+		System.out.println("sql=" + sql);
 		try (Connection con = JndiDs.getConnection(); PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setInt(1, paging.getStart());
 			pstmt.setInt(2, paging.getEnd());
