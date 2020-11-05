@@ -64,163 +64,90 @@ div.content {
 	width: 1200px;
 	margin: 0 auto;
 }
-</style>
-<script type="text/javascript"
-	src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-$(function(){
-			// Load Charts and the corechart package.
-			google.charts.load('current', {
-				'packages' : [ 'corechart' ]
-			});
-		
-			google.charts.setOnLoadCallback(drawChart);
-		
-		function drawChart(){
-		
-				var options1 = {
-				title : 'Join Guest',
-				height : '100%',
-				width : '100%',
-				curveType: 'function',
-			    legend: { position: 'bottom' },
-				backgroundColor: "transparent"
-			};
-			var options2 = {
-				title : 'Gender',
-				height : '100%',
-				width : '100%',
-				pieHole: 0.4,
-				backgroundColor: "transparent"
-			};
-	/* 		var options3 = {
-				title : 'Booking Time',
-				height : '100%',
-				width : '100%',
-				pieHole: 0.4,
-				hAxis : {
-					title : '예약 수',
-					titleTextStyle : {
-						color : 'black'
-					}
-				}
-			}; */
-			var options4 = {
-				title : 'QnA Day',
-				height : '100%',
-				width : '100%',
-				curveType: 'function',
-			    legend: { position: 'bottom' },
-				backgroundColor: "transparent"
-				
-			};
-/* 	 		var options5 = {
-				title : 'Orders Day',
-				height : '100%',
-				width : '100%',
-				pieHole: 0.4,
-				hAxis : {
-					title : '주문 수',
-					titleTextStyle : {
-						color : 'black'
-					}
-				}
-			};  */
-			
-			var joinTable = google.visualization.arrayToDataTable(${joinGuest});
-			var genderTable = google.visualization.arrayToDataTable(${gender});
-	/* 		var bookingTimeTable = google.visualization.arrayToDataTable(${bookingTime}); */
-			var qnaTable = google.visualization.arrayToDataTable(${qnaArray});
-	/* 		var ordersDayTable = google.visualization.arrayToDataTable(${ordersDay}); */
-	
-			var objDiv = document.getElementById('myChart1');
-			var chart = new google.visualization.LineChart(objDiv);
-			chart.draw(joinTable, options1);
-			
-			var objDiv = document.getElementById('myChart2');
-			var chart = new google.visualization.PieChart(objDiv);
-			chart.draw(genderTable, options2);
-			
-	/* 		var objDiv = document.getElementById('myChart3');
-			var chart = new google.visualization.PieChart(objDiv);
-			chart.draw(qnaTable, options3); */
-			
-			var objDiv = document.getElementById('myChart4');
-			var chart = new google.visualization.LineChart(objDiv);
-			chart.draw(qnaTable, options4);
-			
-	 /* 		var objDiv = document.getElementById('myChart5');
-			var chart = new google.visualization.PieChart(objDiv);
-			chart.draw(ordersDayTable, options5); */
-			 
-	}
-});
 
-</script>
+.col-sm-12 col-md-6 {
+	
+}
+</style>
+
+
+
 <!-- Page Heading -->
-<form name="formm">
-	<!-- DataTales Example -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+	<h1 class="h3 mb-0 text-gray-800">공지사항 관리 - 공지사항 목록</h1>
+</div>
+<form method="get" name="formm">
 	<div class="card shadow mb-4">
 		<div class="card-header py-2">
-			<div class="mt-1 float-left">
-				<h6 class="m-1 font-weight-bold text-primary"
-					style="font-size: 1.3em">차트 관리</h6>
-			</div>
+			<h6 class="m-1 font-weight-bold text-primary"
+				style="line-height: 16px; font-size: 1.3em">
+				<input type="button" value="Guest Chart"
+					class="btn btn-success btn-sm"
+					style="float: left; margin-right: 10px;"
+					onclick="location.href='chartGuest.do' "> <input
+					type="button" value="Q&A Chart" class="btn btn-success btn-sm"
+					style="float: left; margin-right: 10px;"
+					onclick="location.href='chartQna.do' "> <input
+					type="button" value="Orders Chart" class="btn btn-success btn-sm"
+					style="float: left; margin-right: 10px;"
+					onclick="location.href='chartOrders.do' ">
+			</h6>
 		</div>
 		<!-- card-body -->
 		<div class="card-body">
 			<div class="table-responsive">
 				<!-- bootStrap table wrapper-->
 				<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-					<div class="de_wrapper">
-						<div class="de_sub_wrapper">
-							<div style="width: 1200px; margin-left: 30px;">
-
-								<div class="responsive">
-									<!-- 사진 하나 -->
-									<div class="gallery">
-										<div id="myChart1" style="width: 500px; height: 300px;"></div>
-										<!--  </a> -->
-										<div class="content">
-											<span style="font-weight: bold; text-align: left"
-												class="tleft">Join Guest</span>
-										</div>
-
+					<!-- 테이블 상단 필터링 시작 -->
+					<div class="row m-0 mb-2">
+						<div class="col-sm-12 col-md-12 p-0">
+							<div class="form-inline justify-content-center">
+								<i class="far fa-calendar-alt mr-3" style="font-size: 22px;"></i>
+								<div class="input-group input-group-sm mr-3">
+									<div class="input-group-prepend">
+										<input type="text" class="form-control" id="startDate"
+											name="startDate" style="width: 120px;" placeholder="시작일">
 									</div>
-									<!-- 사진 하나 -->
-									<div class="gallery">
-										<div id="myChart2" style="width: 500px; height: 300px;"></div>
-										<!--  </a> -->
-										<div class="content">
-											<span style="font-weight: bold; text-align: left"
-												class="tleft">Gender</span>
-										</div>
-
+									<div class="input-group-prepend">
+										<label class="input-group-text">~</label>
 									</div>
-									<!-- 사진 하나 -->
-									<div class="gallery">
-										<div id="myChart4" style="width: 500px; height: 300px;"></div>
-										<!--  </a> -->
-										<div class="content">
-											<span style="font-weight: bold; text-align: left"
-												class="tleft">QnA</span>
-										</div>
-
-									</div>
+									<input type="text" class="form-control" id="endDate"
+										name="endDate" style="width: 120px;" placeholder="종료일">
 								</div>
-
+								<button type="submit" class="form-control btn-primary btn-sm"
+									id="dateBtn">조회</button>
+							</div>
+						</div>
+					</div>
+					<div class="row m-0">
+						<div class="col-sm-12 col-md-12 p-0">
+							<div class="form-inline justify-content-center"
+								style="height: 32px;">
+								<div class="btn-group btn-group-sm" role="group"
+									aria-label="Basic example">
+									<button type="button"
+										class="btn btn-sm btn-outline-secondary dateBtn" value="1"
+										id="todayBtn">오늘</button>
+									<button type="button"
+										class="btn btn-sm btn-outline-secondary dateBtn" value="7"
+										id="aWeekBtn">1주</button>
+									<button type="button"
+										class="btn btn-sm btn-outline-secondary dateBtn" value="14"
+										id="twoWeeksBtn">2주</button>
+									<button type="button"
+										class="btn btn-sm btn-outline-secondary dateBtn" value="31"
+										id="aMonthBtn">1개월</button>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- bootStrap table wrapper-->
 			</div>
-			<!-- tableRespnsible -->
+			<!-- bootStrap table wrapper-->
 		</div>
-		<!-- cardBody-->
+		<!-- tableRespnsible -->
 	</div>
-	<input type="button" value="qna" src="qnaChart.do">
 </form>
 
-
 <%@ include file="../include/footer.jsp"%>
+
