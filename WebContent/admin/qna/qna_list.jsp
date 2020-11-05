@@ -272,8 +272,7 @@
 								<td style="width: 80px;">${qna.guestId.guestId}</td>
 								<td style="width: 130px;"><a
 									href="qnaDetail.do?no=${qna.qnaNo }">${qna.qnaTitle}</a></td>
-								<td style="width: 150px;"><fmt:parseDate
-										value="${qna.qnaRegDate}" pattern="yyyy-MM-dd'T'HH:mm"
+								<td style="width: 150px;"><fmt:parseDate value="${qna.qnaRegDate}" pattern="yyyy-MM-dd'T'HH:mm"
 										var="regDate" type="both" /> <fmt:formatDate
 										value="${regDate}" pattern="yyyy-MM-dd" /></td>
 								<td style="width: 150px;"><c:if
