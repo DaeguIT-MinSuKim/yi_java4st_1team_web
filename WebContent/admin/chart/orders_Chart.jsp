@@ -76,7 +76,7 @@ div.content {
 	margin: 0 auto;
 }
 </style>
-
+<script src="chart/chart.js"></script>
 <script type="text/javascript"
 	src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
@@ -98,35 +98,8 @@ $(function(){
 });
 
 
+
 $(function(){
-			google.charts.load('current', {
-				'packages' : [ 'bar' ]
-			});
-		
-			google.charts.setOnLoadCallback(drawChart);
-		
-		function drawChart(){
-
-			var options1 = {
-				title : 'QnA Cnt',
-				height : '100%',
-				width : '100%',
-				backgroundColor: "transparent"
-			};
-			
-
-			var qnaTable = google.visualization.arrayToDataTable(${qna});
-	
-			var objDiv = document.getElementById('myChart1');
-			var chart = new google.charts.Bar(objDiv);
-			chart.draw(qnaTable, google.charts.Bar.convertOptions(options1));
-			
-			
-		}
-});
-
-
-/* $(function(){
 	google.charts.load('current', {
 		'packages' : [ 'bar' ]
 	});
@@ -135,29 +108,28 @@ $(function(){
 	
 	function drawChart(){
 		
-		var options2 = {
-				title : 'QnA Result',
-				height : '100%',
+		/* var options2 = {
+				title : 'Guest Gender',
+				height : '300',
 				width : '100%',
 				pieHole: 0.4,
 				backgroundColor: "transparent"
-			};
+		}; */
 		
 		var options3 = {
-				title : 'QnA Secret',
-				height : '100%',
+				title : 'Guest Increase',
+				height : '400',
 				width : '100%',
-				pieHole: 0.4,
 				backgroundColor: "transparent"
 			};
 		
-		var resTable = google.visualization.arrayToDataTable(${res})
+		/* var resTable = google.visualization.arrayToDataTable(${gender});
 		
 		var objDiv = document.getElementById('myChart2');
 		var chart = new google.charts.Bar(objDiv);
-		chart.draw(resTable,  google.charts.Bar.convertOptions(options2));
+		chart.draw(resTable, google.charts.Bar.convertOptions(options2)); */
 		
-		var seTable = google.visualization.arrayToDataTable(${secret})
+		var seTable = google.visualization.arrayToDataTable(${orders})
 		
 		var objDiv = document.getElementById('myChart3');
 		var chart = new google.charts.Bar(objDiv);
@@ -165,14 +137,13 @@ $(function(){
 
 	}
 	
-}); */
+});
 </script>
-
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-	<h1 class="h3 mb-0 text-gray-800">Qna Chart</h1>
+	<h1 class="h3 mb-0 text-gray-800">Orders Chart</h1>
 </div>
-<form action="chartQna.do" method="post">
+<form action="chartOrders.do" method="post">
 	<div class="card shadow mb-4" style="width: 1200px;">
 		<div class="card-header py-2">
 			<h6 class="m-1 font-weight-bold text-primary"
@@ -207,14 +178,14 @@ $(function(){
 					<option value="10" <c:if test="${month == 10 }"> selected</c:if>>10월</option>
 					<option value="11" <c:if test="${month == 11 }"> selected</c:if>>11월</option>
 					<option value="12" <c:if test="${month == 12 }"> selected</c:if>>12월</option>
-				</select> <input type="submit" value="검색" class="btn btn-primary btn-sm"
-					style="float: right;">
+				</select> <input type="submit" value="검색" class="btn btn-primary btn-sm" style="float: right;">
 			</h6>
 		</div>
 		<!-- <!-- card-body -->
 		<div class="card-body">
 			<div class="table-responsive">
 				<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+
 					<hr>
 					<div class="row mb-2">
 						<div class="col-sm-12 col-md-6" style="float: right;">
@@ -222,14 +193,14 @@ $(function(){
 						</div>
 					</div>
 					<div class="card-body">
-						<div id="myChart1"></div>
-						<!-- <br> <br>
-						<hr>
-						<div id="myChart2"></div>
+						<!-- <div id="myChart1"></div>
 						<br> <br>
-						<hr>
-						<div id="myChart3"></div>
-						<br> <br> -->
+						<hr> -->
+						<!-- <div id="myChart2" style="width: 300px; height: 240px;"></div>
+						<br> <br>
+						<hr> -->
+						<div id="myChart3" style="width: 100%; height: 400px;"></div>
+						<br> <br>
 					</div>
 				</div>
 			</div>

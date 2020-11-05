@@ -2,6 +2,7 @@ package hairrang_web.controller.handler.admin.chart;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -23,35 +24,43 @@ public class AdminChartGuestHandler implements Command {
 
 		if (request.getMethod().equalsIgnoreCase("GET")) {
 			System.out.println("GET");
-			SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd");
-			
+			SimpleDateFormat format1 = new SimpleDateFormat("yyyy");
+
 			Date date = new Date();
 			String day = format1.format(date);
+			String month = null;
 			
-			JSONArray join = service.joinGuestByOneDay(day,day);
-			JSONArray gender = service.gender("all");
-			JSONArray out = service.guestIncrease(day,day);
+//			JSONArray join = service.joinGuestByOneDay(day,day);
+//			JSONArray gender = service.gender("all");
+			JSONArray out = service.guestIncrease(day, month);
 
-			request.setAttribute("join", join);
-			request.setAttribute("gender", gender);
+//			request.setAttribute("join", join);
+//			request.setAttribute("gender", gender);
 			request.setAttribute("out", out);
 
 			return url;
 		} else {
 			System.out.println("POST");
 
-			String startDate = request.getParameter("startDate");
-			String endDate = request.getParameter("endDate");
-			System.out.println("==============================================");
-			System.out.println("시작날짜"+startDate);
-			System.out.println("끝날짜"+endDate);
+			String year = request.getParameter("year");
+			System.out.println("첫번째"+year);
+			String month = request.getParameter("month");
 			
-			JSONArray join = service.joinGuestByOneDay(startDate, endDate);
-			JSONArray gender = service.gender("all");
-			JSONArray out = service.guestIncrease(startDate, endDate);
+			if(year == null) {
+				SimpleDateFormat format1 = new SimpleDateFormat("yyyy");
 
-			request.setAttribute("join", join);
-			request.setAttribute("gender", gender);
+				Date date = new Date();
+				year = format1.format(date);
+			}
+			
+			if (month.equals("")) {
+				month = null;
+			}
+			System.out.println("두번째"+year);
+			JSONArray out = service.guestIncrease(year, month);
+			
+			request.setAttribute("month", month);
+			request.setAttribute("year", year);
 			request.setAttribute("out", out);
 
 			return url;

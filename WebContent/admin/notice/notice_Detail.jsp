@@ -75,8 +75,12 @@
 						</table>
 						<br> <br>
 						<div class="clear"></div>
-						<br> <img alt="" src="../notice/setload/${notice.noticeFile}"
-							style="width: 600px; height: 600px;"><br> <br>
+						<br>
+						<c:if test="${notice.noticeFile != null }">
+							<img alt="" src="../notice/setload/${notice.noticeFile}"
+								style="width: 600px; height: 600px;">
+						</c:if>
+						<br> <br>
 						<div class="add-buttons" style="float: right">
 							<input type="submit" value="수정" class="btn btn-primary btn-sm">
 							<input type="button" class="btn btn-primary btn-sm" value="삭제"

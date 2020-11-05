@@ -8,8 +8,8 @@ import hairrang_web.dao.impl.ChartDaoImpl;
 public class ChartService {
 	private ChartDao dao = ChartDaoImpl.getInstance();
 
-	public JSONArray selectOnlyQnA(String year) {
-		return dao.qnaByoneDay(year);
+	public JSONArray qnaByoneDay(String year, String month) {
+		return dao.qnaByoneDay(year,month);
 	}
 	
 	public JSONArray QnAByRes(String year) {
@@ -52,8 +52,8 @@ public class ChartService {
 		return dao.ordersByDe();
 	}
 
-	public JSONArray ordersByDay() {
-		return dao.ordersByDay();
+	public JSONArray ordersByDay(String year, String month) {
+		return dao.ordersByDay(year,month);
 	}
 
 	public JSONArray orderDetailByevent() {

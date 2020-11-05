@@ -130,8 +130,7 @@ table td {text-align:center;}
 
 			var tr = $(this);
 			var td = tr.children();
-			var no = td.eq(1).text();
-			alert(no);
+			var no = document.getElementById('no').value;
 
 			if (confirm(no + "번 글을 복원 하시겠습니까?") == true) {
 				$.ajax({
@@ -281,7 +280,7 @@ table td {text-align:center;}
 									<tr>
 								</c:if>
 								
-								<td style="width:30px"><input type="checkbox" name="check"
+								<td style="width:30px"><input type="checkbox" name="check" id="no"
 									value="${qna.qnaNo}"></td>
 								<td style="width: 4px;" class="leftTd">
 								<c:if test="${qna.qnaNotice eq 'y'}"><span style="font-weight:bold">공지</span></c:if>	
