@@ -105,15 +105,7 @@ tr td:nth-child(2) {
 		</c:forEach>
 	</table>
 </div>
-<input style="float: right;" type="button" value="홈으로" class="button"
-	onclick="location.href='noticeHome.do'">
-
-<%@ include file="../footer.jsp"%>
-
-
-
-
-
-
+<input style="text-align:center" type="button" value="목록" class="button"
+	onclick="location.href='guestQna.do'">
 
 <%@ include file="../footer.jsp"%>
