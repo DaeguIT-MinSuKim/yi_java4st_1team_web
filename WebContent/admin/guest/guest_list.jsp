@@ -71,7 +71,6 @@ $(document).on('click', '[id=btn_delete]', function() {
 
 
 
-
 $("#searchBtn").click(function(e) {
 	if($("select[name=where]").val() == undefined || $("input[name=query]").val() == "") {
 		e.preventDefault();
@@ -83,7 +82,9 @@ console.log($("select[name=where]").val());
 $("#where").change(function(){
 	$("select[name=where]").val()
 })
-	
+
+
+
 </script>
 
 <!-- Page Heading -->
@@ -132,8 +133,8 @@ $("#where").change(function(){
 					</div>
 					<div class="col-sm-12 col-md-6">
 						<div id="dataTable_filter" class="dataTables_filter ">
-							<select class="custom-select custom-select-sm" name="where" style="width: 80px;">
-								<option value="">기준</option>
+							<select class="custom-select custom-select-sm" id="where" name="where" style="width: 80px;">
+								<option value="0">기준</option>
 								<option value="guestId">아이디</option>
 								<option value="guestName">고객명</option>
 								<option value="guestPhone">폰번호</option>
