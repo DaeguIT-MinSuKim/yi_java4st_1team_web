@@ -52,12 +52,12 @@ button {
 
 .tr {
 	padding: 50px;
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid #EEEEEE;
 }
 
 * td {
-	padding-top: 20px;
-	padding-bottom: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 tr td:first-child {
@@ -69,14 +69,18 @@ tr td:nth-child(2) {
 }
 
 .button {
-	border: 3px solid gray;
+	border: 1px solid gray;
 	width: 100px;
-	padding: 10px;
+	padding: 5px;
 	margin: 0 auto;
-	border-radius: 10px;
 	color: black;
 	font-weight: bold;
-	cursor: pointer;
+}
+
+.resCard {
+	background-color: #C5C5DB;
+	box-shadow: 5px 5px 5px 5px;
+	color: #C866CA;
 }
 </style>
 
@@ -103,28 +107,6 @@ tr td:nth-child(2) {
 			return;
 		}
 	}
-	/* function go_UpQna(no) {
-		if (confirm("정말 수정하시겠습니까?")) {
-			$.ajax({
-				type : 'get',
-				url : 'qnaUpdate.do',
-				data : {
-					no : no
-				},
-				async : false,
-				success : function(qna){
-					location.href='qnaUpdate.jsp?qna='+qna;
-					},
-				error : function() {
-					alert('수정할 문의을 선택하세요');
-				}
-			});
-		} else {
-			return false;
-		}
-		
-		
-	} */
 </script>
 <h3 style="text-align: center;">Q & A</h3>
 <form name="formm">
@@ -134,6 +116,10 @@ tr td:nth-child(2) {
 		<table class="outer">
 
 			<tr class="tr" style="border-top: 1px solid black;">
+				<th style="width: 15%;">번호</th>
+				<td>${qna.qnaNo }</td>
+			</tr>
+			<tr class="tr">
 				<th>제목</th>
 				<td>${qna.qnaTitle }</td>
 			</tr>
@@ -144,7 +130,7 @@ tr td:nth-child(2) {
 						value="${regDate}" pattern="yyyy-MM-dd" /></td>
 			</tr>
 			<c:if test="${qna.qnaContent != null}">
-				<tr class="tr">
+				<tr class="tr" style="border-bottom: 1px solid black;">
 					<th>내용</th>
 					<td>${qna.qnaContent }</td>
 				</tr>
@@ -153,44 +139,57 @@ tr td:nth-child(2) {
 
 
 		</table>
+		<br>
 		<c:if test="${ qna.qnaFile != null}">
-			<img alt="" src="qna/upload/${qna.qnaFile}"
-				style="width: 600px; height: 600px;">
+			<c:if test="${qna.qnaNotice eq 'y' }">
+				<img alt="" src="notice/setload/${qna.qnaFile}"
+					style="max-width: 100%; height: auto;">
+			</c:if>
+			<c:if test="${qna.qnaNotice eq 'n' }">
+				<img alt="" src="qna/upload/${qna.qnaFile}"
+					style="max-width: 100%; height: auto;">
+			</c:if>
 		</c:if>
 
 
 		<!-- 답변 -->
 		<c:if test="${qna.qnaResYn eq 'y'}">
-			<h3 style="text-align: center; margin-top: 100px;">답변</h3>
-			<p></p>
-			<br>
-			<table class="outer">
+			<div class="resCard">
+				<h3 style="text-align: center; margin-top: 100px;">답변</h3>
+				<p></p>
+				<br>
+				<table class="outer">
 
-				<tr class="tr" style="border-top: 1px solid black;">
-					<th>제목</th>
-					<td>${resQna.qnaTitle }</td>
-				</tr>
-				<tr class="tr">
-					<th>작성일</th>
-					<td><fmt:parseDate value="${resQna.qnaRegDate}"
-							pattern="yyyy-MM-dd'T'HH:mm" var="regDate" type="both" /> <fmt:formatDate
-							value="${regDate}" pattern="yyyy-MM-dd" /></td>
-				</tr>
-				<tr class="tr">
-					<th>내용</th>
-					<td>${resQna.qnaContent }</td>
-				</tr>
+					<tr class="tr" style="border-top: 1px solid black;">
+						<th style="width: 15%;">제목</th>
+						<td>${resQna.qnaTitle }</td>
+					</tr>
+					<tr class="tr">
+						<th>작성일</th>
+						<td><fmt:parseDate value="${resQna.qnaRegDate}"
+								pattern="yyyy-MM-dd'T'HH:mm" var="regDate" type="both" /> <fmt:formatDate
+								value="${regDate}" pattern="yyyy-MM-dd" /></td>
+					</tr>
+					<tr class="tr">
+						<th>내용</th>
+						<td>${resQna.qnaContent }</td>
+					</tr>
+				</table>
+				<c:if test="${ resQna.qnaFile != null}">
+					<img alt="" src="notice/setload/${resQna.qnaFile}"
+						style="max-width: 100%; height: auto;">
+				</c:if>
 
-
-			</table>
+			</div>
 		</c:if>
 	</div>
 	<div id="buttons" style="float: right">
 		<c:if test="${loginUser.guestId eq qna.guestId.guestId}">
 			<c:if test="${qna.qnaResYn eq 'n' }">
-				<input type="button" value="수정하기" id="updateButton" class="button" onclick="location.href='qnaUpdate.do?no=${qna.qnaNo}'" >
+				<input type="button" value="수정하기" id="updateButton" class="button"
+					onclick="location.href='qnaUpdate.do?no=${qna.qnaNo}'">
 			</c:if>
-			<input type="button" value=delete id="delete" class="button"
+			<input type="button" value="삭제하기" id="delete" class="button"
 				onclick="go_delQna(${qna.qnaNo })">
 		</c:if>
 		<input type="button" value="문의홈" id="home" class="button"

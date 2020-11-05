@@ -8,14 +8,20 @@
 <
 <style>
 .button {
-	border: 3px solid gray;
+	border: 1px solid gray;
 	width: 100px;
 	padding: 10px;
 	margin: 0 auto;
-	border-radius: 10px;
 	color: black;
 	font-weight: bold;
-	cursor: pointer;
+}
+
+a {
+	text-decoration: none;
+}
+
+tr * {
+	text-align: left;
 }
 </style>
 <title>Insert title here</title>
@@ -52,31 +58,36 @@
 		</div>
 		<table id="board">
 			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일</th>
-				<th>답변</th>
+				<th style="width: 15%;">번호</th>
+				<th style="width: 40%;">제목</th>
+				<th style="width: 20%;">작성자</th>
+				<th style="width: 20%;">작성일</th>
+				<th style="width: 5%;">답변</th>
 			</tr>
 			<c:forEach items="${viewAll}" var="list">
-				<tr>
-					<td><c:if test="${list.qnaSecret eq 'y'}">
-							<img src="qna/images/secret.png" alt=""
-								style="width: 20px; height: auto;" />
-						</c:if> ${list.qnaNo }</td>
-					<td><a
-						href="qnaConfirmPassword.do?no=${list.qnaNo}&secret=${list.qnaSecret}">${list.qnaTitle }</a></td>
-					<td>${list.guestId.guestId}</td>
-					<td><fmt:parseDate value="${list.qnaRegDate}"
-							pattern="yyyy-MM-dd'T'HH:mm" var="regDate" type="both" /> <fmt:formatDate
-							value="${regDate}" pattern="yyyy-MM-dd HH:mm" /></td>
+				<c:if test="${list.qnaNotice eq 'y'}">
+					<tr style="background-color: #BCBCD9">
+				</c:if>
+				<c:if test="${list.qnaNotice eq 'n'}">
+					<tr>
+				</c:if>
+				<td><c:if test="${list.qnaSecret eq 'y'}">
+						<img src="qna/images/secret.png" alt=""
+							style="width: 20px; height: auto;" />
+					</c:if> ${list.qnaNo }</td>
+				<td><a
+					href="qnaConfirmPassword.do?no=${list.qnaNo}&secret=${list.qnaSecret}">${list.qnaTitle }</a></td>
+				<td><c:if test="${list.qnaNotice eq 'y' }">Hairrang</c:if>${list.guestId.guestId}</td>
+				<td><fmt:parseDate value="${list.qnaRegDate}"
+						pattern="yyyy-MM-dd'T'HH:mm" var="regDate" type="both" /> <fmt:formatDate
+						value="${regDate}" pattern="yyyy-MM-dd HH:mm" /></td>
 
-					<c:if test="${list.guestId.guestId != null}">
-						<td>${list.qnaResYn }</td>
-					</c:if>
-					<c:if test="${list.guestId.guestId == null}">
-						<td></td>
-					</c:if>
+				<c:if test="${list.guestId.guestId != null}">
+					<td><c:if test="${list.qnaResYn eq 'y'}"><img alt="" src="qna/images/check.png" style="max-width: 60%; height: auto;"></c:if></td>
+				</c:if>
+				<c:if test="${list.guestId.guestId == null}">
+					<td></td>
+				</c:if>
 
 
 
@@ -111,8 +122,9 @@
 
 	<div class="qna_buttons">
 		<input type="button" value="글쓰기" id="writeButton" class="button"
-			onclick="location.href='qnaWrite.do'"> <input type="button" class="button"
-			value="문의 내역" id="list" onclick="location.href='qnaList.do'">
+			onclick="location.href='qnaWrite.do'"> <input type="button"
+			class="button" value="문의 내역" id="list"
+			onclick="location.href='qnaList.do'">
 	</div>
 </body>
 <%@ include file="../footer.jsp"%>

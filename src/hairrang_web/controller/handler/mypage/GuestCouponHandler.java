@@ -25,13 +25,23 @@ public class GuestCouponHandler implements Command {
 		//페이징
 		String nowPage = request.getParameter("nowPage");
 		String cntPerPage = request.getParameter("cntPerPage");
+		String status = request.getParameter("status");
+		
+		Paging paging = new Paging();
+		if(status != null) {
+			if(!status.trim().equals("")) {
+				request.setAttribute("status", status);
+			}
+		}
+		
+		System.out.println("status:" + status);
 
 		// 현재페이지랑 한페이지당 제한 문의 갯수 확인용
 //				System.out.println(nowPage);
 //				System.out.println(cntPerPage);
 
 		// 만약 처음 접속했을때 초기세팅해주는 곳
-		int total = service.countCouponById(loginUser.getGuestId());
+		int total = service.countCouponById(loginUser.getGuestId(), status);
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "10";
@@ -40,19 +50,22 @@ public class GuestCouponHandler implements Command {
 		} else if (cntPerPage == null) {
 			cntPerPage = "10";
 		}
-		System.out.println("현재 페이지 ===>" + nowPage);
-		System.out.println("한 페이지당 나오는 게시물수 ===>" + cntPerPage);
-		System.out.println("총게시물 갯수 ===>" + total);
+		
+		paging.setNowPage(Integer.parseInt(nowPage));
+		paging.setCntPerPage(Integer.parseInt(cntPerPage));
+		
 
 		// 이후 페이지 클래스로 정리하는곳
-		Paging paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-		ArrayList<Coupon> list = service.pagingCouponById(paging, loginUser.getGuestId());
+		paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+		ArrayList<Coupon> list = service.pagingCouponById(paging, loginUser.getGuestId(), status);
 
 		System.out.println(paging);
 
-		request.setAttribute("cnt", cntPerPage);
 		request.setAttribute("total", total);
 		request.setAttribute("paging", paging);
+		
+		request.setAttribute("nowPage", Integer.parseInt(nowPage));
+		request.setAttribute("cntPerPage", Integer.parseInt(cntPerPage));
 		
 		request.setAttribute("list", list);
 		

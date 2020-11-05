@@ -7,17 +7,18 @@ INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, 
 VALUES('nonmember', 'admin', '비회원', NULL, '0', NULL, NULL, NULL, NULL, 'n', 'n');
 
 /* TEST용 회원 */
+-- 아이디 test 생일설정
 SELECT * FROM GUEST;
 INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
-VALUES('test', 'tt123', '태수튼', to_date('19921015', 'YYYYMMDD'), '010-1234-5678', 'earth_do@naver.com', 0, sysdate, '머리카락이 약하심', 'n', 'y');
+VALUES('test', 'tt123', '테스트유저', to_date('19921104', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
 INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
 VALUES('abcd', 'efghijk', '에이비', to_date('19960115', 'YYYYMMDD'), '010-1234-5678', 'abcd@test.co.kr', 1, sysdate, null, 'n', 'n');
 INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
 VALUES('test4321', '43211234', '사삼이', to_date('20001021', 'YYYYMMDD'), '010-1234-5678', 'test4321@test.co.kr', 1, sysdate, '탈모끼 있음', 'n', 'y');
 --생일쿠폰 테스트할 고객
 --job에 이벤트번호 생일쿠폰으로 수정 / 생일 오늘로 수정해라
-INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
-VALUES('test111', 'tt123', '생일테스트', to_date('19921104', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
+--INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
+--VALUES('test111', 'tt123', '생일테스트', to_date('19921104', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
 
 
 /* hair_kind */
@@ -64,8 +65,8 @@ VALUES ('생일 쿠폰', 0.2, to_date('2020-11-01','yyyy-MM-dd'),to_date('9999-1
 INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT)
 VALUES ('오픈 기념 가입 쿠폰', 0.1, to_date('2020-11-01','yyyy-MM-dd'), to_date('2020-12-01','yyyy-MM-dd'), 'open_event.jpg', '가입한 날짜로부터 30일 이내에 사용가능합니다.');
 
+
 SELECT * FROM BOOKING;
-UPDATE EVENT SET EVENT_CONTENT = '고객님의 생일을 축하드립니다. <br>생일 당일 발급되며 생일로부터 14일 이내에 사용가능합니다.' WHERE event_no = 1;
 
 --생일인 사람 쿠폰 수동 삽입
 -- INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
@@ -169,8 +170,8 @@ INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(62, 12, 2);
 */
 
 /*booking data*/
-SELECT * FROM BOOKING;
-SELECT * FROM BOOKING_HAIRS;
+SELECT * FROM BOOKING ORDER BY BOOK_NO;
+SELECT * FROM BOOKING_HAIRS ORDER BY BOOK_NO;
 INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
 VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
 INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
@@ -184,6 +185,23 @@ INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(2, 11, 1);
 INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(3, 10, 1);
 INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(3, 12, 2);
 
+
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
+INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
+VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(5, 16, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(5, 14, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(6, 11, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(6, 10, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(7, 12, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(12, 12, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(13, 15, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(14, 16, 2);
 
 /*주문*/
 SELECT * FROM orders;
@@ -222,7 +240,7 @@ INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) val
 
 /*qna*/
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('test','로그인이 안된다고 떠요','로그인창에서 로그인을 눌렀는데 자꾸 튕겨요 어떻게 해야해요?');
-INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('test111','신상품 언제나오나요?','신상품 언제쯤 들어오나요 이번주안에 들어오나요?');
+--INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('test111','신상품 언제나오나요?','신상품 언제쯤 들어오나요 이번주안에 들어오나요?');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('abcd','정확한 위치를 모르겠는데','지도를 봐도 정확한 위치를 모르겠는데 따로 안내해주실수있나요?');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?');
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT,QNA_REGDATE,DEL_YN ) VALUES ('test4321','밤에도 해요?','제가 퇴근시간이 9시인데 밤늦게 까지도 운여하시나요?','2020-11-13','y');

@@ -50,7 +50,7 @@ public class QnADaoImpl implements QnADao {
 	// 총 글 갯수
 	@Override
 	public int countQnA() {
-		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE DEL_YN = 'n' and ADMIN_ID is null or NOTICE_YN ='y'";
+		String sql = "SELECT COUNT(*) AS count FROM QNA WHERE DEL_YN = 'n' and ADMIN_ID is null or NOTICE_YN ='y' AND DEL_YN ='n'";
 		try (Connection con = JndiDs.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {

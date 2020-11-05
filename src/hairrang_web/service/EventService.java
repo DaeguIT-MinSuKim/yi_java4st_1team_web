@@ -34,12 +34,12 @@ public class EventService {
 	}
 	
 	//페이징
-	public int countEvent() {
-		return dao.countEvent();
+	public int countEvent(Paging paging, String status) {
+		return dao.countEvent(paging, status);
 	}
 	
-	public ArrayList<Event> PagingEventAll(Paging paging){
-		return dao.PagingEventAll(paging);
+	public ArrayList<Event> PagingEventAll(Paging paging, String status){
+		return dao.PagingEventAll(paging, status);
 	}
 	
 	public int updateEvent(Event event) {

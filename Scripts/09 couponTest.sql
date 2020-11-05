@@ -326,3 +326,12 @@ UPDATE COUPON SET USED_YN = 'y' WHERE GUEST_ID = 'testtt' AND COUPON_ID = 39;
 UPDATE EVENT SET EVENT_CONTENT = '가입시 증정' WHERE EVENT_NO = 2;
 
 SELECT * FROM event;
+
+SELECT * FROM DESIGNER;
+
+ SELECT COUNT(*) FROM coupon_view;
+ 
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon_view WHERE GUEST_ID = 'test' and not event_status = 'w' AND NOT used_yn = 'e'
+ORDER BY COUPON_ID desc) a) WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
+
+UPDATE EVENT SET EVENT_START = TO_date('2020-11-01', 'yyyy-MM-dd') , EVENT_END = TO_date('2020-11-03', 'yyyy-MM-dd');

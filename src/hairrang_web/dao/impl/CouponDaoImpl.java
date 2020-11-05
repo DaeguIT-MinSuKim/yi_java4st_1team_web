@@ -154,55 +154,22 @@ public class CouponDaoImpl implements CouponDao{
 	}
 	
 	
-
+	
+	
 	@Override
-	public ArrayList<Coupon> pagingCouponByEventNo(Paging paging, int eventNo) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon_view where event_no = ? ORDER BY COUPON_ID desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
-		try (Connection con = JndiDs.getConnection(); 
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
-			pstmt.setInt(1, eventNo);
-			pstmt.setInt(2, paging.getStart());
-			pstmt.setInt(3, paging.getEnd());
-			try (ResultSet rs = pstmt.executeQuery()) {
-				if (rs.next()) {
-					ArrayList<Coupon> list = new ArrayList<>();
-					do {
-						list.add(getCoupon(rs));
-					} while (rs.next());
-					return list;
-				}
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
+	public ArrayList<Coupon> pagingCouponById(Paging paging, String id, String status) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon_view WHERE GUEST_ID = ? and not event_status = 'w'";
+		// 디폴트 and not used_yn = 'e'
+		
+		if(status == null || status.equals("")) {
+			sql += " and not used_yn = 'e' ";
+		}else { //status 있으면
+			sql += "and used_yn = 'e' ";
 		}
-		return null;
-	}
-	
-	
-	@Override
-	public int countCoupon(int eventNo) {
-		String sql = "SELECT COUNT(*) FROM coupon where event_no = ?";
-		try (Connection con = JndiDs.getConnection(); 
-				PreparedStatement pstmt = con.prepareStatement(sql)) {
-				pstmt.setInt(1, eventNo);
-				try (ResultSet rs = pstmt.executeQuery()) {
-					if (rs.next()) {
-						return rs.getInt(1);
-					}
-				}
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
-		}
-			return 0;
-	}
-
-	
-	
-	
-	@Override
-	public ArrayList<Coupon> pagingCouponById(Paging paging, String id) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon_view WHERE GUEST_ID = ? and not event_status = 'w' ORDER BY COUPON_ID desc) a) "
-				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		
+		sql += "ORDER BY COUPON_ID desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		
+		System.out.println("쿠폰 sql = " + sql);
 		try (Connection con = JndiDs.getConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, id);
@@ -224,8 +191,17 @@ public class CouponDaoImpl implements CouponDao{
 	}
 
 	@Override
-	public int countCouponById(String id) {
+	public int countCouponById(String id, String status) {
 		String sql = "SELECT COUNT(*) FROM COUPON WHERE GUEST_ID = ?";
+		
+		if(status == null || status.equals("")) {
+			sql += " and not used_yn = 'e' ";
+		}else { //status 있으면
+			sql += "and used_yn = 'e' ";
+		}
+		
+		System.out.println("count = " + sql);
+		
 		try (Connection con = JndiDs.getConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, id);
@@ -254,6 +230,84 @@ public class CouponDaoImpl implements CouponDao{
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public ArrayList<Coupon> pagingCouponByEventNo(Paging paging, String no, String status) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon_view";
+		//where event_no = ? and used_yn = ? (n y w e)
+		
+		int cnt = 0;
+		if(no == null || no.equals("") ) { // x
+		} else {// 있으면 
+			sql += " where event_no = " + no;
+			cnt++;
+		}
+		
+		if(status == null || status.equals("")) {
+		}else{
+			if(cnt >= 1) { //cnt 1이상이면 -> 위에꺼있으면
+				sql += " and used_yn = '" + status + "'";
+			}else {
+				sql += " where used_yn = '" + status + "'";
+			}
+		}		
+		
+		sql+= " ORDER BY COUPON_ID desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		System.out.println("list 쿼리: " + sql);
+		
+		try (Connection con = JndiDs.getConnection(); 
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, paging.getStart());
+			pstmt.setInt(2, paging.getEnd());
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					ArrayList<Coupon> list = new ArrayList<>();
+					do {
+						list.add(getCoupon(rs));
+					} while (rs.next());
+					return list;
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return null;
+	}
+
+	@Override
+	public int countCoupon(Paging paging, String no, String status) {
+		String sql = "SELECT COUNT(*) FROM coupon_view ";
+		//where event_no = ? and used_yn = '?'
+
+		int cnt = 0;
+		if(no == null || no.equals("") ) { // x
+		} else {// 있으면 
+			sql += "where event_no = " + no;
+			cnt++;
+		}
+		
+		if(status == null || status.equals("")) {
+		}else{
+			if(cnt >= 1) { //cnt 1이상이면 -> 위에꺼있으면
+			sql += "and used_yn = '" + status + "'";
+			}else {
+				sql += " where used_yn = '" + status + "'";
+			}
+		}		
+		System.out.println("count 쿼리 " + sql);
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return 0;
 	}
 
 	

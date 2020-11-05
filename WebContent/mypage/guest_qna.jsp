@@ -31,10 +31,15 @@
 					<td class="qna_date"><fmt:parseDate value="${qna.qnaRegDate}"
 							pattern="yyyy-MM-dd'T'HH:mm" var="qnaRegDate" type="both" /> <fmt:formatDate
 							value="${qnaRegDate}" pattern="yyyy-MM-dd HH:mm" /></td>
-					<td class="qna_resYn">${qna.qnaResYn}</td>
+					<td class="qna_resYn">
+						<c:if test="${qna.qnaResYn == 'y'}">답변완료</c:if>
+						<c:if test="${qna.qnaResYn == 'n'}">미답변</c:if>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>
+		
+		
 		<!-- 페이징 -->
 					<div style="width:100%; text-align:center; display:inline-block; margin:0 auto;">
 					<p>Total : ${total}</p>
