@@ -164,13 +164,22 @@
             <i class="fa fa-bars"></i>
           </button>
 
+			<script>
+				$(document).on("click", "#navSearchBtn", function(e) {
+					if(!$("navQueryInput").val()){
+						e.preventDefault();
+						return;
+					}
+					document.navSearch.submit();
+				});
+			</script>
           <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="guestList.do">
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="guestList.do" name="navSearch">
             <div class="input-group">
               <input type="hidden" name="where" value="guestName">
-              <input type="text" name="query" class="form-control bg-light border-0 small" placeholder="이름으로 회원 검색" aria-label="Search" aria-describedby="basic-addon2">
+              <input type="text" id="navQueryInput"name="query" class="form-control bg-light border-0 small" placeholder="이름으로 회원 검색" aria-label="Search" aria-describedby="basic-addon2">
               <div class="input-group-append">
-                <button class="btn btn-primary" type="button" >
+                <button class="btn btn-primary" type="button" id="navSearchBtn">
                   <i class="fas fa-search fa-sm"></i>
                 </button>
               </div>
