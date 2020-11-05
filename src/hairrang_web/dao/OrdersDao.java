@@ -36,6 +36,8 @@ public interface OrdersDao {
 	ArrayList<Orders> pagingOrdersListById(Paging paging, String id);
 	int countOrdersById(String id);
 
+	int checkUser(Orders order, Guest guest);
+
 	
 	
 }

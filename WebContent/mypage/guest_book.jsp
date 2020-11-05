@@ -15,8 +15,8 @@
 <body>
 
 <div class="book_wrapper">
-<h3 style="text-align:center; padding:20px; margin-bottom:50px;">나의 예약내역</h3>
-<div class="tcenter" style="padding:10px; margin-bottom:20px; float:right">
+<h3 style="text-align:center; margin-bottom:20px;">나의 예약내역</h3>
+<div class="tcenter" style="margin-bottom:20px; float:right">
 	<input type="button" value="전체보기" onclick="location.href='guestBook.do'" class="book-btn"><span style="color:gray">ㅣ</span> 
 	<input type="button" value="지난 예약 내역" onclick="location.href='guestBook.do?nowPage=1&booking=past'" class="book-btn">
 </div>

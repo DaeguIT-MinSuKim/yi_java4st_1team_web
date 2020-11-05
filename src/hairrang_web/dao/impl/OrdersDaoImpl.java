@@ -160,6 +160,25 @@ public class OrdersDaoImpl implements OrdersDao {
 		return new OrderDetail(odNo, hair, odPrice, odQuantity, coupon, odDiscount);
 	}
 
+	@Override
+	public int checkUser(Orders order, Guest guest) {
+		String sql = "SELECT 1 FROM ORDERS WHERE ORDERS_NO = ? AND GUEST_ID = ?";
+		
+		try(Connection con = JndiDs.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sql)) {
+			pstmt.setInt(1, order.getOrdersNo());
+			pstmt.setString(2, guest.getGuestId());
+			
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return 0;
+	}
 	
 	@Override
 	public int selectMaxOrdersNo() {

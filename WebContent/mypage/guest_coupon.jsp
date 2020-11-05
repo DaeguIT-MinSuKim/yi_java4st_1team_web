@@ -10,8 +10,8 @@
 </style>   
 <body>
 <div class="book_wrapper">
-<h3 style="text-align:center; padding:20px; margin-bottom:50px;">쿠폰함</h3>
-<div style="padding:10px;float:right; margin-bottom:20px">
+<h3 style="text-align:center; margin-bottom:20px;">쿠폰함</h3>
+<div style="float:right; margin-bottom:20px">
 	<input type="button" value="전체보기" onclick="location.href='guestCoupon.do'" class="book-btn"> <span style="color:gray">ㅣ</span> 
 	<input type="button" value="지난 쿠폰 내역" onclick="location.href='guestCoupon.do?nowPage=1&status=e'" class="book-btn">
 </div>

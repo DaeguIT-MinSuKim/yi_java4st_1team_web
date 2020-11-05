@@ -14,7 +14,7 @@
 
 <body>
 	<div class="book_wrapper">
-		<h3 style="text-align:center; padding:20px; margin-bottom:50px;">나의 문의 내역</h3>
+		<h3 style="text-align:center; margin-bottom:68px;">나의 문의 내역</h3>
 		<table id="board">
 			<tr class=>
 				<th>번호</th>
