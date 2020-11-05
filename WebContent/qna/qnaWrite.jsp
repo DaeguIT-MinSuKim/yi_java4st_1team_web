@@ -110,7 +110,7 @@ tr td:nth-child(2) {
 				"></td>
 			</tr>
 			<tr class="tr">
-				<th>내용</th>
+				<th style="vertical-align: middle;">내용</th>
 				<td><textarea rows="8" cols="65" name="content" style="resize: none; border: 1px solid #C5C5DB;"></textarea></td>
 			</tr>
 			<tr style="border-bottom: 1px solid black;">
@@ -122,7 +122,7 @@ tr td:nth-child(2) {
 		</table>
 		<br> <input type="file" name="upload" style="float: left;">
 	</div>
-	<div id="rightButtons" style="float: right">
+	<div id="rightButtons" class="outer" style="margin: 0px auto; text-align:right;">
 		<input type="submit" value="제출하기" class="button"> <input
 			type="reset" value="초기화" class="button">
 	</div>
