@@ -282,7 +282,7 @@
 										<td style="width: 100px;"><fmt:parseDate
 												value="${notice.noticeRegDate}" pattern="yyyy-MM-dd'T'HH:mm"
 												var="regDate" type="both" /> <fmt:formatDate
-												value="${regDate}" pattern="yyyy-MM-dd" /></td>
+												value="${regDate}" pattern="yyyy-MM-dd HH:mm" /></td>
 										<c:if test="${stay eq 'del' }">
 											<td><input type="button" name="info" value="복원"
 												class="btn bg-gray-200 btn-sm detailViewButton"

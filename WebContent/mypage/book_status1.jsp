@@ -14,7 +14,7 @@
 
 <body>
 <div class="book_wrapper">
-<h3 style="text-align:center; padding:20px; margin-bottom:50px;">RESERVATION</h3>
+<h3 style="text-align:center; padding:20px; margin-bottom:50px;">MY RESERVATION</h3>
 <div class="tcenter" style="padding:10px;">
 	<input type="button" value="전체보기" onclick="location.href='guestBook.do'"  class="book-btn">
 	<input type="button" value="예약완료" onclick="location.href='status1.do'"  class="book-btn">

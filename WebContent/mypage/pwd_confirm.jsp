@@ -5,7 +5,7 @@
     <%@ include file="sub_menu.jsp" %>  
 <style>
 .info a{background-color:white;  border-bottom:1px solid white;}
-.btn { width:250px; height:50px; color:black; border:none; font-size:15px; margin:5px; background: white; border:1px solid #777;}
+.btn {cursor:pointer; width:250px; height:50px; color:black; border:none; font-size:15px; margin:5px; background: white; border:1px solid #777;}
 </style>
 <body>
 

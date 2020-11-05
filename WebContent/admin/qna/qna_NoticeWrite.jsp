@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
+<style>
+.add-table {
+	text-align: left;
+}
+
+.add-table tr td:nth-child(2) {
+	text-align: left;
+}
+
+h3 {
+	text-align: center;
+}
+
+</style>
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800 font-weight">문의사항 - 등록</h1>
 <p class="mb-4"></p>
@@ -19,8 +33,9 @@
 				<!-- bootStrap table wrapper-->
 				<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 					<div id="add-wrapper">
+					<h3>공지 등록</h3>
 						<table class="add-table">
-							<tr>
+							<tr style="border-top: 1px solid black;">
 								<td>공지명</td>
 								<td><input type="text" id="title" name="title" /></td>
 
@@ -30,12 +45,9 @@
 								<td><textarea rows="20" cols="60" id="content"
 										name="content"></textarea></td>
 							</tr>
-							<tr>
-								<td>업로드</td>
-								<td><input type="file" class="btn btn-primary btn-sm"
-									value="파일첨부" multiple id="setload" name="setload" style="width: 100px;"></td>
-							</tr>
 						</table>
+						<input type="file" value="파일첨부" multiple id="setload"
+								name="setload" style="width: 100px;">
 						<br> <br>
 						<div class="clear"></div>
 						<br>

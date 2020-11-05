@@ -9,7 +9,7 @@
 
 .underline {font-size:30px;}
 .pwdform {width:650px;margin:0 auto;padding:20px;}
-td {width:100px; padding:10px;}
+td {width:150px; padding:10px;}
 input {margin-left:20px; width:300px; border: 1px solid #e8e8e8;}
 
 .line {margin:0 auto;border:2px solid gray;width:120px;background:gray;} 	

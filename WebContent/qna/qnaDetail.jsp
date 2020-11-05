@@ -139,9 +139,16 @@ tr td:nth-child(2) {
 
 
 		</table>
+		<br>
 		<c:if test="${ qna.qnaFile != null}">
-			<img alt="" src="qna/upload/${qna.qnaFile}"
-				style="max-width: 100%; height: auto;">
+			<c:if test="${qna.qnaNotice eq 'y' }">
+				<img alt="" src="notice/setload/${qna.qnaFile}"
+					style="max-width: 100%; height: auto;">
+			</c:if>
+			<c:if test="${qna.qnaNotice eq 'n' }">
+				<img alt="" src="qna/upload/${qna.qnaFile}"
+					style="max-width: 100%; height: auto;">
+			</c:if>
 		</c:if>
 
 

@@ -274,7 +274,7 @@
 									href="qnaDetail.do?no=${qna.qnaNo }">${qna.qnaTitle}</a></td>
 								<td style="width: 150px;"><fmt:parseDate value="${qna.qnaRegDate}" pattern="yyyy-MM-dd'T'HH:mm"
 										var="regDate" type="both" /> <fmt:formatDate
-										value="${regDate}" pattern="yyyy-MM-dd" /></td>
+										value="${regDate}" pattern="yyyy-MM-dd HH:mm" /></td>
 								<td style="width: 150px;"><c:if
 										test="${qna.qnaNotice eq 'n' }">${qna.qnaResYn}</c:if></td>
 
