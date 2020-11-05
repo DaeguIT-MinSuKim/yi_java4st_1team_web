@@ -119,9 +119,9 @@ public class EventService {
 		return 0;
 	}
 	
-	public int insertEvent(Event event) {
+	public int insertEvent(Event event) {//쓸필요없지만 한번에 적을려고,,ㅎ,,
 		//insertevent랑 동시에 전체회원에게 쿠폰 삽입
-		//생일쿠폰은 개별 생일 10일전 발급 -> 10일후까지 사용가능
+		//생일쿠폰 당일발급
 		String eSql = "INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT) "
 				+ "VALUES(?, ?, ?, ? + - 1 / (24*60*60) + 1, ?, ?)";
 		String cSql = "INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END) SELECT guest_id, EVENT_NO, EVENT_START, EVENT_END "

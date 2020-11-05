@@ -19,7 +19,7 @@ VALUES('test4321', '43211234', '사삼이', to_date('20001021', 'YYYYMMDD'), '01
 --job에 이벤트번호 생일쿠폰으로 수정 / 생일 오늘로 수정해라
 --INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
 --VALUES('test111', 'tt123', '생일테스트', to_date('19921104', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
-
+UPDATE GUEST SET DEL_YN = 'n';
 
 /* hair_kind */
 SELECT * FROM HAIR_KIND;
@@ -76,7 +76,6 @@ SELECT * FROM BOOKING;
 --		) gb WHERE TO_CHAR(sysdate, 'YYYY-MM-DD') = TO_CHAR("thisyear_bd", 'YYYY-MM-DD');
 
 
-SELECT * FROM event;
 -- 모든 테스트 회원에게 오픈 기념 쿠폰 발행 -> 가입시 자동했음
 INSERT INTO coupon(guest_id, event_no, event_start, event_end) 
 SELECT 'test', event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 FROM event WHERE event_no = 2;
@@ -86,8 +85,6 @@ INSERT INTO coupon(guest_id, event_no, event_start, event_end)
 SELECT 'abcd', event_no ,sysdate, to_date(to_char(sysdate, 'yyyy-MM-dd')) + 30 - 1 / (24*60*60) + 1 FROM event WHERE event_no = 2;
 
 /* designer */
-
-SELECT * FROM DESIGNER;
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('손승완', '웬디', '원장', 'designer/images/wd.jpg','#찰떡스타일링 #정형화되지않은스타일 #얼굴형보완 #내츄럴웨이브 #연예인머리 #컨셉세팅펌');
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('강슬기', '슬기', '디자이너', 'designer/images/sk.jpg','#클래식 #고급스러움 #단발머리 #단발컷 #풍성한웨이브 #로맨틱웨이브 #드라마틱볼륨 #글램웨이브 #러블리헤어');
 INSERT INTO DESIGNER(DE_NAME, DE_NICKNAME, DE_LEVEL, DE_PIC, DE_CONTENT) VALUES ('김예림', '예리', '디자이너', 'designer/images/yr.jpg','#단발컷 #태슬컷 #내츄럴웨이브펌 #볼륨레이어컷 #볼륨펌');
@@ -173,11 +170,11 @@ INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(62, 12, 2);
 SELECT * FROM BOOKING ORDER BY BOOK_NO;
 SELECT * FROM BOOKING_HAIRS ORDER BY BOOK_NO;
 INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
-VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
+VALUES('test', TRUNC(sysdate) + 1/48*20, 2, sysdate, 1, null);
 INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
-VALUES('abcd', sysdate + 1 - 2/24, 2, sysdate, 1, null);
+VALUES('abcd', TRUNC(sysdate) - 1/48*20, 2, sysdate, 1, null);
 INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
-VALUES('test4321', sysdate + 1 - 6/24, 2, sysdate, 1, null);
+VALUES('test4321', TRUNC(sysdate) + 1 + 1/48*26, 4, sysdate, 1, null);
 
 INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(1, 16, 1);
 INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(2, 14, 2);
@@ -187,21 +184,20 @@ INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(3, 12, 2);
 
 
 INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
-VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
+VALUES('test', TRUNC(sysdate) + 1/48*32, 1, sysdate, 1, null);
 INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
-VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
+VALUES('test', TRUNC(sysdate) + 1 + 1/48*21, 2, sysdate, 1, null);
 INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
-VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
+VALUES('test', TRUNC(sysdate) + 3 + 1/48*34, 5, sysdate, 1, null);
 INSERT INTO BOOKING(GUEST_ID, BOOK_TIME, DE_NO, BOOK_REGDATE, BOOK_STATUS, BOOK_NOTE)
-VALUES('test', sysdate + 2 - 6/24, 2, sysdate, 1, null);
-INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(5, 16, 1);
-INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(5, 14, 2);
-INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(6, 11, 1);
-INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(6, 10, 1);
-INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(7, 12, 2);
-INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(12, 12, 2);
-INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(13, 15, 2);
-INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(14, 16, 2);
+VALUES('test', TRUNC(sysdate) + 5/48*21, 2, sysdate, 1, null);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(4, 16, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(4, 14, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(5, 11, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(5, 10, 1);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(6, 12, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(7, 15, 2);
+INSERT INTO booking_hairs(book_no, hair_no, hair_quantity) VALUES(7, 16, 2);
 
 /*주문*/
 SELECT * FROM orders;
