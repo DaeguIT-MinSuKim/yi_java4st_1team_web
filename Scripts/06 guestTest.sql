@@ -195,3 +195,5 @@ UPDATE booking SET BOOK_STATUS = -1 WHERE BOOK_NO = 6;
 SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking WHERE GUEST_ID = 'test' AND NOT BOOK_STATUS = 1 ORDER BY book_no desc) a) WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
 
 SELECT COUNT(*) FROM (SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test'AND book_status = 1);
+
+SELECT * FROM qna;

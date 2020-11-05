@@ -277,15 +277,9 @@ public class GuestDaoImpl implements GuestDao {
 	@Override
 	public int countBookingByConditionForPaging(Paging paging, String del, String where, String query) {
 		String sql = "SELECT count(*) FROM GUEST_VIEW";
+		int cnt = 0;
 		
-		if(del == null || del.equals("")) {
-			sql += " where del_yn = 'n'";
-		} else {
-			sql += " where del_yn = '" + del + "'"; 
-		}
-		
-		if(where == null) {
-		} else if(where.equals("")) {
+		if(where == null || where.equals("") ) {		
 		} else {
 			if(where.trim().equals("guestId")) {
 				where = "guest_id";
@@ -294,7 +288,18 @@ public class GuestDaoImpl implements GuestDao {
 			} else if (where.equals("guestPhone")) {
 				where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
 			}
-			sql += " and " + where + " LIKE '%" + query + "%'";		
+			sql += " where " + where + " LIKE '%" + query + "%'";	
+			cnt++;
+			System.out.println(cnt);
+		}
+		
+		if(del == null || del.equals("")) {
+			if(cnt>=1) {
+				sql += " and del_yn = '" + del + "'";
+			}
+		} else {
+			sql += " where del_yn = '" + del + "'"; 
+			
 		}
 		
 		System.out.println("count 쿼리: " + sql);
@@ -332,8 +337,8 @@ public class GuestDaoImpl implements GuestDao {
 		}
 		
 		if(del == null || del.equals("")) {
-			if(cnt<=1) {
-				sql += " where del_yn = 'n'";
+			if(cnt>=1) {
+				sql += " and del_yn = '" + del + "'";
 			}
 		} else {
 			sql += " where del_yn = '" + del + "'"; 

@@ -141,7 +141,7 @@ $("#where").change(function(){
 							<label>
 								<input type="search" name="query" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
 							</label>
-							<input type="submit" value="검색" class="btn btn-primary btn-sm" id="searchBtn"></input>
+							<input type="button" value="검색" class="btn btn-primary btn-sm" id="searchBtn" onclick="location.href='guestList.do?nowPage=1&del=${del}&where=${where}&query=${query}'"></input>
 						</div>
 					</div>
 				</div>
@@ -201,7 +201,7 @@ $("#where").change(function(){
 				<input type="button" value="등록" class="btn btn-info btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='guestAdd.do' ">
 				<input type="button"  value="선택삭제" name="delete" class="btn btn-secondary btn-sm" style="float: left; margin-right: 10px;" >
 				
-				<input type="button" value="탈퇴고객" name="delGuest" class="btn btn-dark btn-sm" onclick="location.href='guestList.do?nowPage=1&cntPerPage=10&del=y'" style="float:right; margin-left: 20px;">
+				<input type="button" value="탈퇴고객" name="delGuest" class="btn btn-dark btn-sm" onclick="location.href='guestList.do?nowPage=1&del=y&where=${where}&query=${query}'" style="float:right; margin-left: 20px;">
 			
 	
 					<!-- 페이징 시작 -->
@@ -212,7 +212,7 @@ $("#where").change(function(){
 						<!-- << -->
 						<c:if test="${paging.startPage != 1}">
 							<div class="paging-line">
-							<a href="guestList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&del=${del}&where=${where}&query=${query}">
+							<a href="guestList.do?nowPage=${paging.startPage -1}&del=${del}&where=${where}&query=${query}">
 								<i class="fas fa-angle-double-left"></i>
 							</a>
 							</div>
@@ -228,7 +228,7 @@ $("#where").change(function(){
 						<c:choose>
 							<c:when test="${paging.nowPage != 1}">
 								<div class="paging-line">
-									<a href="guestList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&del=${del}&where=${where}&query=${query}"><i class="fas fa-angle-left"></i></a>
+									<a href="guestList.do?nowPage=${paging.nowPage-1}&del=${del}&where=${where}&query=${query}"><i class="fas fa-angle-left"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == 1}">
@@ -249,7 +249,7 @@ $("#where").change(function(){
 								</c:when>
 								<c:when test="${p != paging.nowPage }">
 									<div class="paging-line">
-									<a href="guestList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&del=${del}&where=${where}&query=${query}">
+									<a href="guestList.do?nowPage=${p}&del=${del}&where=${where}&query=${query}">
 									${p}</a></div>
 								</c:when>
 							</c:choose>
@@ -261,7 +261,7 @@ $("#where").change(function(){
 						<c:choose>
 							<c:when test="${paging.nowPage != paging.lastPage}">
 								<div class="paging-line">
-									<a href="guestList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&del=${del}&where=${where}&query=${query}"><i class="fas fa-angle-right"></i></a>
+									<a href="guestList.do?nowPage=${paging.nowPage+1}&del=${del}&where=${where}&query=${query}"><i class="fas fa-angle-right"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == paging.lastPage}">
@@ -277,7 +277,7 @@ $("#where").change(function(){
 					
 						<c:if test="${paging.endPage != paging.lastPage }">
 							<div class="paging-line">
-							<a href="guestList.do?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}&del=${del}&where=${where}&query=${query}">
+							<a href="guestList.do?nowPage=${paging.endPage+1}&del=${del}&where=${where}&query=${query}">
 							<i class="fas fa-angle-double-right"></i></a>
 							</div>
 						</c:if>
