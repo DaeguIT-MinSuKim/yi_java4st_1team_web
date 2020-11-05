@@ -35,10 +35,10 @@ $(document).on('click', '[id=btn_delete]', function() {
 				<div style="float:left; margin-top:5px;">※ 생일쿠폰은 생일 당일 자동 발급</div>
 				<div style="float:right; padding:5px; ">
 				<ul>
-					<li class="btn-light btn-sm" style="width:80px; display: inline; cursor:pointer;" onclick="location.href='eventList.do'">전체보기</li>
-					<li class="btn-info btn-sm" style="width:80px; display: inline; cursor:pointer;" onclick="location.href='eventList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&status=s'">진행중</li>
-					<li class="btn-secondary btn-sm" style="width:80px; display: inline; cursor:pointer;" onclick="location.href='eventList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&status=e'">종료</li>
-					<li class="btn-warning btn-sm" style="width :80px;  display: inline; cursor:pointer;" onclick="location.href='eventList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&status=w'">대기중</li>
+					<li class="btn btn-outline-primary btn-sm" style="width:80px; display: inline; cursor:pointer;" onclick="location.href='eventList.do'">전체보기</li>
+					<li class="btn btn-outline-info btn-sm" style="width:80px; display: inline; cursor:pointer;" onclick="location.href='eventList.do?nowPage=1&status=s'">진행중</li>
+					<li class="btn btn-outline-secondary btn-sm" style="width:80px; display: inline; cursor:pointer;" onclick="location.href='eventList.do?nowPage=1&status=e'">종료</li>
+					<li class="btn btn-outline-warning btn-sm" style="width :80px;  display: inline; cursor:pointer;" onclick="location.href='eventList.do?nowPage=1&&status=w'">대기중</li>
 					
 				</ul>
 

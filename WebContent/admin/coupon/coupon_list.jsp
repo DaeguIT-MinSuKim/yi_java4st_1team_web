@@ -53,7 +53,7 @@ function tableChange(){
 			<!-- bootStrap table wrapper-->
 			<!-- " onchange="location.href='couponList.do?nowPage=${paging.nowPage}&cntPerPage=${paging.cntPerPage}&no='+this.value " -->
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-					<div class="input-group input-group-sm mr-3" style="width:250px; float:left; padding:5px; ">	
+					<div class="input-group input-group-sm mr-3" style="width:250px; float:left; margin-botton:10px;">	
 						<div class="input-group-sm input-group-prepend">
 							<label class="input-group-text" for="sorter">이벤트종류</label>
 						</div>
@@ -66,11 +66,11 @@ function tableChange(){
 						
 				</div>
 				<div style="float:right; padding:5px;">
-				<input type="button"  class="btn btn-light btn-sm" value="전체보기" style="width:80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do'">
-					<input type="button" name="n" class="btn btn-info btn-sm" value="사용가능" style="width: 80px; display: inline; cursor:pointer;" name="" onclick="location.href='couponList.do?nowPage=1&no=${no}&status=n' ">
-					<input type="button" name="w" class="btn btn-warning btn-sm" value="대기중" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=1&no=${no}&status=w' ">
-					<input type="button" name="y" class="btn btn-secondary btn-sm" value="사용완료" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=1&no=${no}&status=y' ">
-					<input type="button" name="e" class="btn btn-dark btn-sm" value="기간만료" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=1&no=${no}&status=e' ">
+				<input type="button"  class="btn btn-outline-primary btn-sm" value="전체보기" style="width:80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do'">
+					<input type="button" name="n" class="btn btn-outline-info btn-sm" value="사용가능" style="width: 80px; display: inline; cursor:pointer;" name="" onclick="location.href='couponList.do?nowPage=1&no=${no}&status=n' ">
+					<input type="button" name="w" class="btn btn-outline-warning btn-sm" value="대기중" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=1&no=${no}&status=w' ">
+					<input type="button" name="y" class="btn btn-outline-secondary btn-sm" value="사용완료" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=1&no=${no}&status=y' ">
+					<input type="button" name="e" class="btn btn-outline-dark btn-sm" value="기간만료" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=1&no=${no}&status=e' ">
 				
 
 			</div>
