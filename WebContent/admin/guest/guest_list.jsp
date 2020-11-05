@@ -186,7 +186,7 @@ $("#where").change(function(){
 							</td>
 							<td  style="width:200px;">
 								<input type="button" name="booking" value="예약내역" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='bookingList.do?where=guestId&query=${guest.guestId}'">
-								<input type="button" name="order" value="주문내역" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='bookingList.do?where=guestId&query=${guest.guestId}'">
+								<input type="button" name="order" value="주문내역" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='orderList.do?where=guestId&query=${guest.guestId}'">
 								<input type="button" name="guest" value="회원정보" class="btn bg-gray-200 btn-sm detailViewButton" onclick="location.href='guestData.do?id=${guest.guestId}' ">
 							</td>
 							<td  style="width:100px;">

@@ -248,7 +248,7 @@ public class OrdersDaoImpl implements OrdersDao {
 			if(cnt == 0) {
 				sql += " WHERE ORDERS_DATE > TO_DATE('" + startDate + "') ";
 			} else {
-				sql += " AND DE_NO = " + designer;
+				sql += " AND ORDERS_DATE > TO_DATE('" + startDate + "') ";
 			}
 			cnt++;
 		}
@@ -331,7 +331,7 @@ public class OrdersDaoImpl implements OrdersDao {
 			if(cnt == 0) {
 				sql += " WHERE ORDERS_DATE > TO_DATE('" + startDate + "') ";
 			} else {
-				sql += " AND DE_NO = " + designer;
+				sql += " AND ORDERS_DATE > TO_DATE('" + startDate + "') ";
 			}
 			cnt++;
 		}

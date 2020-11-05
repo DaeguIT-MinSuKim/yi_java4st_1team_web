@@ -90,9 +90,9 @@
 									<label class="input-group-text" for="membership">회원구분</label>
 								</div>
 								<select name="membership" aria-controls="dataTable" class="custom-select custom-select-sm">
-									<option selected value="">전체</option>
-									<option selected value="y">회원</option>
-									<option selected value="n">비회원</option>
+									<option value="" selected >전체</option>
+									<option value="y">회원</option>
+									<option value="n">비회원</option>
 								</select>
 							</div>
 						</div>
