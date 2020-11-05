@@ -276,10 +276,13 @@ public class GuestDaoImpl implements GuestDao {
 	////del_yn = 'y', 검색 3가지, cntPerPage 
 	@Override
 	public int countBookingByConditionForPaging(Paging paging, String del, String where, String query) {
+		
 		String sql = "SELECT count(*) FROM GUEST_VIEW";
 		int cnt = 0;
 		
+		
 		if(where == null) {
+			sql += " where del_yn = 'n'";
 		} else if(where.equals("")) {
 		} else {
 			if(where.trim().equals("guestId")) {
@@ -289,7 +292,7 @@ public class GuestDaoImpl implements GuestDao {
 			} else if (where.equals("guestPhone")) {
 				where = "REGEXP_REPLACE(guest_phone, '[^0-9]+')";
 			}
-			sql += " where " + where + " LIKE '%" + query + "%' ";		
+			sql += " where " + where + " LIKE '%" + query + "%' ";	
 			cnt ++;
 		}
 		
@@ -324,6 +327,7 @@ public class GuestDaoImpl implements GuestDao {
 		int cnt = 0;
 		
 		if(where == null) {
+			sql += " where del_yn = 'n'";
 		} else if(where.trim().equals("")) {
 		} else {
 			if(where.trim().equals("guestId")) {

@@ -19,7 +19,7 @@ VALUES('test4321', '43211234', '사삼이', to_date('20001021', 'YYYYMMDD'), '01
 --job에 이벤트번호 생일쿠폰으로 수정 / 생일 오늘로 수정해라
 --INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
 --VALUES('test111', 'tt123', '생일테스트', to_date('19921104', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
-
+UPDATE GUEST SET DEL_YN = 'n';
 
 /* hair_kind */
 SELECT * FROM HAIR_KIND;
