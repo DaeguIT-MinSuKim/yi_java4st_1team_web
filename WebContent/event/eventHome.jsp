@@ -47,7 +47,7 @@ div.content {float:right; border:1px solid black;}
 </style>
 <body>
 <div class="de_wrapper">
-<h3 style="text-align:center; padding:20px; margin-bottom:50px;">EVENT</h3>
+<p style="text-align:center; font-size:30px;">이벤트</p>
 <div class="de_sub_wrapper">
 <div style=" width:900px; margin:0 auto; text-align:center">
 
@@ -56,7 +56,7 @@ div.content {float:right; border:1px solid black;}
 <a href="eventDetail.do?eno=${event.eventNo}"><img src="event/images/${event.eventPic}" alt="" width=60%></a>
 <div style="font-size:22px; font-weight :bold; padding:10px;">${event.eventName}</div>
    		<div>
-   			<img src="images/cal-b.png" width=2% style="margin-bottom:-3px;"> ${event.eventStart} ~ 
+   			<i class="far fa-calendar-check"></i>  ${event.eventStart} ~ 
    			<c:if test="${event.eventEnd == '9999-12-30'}">상시적용</c:if>
    			<c:if test="${event.eventEnd != '9999-12-30'}">${event.eventEnd}</c:if>
    		</div>

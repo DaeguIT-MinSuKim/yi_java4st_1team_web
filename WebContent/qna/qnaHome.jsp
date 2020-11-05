@@ -5,7 +5,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ include file="../header.jsp"%>
-
 <style>
 .button {
 	border: 1px solid gray;

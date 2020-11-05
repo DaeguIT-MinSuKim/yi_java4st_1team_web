@@ -53,7 +53,7 @@ function tableChange(){
 			<!-- bootStrap table wrapper-->
 			<!-- " onchange="location.href='couponList.do?nowPage=${paging.nowPage}&cntPerPage=${paging.cntPerPage}&no='+this.value " -->
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-					<div class="input-group input-group-sm mr-3" style="width:250px; float:left; padding:5px; ">	
+					<div class="input-group input-group-sm mr-3" style="width:250px; float:left; margin-botton:10px;">	
 						<div class="input-group-sm input-group-prepend">
 							<label class="input-group-text" for="sorter">이벤트종류</label>
 						</div>
@@ -66,11 +66,11 @@ function tableChange(){
 						
 				</div>
 				<div style="float:right; padding:5px;">
-				
-					<input type="button" name="n" class="btn btn-info btn-sm" value="사용가능" style="width: 80px; display: inline; cursor:pointer;" name="" onclick="location.href='couponList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&no=${no}&status=n' ">
-					<input type="button" name="w" class="btn btn-warning btn-sm" value="대기중" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&no=${no}&status=w' ">
-					<input type="button" name="y" class="btn btn-secondary btn-sm" value="사용완료" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&no=${no}&&status=y' ">
-					<input type="button" name="e" class="btn btn-dark btn-sm" value="기간만료" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=${nowPage}&cntPerPage=${cntPerPage}&no=${no}&&status=e' ">
+				<input type="button"  class="btn btn-outline-primary btn-sm" value="전체보기" style="width:80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do'">
+					<input type="button" name="n" class="btn btn-outline-info btn-sm" value="사용가능" style="width: 80px; display: inline; cursor:pointer;" name="" onclick="location.href='couponList.do?nowPage=1&no=${no}&status=n' ">
+					<input type="button" name="w" class="btn btn-outline-warning btn-sm" value="대기중" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=1&no=${no}&status=w' ">
+					<input type="button" name="y" class="btn btn-outline-secondary btn-sm" value="사용완료" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=1&no=${no}&status=y' ">
+					<input type="button" name="e" class="btn btn-outline-dark btn-sm" value="기간만료" style="width: 80px; display: inline; cursor:pointer;" onclick="location.href='couponList.do?nowPage=1&no=${no}&status=e' ">
 				
 
 			</div>
@@ -142,15 +142,14 @@ function tableChange(){
 	
 					<!-- 페이징 시작 -->
 					
-					<c:choose>
-					<c:when test="${no == 0}">
+					
 						<div style="width:100%; text-align:center; display:inline-block; margin:0 auto;">
 					<p>Total : ${total}</p>
 					
 						<!-- << -->
 						<c:if test="${paging.startPage != 1}">
 							<div class="paging-line">
-								<a href="couponList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
+								<a href="couponList.do?nowPage=${paging.startPage -1}&no=${no}&status=${status}">
 									<i class="fas fa-angle-double-left"></i>
 								</a>
 							</div>
@@ -166,7 +165,7 @@ function tableChange(){
 						<c:choose>
 							<c:when test="${paging.nowPage != 1}">
 								<div class="paging-line">
-									<a href="couponList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
+									<a href="couponList.do?nowPage=${paging.nowPage-1}&no=${no}&status=${status}"><i class="fas fa-angle-left"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == 1}">
@@ -187,7 +186,7 @@ function tableChange(){
 								</c:when>
 								<c:when test="${p != paging.nowPage }">
 									<div class="paging-line">
-									<a href="couponList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+									<a href="couponList.do?nowPage=${p}&no=${no}&status=${status}">
 									${p}</a></div>
 								</c:when>
 							</c:choose>
@@ -199,7 +198,7 @@ function tableChange(){
 						<c:choose>
 							<c:when test="${paging.nowPage != paging.lastPage}">
 								<div class="paging-line">
-									<a href="couponList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
+									<a href="couponList.do?nowPage=${paging.nowPage+1}&no=${no}&status=${status}"><i class="fas fa-angle-right"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == paging.lastPage}">
@@ -215,7 +214,7 @@ function tableChange(){
 					
 						<c:if test="${paging.endPage != paging.lastPage }">
 							<div class="paging-line">
-							<a href="couponList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
+							<a href="couponList.do?nowPage=${paging.endPage+1 }&no=${no}&status=${status}">
 							<i class="fas fa-angle-double-right"></i></a>
 							</div>
 						</c:if>
@@ -227,95 +226,7 @@ function tableChange(){
 					
 			
 					</div>
-					</c:when>
-					
-					
-					<c:when test ="${no != 0}">
-					<div style="width:100%; text-align:center; display:inline-block; margin:0 auto;">
-					<p>Total : ${total}</p>
-					
-						<!-- << -->
-						<c:if test="${paging.startPage != 1}">
-							<div class="paging-line">
-								<a href="couponList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&no=${no}">
-									<i class="fas fa-angle-double-left"></i>
-								</a>
-							</div>
-						</c:if>
-						<c:if test="${paging.startPage == 1}">
-							<div class="paging-line">
-								<i class="fas fa-angle-double-left"></i>
-							</div>
-						</c:if>
-						
-						
-						<!-- 이전페이지 -->
-						<c:choose>
-							<c:when test="${paging.nowPage != 1}">
-								<div class="paging-line">
-									<a href="couponList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&no=${no}"><i class="fas fa-angle-left"></i></a>
-								</div>
-							</c:when>
-							<c:when test="${paging.nowPage == 1}">
-								<div class="paging-line">
-									<i class="fas fa-angle-left"></i>
-								</div>
-							</c:when>
-						
-						</c:choose>
-						
-						<!-- 페이지 숫자 -->
-						
-						<c:forEach begin="${paging.startPage}" end="${paging.endPage }"
-							var="p">
-							<c:choose>
-								<c:when test="${p == paging.nowPage }">
-									<div class="paging-line" style="font-weight:bold">${p}</div>
-								</c:when>
-								<c:when test="${p != paging.nowPage }">
-									<div class="paging-line">
-									<a href="couponList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&no=${no}">
-									${p}</a></div>
-								</c:when>
-							</c:choose>
-						</c:forEach>
-						
-						
-						
-						<!-- 다음페이지 -->
-						<c:choose>
-							<c:when test="${paging.nowPage != paging.lastPage}">
-								<div class="paging-line">
-									<a href="couponList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&no=${no}"><i class="fas fa-angle-right"></i></a>
-								</div>
-							</c:when>
-							<c:when test="${paging.nowPage == paging.lastPage}">
-								<div class="paging-line">
-									<i class="fas fa-angle-right"></i>
-								</div>	
-							</c:when>
-						
-						</c:choose>	
-						
-						<!-- >> -->
-						
-					
-						<c:if test="${paging.endPage != paging.lastPage }">
-							<div class="paging-line">
-							<a href="couponList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&no=${no}">
-							<i class="fas fa-angle-double-right"></i></a>
-							</div>
-						</c:if>
-						<c:if test="${paging.endPage == paging.lastPage }">
-							<div class="paging-line">
-							<i class="fas fa-angle-double-right"></i>
-							</div>
-						</c:if>
-					
-			
-					</div>
-					</c:when>
-					</c:choose>
+		
 					
 				</div>
 				<!-- bootStrap table wrapper-->

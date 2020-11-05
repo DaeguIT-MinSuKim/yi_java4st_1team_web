@@ -18,16 +18,18 @@ public interface EventDao {
 	
 	//eventDetail밑에 이전글 다음글 정보 불러오기
 	Event selectEventDownSide(Event event);
-	
 	Event selectEventUpSide(Event event);
 	
 	//admin paging
-	int countEvent();
-	ArrayList<Event> PagingEventAll(Paging paging);
+	int countEvent(Paging paging, String status);
+	ArrayList<Event> PagingEventAll(Paging paging, String status);
+	
 	
 	//
 	int selectMaxEventNo();
+
 	
+
 }
 
 

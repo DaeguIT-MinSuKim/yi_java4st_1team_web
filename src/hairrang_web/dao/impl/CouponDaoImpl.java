@@ -157,9 +157,19 @@ public class CouponDaoImpl implements CouponDao{
 	
 	
 	@Override
-	public ArrayList<Coupon> pagingCouponById(Paging paging, String id) {
-		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon_view WHERE GUEST_ID = ? and not event_status = 'w' ORDER BY COUPON_ID desc) a) "
-				+ "WHERE rn BETWEEN ? AND ? ORDER BY rn";
+	public ArrayList<Coupon> pagingCouponById(Paging paging, String id, String status) {
+		String sql = "SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM coupon_view WHERE GUEST_ID = ? and not event_status = 'w'";
+		// 디폴트 and not used_yn = 'e'
+		
+		if(status == null || status.equals("")) {
+			sql += " and not used_yn = 'e' ";
+		}else { //status 있으면
+			sql += "and used_yn = 'e' ";
+		}
+		
+		sql += "ORDER BY COUPON_ID desc) a) WHERE rn BETWEEN ? AND ? ORDER BY rn";
+		
+		System.out.println("쿠폰 sql = " + sql);
 		try (Connection con = JndiDs.getConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, id);
@@ -181,8 +191,17 @@ public class CouponDaoImpl implements CouponDao{
 	}
 
 	@Override
-	public int countCouponById(String id) {
+	public int countCouponById(String id, String status) {
 		String sql = "SELECT COUNT(*) FROM COUPON WHERE GUEST_ID = ?";
+		
+		if(status == null || status.equals("")) {
+			sql += " and not used_yn = 'e' ";
+		}else { //status 있으면
+			sql += "and used_yn = 'e' ";
+		}
+		
+		System.out.println("count = " + sql);
+		
 		try (Connection con = JndiDs.getConnection(); 
 				PreparedStatement pstmt = con.prepareStatement(sql)) {
 			pstmt.setString(1, id);

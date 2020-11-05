@@ -32,15 +32,15 @@ $(document).on('click', '[id=btn_delete]', function() {
 			<!-- bootStrap table wrapper-->
 			<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 				<input type="button" value="이벤트 등록" class="btn btn-info btn-sm" style="float: left;  margin-right: 10px;" onclick="location.href='eventAdd.do' ">
-				<div style="float:left; margin-top:5px;">※ 생일쿠폰은 생일 10일전 자동 발급</div>
+				<div style="float:left; margin-top:5px;">※ 생일쿠폰은 생일 당일 자동 발급</div>
 				<div style="float:right; padding:5px; ">
 				<ul>
-					<li class="btn-info btn-sm" style="width:80px; display: inline;">진행중</li>
-					<li class="btn-secondary btn-sm" style="width:80px; display: inline;">종료</li>
-					<li class="btn-warning btn-sm" style="width:80px;  display: inline;">대기중</li>
+					<li class="btn btn-outline-primary btn-sm" style="width:80px; display: inline; cursor:pointer;" onclick="location.href='eventList.do'">전체보기</li>
+					<li class="btn btn-outline-info btn-sm" style="width:80px; display: inline; cursor:pointer;" onclick="location.href='eventList.do?nowPage=1&status=s'">진행중</li>
+					<li class="btn btn-outline-secondary btn-sm" style="width:80px; display: inline; cursor:pointer;" onclick="location.href='eventList.do?nowPage=1&status=e'">종료</li>
+					<li class="btn btn-outline-warning btn-sm" style="width :80px;  display: inline; cursor:pointer;" onclick="location.href='eventList.do?nowPage=1&&status=w'">대기중</li>
 					
 				</ul>
-
 			</div>
 				<!-- 테이블 상단 필터링 시작 -->
 				<div class="row mb-2">
@@ -54,7 +54,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 				<table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th style="width:10px;"></th>
+							
 							<th>이벤트번호</th>
 							<th>이벤트명</th>
 							<th>할인율</th>
@@ -69,15 +69,16 @@ $(document).on('click', '[id=btn_delete]', function() {
 						<c:forEach var="event" items="${list}" varStatus="status">
 						<tr>
 						<%--<td><input type="checkbox" name="check" value="${guest.guestId}"></td> --%>
-							<td style="width:20px;"> ${total - ((paging.nowPage-1) * cnt + status.index)}</td>
+							<%-- <td style="width:20px;"> ${total - ((paging.nowPage-1) * cnt + status.index)}</td> --%>
 							<td>${event.eventNo}</td>
-							<td style="width:100px;">${event.eventName}
+							<td style="width:200px;">${event.eventName}
 							</td>
 							<td style="width:40px;"> <fmt:parseNumber value="${event.eventSaleRate * 100}" integerOnly="true"/>%</td>
 							<td style="width:50px;">${event.eventStart}</td>
 							<td style="width:50px;">${event.eventEnd}</td>
 							<td style="width:300px;">${event.eventContent}</td>
 							<td style="width:50px;">
+								
 								<c:if test="${event.eventStatus == 's'}">
 									<div class="btn-info btn-sm" style="width:80px; margin:0 auto">진행중</div>
 								</c:if>
@@ -109,7 +110,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 						<!-- << -->
 						<c:if test="${paging.startPage != 1}">
 							<div class="paging-line">
-							<a href="eventList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
+							<a href="eventList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&status=${status}">
 								<i class="fas fa-angle-double-left"></i>
 							</a>
 							</div>
@@ -125,7 +126,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 						<c:choose>
 							<c:when test="${paging.nowPage != 1}">
 								<div class="paging-line">
-									<a href="eventList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
+									<a href="eventList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&status=${status}"><i class="fas fa-angle-left"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == 1}">
@@ -146,7 +147,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 								</c:when>
 								<c:when test="${p != paging.nowPage }">
 									<div class="paging-line">
-									<a href="eventList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+									<a href="eventList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&status=${status}">
 									${p}</a></div>
 								</c:when>
 							</c:choose>
@@ -158,7 +159,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 						<c:choose>
 							<c:when test="${paging.nowPage != paging.lastPage}">
 								<div class="paging-line">
-									<a href="eventList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
+									<a href="eventList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&status=${status}"><i class="fas fa-angle-right"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == paging.lastPage}">
@@ -174,7 +175,7 @@ $(document).on('click', '[id=btn_delete]', function() {
 					
 						<c:if test="${paging.endPage != paging.lastPage }">
 							<div class="paging-line">
-							<a href="eventList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
+							<a href="eventList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&status=${status}">
 							<i class="fas fa-angle-double-right"></i></a>
 							</div>
 						</c:if>

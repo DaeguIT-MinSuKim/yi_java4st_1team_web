@@ -6,19 +6,19 @@
      <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>  
      <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
+
 <style>
 .book a {background-color:white;  border-bottom:1px solid white;}
-.book-btn {border:none; background-color:#fff; cursor:pointer;}
+.book-btn {background-color:#fff; cursor:pointer; font-size:15px; border:none;}
 </style>     
 
 <body>
 
 <div class="book_wrapper">
-<h3 style="text-align:center; padding:20px; margin-bottom:50px;">MY RESERVATION</h3>
-<div class="tcenter" style="padding:10px;">
-	<input type="button" value="전체보기" onclick="location.href='guestBook.do'" class="book-btn">
-	<input type="button" value="예약완료" onclick="location.href='status1.do'" class="book-btn">
-	<input type="button" value="예약취소" onclick="location.href='status0.do'" class="book-btn">
+<h3 style="text-align:center; padding:20px; margin-bottom:50px;">나의 예약내역</h3>
+<div class="tcenter" style="padding:10px; margin-bottom:20px; float:right">
+	<input type="button" value="전체보기" onclick="location.href='guestBook.do'" class="book-btn"><span style="color:gray">ㅣ</span> 
+	<input type="button" value="지난 예약 내역" onclick="location.href='guestBook.do?nowPage=1&booking=past'" class="book-btn">
 </div>
 <table id="board">
 	<tr>
