@@ -11,7 +11,7 @@ SELECT QNA_SECRET ,COUNT(*)AS count FROM qna GROUP BY QNA_SECRET ORDER BY QNA_SE
 
 SELECT * FROM GUEST ;
 --가입일별날짜
-SELECT TO_CHAR(GUEST_JOIN_DATE,'mm')AS day ,COUNT(*)AS count FROM GUEST WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = 2020 GROUP BY TO_CHAR(GUEST_JOIN_DATE,'mm') ORDER BY TO_CHAR(GUEST_JOIN_DATE,'mm');
+SELECT TO_CHAR(GUEST_JOIN_DATE,'mm')AS day ,NVL(COUNT(*), 0) AS count FROM GUEST WHERE TO_CHAR(GUEST_JOIN_DATE,'yyyy') = 2020 GROUP BY TO_CHAR(GUEST_JOIN_DATE,'mm') ORDER BY TO_CHAR(GUEST_JOIN_DATE,'mm');
 --남자여자(이전)
 SELECT GUEST_GENDER ,COUNT(*)AS count FROM  GUEST TO_CHAR(SYSDATE ,'yyyy') = 2019 GROUP BY GUEST_GENDER ORDER BY GUEST_GENDER;
 --탈퇴한 회원비율
@@ -52,5 +52,49 @@ SELECT hair_no ,COUNT(*)AS count FROM ORDER_DETAIL GROUP BY hair_no ORDER BY hai
 SELECT * FROM DESIGNER d2 ;
 --직위디자이너
 SELECT de_level ,COUNT(*)AS count FROM DESIGNER GROUP BY de_level ORDER BY de_level;
+
+
+
+--------------------------------------------------------------------
+
+--날짜별 문의
+SELECT TO_CHAR(QNA_REGDATE,'yyyy-MM-dd') AS day ,COUNT(*)AS count FROM qna WHERE ADMIN_ID IS NULL  GROUP BY TO_CHAR(QNA_REGDATE,'yyyy-MM-dd') ORDER BY TO_CHAR(QNA_REGDATE,'yyyy-MM-dd');
+
+SELECT TO_CHAR(b.dt, 'YYYY-MM-DD') AS QNA_REGDATE
+     , NVL(SUM(a.cnt), 0) cnt
+  FROM ( SELECT TO_CHAR(QNA_REGDATE, 'YYYY-MM-DD') AS QNA_REGDATE
+              , COUNT(*) cnt
+           FROM qna
+          WHERE QNA_REGDATE BETWEEN TO_DATE('2020-11-01', 'YYYY-MM-DD')
+                             AND TO_DATE('2020-11-04' , 'YYYY-MM-DD') 
+          GROUP BY QNA_REGDATE
+        ) a
+      , ( SELECT TO_DATE('2020-11-01','YYYY-MM-DD') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-11-04','YYYY-MM-DD') 
+                            - TO_DATE('2020-11-01','YYYY-MM-DD') + 1)
+        ) b
+  WHERE b.dt = a.QNA_REGDATE(+)
+  GROUP BY b.dt
+  ORDER BY b.dt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

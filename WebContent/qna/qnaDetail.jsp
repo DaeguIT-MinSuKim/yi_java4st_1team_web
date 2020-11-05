@@ -78,9 +78,9 @@ tr td:nth-child(2) {
 }
 
 .resCard {
-	background-color: #C5C5DB;
-	box-shadow: 5px 5px 5px 5px;
-	color: #C866CA;
+	width: 99%;
+	background-color: #F6F6F6;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 </style>
 
@@ -154,12 +154,13 @@ tr td:nth-child(2) {
 
 		<!-- 답변 -->
 		<c:if test="${qna.qnaResYn eq 'y'}">
+
+		
+			<p></p>
+			<br>
 			<div class="resCard">
 				<h3 style="text-align: center; margin-top: 100px;">답변</h3>
-				<p></p>
-				<br>
 				<table class="outer">
-
 					<tr class="tr" style="border-top: 1px solid black;">
 						<th style="width: 15%;">제목</th>
 						<td>${resQna.qnaTitle }</td>

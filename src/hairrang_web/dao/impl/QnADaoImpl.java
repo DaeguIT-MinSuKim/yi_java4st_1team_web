@@ -534,6 +534,9 @@ public class QnADaoImpl implements QnADao {
 			} else if (condition.equalsIgnoreCase("qnaContent")) {
 				condition = " QNA_CONTENT ";
 				sql += condition + " like '%" + keyword + "%'";
+			} else if (condition.equalsIgnoreCase("qnaWriter")) {
+				condition = " GUEST_ID ";
+				sql += condition + " like '%" + keyword + "%'";
 			}
 		}
 
@@ -574,6 +577,9 @@ public class QnADaoImpl implements QnADao {
 				sql += condition + " like '%" + keyword + "%'";
 			} else if (condition.equalsIgnoreCase("qnaContent")) {
 				condition = " QNA_CONTENT ";
+				sql += condition + " like '%" + keyword + "%'";
+			} else if (condition.equalsIgnoreCase("qnaWriter")) {
+				condition = " GUEST_ID ";
 				sql += condition + " like '%" + keyword + "%'";
 			}
 		}

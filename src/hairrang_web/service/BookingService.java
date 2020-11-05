@@ -62,24 +62,17 @@ public class BookingService {
 		return dao.isAvailableTime(wantDateTime, deNo);
 	}
 	
-	public int countBookingById(String id) {
-		return dao.countBookingById(id);
+	public int countBookingById(String id, String booking) {
+		return dao.countBookingById(id, booking);
 	}
-	
-	public int countStatus1(String id) {
-		return dao.countStatus1(id);
-	}
-	
-	public int countStatus0(String id) {
-		return dao.countStatus0(id);
-	}
+
 	
 	public Booking pagingBookingById(Paging paging, String id, int no) {
 		return dao.pagingBookingById(paging, id, no);
 	}
 	
-	public ArrayList<Booking> pagingBookingListById(Paging paging, String id) {
-		return dao.pagingBookingListById(paging, id);
+	public ArrayList<Booking> pagingBookingListById(Paging paging, String id, String booking) {
+		return dao.pagingBookingListById(paging, id,booking);
 	}
 	
 	public ArrayList<BookingHairs> pagingBookingHairsByID(Paging paging, String id){
@@ -95,26 +88,10 @@ public class BookingService {
 	}
 	
 	
-	public Booking selectBookStatus1(Paging paging, String id, int no) {
-		return dao.selectBookStatus1(paging, id, no);
-	}
-	
-	public Booking selectBookStatus0(Paging paging, String id, int no) {
-		return dao.selectBookStatus0(paging, id, no);
-	}
-	
 	public ArrayList<Integer> selectNoBooking(String id){
 		return dao.selectNoBooking(id);
 	}
-	
-	public ArrayList<Integer> selectNoStatus0 (String id){
-		return dao.selectNoStatus0(id);
-	}
-	
-	public ArrayList<Integer> selectNoStatus1 (String id){
-		return dao.selectNoStatus1(id);
-	}
-	
+
 	public int updateBookingStatus(String[] list) {
 		String sql = "UPDATE booking SET BOOK_STATUS = 0 WHERE book_no = ?";
 		

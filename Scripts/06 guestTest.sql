@@ -187,10 +187,11 @@ SELECT * FROM guest WHERE DEL_YN = 'n';
 
 SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM GUEST WHERE del_yn = 'y'  ORDER BY GUEST_JOIN_DATE desc) a) WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
 
-SELECT * FROM COUPON_VIEW;
-SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM guest_view) a) WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
-SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM guest_view) WHERE rn BETWEEN ? AND ? ORDER BY rn
-SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM guest_view  and guest_id LIKE '%te%') a) WHERE rn BETWEEN :1  AND :2  ORDER BY rn
-SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM guest_view WHERE guest_id LIKE '%te%') a) WHERE rn BETWEEN 1  AND 10  ORDER BY rn;
-
 DELETE FROM BOOKING WHERE BOOK_NO = 11;
+
+SELECT * FROM booking;
+-- -1 미방문/ 0 취소 / 1 예약완 / 2 방문완
+UPDATE booking SET BOOK_STATUS = -1 WHERE BOOK_NO = 6;
+SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM booking WHERE GUEST_ID = 'test' AND NOT BOOK_STATUS = 1 ORDER BY book_no desc) a) WHERE rn BETWEEN 1 AND 10 ORDER BY rn;
+
+SELECT COUNT(*) FROM (SELECT DISTINCT book_no FROM booking_view WHERE guest_id = 'test'AND book_status = 1);

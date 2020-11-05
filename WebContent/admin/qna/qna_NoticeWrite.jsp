@@ -2,8 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
 <style>
-.add-table {
-	text-align: left;
+.add-table td {
+	padding: 10px;
+}
+
+.add-table tr td:nth-child(1) {
+	width: 100px;
 }
 
 .add-table tr td:nth-child(2) {
@@ -13,7 +17,6 @@
 h3 {
 	text-align: center;
 }
-
 </style>
 <!-- Page Heading -->
 <h1 class="h3 mb-2 text-gray-800 font-weight">문의사항 - 등록</h1>
@@ -25,7 +28,7 @@ h3 {
 	<div class="card shadow mb-4" style="width: 700px">
 		<div class="card-header py-2">
 			<h6 class="m-1 font-weight-bold text-primary"
-				style="line-height: 16px; font-size: 1.3em"></h6>
+				style="line-height: 16px; font-size: 1.3em">공지 작성</h6>
 		</div>
 		<!-- card-body -->
 		<div class="card-body">
@@ -33,7 +36,7 @@ h3 {
 				<!-- bootStrap table wrapper-->
 				<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 					<div id="add-wrapper">
-					<h3>공지 등록</h3>
+						<h3>공지 등록</h3>
 						<table class="add-table">
 							<tr style="border-top: 1px solid black;">
 								<td>공지명</td>
@@ -43,12 +46,11 @@ h3 {
 							<tr>
 								<td>공지내용</td>
 								<td><textarea rows="20" cols="60" id="content"
-										name="content"></textarea></td>
+										name="content" style="resize: none;"></textarea></td>
 							</tr>
 						</table>
-						<input type="file" value="파일첨부" multiple id="setload"
-								name="setload" style="width: 100px;">
-						<br> <br>
+						<br> <input type="file" value="파일첨부" multiple id="setload"
+							name="setload" style="width: 100px;"> <br> <br>
 						<div class="clear"></div>
 						<br>
 						<div class="add-buttons" style="float: right">

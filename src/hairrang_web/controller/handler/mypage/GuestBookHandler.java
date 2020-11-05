@@ -30,14 +30,17 @@ public class GuestBookHandler implements Command {
 			//현재페이지랑 한페이지당 제한 문의 갯수 넘겨주는 곳
 			String nowPage = request.getParameter("nowPage");
 			String cntPerPage = request.getParameter("cntPerPage");
-
+			String booking = request.getParameter("booking");
+			System.out.println("booking = " + booking);
+			
 			//현재페이지랑 한페이지당 제한 문의 갯수 확인용
 			System.out.println(nowPage);
 			System.out.println(cntPerPage);
 
-		
+			Paging paging = new Paging();
+			
 			//만약 처음 접속했을때 초기세팅해주는 곳 
-			int total = service.countBookingById(loginUser.getGuestId());
+			int total = service.countBookingById(loginUser.getGuestId(), booking);
 			if (nowPage == null && cntPerPage == null) {
 				nowPage = "1";
 				cntPerPage = "10";
@@ -52,8 +55,8 @@ public class GuestBookHandler implements Command {
 			
 			
 			//이후 페이지 클래스로 정리하는곳
-			Paging paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
-			ArrayList<Booking> bookingList = service.pagingBookingListById(paging, loginUser.getGuestId());
+			paging = new Paging(Integer.parseInt(nowPage), total, Integer.parseInt(cntPerPage));
+			ArrayList<Booking> bookingList = service.pagingBookingListById(paging, loginUser.getGuestId(), booking);
 			
 			//리스트없을때
 			if(bookingList == null) {

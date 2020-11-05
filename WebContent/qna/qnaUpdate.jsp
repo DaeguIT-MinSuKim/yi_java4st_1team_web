@@ -75,9 +75,9 @@ tr td:nth-child(2) {
 }
 
 .resCard {
-	background-color: #C5C5DB;
-	box-shadow: 5px 5px 5px 5px;
-	color: #C866CA;
+	width: 99%;
+	background-color: #F6F6F6;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 </style>
 <script>

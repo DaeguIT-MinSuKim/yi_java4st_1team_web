@@ -17,7 +17,7 @@
 
 <form method=post name=formm style="margin-right:0" action="guestInfoDelete.do" >
 <div class="delete_wrapper">
-	<p style="font-size:27px;"><img src="images/document.png" style="margin-bottom:-7px;">
+	<p style="font-size:27px;"><i class="fas fa-user-check" style="color:gray"></i>
 	  회원 탈퇴 시 아래 유의사항을 반드시 확인하시기 바랍니다.</p> <br> 
 	<div class="delete_sub1">
 	탈퇴 시 아이디는 재사용 및 복구 불가능합니다. 

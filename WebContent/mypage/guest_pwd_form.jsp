@@ -8,7 +8,7 @@
 .info a{background-color:white;  border-bottom:1px solid white;}
 
 .underline {font-size:30px;}
-.pwdform {width:650px;margin:0 auto;padding:20px;}
+.pwdform {width:650px;margin:0 auto;padding:20px; text-align:center;}
 td {width:150px; padding:10px;}
 input {margin-left:20px; width:300px; border: 1px solid #e8e8e8;}
 
@@ -68,15 +68,15 @@ $(function(){
 <p style="font-size:30px; text-align:center;">비밀번호 변경</p>
 <table class="pwdform">
 	<tr>
-		<td>아이디</td>
+		<td style="text-align:left">아이디</td>
 		<td><input type="text" name="id" value="${id}" readonly/> 
 	</tr>
-	<tr>
-		<td>변경할 비밀번호</td>
+	<tr >
+		<td style="text-align:left">변경할 비밀번호</td>
 		<td><input type="password" name="new_pwd" id="new_pwd"/></td>
 	</tr>
 	<tr>
-		<td>변경할 비밀번호 확인</td>
+		<td style="text-align:left">변경할 비밀번호 확인</td>
 		<td><input type="password" name="new_pwdCheck" id="new_pwdCheck"/>
 	</tr>
 	<tr>
