@@ -123,7 +123,7 @@ $(function(){
 		
 		var options2 = {
 				title : 'Guest Gender',
-				height : '100%',
+				height : '300',
 				width : '100%',
 				pieHole: 0.4,
 				backgroundColor: "transparent"
@@ -131,7 +131,7 @@ $(function(){
 		
 		var options3 = {
 				title : 'Guest Out',
-				height : '100%',
+				height : '400',
 				width : '100%',
 				pieHole: 0.4,
 				backgroundColor: "transparent"
@@ -158,7 +158,7 @@ $(function(){
 	<h1 class="h3 mb-0 text-gray-800">Guest Chart</h1>
 </div>
 <form action="chartGuest.do" method="post">
-	<div class="card shadow mb-4" style="margin: 0 auto;">
+	<div class="card shadow mb-4" style="width: 1200px;">
 		<div class="card-header py-2">
 			<h6 class="m-1 font-weight-bold text-primary"
 				style="line-height: 16px; font-size: 1.3em">
@@ -230,10 +230,10 @@ $(function(){
 						<!-- <div id="myChart1"></div>
 						<br> <br>
 						<hr> -->
-						<div id="myChart2"></div>
+						<div id="myChart2" style="width:300px; height: 240px;"></div>
 						<br> <br>
 						<hr>
-						<div id="myChart3"></div>
+						<div id="myChart3" style="width:100%; height: 400px;"></div>
 						<br> <br>
 					</div>
 				</div>
