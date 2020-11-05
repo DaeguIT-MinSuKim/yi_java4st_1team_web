@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ include file="../include/header.jsp"%>
 <script src="booking/admin_booking_list.js"></script>
 <!-- Page Heading -->
@@ -122,7 +124,7 @@
 				</form>
 				<!-- 테이블 상단 필터링 끝 -->
 				<!-- 테이블 시작 -->
-				<table class="table table-bordered text-center" id="dataTable" width="100%" cellspacing="0">
+				<table class="table table-bordered text-center text-gray-700" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
 							<th>선택</th>
@@ -132,18 +134,36 @@
 							<th>고객명</th>
 							<th>연락처</th>
 							<th>시술</th>
+							<th>예상금액</th>
 							<th>예약상태</th>
-							<th>예약등록일</th>
+							<th>등록일</th>
 							<th style="width: 100px; min-width:100px; max-width:100px;">상세보기</th>
 							<th style="width: 180px; min-width:180px; max-width:180px;"></th>
 						</tr>
 					</thead>
 					<tbody>
 						<c:if test="${list eq null }">
-							<td colspan="11" style="height: 80px;">해당 조건에 부합하는 예약건이 없습니다.</td>
-						</c:if>
-						<c:forEach var="booking" items="${list }">
 						<tr>
+							<td colspan="11" style="height: 80px;">해당 조건에 부합하는 예약건이 없습니다.</td>
+						</tr>
+						</c:if>
+						<c:set var="now" value="<%=new java.util.Date()%>" />
+						<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="nowDate" />
+						<c:forEach var="booking" items="${list }">
+						<c:choose>
+							<c:when test='${booking.bookStatus eq 1 && booking.totalPrice ge 150000}'>
+								<tr class="table-info ">
+							</c:when>
+							<c:when test='${booking.bookStatus eq 1 && nowDate eq booking.onlyBookDateStr}'>
+								<tr class="table-warning">
+							</c:when>
+							<c:when test='${booking.bookStatus eq 0 || booking.bookStatus eq -1 }'>
+								<tr class="text-gray-500">
+							</c:when>
+							<c:otherwise>
+								<tr>
+							</c:otherwise>
+						</c:choose>
 							<td>
 								<c:if test="${booking.bookStatus eq 1}">
 									<input type="checkbox" class="ckbox"value="${booking.bookNo }">
@@ -155,6 +175,7 @@
 							<td>${booking.guest.guestName } (${booking.guest.guestId })</td>
 							<td>${booking.guest.guestPhone }</td>
 							<td>${booking.howManyHairItems }</td>
+							<td>${booking.totalPrice }</td>
 							<td>${booking.bookStatusStr }</td>
 							<td>${booking.bookRegDateStr }</td>
 							<td>

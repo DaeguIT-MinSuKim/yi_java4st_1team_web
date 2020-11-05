@@ -48,18 +48,18 @@
       </a>
 
       <!-- Divider -->
-      <hr class="sidebar-divider my-0">
-
+      <hr class="sidebar-divider">
+	  <!--  my-0 -->
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item active">
+      <!-- <li class="nav-item active">
         <a class="nav-link" href="main.do">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>소식</span></a>
       </li>
 
-      <!-- Divider -->
+      Divider
       <hr class="sidebar-divider">
-
+ -->
       <!-- Heading -->
       <div class="sidebar-heading">
       	GUEST & BOOKING
@@ -165,11 +165,12 @@
           </button>
 
           <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="guestList.do">
             <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="회원 검색" aria-label="Search" aria-describedby="basic-addon2">
+              <input type="hidden" name="where" value="guestName">
+              <input type="text" name="query" class="form-control bg-light border-0 small" placeholder="이름으로 회원 검색" aria-label="Search" aria-describedby="basic-addon2">
               <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
+                <button class="btn btn-primary" type="button" >
                   <i class="fas fa-search fa-sm"></i>
                 </button>
               </div>

@@ -24,6 +24,16 @@ $(function() {
 	    console.log(idx);
 	});
 
+	/*$("#startDate, #endDate").change(function() {
+		console.log("바뀜");
+		$(".dateBtn.active").removeClass("active");
+	});
+	
+	$(".dateBtn").click(function() {
+		console.log("클릭");
+		$(".dateBtn.active").removeClass("active");
+		$(this).addClass("active");
+	});*/
 	
 	$(".dateBtn").not("#aMonthBtn").click(function() {
 		setDateValue($(this).val() - 1);
