@@ -74,10 +74,11 @@ $(function() {
 		var thisUrlStr = window.location.href;
 		var thisUrl = new URL(thisUrlStr);
 
+		var cntPerPage = thisUrl.searchParams.get("cntPerPage");
 		var where = thisUrl.searchParams.get("where");
 		var query = thisUrl.searchParams.get("query");
-		var cntPerPage = thisUrl.searchParams.get("cntPerPage");
 		var designer = thisUrl.searchParams.get("designer");
+		var membership = thisUrl.searchParams.get("membership");
 		var startDate = thisUrl.searchParams.get("startDate");
 		var endDate = thisUrl.searchParams.get("endDate");
 		
@@ -92,6 +93,10 @@ $(function() {
 		if(!designer) {
 		} else if(designer.length != 0) {
 			$("select[name=designer]").val(designer);
+		}
+		if(!membership) {
+		} else if(membership.length != 0) {
+			$("select[name=membership]").val(membership);
 		}
 		if(!startDate) {
 		} else if(startDate.length != 0) {

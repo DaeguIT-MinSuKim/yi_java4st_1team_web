@@ -192,7 +192,7 @@
 							<c:choose>
 								<c:when test="${paging.nowPage > 1}">
 									<div class="paging-line">
-										<a href="bookingList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}"><i class="fas fa-angle-left"></i></a>
+										<a href="bookingList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&sorter=${sorter}&designer=${designer }&where=${where }&query=${query}"><i class="fas fa-angle-left"></i></a>
 									</div>
 								</c:when>
 								<c:when test="${paging.nowPage == 1}">
@@ -213,7 +213,7 @@
 									</c:when>
 									<c:when test="${p != paging.nowPage }">
 										<div class="paging-line" style="font-weight: 600;">
-										<a href="bookingList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}">${p}</a></div>
+										<a href="bookingList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&sorter=${sorter}&designer=${designer }&where=${where }&query=${query}">${p}</a></div>
 									</c:when>
 								</c:choose>
 							</c:forEach>
@@ -224,7 +224,7 @@
 							<c:choose>
 								<c:when test="${paging.nowPage < paging.lastPage}">
 									<div class="paging-line">
-										<a href="bookingList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&sorter=${sorter}&where=${where }&query=${query}"><i class="fas fa-angle-right"></i></a>
+										<a href="bookingList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&sorter=${sorter}&designer=${designer }&where=${where }&query=${query}"><i class="fas fa-angle-right"></i></a>
 									</div>
 								</c:when>
 								<c:when test="${paging.nowPage >= paging.lastPage}">
@@ -237,7 +237,7 @@
 							<!-- >> -->
 							<c:if test="${paging.endPage < paging.lastPage }">
 								<div class="paging-line">
-								<a href="bookingList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}">
+								<a href="bookingList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&sorter=${sorter}&designer=${designer }&where=${where }&query=${query}">
 									<i class="fas fa-angle-double-right"></i></a>
 								</div>
 							</c:if>
@@ -259,7 +259,7 @@
 	<!-- cardBody-->
 	<div class="card-footer">
 		<div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
-			전체 ${total }개 중 ${cntPerPage*(nowPage-1) + 1} - ${nowPage > (total/cntPerPage) ? (nowPage-1)*cntPerPage + total%cntPerPage : nowPage*cntPerPage}
+			전체 ${paging.total }개 중 ${paging.cntPerPage*(paging.nowPage-1) + 1} - ${paging.nowPage > (paging.total/paging.cntPerPage) ? (paging.nowPage-1)*paging.cntPerPage + paging.total%paging.cntPerPage : paging.nowPage*paging.cntPerPage}
 		</div>
 	</div>
 </div>

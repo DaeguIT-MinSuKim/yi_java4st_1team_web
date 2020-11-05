@@ -125,7 +125,7 @@ public class EventService {
 		String eSql = "INSERT INTO EVENT(EVENT_NAME, EVENT_SALERATE, EVENT_START, EVENT_END, EVENT_PIC, EVENT_CONTENT) "
 				+ "VALUES(?, ?, ?, ? + - 1 / (24*60*60) + 1, ?, ?)";
 		String cSql = "INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END) SELECT guest_id, EVENT_NO, EVENT_START, EVENT_END "
-				+ "FROM (SELECT g.*, 1 AS fake FROM guest g WHERE del_yn = 'n' ) g "
+				+ "FROM (SELECT g.*, 1 AS fake FROM guest_view g WHERE del_yn = 'n' ) g "
 				+ "LEFT OUTER JOIN (SELECT e.*, 1 AS fake FROM EVENT e WHERE event_no = ?) USING (FAKE)";
 		
 		Connection con = null;

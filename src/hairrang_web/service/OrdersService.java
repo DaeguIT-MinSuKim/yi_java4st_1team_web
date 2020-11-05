@@ -163,11 +163,11 @@ public class OrdersService {
     }
 	
     
-    public ArrayList<Orders> getOrdersListBySearch(Paging paging, String where, String query, String designer) {
-    	return dao.selectOrdersByCondition(paging, where, query, designer);
+    public ArrayList<Orders> getOrdersListBySearch(Paging paging, String where, String query, String designer, String membership, String startDate, String endDate) {
+    	return dao.selectOrdersByCondition(paging, where, query, designer, membership, startDate, endDate);
     }
     
-    public int getTotalCountBySearch(Paging paging, String where, String query, String designer) {
-    	return dao.countOrdersByConditionForPaging(paging, where, query, designer);
+    public int getTotalCountBySearch(Paging paging, String where, String query, String designer, String membership, String startDate, String endDate) {
+    	return dao.countOrdersByConditionForPaging(paging, where, query, designer, membership, startDate, endDate);
 	}
 }

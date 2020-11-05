@@ -74,7 +74,7 @@
 									<option value="100">100줄 보기</option>
 								</select>
 							</div>
-							<div class="input-group input-group-sm">
+							<div class="input-group input-group-sm mr-3">
 								<div class="input-group-sm input-group-prepend">
 									<label class="input-group-text" for="sorter">담당 디자이너</label>
 								</div>
@@ -83,6 +83,16 @@
 									<c:forEach var="de" items="${ dList}">
 										<option value="${de.deNo }">${de.deNickname } ${de.deLevel }</option>
 									</c:forEach>
+								</select>
+							</div>
+							<div class="input-group input-group-sm">
+								<div class="input-group-sm input-group-prepend">
+									<label class="input-group-text" for="membership">회원구분</label>
+								</div>
+								<select name="membership" aria-controls="dataTable" class="custom-select custom-select-sm">
+									<option selected value="">전체</option>
+									<option selected value="y">회원</option>
+									<option selected value="n">비회원</option>
 								</select>
 							</div>
 						</div>
@@ -155,7 +165,7 @@
 							<!-- << -->
 							<div class="paging-line">
 								<c:if test="${paging.startPage > 1}">
-									<a href="bookingList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&designer=${designer}&where=${where }&query=${query}">
+									<a href="bookingList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&designer=${designer }&sorter=${sorter}&membership=${membership}&where=${where }&query=${query}">
 										<i class="fas fa-angle-double-left"></i>
 									</a>
 								</c:if>
@@ -168,7 +178,7 @@
 							<c:choose>
 								<c:when test="${paging.nowPage > 1}">
 									<div class="paging-line">
-										<a href="bookingList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&designer=${designer}&where=${where }&query=${query}"><i class="fas fa-angle-left"></i></a>
+										<a href="bookingList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&designer=${designer }&sorter=${sorter}&membership=${membership}&where=${where }&query=${query}"><i class="fas fa-angle-left"></i></a>
 									</div>
 								</c:when>
 								<c:when test="${paging.nowPage == 1}">
@@ -189,7 +199,7 @@
 									</c:when>
 									<c:when test="${p != paging.nowPage }">
 										<div class="paging-line" style="font-weight: 600;">
-										<a href="bookingList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&sorter=${sorter}&where=${where }&designer=${designer }&query=${query}">${p}</a></div>
+										<a href="bookingList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&designer=${designer }&sorter=${sorter}&membership=${membership}&where=${where }&query=${query}">${p}</a></div>
 									</c:when>
 								</c:choose>
 							</c:forEach>
@@ -200,7 +210,7 @@
 							<c:choose>
 								<c:when test="${paging.nowPage < paging.lastPage}">
 									<div class="paging-line">
-										<a href="bookingList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&designer=${designer}&where=${where }&query=${query}"><i class="fas fa-angle-right"></i></a>
+										<a href="bookingList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&designer=${designer}&sorter=${sorter}&membership=${membership}&where=${where }&query=${query}"><i class="fas fa-angle-right"></i></a>
 									</div>
 								</c:when>
 								<c:when test="${paging.nowPage >= paging.lastPage}">
@@ -213,7 +223,7 @@
 							<!-- >> -->
 							<c:if test="${paging.endPage < paging.lastPage }">
 								<div class="paging-line">
-								<a href="bookingList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&designer=${designer}&where=${where }&query=${query}">
+								<a href="bookingList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}&startDate=${startDate }&endDate=${endDate}&designer=${designer}&sorter=${sorter}&membership=${membership}&where=${where }&query=${query}">
 									<i class="fas fa-angle-double-right"></i></a>
 								</div>
 							</c:if>
@@ -234,7 +244,7 @@
 	</div>
 	<!-- cardBody-->
 	<div class="card-footer">
-		<div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">전체 ${total }개 중 ${cntPerPage*(nowPage-1) + 1} - ${nowPage > (total/cntPerPage) ? (nowPage-1)*cntPerPage + total%cntPerPage : nowPage*cntPerPage}</div>
+		<div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">전체 ${paging.total }개 중 ${paging.cntPerPage*(paging.nowPage-1) + 1} - ${paging.nowPage > (paging.total/paging.cntPerPage) ? (paging.nowPage-1)*paging.cntPerPage + paging.total%paging.cntPerPage : paging.nowPage*paging.cntPerPage}</div>
 	</div>
 </div>
 
