@@ -50,13 +50,13 @@ public class QnaService {
 		return dao.deleteQnA(qna);
 	}
 
-	public int countQna() {
-		return dao.countQnA();
-	}
-
-	public List<QnA> selectPagingQnA(Paging paging) {
-		return dao.selectPagingQnA(paging);
-	}
+	/*	public int countQna() {
+			return dao.countQnA();
+		}
+	
+		public List<QnA> selectPagingQnA(Paging paging) {
+			return dao.selectPagingQnA(paging);
+		}*/
 
 	public QnA selectResQnaByNo(QnA qna) {
 		return dao.selectResByNo(qna);
@@ -173,7 +173,7 @@ public class QnaService {
 		}
 		return res;
 	};
-	
+	/*
 	//답변한 문의 갯수
 	public int countResYQnA() {
 		return dao.countResYQnA();
@@ -212,7 +212,7 @@ public class QnaService {
 	//페이징 처리된 삭제된 공지
 	public List<QnA> selectPagingDelYQnANotice(Paging paging){
 		return dao.selectPagingDelYQnANotice(paging);
-	};
+	};*/
 	
 	//복원
 	public int updateRestoreQna(String no) {

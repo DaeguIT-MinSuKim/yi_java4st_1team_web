@@ -14,7 +14,6 @@
 
 	function tableChange() {
 		var sel = document.getElementById('selectPage').value;
-		alert(sel);
 		location.href = "noticeList.do?nowPage=${paging.nowPage}&stay=" + sel;
 	}
 
