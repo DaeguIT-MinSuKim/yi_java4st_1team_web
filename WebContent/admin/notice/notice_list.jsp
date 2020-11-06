@@ -303,41 +303,96 @@
 						</table>
 						<!-- 테이블 끝 -->
 
-						<div style="text-align: center; float: center;">
-							<p>Total : ${total}</p>
+						<div style="width: 100%; margin: 0 auto; text-align: center;">
 
-
-							<c:if test="${paging.startPage != 1}">
+						<!-- << -->
+						<c:if test="${paging.startPage != 1}">
+							<div class="paging-line">
 								<a
-									href="noticeList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
-									<i class="xi-angle-left"></i>
+									href="noticeList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&stay=${stay}">
+									<i class="fas fa-angle-double-left"></i>
 								</a>
-							</c:if>
+							</div>
+						</c:if>
+						<c:if test="${paging.startPage == 1}">
+							<div class="paging-line">
+								<i class="fas fa-angle-double-left"></i>
+							</div>
+						</c:if>
 
-							<c:forEach begin="${paging.startPage}" end="${paging.endPage }"
-								var="p">
-								<c:choose>
-									<c:when test="${p == paging.nowPage }">
-								${p}
+
+						<!-- 이전페이지 -->
+						<c:choose>
+							<c:when test="${paging.nowPage != 1}">
+								<div class="paging-line">
+									<a
+										href="noticeList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&stay=${stay}"><i
+										class="fas fa-angle-left"></i></a>
+								</div>
+							</c:when>
+							<c:when test="${paging.nowPage == 1}">
+								<div class="paging-line">
+									<i class="fas fa-angle-left"></i>
+								</div>
+							</c:when>
+
+						</c:choose>
+
+						<!-- 페이지 숫자 -->
+
+						<c:forEach begin="${paging.startPage}" end="${paging.endPage }"
+							var="p">
+							<c:choose>
+								<c:when test="${p == paging.nowPage }">
+									<div class="paging-line" style="font-weight: bold">${p}</div>
 								</c:when>
-									<c:when test="${p != paging.nowPage }">
+								<c:when test="${p != paging.nowPage }">
+									<div class="paging-line">
 										<a
-											href="noticeList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><b
-											style="margin: 5px;">${p}</b></a>
-									</c:when>
-								</c:choose>
-							</c:forEach>
+											href="noticeList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&stay=${stay}">
+											${p}</a>
+									</div>
+								</c:when>
+							</c:choose>
+						</c:forEach>
 
-							&nbsp;&nbsp;
-							<c:if test="${paging.endPage != paging.lastPage }">
+
+
+						<!-- 다음페이지 -->
+						<c:choose>
+							<c:when test="${paging.nowPage != paging.lastPage}">
+								<div class="paging-line">
+									<a
+										href="noticeList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&stay=${stay}"><i
+										class="fas fa-angle-right"></i></a>
+								</div>
+							</c:when>
+							<c:when test="${paging.nowPage == paging.lastPage}">
+								<div class="paging-line">
+									<i class="fas fa-angle-right"></i>
+								</div>
+							</c:when>
+
+						</c:choose>
+
+						<!-- >> -->
+
+
+						<c:if test="${paging.endPage != paging.lastPage }">
+							<div class="paging-line">
 								<a
-									href="noticeList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
-									<i class="xi-angle-right"></i>
+									href="noticeList.do?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}&stay=${stay}">
+									<i class="fas fa-angle-double-right"></i>
 								</a>
-							</c:if>
+							</div>
+						</c:if>
+						<c:if test="${paging.endPage == paging.lastPage}">
+							<div class="paging-line">
+								<i class="fas fa-angle-double-right"></i>
+							</div>
+						</c:if>
 
-
-						</div>
+					</div>
 					</div>
 					<!-- bootStrap table wrapper-->
 				</div>

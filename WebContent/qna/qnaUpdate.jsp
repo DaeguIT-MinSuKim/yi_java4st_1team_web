@@ -102,11 +102,10 @@ tr td:nth-child(2) {
 
 <h3 style="text-align: center;">Q & A 수정</h3>
 
-<form name="form" method="post" action="qnaWrite.do"
-	enctype="multipart/form-data">
+<form name="form" method="post" action="qnaUpdate.do">
 	<div class="content1-inner" style="text-align: center;">
 		<p></p>
-		<br> <input type="hidden" id="no" value="${qna.qnaNo }">
+		<br> <input type="hidden" id="no" name="no" value="${qna.qnaNo }">
 		<table class="outer">
 			<tr class="tr" style="border-top: 1px solid black;">
 				<th style="width: 100px;">번호</th>
@@ -137,7 +136,7 @@ tr td:nth-child(2) {
 	<div id="rightButtons" class="outer" style="margin: 0px auto; text-align:right;" style="float: right">
 		<input type="button" class="button" value="돌아가기" id="home" onclick="location.href='qnaHome.do'">
 		<input type="reset" value="초기화" id="reset" class="button">
-		<input type="submit" value="수정하기" id="updateButton" class="button" onclick="go_QnaUpdate()">
+		<input type="submit" value="수정하기" id="updateButton" class="button" >
 	</div>
 </form>
 

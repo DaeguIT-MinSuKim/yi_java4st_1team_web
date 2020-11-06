@@ -88,4 +88,3 @@ SELECT * FROM (SELECT rownum RN, a.* FROM (SELECT * FROM QNA WHERE DEL_YN = 'y' 
 
 
 
-

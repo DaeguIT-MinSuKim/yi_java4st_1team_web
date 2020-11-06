@@ -2,7 +2,6 @@ qnaList.do
 qnaWrite.do
 qnaUpdate.do
 qnaDelete.do
-qnaConfirmPassword.do
 qnaPassword.do
 qnaUpdate.do
 booking.do

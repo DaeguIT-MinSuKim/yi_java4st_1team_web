@@ -8,8 +8,13 @@
 	text-align: center;
 }
 
-a {text-decoration:none;}
-table td {text-align:center;}
+a {
+	text-decoration: none;
+}
+
+table td {
+	text-align: center;
+}
 </style>
 <script>
 	document.title += ' - 문의 목록';
@@ -218,17 +223,17 @@ table td {text-align:center;}
 										<option value="all"
 											<c:if test="${stay eq 'all'}">selected</c:if>>전체</option>
 										<option value="resy"
-											<c:if test="${stay eq 'resy'}">selected</c:if>>답변된 문의
-										</option>
+											<c:if test="${stay eq 'resy'}">selected</c:if>>답변된
+											문의</option>
 										<option value="resn"
-											<c:if test="${stay eq 'resn'}">selected</c:if>>미답변된 문의
-										</option>
+											<c:if test="${stay eq 'resn'}">selected</c:if>>미답변된
+											문의</option>
 										<option value="delq"
-											<c:if test="${stay eq 'delq'}">selected</c:if>>삭제된 문의
-										</option>
+											<c:if test="${stay eq 'delq'}">selected</c:if>>삭제된
+											문의</option>
 										<option value="deln"
-											<c:if test="${stay eq 'deln'}">selected</c:if>>삭제된 공지
-										</option>
+											<c:if test="${stay eq 'deln'}">selected</c:if>>삭제된
+											공지</option>
 								</select>
 
 								</label>
@@ -279,13 +284,13 @@ table td {text-align:center;}
 								<c:if test="${qna.qnaNotice eq 'n'}">
 									<tr>
 								</c:if>
-								
-								<td style="width:30px"><input type="checkbox" name="check" id="no"
-									value="${qna.qnaNo}"></td>
-								<td style="width: 4px;" class="leftTd">
-								<c:if test="${qna.qnaNotice eq 'y'}"><span style="font-weight:bold">공지</span></c:if>	
-								<c:if test="${qna.qnaNotice eq 'n'}">${qna.qnaNo}</c:if>
-								</td>
+
+								<td style="width: 30px"><input type="checkbox" name="check"
+									id="no" value="${qna.qnaNo}"></td>
+								<td style="width: 4px;" class="leftTd"><c:if
+										test="${qna.qnaNotice eq 'y'}">
+										<span style="font-weight: bold">공지</span>
+									</c:if> <c:if test="${qna.qnaNotice eq 'n'}">${qna.qnaNo}</c:if></td>
 								<td style="width: 350px;" class="leftTd"><a
 									href="qnaDetail.do?no=${qna.qnaNo }"><c:if
 											test="${qna.qnaNotice eq 'y'}">
@@ -293,20 +298,19 @@ table td {text-align:center;}
 											<i class="fas fa-lock"></i>
 										</c:if>${qna.qnaTitle}</a></td>
 								<td style="width: 80px;" class="leftTd">${qna.guestId.guestId}</td>
-								
+
 								<td style="width: 100px;"><fmt:parseDate
 										value="${qna.qnaRegDate}" pattern="yyyy-MM-dd'T'HH:mm"
 										var="regDate" type="both" /> <fmt:formatDate
 										value="${regDate}" pattern="yyyy-MM-dd HH:mm" /></td>
-								<td style="width: 40px;">
-									<c:if test="${qna.qnaResYn eq 'n'}">
-										<c:if test="${qna.qnaNotice eq 'n'}"><i class="fas fa-times"></i></c:if>
-									</c:if>
-									<c:if test="${qna.qnaResYn eq 'y' }">
+								<td style="width: 40px;"><c:if
+										test="${qna.qnaResYn eq 'n'}">
+										<c:if test="${qna.qnaNotice eq 'n'}">
+											<i class="fas fa-times"></i>
+										</c:if>
+									</c:if> <c:if test="${qna.qnaResYn eq 'y' }">
 										<i class="fas fa-check" style="color: #09D345;"></i>
-									</c:if>
-									
-								</td>
+									</c:if></td>
 
 								<td style="width: 100px;"><c:if
 										test="${qna.qnaResYn eq 'y'}">
@@ -343,39 +347,94 @@ table td {text-align:center;}
 					<!-- 테이블 끝 -->
 
 
-					<div style="text-align: center; float: center;">
-						<p>Total : ${total}</p>
+					<div style="width: 100%; margin: 0 auto; text-align: center;">
 
-
+						<!-- << -->
 						<c:if test="${paging.startPage != 1}">
-							<a
-								href="qnaList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
-								<i class="xi-angle-left"></i>
-							</a>
+							<div class="paging-line">
+								<a
+									href="qnaList.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}&stay=${stay}">
+									<i class="fas fa-angle-double-left"></i>
+								</a>
+							</div>
 						</c:if>
+						<c:if test="${paging.startPage == 1}">
+							<div class="paging-line">
+								<i class="fas fa-angle-double-left"></i>
+							</div>
+						</c:if>
+
+
+						<!-- 이전페이지 -->
+						<c:choose>
+							<c:when test="${paging.nowPage != 1}">
+								<div class="paging-line">
+									<a
+										href="qnaList.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}&stay=${stay}"><i
+										class="fas fa-angle-left"></i></a>
+								</div>
+							</c:when>
+							<c:when test="${paging.nowPage == 1}">
+								<div class="paging-line">
+									<i class="fas fa-angle-left"></i>
+								</div>
+							</c:when>
+
+						</c:choose>
+
+						<!-- 페이지 숫자 -->
 
 						<c:forEach begin="${paging.startPage}" end="${paging.endPage }"
 							var="p">
 							<c:choose>
 								<c:when test="${p == paging.nowPage }">
-								${p}
+									<div class="paging-line" style="font-weight: bold">${p}</div>
 								</c:when>
 								<c:when test="${p != paging.nowPage }">
-									<a
-										href="qnaList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}"><b
-										style="margin: 5px;">${p}</b></a>
+									<div class="paging-line">
+										<a
+											href="qnaList.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}&stay=${stay}">
+											${p}</a>
+									</div>
 								</c:when>
 							</c:choose>
 						</c:forEach>
 
-						&nbsp;&nbsp;
-						<c:if test="${paging.endPage != paging.lastPage }">
-							<a
-								href="qnaList.do?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">
-								<i class="xi-angle-right"></i>
-							</a>
-						</c:if>
 
+
+						<!-- 다음페이지 -->
+						<c:choose>
+							<c:when test="${paging.nowPage != paging.lastPage}">
+								<div class="paging-line">
+									<a
+										href="qnaList.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}&stay=${stay}"><i
+										class="fas fa-angle-right"></i></a>
+								</div>
+							</c:when>
+							<c:when test="${paging.nowPage == paging.lastPage}">
+								<div class="paging-line">
+									<i class="fas fa-angle-right"></i>
+								</div>
+							</c:when>
+
+						</c:choose>
+
+						<!-- >> -->
+
+
+						<c:if test="${paging.endPage != paging.lastPage }">
+							<div class="paging-line">
+								<a
+									href="qnaList.do?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}&stay=${stay}">
+									<i class="fas fa-angle-double-right"></i>
+								</a>
+							</div>
+						</c:if>
+						<c:if test="${paging.endPage == paging.lastPage}">
+							<div class="paging-line">
+								<i class="fas fa-angle-double-right"></i>
+							</div>
+						</c:if>
 
 					</div>
 				</div>
