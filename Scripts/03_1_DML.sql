@@ -19,6 +19,11 @@ VALUES('test4321', '43211234', '사삼이', to_date('20001021', 'YYYYMMDD'), '01
 --job에 이벤트번호 생일쿠폰으로 수정 / 생일 오늘로 수정해라
 --INSERT INTO GUEST(GUEST_ID, GUEST_PWD, GUEST_NAME, GUEST_BIRTHDAY, GUEST_PHONE, GUEST_EMAIL, GUEST_GENDER, GUEST_JOIN_DATE, GUEST_NOTE, DEL_YN, INFO_YN)
 --VALUES('test111', 'tt123', '생일테스트', to_date('19921104', 'YYYYMMDD'), '010-1234-5678', 'test@test.co.kr', 0, sysdate, '머리카락이 약하심', 'n', 'y');
+
+SELECT TO_CHAR(DBMS_RANDOM.VALUE(1980,2004), 'FM0000') year, TO_CHAR(DBMS_RANDOM.VALUE(1,12), 'FM00') MONTH, TO_CHAR(DBMS_RANDOM.VALUE(1,28), 'FM00') DAY
+FROM dual
+CONNECT BY LEVEL <= 10;
+
 UPDATE GUEST SET DEL_YN = 'n';
 
 /* hair_kind */
@@ -210,8 +215,9 @@ INSERT INTO ADMIN VALUES ('testadmin','1234','testadmin');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 운영공지','사이트운영방침에 따라 이번년도는 1명의 운영자로 운영할 예정');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사기 조심','헤어랑을 빙자해서 선예약금 지불 사례발생 조심해주세요.');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('일부 상품 가격 조정','이번년도 물가가 올라서 일부 상품들의 가격이 올라갑니다.');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 11월1일정기정검',' 사이트 정기정검을 할 예정입니다.');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 11월 5일정기정검',' 사이트 정기정검을 할 예정입니다.');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 11월1일정기정검',' 사이트 정기점검을 할 예정입니다.');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 11월 5일정기정검',' 사이트 정기점검을 할 예정입니다.');
+
 
 /*qna*/
 INSERT INTO QNA (GUEST_ID,QNA_TITLE,QNA_CONTENT) VALUES ('test','로그인이 안된다고 떠요','로그인창에서 로그인을 눌렀는데 자꾸 튕겨요 어떻게 해야해요?');

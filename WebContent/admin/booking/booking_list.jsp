@@ -61,6 +61,7 @@
 					<div class="col-sm-12 col-md-12 p-0">
 						<div class="form-inline justify-content-center" style="height: 32px;">
 							<div class="btn-group btn-group-sm" role="group" aria-label="Basic example" style>
+							  <span class="btn btn-sm btn-outline-secondary active" style="cursor: default;">예약일 기준</span>
 							  <button type="button" class="btn btn-sm btn-outline-secondary dateBtn" value="1" id="todayBtn">오늘</button>
 							  <button type="button" class="btn btn-sm btn-outline-secondary dateBtn" value="7" id="aWeekBtn">1주</button>
 							  <button type="button" class="btn btn-sm btn-outline-secondary dateBtn" value="14" id="twoWeeksBtn">2주</button>
