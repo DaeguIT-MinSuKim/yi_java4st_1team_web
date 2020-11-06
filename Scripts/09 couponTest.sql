@@ -296,6 +296,8 @@ SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GU
 ) gb
 WHERE sysdate BETWEEN "thisyear_bd" - 10 AND "thisyear_bd" + 10 - 1 / (24*60*60) + 1;
 
+
+
 UPDATE event SET event_status = 's' WHERE event_no = 's';
 
 --쿠폰view의 생일쿠폰만 보기

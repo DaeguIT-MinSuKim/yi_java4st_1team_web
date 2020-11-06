@@ -210,28 +210,28 @@ INSERT INTO ADMIN VALUES ('testadmin','1234','testadmin');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 운영공지','사이트운영방침에 따라 이번년도는 1명의 운영자로 운영할 예정');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사기 조심','헤어랑을 빙자해서 선예약금 지불 사례발생 조심해주세요.');
 INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('일부 상품 가격 조정','이번년도 물가가 올라서 일부 상품들의 가격이 올라갑니다.');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 11월1일정기정검',' 사이트 정기정검을 할 예정입니다.');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 11월 5일정기정검',' 사이트 정기정검을 할 예정입니다.');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 11월1일정기정검',' 사이트 정기점검을 할 예정입니다.');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT) values('사이트 11월 5일정기정검',' 사이트 정기점검을 할 예정입니다.');
 
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 10월 15일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-10-15','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 10월 3일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-10-03','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 9월 26일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-09-26','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 9월 3일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-09-03','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 9월 1일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-09-01','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 5월 3일정기정검',' 사이트 정기정검을 할 예정입니다.','2020-05-03','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 10월 15일정기정검',' 사이트 정기점검을 할 예정입니다.','2020-10-15','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 10월 3일정기정검',' 사이트 정기점검을 할 예정입니다.','2020-10-03','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 9월 26일정기정검',' 사이트 정기점검을 할 예정입니다.','2020-09-26','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 9월 3일정기정검',' 사이트 정기점검을 할 예정입니다.','2020-09-03','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 9월 1일정기정검',' 사이트 정기점검을 할 예정입니다.','2020-09-01','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 5월 3일정기정검',' 사이트 정기점검을 할 예정입니다.','2020-05-03','y');
 
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 12월 1일정기정검',' 사이트 정기정검을 할 예정입니다.','2019-12-01','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 11월 4일정기정검',' 사이트 정기정검을 할 예정입니다.','2019-11-04','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 10월 24일정기정검',' 사이트 정기정검을 할 예정입니다.','2019-10-24','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 5월 7일정기정검',' 사이트 정기정검을 할 예정입니다.','2019-05-07','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 3월 1일정기정검',' 사이트 정기정검을 할 예정입니다.','2019-03-01','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 1월 1일정기정검',' 사이트 정기정검을 할 예정입니다.','2019-01-01','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 12월 1일정기정검',' 사이트 정기점검을 할 예정입니다.','2019-12-01','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 11월 4일정기정검',' 사이트 정기점검을 할 예정입니다.','2019-11-04','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 10월 24일정기정검',' 사이트 정기점검을 할 예정입니다.','2019-10-24','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 5월 7일정기정검',' 사이트 정기점검을 할 예정입니다.','2019-05-07','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 3월 1일정기정검',' 사이트 정기점검을 할 예정입니다.','2019-03-01','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 1월 1일정기정검',' 사이트 정기점검을 할 예정입니다.','2019-01-01','y');
 
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 12월 20일정기정검',' 사이트 정기정검을 할 예정입니다.','2018-12-20','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 11월 15일정기정검',' 사이트 정기정검을 할 예정입니다.','2018-11-15','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 6월 5일정기정검',' 사이트 정기정검을 할 예정입니다.','2018-06-05','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 3월 1일정기정검',' 사이트 정기정검을 할 예정입니다.','2018-03-01','y');
-INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 4월 24일정기정검',' 사이트 정기정검을 할 예정입니다.','2018-04-24','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 12월 20일정기정검',' 사이트 정기점검을 할 예정입니다.','2018-12-20','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 11월 15일정기정검',' 사이트 정기점검을 할 예정입니다.','2018-11-15','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 6월 5일정기정검',' 사이트 정기점검을 할 예정입니다.','2018-06-05','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 3월 1일정기정검',' 사이트 정기점검을 할 예정입니다.','2018-03-01','y');
+INSERT INTO notice(NOTICE_TITLE,NOTICE_CONTENT,NOTICE_REGDATE,NOTICE_DELYN ) values('사이트 4월 24일정기정검',' 사이트 정기점검을 할 예정입니다.','2018-04-24','y');
 
 
 /*qna*/
