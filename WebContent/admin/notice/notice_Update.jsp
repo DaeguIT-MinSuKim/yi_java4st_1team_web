@@ -106,8 +106,12 @@
 
 						<br> <br>
 						<div class="clear"></div>
-						<br> <img alt="" src="../notice/setload/${notice.noticeFile}"
-							style="width: 600px; height: 600px;"><br> <br>
+						<br>
+						<c:if test="${notice.noticeFile != null }">
+							<img alt="" src="../notice/setload/${notice.noticeFile}"
+								style="width: 600px; height: 600px;">
+						</c:if>
+						<br> <br>
 						<div class="add-buttons" style="float: right">
 							<input type="reset" value="초기화" class="btn btn-primary btn-sm">
 							<input type="button" value="수정완료" id="modifyBtn"

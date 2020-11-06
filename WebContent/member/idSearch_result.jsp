@@ -13,6 +13,8 @@ function confirm(){
 	self.close();
 }
 </script>
+<link rel="stylesheet" href="css/design.css">
+<link rel="stylesheet" href="css/style.css">
 <body>
 <c:choose>
 	<c:when test="${message == -1}">

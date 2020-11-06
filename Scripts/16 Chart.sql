@@ -76,17 +76,21 @@ SELECT TO_CHAR(b.dt, 'YYYY-MM-DD') AS GUEST_JOIN_DATE
   GROUP BY b.dt
   ORDER BY b.dt;
 
+SELECT COUNT(a.*)AS aa, count(b.*)AS bb FROM (SELECT * FROM GUEST WHERE GUEST_GENDER =0 AND DEL_YN = 'n')AS a,(SELECT * FROM GUEST WHERE GUEST_GENDER =0 AND DEL_YN = 'y')AS b, dual;  
+ 
  SELECT COUNT(*)AS mail FROM GUEST WHERE GUEST_GENDER =0 AND DEL_YN = 'n';
  SELECT COUNT(*)AS mail FROM GUEST WHERE GUEST_GENDER =0 AND DEL_YN = 'y';
 
 SELECT COUNT(a.*)AS mail, count(b.*)AS femail FROM (SELECT * FROM GUEST WHERE GUEST_GENDER =0 AND DEL_YN = 'n')AS a,
 	(SELECT * FROM GUEST WHERE GUEST_GENDER =0 AND DEL_YN = 'n')AS b;
 
+SELECT TO_CHAR(TO_DATE(SYSDATE ,'yyyy-MM-dd') ,'YYYY-MM-dd'), NVL(cnt(abc.mail), 0) MAIL,NVL(cnt(abc.femail), 0) femail
+FROM ( (SELECT COUNT(*) FROM GUEST WHERE GUEST_GENDER =1)AS mail
+              , (SELECT COUNT(*) FROM GUEST WHERE GUEST_GENDER =0)AS femail)AS abc;
 
 
-
---회원 증가율 차트(o)
-SELECT TO_CHAR(b.dt, 'YYYY-MM-DD') AS GUEST_JOIN_DATE 
+--회원 일별남녀증가율 차트(o)
+SELECT TO_CHAR(TO_DATE(SYSDATE ,'yyyy-MM') , 'YYYY-MM') AS GUEST_JOIN_DATE 
      , NVL(SUM(a.mail), 0) MAIL ,NVL(SUM(a.femail), 0) FEMAIL 
   FROM ( SELECT TO_CHAR(GUEST_JOIN_DATE, 'YYYY-MM-DD') AS GUEST_JOIN_DATE
               , (SELECT COUNT(*) FROM GUEST WHERE GUEST_GENDER =1)AS mail
@@ -104,9 +108,67 @@ SELECT TO_CHAR(b.dt, 'YYYY-MM-DD') AS GUEST_JOIN_DATE
   WHERE b.dt = a.GUEST_JOIN_DATE(+)
   GROUP BY b.dt
   ORDER BY b.dt;
+ 
+--회원 월별증가율 차트(o)
+SELECT TO_CHAR(b.dt, 'YYYY-MM') AS GUEST_JOIN_DATE 
+     , NVL(SUM(a.cnt), 0)AS CNT 
+  FROM ( SELECT TO_CHAR(GUEST_JOIN_DATE, 'YYYY-MM-DD') AS GUEST_JOIN_DATE
+              , COUNT(*)AS cnt 
+           FROM GUEST
+          WHERE DEL_YN ='n' AND GUEST_JOIN_DATE BETWEEN TO_DATE('2020-01-01', 'YYYY-MM-DD')
+                             AND TO_DATE('2020-12-05' , 'YYYY-MM-DD') 
+          GROUP BY GUEST_JOIN_DATE 
+        ) a
+      , ( SELECT TO_DATE('2020-01-01','YYYY-MM-DD') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-12-05','YYYY-MM-DD') 
+                            - TO_DATE('2020-01-01','YYYY-MM-DD') + 1)
+        ) b
+  WHERE b.dt = a.GUEST_JOIN_DATE(+)
+  GROUP BY TO_CHAR(b.dt, 'YYYY-MM')
+  ORDER BY TO_CHAR(b.dt, 'YYYY-MM');
+ 
+--회원 일별증가율 차트(o)
+SELECT TO_CHAR(b.dt, 'YYYY-MM-dd') AS GUEST_JOIN_DATE 
+     , NVL(SUM(a.cnt), 0)AS CNT 
+  FROM ( SELECT TO_CHAR(GUEST_JOIN_DATE, 'YYYY-MM-DD') AS GUEST_JOIN_DATE
+              , COUNT(*)AS cnt 
+           FROM GUEST
+          WHERE DEL_YN ='n' AND GUEST_JOIN_DATE BETWEEN TO_DATE('2020-11-01', 'YYYY-MM-DD')
+                             AND TO_DATE('2020-11-05' , 'YYYY-MM-DD') 
+          GROUP BY GUEST_JOIN_DATE 
+        ) a
+      , ( SELECT TO_DATE('2020-11-01','YYYY-MM-DD') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-11-05','YYYY-MM-DD') 
+                            - TO_DATE('2020-11-01','YYYY-MM-DD') + 1)
+        ) b
+  WHERE b.dt = a.GUEST_JOIN_DATE(+)
+  GROUP BY TO_CHAR(b.dt, 'YYYY-MM-dd')
+  ORDER BY TO_CHAR(b.dt, 'YYYY-MM-dd');
 
-
-
+ 
+ 
+ 
+ 
+ 
+  SELECT TO_CHAR(b.dt, 'YYYY-MM-dd') AS GUEST_JOIN_DATE 
+     , NVL(SUM(a.cnt), 0)AS CNT 
+  FROM ( SELECT TO_CHAR(GUEST_JOIN_DATE, 'YYYY-MM-DD') AS GUEST_JOIN_DATE
+              , COUNT(*)AS cnt 
+           FROM GUEST
+          WHERE DEL_YN ='n' AND GUEST_JOIN_DATE BETWEEN TO_DATE('2020-02-01', 'YYYY-MM-DD')
+                             AND TO_DATE('2020-02-28' , 'YYYY-MM-DD') 
+          GROUP BY GUEST_JOIN_DATE 
+        ) a
+      , ( SELECT TO_DATE('2020-02-01','YYYY-MM-DD') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-02-28','YYYY-MM-DD') 
+                            - TO_DATE('2020-02-01','YYYY-MM-DD') + 1)
+        ) b
+  WHERE b.dt = a.GUEST_JOIN_DATE(+)
+  GROUP BY TO_CHAR(b.dt, 'YYYY-MM-dd')
+  ORDER BY TO_CHAR(b.dt, 'YYYY-MM-dd');
 
 -----------------------------------------------------------------------------
 
@@ -138,9 +200,35 @@ SELECT TO_CHAR(b.dt, 'DD') AS QNA_REGDATE
                             - TO_DATE('2020-11-01','YYYY-MM-DD') + 1)
         ) b
   WHERE b.dt = a.QNA_REGDATE(+)
-  GROUP BY b.dt
-  ORDER BY b.dt;
+  GROUP BY TO_CHAR(b.dt, 'DD')
+  ORDER BY TO_CHAR(b.dt, 'DD');
+ 
+ --월별 문의통계
+ SELECT TO_CHAR(b.dt, 'YYYY-MM') AS QNA_REGDATE
+     , NVL(SUM(a.cnt), 0) cnt
+  FROM ( SELECT TO_CHAR(QNA_REGDATE, 'YYYY-MM-DD') AS QNA_REGDATE
+              , COUNT(*) cnt
+           FROM qna
+          WHERE QNA_REGDATE BETWEEN TO_DATE('2020-1-01', 'YYYY-MM-DD')
+                             AND TO_DATE('2020-12-04' , 'YYYY-MM-DD') 
+          GROUP BY QNA_REGDATE
+        ) a
+      , ( SELECT TO_DATE('2020-1-01','YYYY-MM-DD') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-12-04','YYYY-MM-DD') 
+                            - TO_DATE('2020-1-01','YYYY-MM-DD') + 1)
+        ) b
+  WHERE b.dt = a.QNA_REGDATE(+)
+  GROUP BY TO_CHAR(b.dt, 'YYYY-MM')
+  ORDER BY TO_CHAR(b.dt, 'YYYY-MM');
 
+ 
+ 
+ 
+ 
+ 
+
+ 
 -----------------------------------------------------------------------------------------------
  
  --예약 월별 카운팅(o)
@@ -191,8 +279,27 @@ SELECT * FROM ORDERS WHERE ORDERS_DATE BETWEEN '2020-11-01' AND '2020-11-05';
 
 SELECT * FROM ORDER_DETAIL od ;
 
+--월별 주문카운팅(o)
+SELECT TO_CHAR(b.dt, 'yyyy-MM ') AS ORDERS_DATE
+    , NVL(SUM(a.cnt), 0) cnt
+  FROM ( SELECT TO_CHAR(ORDERS_DATE , 'yyyy-MM-dd ') AS ORDERS_DATE
+              , COUNT(*) cnt
+           FROM ORDERS
+          WHERE ORDERS_DATE BETWEEN TO_DATE('2020-11-01', 'yyyy-MM-dd ')
+                             AND TO_DATE('2020-12-05' , 'yyyy-MM-dd ') 
+          GROUP BY ORDERS_DATE
+        ) a
+      , ( SELECT TO_DATE('2020-1-01 ','yyyy-MM-dd ') + LEVEL - 1 AS dt
+            FROM dual 
+         CONNECT BY LEVEL <= (TO_DATE('2020-12-05 ','yyyy-MM-dd ') 
+                            - TO_DATE('2020-1-01 ','yyyy-MM-dd ') + 1)
+        ) b
+  WHERE b.dt = a.ORDERS_DATE(+)
+  GROUP BY TO_CHAR(b.dt, 'yyyy-MM ')
+  ORDER BY TO_CHAR(b.dt, 'yyyy-MM ');
+ 
 --일별 주문카운팅(o)
-SELECT TO_CHAR(b.dt, 'yyyy-MM-dd ') AS ORDERS_DATE
+SELECT TO_CHAR(b.dt, 'dd ') AS ORDERS_DATE
     , NVL(SUM(a.cnt), 0) cnt
   FROM ( SELECT TO_CHAR(ORDERS_DATE , 'yyyy-MM-dd ') AS ORDERS_DATE
               , COUNT(*) cnt
@@ -207,8 +314,8 @@ SELECT TO_CHAR(b.dt, 'yyyy-MM-dd ') AS ORDERS_DATE
                             - TO_DATE('2020-11-01 ','yyyy-MM-dd ') + 1)
         ) b
   WHERE b.dt = a.ORDERS_DATE(+)
-  GROUP BY b.dt
-  ORDER BY b.dt;
+  GROUP BY TO_CHAR(b.dt, 'dd ') 
+  ORDER BY TO_CHAR(b.dt, 'dd ');
  
 /*--월별 주문카운팅(x)
 SELECT TO_CHAR(b.dt, 'yyyy-MM ') AS ORDERS_DATE
@@ -251,19 +358,19 @@ SELECT TO_CHAR(b.dt, 'yyyy-MM-dd ') AS ORDERS_DATE
 
  
  -- 월별 주문금액(x)
-SELECT TO_CHAR(b.dt, 'yyyy-MM-dd ') AS ORDERS_DATE
+SELECT TO_CHAR(b.dt, 'yyyy-MM ') AS ORDERS_DATE
     , NVL(SUM(a.total), 0) total
   FROM ( SELECT TO_CHAR(ORDERS_DATE , 'yyyy-MM-dd ') AS ORDERS_DATE
               , TO_CHAR(SUM(ORDERS_TOTAL_PRICE),'999,999,999,999,999')  total
            FROM ORDERS
-          WHERE ORDERS_DATE BETWEEN TO_DATE('2020-11-01', 'yyyy-MM-dd ')
-                             AND TO_DATE('2020-11-05' , 'yyyy-MM-dd ') 
+          WHERE ORDERS_DATE BETWEEN TO_DATE('2020-10', 'yyyy-MM-dd ')
+                             AND TO_DATE('2020-11' , 'yyyy-MM-dd ') 
           GROUP BY ORDERS_DATE
         ) a
-      , ( SELECT TO_DATE('2020-11-01 ','yyyy-MM-dd ') + LEVEL - 1 AS dt
+      , ( SELECT TO_DATE('2020-10 ','yyyy-MM-dd ') + LEVEL - 1 AS dt
             FROM dual 
-         CONNECT BY LEVEL <= (TO_DATE('2020-11-05 ','yyyy-MM-dd ') 
-                            - TO_DATE('2020-11-01 ','yyyy-MM-dd ') + 1)
+         CONNECT BY LEVEL <= (TO_DATE('2020-11 ','yyyy-MM-dd ') 
+                            - TO_DATE('2020-10 ','yyyy-MM-dd ') + 1)
         ) b
   WHERE b.dt = a.ORDERS_DATE(+)
   GROUP BY b.dt

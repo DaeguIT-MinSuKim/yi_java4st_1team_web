@@ -135,7 +135,7 @@
       <hr class="sidebar-divider">
       
       <!-- Nav Item - Charts -->
-      <li class="nav-item"><a class="nav-link" href="chartList.do">
+      <li class="nav-item"><a class="nav-link" href="chartGuest.do">
 					<i class="fas fa-fw fa-table"></i> <span>차트 관리</span>
 			</a></li>
 

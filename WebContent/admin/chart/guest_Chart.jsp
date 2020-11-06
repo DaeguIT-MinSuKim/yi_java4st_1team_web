@@ -80,38 +80,25 @@ div.content {
 <script type="text/javascript"
 	src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-/* $(function(){
-			google.charts.load('current', {
-				'packages' : [ 'corechart' ]
-			});
-		
-			google.charts.setOnLoadCallback(drawChart);
-		
-		function drawChart(){
-
-			var options1 = {
-				title : 'Guest Join',
-				height : '100%',
-				width : '100%',
-				curveType: 'function',
-			    legend: { position: 'bottom' },
-				backgroundColor: "transparent"
-			};
-			
-			
-			
-			
-			
-			var qnaTable = google.visualization.arrayToDataTable(${join});
+$(function(){
+	var nowDate = new Date();
+	var year = nowDate.getFullYear();
 	
-			var objDiv = document.getElementById('myChart1');
-			var chart = new google.visualization.LineChart(objDiv);
-			chart.draw(qnaTable, options1);
-			
-			
-			
-		}
-}); */
+	document.getElementById('one').innerHTML = year+'년';
+	document.getElementById('one').value = year;
+	document.getElementById('two').innerHTML = (year-1)+'년';
+	document.getElementById('two').value = year-1;
+	document.getElementById('three').innerHTML = (year-2)+'년';
+	document.getElementById('three').value = year-2;
+	document.getElementById('four').innerHTML = (year-3)+'년';
+	document.getElementById('four').value = year-3;
+	document.getElementById('five').innerHTML = (year-4)+'년';
+	document.getElementById('five').value = year-4;
+	 
+});
+
+
+
 $(function(){
 	google.charts.load('current', {
 		'packages' : [ 'bar' ]
@@ -121,27 +108,26 @@ $(function(){
 	
 	function drawChart(){
 		
-		var options2 = {
+		/* var options2 = {
 				title : 'Guest Gender',
 				height : '300',
 				width : '100%',
 				pieHole: 0.4,
 				backgroundColor: "transparent"
-		};
+		}; */
 		
 		var options3 = {
-				title : 'Guest Out',
+				title : 'Guest Increase',
 				height : '400',
 				width : '100%',
-				pieHole: 0.4,
 				backgroundColor: "transparent"
 			};
 		
-		var resTable = google.visualization.arrayToDataTable(${gender});
+		/* var resTable = google.visualization.arrayToDataTable(${gender});
 		
 		var objDiv = document.getElementById('myChart2');
 		var chart = new google.charts.Bar(objDiv);
-		chart.draw(resTable, google.charts.Bar.convertOptions(options2));
+		chart.draw(resTable, google.charts.Bar.convertOptions(options2)); */
 		
 		var seTable = google.visualization.arrayToDataTable(${out})
 		
@@ -171,55 +157,35 @@ $(function(){
 					onclick="location.href='chartQna.do' "> <input
 					type="button" value="Orders Chart" class="btn btn-success btn-sm"
 					style="float: left; margin-right: 10px;"
-					onclick="location.href='chartOrders.do' ">
+					onclick="location.href='chartOrders.do' "> <select
+					name="year" style="float: right; width: 90px;">
+					<option id="one"></option>
+					<option id="two"></option>
+					<option id="three"></option>
+					<option id="four"></option>
+					<option id="five"></option>
+				</select><select name="month" style="float: right; width: 65px;">
+					<option value="">선택</option>
+					<option value="1" <c:if test="${month ==  1 }"> selected</c:if>>1월</option>
+					<option value="2" <c:if test="${month == 2 }"> selected</c:if>>2월</option>
+					<option value="3" <c:if test="${month == 3 }"> selected</c:if>>3월</option>
+					<option value="4" <c:if test="${month == 4 }"> selected</c:if>>4월</option>
+					<option value="5" <c:if test="${month == 5 }"> selected</c:if>>5월</option>
+					<option value="6" <c:if test="${month == 6 }"> selected</c:if>>6월</option>
+					<option value="7" <c:if test="${month == 7 }"> selected</c:if>>7월</option>
+					<option value="8" <c:if test="${month == 8 }"> selected</c:if>>8월</option>
+					<option value="9" <c:if test="${month == 9 }"> selected</c:if>>9월</option>
+					<option value="10" <c:if test="${month == 10 }"> selected</c:if>>10월</option>
+					<option value="11" <c:if test="${month == 11 }"> selected</c:if>>11월</option>
+					<option value="12" <c:if test="${month == 12 }"> selected</c:if>>12월</option>
+				</select> <input type="submit" value="검색" class="btn btn-primary btn-sm" style="float: right;">
 			</h6>
 		</div>
 		<!-- <!-- card-body -->
 		<div class="card-body">
 			<div class="table-responsive">
 				<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-					<div class="row m-0 mb-2">
-						<div class="col-sm-12 col-md-12 p-0">
-							<div class="form-inline justify-content-center">
-								<i class="far fa-calendar-alt mr-3" style="font-size: 22px;"></i>
-								<div class="input-group input-group-sm mr-3">
-									<div class="input-group-prepend">
-										<input type="text" class="form-control" id="startDate"
-											name="startDate" style="width: 120px;" placeholder="시작일">
-									</div>
-									<div class="input-group-prepend">
-										<label class="input-group-text">~</label>
-									</div>
-									<input type="text" class="form-control" id="endDate"
-										name="endDate" style="width: 120px;" placeholder="종료일">
-								</div>
-								<button type="submit" class="form-control btn-primary btn-sm"
-									id="dateBtn">조회</button>
-							</div>
-						</div>
-					</div>
-					<div class="row m-0">
-						<div class="col-sm-12 col-md-12 p-0">
-							<div class="form-inline justify-content-center"
-								style="height: 32px;">
-								<div class="btn-group btn-group-sm" role="group"
-									aria-label="Basic example">
-									<button type="button"
-										class="btn btn-sm btn-outline-secondary dateBtn" value="1"
-										id="todayBtn">오늘</button>
-									<button type="button"
-										class="btn btn-sm btn-outline-secondary dateBtn" value="7"
-										id="aWeekBtn">1주</button>
-									<button type="button"
-										class="btn btn-sm btn-outline-secondary dateBtn" value="14"
-										id="twoWeeksBtn">2주</button>
-									<button type="button"
-										class="btn btn-sm btn-outline-secondary dateBtn" value="31"
-										id="aMonthBtn">1개월</button>
-								</div>
-							</div>
-						</div>
-					</div>
+
 					<hr>
 					<div class="row mb-2">
 						<div class="col-sm-12 col-md-6" style="float: right;">
@@ -230,10 +196,10 @@ $(function(){
 						<!-- <div id="myChart1"></div>
 						<br> <br>
 						<hr> -->
-						<div id="myChart2" style="width:300px; height: 240px;"></div>
+						<!-- <div id="myChart2" style="width: 300px; height: 240px;"></div>
 						<br> <br>
-						<hr>
-						<div id="myChart3" style="width:100%; height: 400px;"></div>
+						<hr> -->
+						<div id="myChart3" style="width: 100%; height: 400px;"></div>
 						<br> <br>
 					</div>
 				</div>

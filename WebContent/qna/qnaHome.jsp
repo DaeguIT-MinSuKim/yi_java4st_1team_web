@@ -95,7 +95,7 @@ a {
 			</c:forEach>
 		</table>
 		<div class="qna_buttons" style="padding:10px">
-			<input type="button"  style="float:left" value="내 문의 내역" id="list" onclick="location.href='qnaList.do'" class="qna-btn">
+			<input type="button"  style="float:left" value="내 문의 내역" id="list" onclick="location.href='guestQna.do'" class="qna-btn">
 			<input type="button" value="글쓰기"  onclick="location.href='qnaWrite.do'" class="qna-btn"> 
 		</div>
 

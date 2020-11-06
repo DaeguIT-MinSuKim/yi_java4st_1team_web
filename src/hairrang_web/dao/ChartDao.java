@@ -6,7 +6,7 @@ public interface ChartDao {
 
 	/*Q&A*/
 	//날짜 문의 갯수(공지x)
-	JSONArray qnaByoneDay(String year);
+	JSONArray qnaByoneDay(String year, String month);
 	//답변 문의 갯수
 	JSONArray qnaByRes(String year);
 	//비밀글 별 문의 갯수
@@ -17,7 +17,7 @@ public interface ChartDao {
 	//남자여자성별 비율
 	JSONArray guestByGender(String year);
 	//증가한 비율
-	JSONArray guestIncrease(String startDate, String endDate);
+	JSONArray guestIncrease(String year, String month);
 	
 	//시간별에약 
 	JSONArray bookingByTime();
@@ -35,7 +35,7 @@ public interface ChartDao {
 	JSONArray ordersByDe();
 	
 	//날짜별 주문
-	JSONArray ordersByDay();
+	JSONArray ordersByDay(String year, String month);
 	
 	//이벤트별 주문상세
 	JSONArray orderDetailByevent();

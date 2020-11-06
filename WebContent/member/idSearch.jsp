@@ -13,6 +13,8 @@
 	text-align:center;
 	}
 </style>
+<link rel="stylesheet" href="css/design.css">
+<link rel="stylesheet" href="css/style.css">
 <script type="text/javascript" src="member/member.js"></script>
 </head>
 <body>

@@ -58,6 +58,7 @@ public class AdminQnaUpdateHandler implements Command {
 			System.out.println(uploadFilePath);
 			File isDir = new File(uploadFilePath);
 			
+			
 			if (!isDir.isDirectory()) {
 				//디렉토리 생성 메서드
 				isDir.mkdirs();
@@ -79,6 +80,8 @@ public class AdminQnaUpdateHandler implements Command {
 				// 업로드된 파일 얻기
 				File findFile = new File(uploadFilePath + "/" + fileName);
 
+				
+				
 				
 				String realFileName = nowDate + "-" + fileName; // 현재시간과 확장자 합치기
 				System.out.println("realFileName : " + realFileName);

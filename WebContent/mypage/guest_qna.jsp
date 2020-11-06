@@ -24,15 +24,18 @@
 				<th>답변여부</th>
 			</tr>
 			<c:forEach items="${list}" var="qna" varStatus="status">
-				<tr onclick="location.href='guestQnaDetail.do'" class="mypage_title">
-					<td class="qna_index">${total - ((paging.nowPage-1) * cnt + status.index)}</td>
+				<tr onclick="location.href='guestQnaDetail.do?no=${qna.qnaNo}'" class="mypage_title">
+				
+					<td class="qna_index">${total - ((paging.nowPage-1) * cnt + status.index)}
+					<input type="hidden" value="${qna.qnaNo}" name="no">
+					</td>
 					<%-- <td>${qna.qnaNo }</td> --%>
 					<td class="qna_title">${qna.qnaTitle}</td>
 					<td class="qna_date"><fmt:parseDate value="${qna.qnaRegDate}"
 							pattern="yyyy-MM-dd'T'HH:mm" var="qnaRegDate" type="both" /> <fmt:formatDate
 							value="${qnaRegDate}" pattern="yyyy-MM-dd HH:mm" /></td>
 					<td class="qna_resYn">
-						<c:if test="${qna.qnaResYn == 'y'}">답변완료</c:if>
+						<c:if test="${qna.qnaResYn == 'y'}"><span style="font-weight:bold">답변완료</span></c:if>
 						<c:if test="${qna.qnaResYn == 'n'}">미답변</c:if>
 					</td>
 				</tr>

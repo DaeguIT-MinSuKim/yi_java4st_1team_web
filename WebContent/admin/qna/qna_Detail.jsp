@@ -105,11 +105,6 @@ h3 {
 										<td>답변 내용</td>
 										<td>${qnaResult.qnaContent }</td>
 									</tr>
-									<tr>
-										<td>사진</td>
-										<td><img alt=""
-											src="../notice/setload/${qnaResult.qnaFile}"></td>
-									</tr>
 
 								</table>
 								<br>
