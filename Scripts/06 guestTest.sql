@@ -205,3 +205,5 @@ INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
 	FROM (
 	SELECT guest_id, guest_birthday, TO_DATE(TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD')) AS "thisyear_bd", 1 AS fake FROM guest g
 	) gb WHERE TO_CHAR(sysdate, 'YYYY-MM-DD') = TO_CHAR("thisyear_bd", 'YYYY-MM-DD');
+
+SELECT * FROM BOOKING;
