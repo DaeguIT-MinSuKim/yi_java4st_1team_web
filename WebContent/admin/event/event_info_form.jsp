@@ -75,13 +75,13 @@ function event_info(){
 					<td>이벤트 상태</td>
 					<td>
 						<c:if test="${event.eventStatus == 's'}">
-							<div class="btn-info btn-sm" style="width:80px; margin:0 auto">진행중</div>
+							<div class="btn-info btn-sm" style="width:80px;text-align:center;">진행중</div>
 							</c:if>
 						<c:if test="${event.eventStatus == 'e'}">
-							<div class="btn-secondary btn-sm" style="width:80px; margin:0 auto">종료</div>
+							<div class="btn-secondary btn-sm" style="width:80px; text-align:center;">종료</div>
 						</c:if>
 							<c:if test="${event.eventStatus == 'w'}">
-							<div class="btn-warning btn-sm" style="width:80px; margin:0 auto">대기중</div>
+							<div class="btn-warning btn-sm" style="width:80px; text-align:center;">대기중</div>
 							</c:if>
 					</td>
 					

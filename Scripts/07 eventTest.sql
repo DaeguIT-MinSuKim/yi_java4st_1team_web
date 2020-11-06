@@ -69,3 +69,10 @@ SELECT * FROM EVENT where not event_no = 1 AND EVENT_STATUS = 's' ORDER BY EVENT
 SELECT * FROM EVENT;
 UPDATE event SET EVENT_PIC = 'open_event.jpg' WHERE event_no = 2;
 
+
+INSERT INTO COUPON(guest_id, EVENT_NO, EVENT_START, EVENT_END)
+		SELECT guest_id, 1/*이벤트번호*/, "thisyear_bd" AS event_start, "thisyear_bd" + 14 - 1 / (24*60*60) + 1 AS event_end
+		FROM (
+		SELECT guest_id, guest_birthday, TO_DATE((TO_CHAR(sysdate, 'YYYY-') || TO_CHAR(GUEST_BIRTHDAY, 'MM-DD'))) AS "thisyear_bd", 1 AS fake FROM guest_view g
+		) gb WHERE TO_CHAR(sysdate, 'YYYY-MM-DD') = TO_CHAR("thisyear_bd", 'YYYY-MM-DD');
+      END;

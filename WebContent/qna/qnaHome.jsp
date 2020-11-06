@@ -66,7 +66,7 @@ a {
 				</c:if>
 				</td>
 				<td style="text-align:left;"><a
-					href="qnaConfirmPassword.do?no=${list.qnaNo}&secret=${list.qnaSecret}">
+					href="qnaDetail.do?no=${list.qnaNo}&secret=${list.qnaSecret}">
 						<c:if test="${list.qnaNotice eq 'y'}">
 							　
 						</c:if> <c:if test="${list.qnaSecret eq 'y'}">
@@ -107,7 +107,7 @@ a {
 						<!-- << -->
 						<c:if test="${paging.startPage != 1}">
 							<div class="paging-line">
-							<a href="guestBook.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
+							<a href="qnaHome.do?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}">
 								<i class="fas fa-angle-double-left"></i>
 							</a>
 							</div>
@@ -123,7 +123,7 @@ a {
 						<c:choose>
 							<c:when test="${paging.nowPage != 1}">
 								<div class="paging-line">
-									<a href="guestBook.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
+									<a href="qnaHome.do?nowPage=${paging.nowPage-1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-left"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == 1}">
@@ -144,7 +144,7 @@ a {
 								</c:when>
 								<c:when test="${p != paging.nowPage }">
 									<div class="paging-line">
-									<a href="guestBook.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
+									<a href="qnaHome.do?nowPage=${p}&cntPerPage=${paging.cntPerPage}">
 									${p}</a></div>
 								</c:when>
 							</c:choose>
@@ -156,7 +156,7 @@ a {
 						<c:choose>
 							<c:when test="${paging.nowPage != paging.lastPage}">
 								<div class="paging-line">
-									<a href="guestBook.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
+									<a href="qnaHome.do?nowPage=${paging.nowPage+1}&cntPerPage=${paging.cntPerPage}"><i class="fas fa-angle-right"></i></a>
 								</div>
 							</c:when>
 							<c:when test="${paging.nowPage == paging.lastPage}">
@@ -172,7 +172,7 @@ a {
 					
 						<c:if test="${paging.endPage != paging.lastPage }">
 							<div class="paging-line">
-							<a href="guestBook.do?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">
+							<a href="qnaHome.do?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}">
 							<i class="fas fa-angle-double-right"></i></a>
 							</div>
 						</c:if>
